@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://rem1l45jdk6p"]
+
+[ext_resource type="PackedScene" uid="uid://bv037pna70vdp" path="res://player_character.tscn" id="1_b2n5o"]
+[ext_resource type="PackedScene" uid="uid://cixixpexjjnsg" path="res://fireball.tscn" id="2_wx0tx"]
+
+[node name="Test Level" type="Node2D"]
+
+[node name="Player Character" parent="." instance=ExtResource("1_b2n5o")]
+friction_percent = 10
+projectile_scene = ExtResource("2_wx0tx")
+
+[node name="Fireball" parent="." instance=ExtResource("2_wx0tx")]
+visible = false

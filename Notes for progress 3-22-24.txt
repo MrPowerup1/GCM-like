@@ -1,0 +1,12 @@
+Currently in the process of creating the spell system.  
+
+Spells are resources (so a fireball or a buff spell is a resource containing stats as well as a scene to hold them for players)
+
+Players each have a scene that holds their spells called "actions"
+When initialized, scenes are instantiated for each base spell that player holds.
+
+For each type of base spell scene there can be a different packed scene.  They all inherit from base spell scene.  They all have an "activate" function that fires a bullet or teleports or buffs.  For passive spells, call "activate" immediately, and then never again.  Like if I want to do thorns, I could just create a permanent projectile that follows the player and does damage
+
+
+Damage Logic is handled by the bullets (yet to be implemented)
+

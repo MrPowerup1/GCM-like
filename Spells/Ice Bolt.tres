@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Projectile_Spell" load_steps=2 format=3 uid="uid://do58kbkt216jo"]
+
+[ext_resource type="Script" path="res://Spells/Projectile_Spell.gd" id="1_xm7ip"]
+
+[resource]
+script = ExtResource("1_xm7ip")
+Damage = 0
+Speed = 0
+name = ""
+element = 0

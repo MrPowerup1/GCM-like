@@ -9,7 +9,10 @@ var category:int
 var type:int
 
 
-func initialize(spell : Projectile_Spell):
+func initialize(spell : Spell):
+	saveBaseSpellStats(spell)
+	
+func saveBaseSpellStats(spell:Spell):
 	name=spell.name
 	description=spell.description
 	card_image=spell.card_image
@@ -19,5 +22,5 @@ func initialize(spell : Projectile_Spell):
 	type=spell.type
 
 # Called when the node enters the scene tree for the first time.
-func activate():
+func activate(caster:Player):
 	pass

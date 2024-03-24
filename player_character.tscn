@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2fbdg2ave3xj"]
+[gd_scene load_steps=7 format=3 uid="uid://d2fbdg2ave3xj"]
 
 [ext_resource type="Script" path="res://Player Character.gd" id="1_0v4ug"]
 [ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="2_lu85g"]
 [ext_resource type="Script" path="res://Actions.gd" id="3_kba8a"]
-[ext_resource type="Resource" uid="uid://d3olgoe5cd2iy" path="res://Spells/Fireball.tres" id="4_4srrm"]
+[ext_resource type="Resource" uid="uid://wsbmu6ksaiae" path="res://Spells/Fireball.tres" id="4_fv27h"]
+[ext_resource type="Resource" uid="uid://cnaydhupd5oe7" path="res://Spells/Big Fireball.tres" id="5_j32al"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqaox"]
 
@@ -21,4 +22,4 @@ texture = ExtResource("2_lu85g")
 
 [node name="Actions" type="Node" parent="."]
 script = ExtResource("3_kba8a")
-starting_spells = Array[Resource("res://Spells/Spell.gd")]([ExtResource("4_4srrm")])
+starting_spells = Array[Resource("res://Spells/Spell.gd")]([ExtResource("4_fv27h"), ExtResource("5_j32al")])

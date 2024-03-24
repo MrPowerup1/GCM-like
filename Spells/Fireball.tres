@@ -1,26 +1,23 @@
-[gd_resource type="Resource" script_class="Projectile_Spell" load_steps=7 format=3 uid="uid://d3olgoe5cd2iy"]
+[gd_resource type="Resource" script_class="Projectile_Spell" load_steps=5 format=3 uid="uid://wsbmu6ksaiae"]
 
-[ext_resource type="Script" path="res://Spells/Projectile_Spell.gd" id="1_5xls2"]
-[ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="1_ivk6f"]
-[ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_puncs"]
-[ext_resource type="Resource" uid="uid://bw72gfo1364w4" path="res://Elements/Fire.tres" id="2_kluf4"]
-[ext_resource type="PackedScene" uid="uid://b2ufgqrat5avm" path="res://base_projectile.tscn" id="3_kykmp"]
-[ext_resource type="PackedScene" uid="uid://bqsjjce6aujbp" path="res://base_projectile_spell.tscn" id="6_4vkbo"]
+[ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_hvfbg"]
+[ext_resource type="Script" path="res://Spells/Projectile_Spell.gd" id="1_norus"]
+[ext_resource type="PackedScene" uid="uid://b2ufgqrat5avm" path="res://base_projectile.tscn" id="2_vu7m1"]
+[ext_resource type="PackedScene" uid="uid://bqsjjce6aujbp" path="res://base_projectile_spell.tscn" id="4_1j6ue"]
 
 [resource]
-script = ExtResource("1_5xls2")
-projectile_sprite = ExtResource("1_puncs")
+script = ExtResource("1_norus")
+projectile_sprite = ExtResource("1_hvfbg")
 damage = 10
-speed = 300
-size = Vector2(20, 20)
-projectile_scene = ExtResource("3_kykmp")
+speed = 700
+size = Vector2(0.5, 0.5)
+projectile_scene = ExtResource("2_vu7m1")
 lifetime = 2.0
 cooldown = 2.0
 name = "Fireball"
-card_image = ExtResource("1_ivk6f")
-description = "Fire a ball at enemies"
-element = ExtResource("2_kluf4")
-requirements = Array[Resource("res://Elements/Element.gd")]([ExtResource("2_kluf4")])
+card_image = ExtResource("1_hvfbg")
+description = "Fire a big projectile"
+requirements = Array[Resource("res://Elements/Element.gd")]([])
 category = 1
 type = 2
-spell_scene = ExtResource("6_4vkbo")
+spell_scene = ExtResource("4_1j6ue")

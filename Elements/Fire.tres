@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://bw72gfo1364w4"]
+[gd_resource type="Resource" script_class="Element" load_steps=3 format=3 uid="uid://dehdpr3friiuo"]
 
 [ext_resource type="Script" path="res://Elements/Element.gd" id="1_dwcyj"]
 [ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_ht8jx"]

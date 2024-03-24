@@ -10,7 +10,7 @@ func _ready():
 		for spell in starting_spells:
 			var new_spell = spell.spell_scene.instantiate()
 			add_child(new_spell)
-			get_parent().spell_1=new_spell
+			get_parent().add_spell(new_spell)
 			new_spell.initialize(spell)
 			
 

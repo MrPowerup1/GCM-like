@@ -1,12 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cn07010jiuyif"]
+[gd_scene load_steps=2 format=3 uid="uid://cn07010jiuyif"]
 
-[ext_resource type="PackedScene" uid="uid://d2fbdg2ave3xj" path="res://player_character.tscn" id="1_b2n5o"]
-[ext_resource type="PackedScene" uid="uid://b2ufgqrat5avm" path="res://base_projectile.tscn" id="2_wx0tx"]
+[ext_resource type="PackedScene" uid="uid://d0xwjbkk3obak" path="res://player_character.tscn" id="1_b2n5o"]
 
 [node name="Test Level" type="Node2D"]
 
 [node name="Player Character" parent="." instance=ExtResource("1_b2n5o")]
-projectile_scene = ExtResource("2_wx0tx")
-
-[node name="Fireball" parent="." instance=ExtResource("2_wx0tx")]
-visible = false

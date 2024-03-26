@@ -1,25 +1,36 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2fbdg2ave3xj"]
+[gd_scene load_steps=8 format=3 uid="uid://d0xwjbkk3obak"]
 
 [ext_resource type="Script" path="res://Player Character.gd" id="1_0v4ug"]
 [ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="2_lu85g"]
-[ext_resource type="Script" path="res://Actions.gd" id="3_kba8a"]
-[ext_resource type="Resource" uid="uid://wsbmu6ksaiae" path="res://Spells/Fireball.tres" id="4_fv27h"]
-[ext_resource type="Resource" uid="uid://cnaydhupd5oe7" path="res://Spells/Big Fireball.tres" id="5_j32al"]
+[ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
+[ext_resource type="Resource" uid="uid://byddyfrk5kob4" path="res://Spell Effects/Charged Fireball.tres" id="4_g781h"]
+[ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
+[ext_resource type="Script" path="res://Old spell System/Actions.gd" id="6_5whlc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqaox"]
 
 [node name="Player Character" type="CharacterBody2D"]
 script = ExtResource("1_0v4ug")
 speed = 50
+friction_percent = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hqaox")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
 texture_repeat = 1
 texture = ExtResource("2_lu85g")
 
+[node name="Spell Manager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_dckfd")
+known_spells = Array[Resource("res://Spell Effects/Spell Type.gd")]([ExtResource("4_g781h"), ExtResource("4_g781h")])
+
+[node name="Spell Slot" parent="Spell Manager" instance=ExtResource("4_tyvj0")]
+
+[node name="Spell Slot2" parent="Spell Manager" instance=ExtResource("4_tyvj0")]
+
 [node name="Actions" type="Node" parent="."]
-script = ExtResource("3_kba8a")
-starting_spells = Array[Resource("res://Spells/Spell.gd")]([ExtResource("4_fv27h"), ExtResource("5_j32al")])
+script = ExtResource("6_5whlc")

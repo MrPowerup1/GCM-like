@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Old spell System/retry_charged_projectile_spell.gd" id="1_0tu3c"]
+[ext_resource type="Script" path="res://Old spell System/Spells/Charge_Timer.gd" id="2_u02ig"]
+
+[node name="retry_charged_projectile_spell" type="Node"]
+script = ExtResource("1_0tu3c")
+
+[node name="Cooldown_Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Charge_Timer" type="Timer" parent="."]
+script = ExtResource("2_u02ig")
+
+[connection signal="timeout" from="Cooldown_Timer" to="." method="_on_cooldown_timer_timeout"]

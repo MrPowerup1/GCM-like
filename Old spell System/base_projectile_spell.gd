@@ -40,8 +40,10 @@ func activate(caster:Player):
 	if (current_cooldown<0):
 		current_cooldown=max_cooldown
 		var new_projectile = projectile_scene.instantiate()
-		get_parent().get_parent().get_parent().add_child(new_projectile)
-		new_projectile.transform=get_parent().get_parent().transform
-		new_projectile.move_dir=get_parent().get_parent().velocity.normalized()
+		caster.get_parent().add_child(new_projectile)
+		new_projectile.transform=caster.transform
+		new_projectile.move_dir=caster.velocity.normalized()
 		new_projectile.initialize(speed,projectile_sprite,damage,lifetime,size)
 	
+func deactivate(caster:Player):
+	pass

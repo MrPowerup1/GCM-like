@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="Charge_Projectile_Spell" load_steps=11 format=3 uid="uid://cnaydhupd5oe7"]
+[gd_resource type="Resource" script_class="Charge_Projectile_Spell" load_steps=11 format=3]
 
-[ext_resource type="Script" path="res://Spells/Charge_Projectile_Spell.gd" id="1_3soq7"]
+[ext_resource type="Script" path="res://Old spell System/Spells/Charge_Projectile_Spell.gd" id="1_3soq7"]
 [ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_5s24r"]
 [ext_resource type="Resource" uid="uid://dehdpr3friiuo" path="res://Elements/Fire.tres" id="2_ceb32"]
-[ext_resource type="PackedScene" uid="uid://b2ufgqrat5avm" path="res://base_projectile.tscn" id="3_ntkq3"]
-[ext_resource type="PackedScene" uid="uid://dh0vdi46fjlnt" path="res://Spells/base_charged_projectile_spell.tscn" id="5_32lnb"]
+[ext_resource type="PackedScene" path="res://Old spell System/base_projectile.tscn" id="3_ntkq3"]
+[ext_resource type="PackedScene" path="res://Old spell System/Spells/base_charged_projectile_spell.tscn" id="5_32lnb"]
 
 [sub_resource type="Curve" id="Curve_i25ct"]
 max_value = 3.0

@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="Projectile_Spell" load_steps=5 format=3 uid="uid://wsbmu6ksaiae"]
+[gd_resource type="Resource" script_class="Projectile_Spell" load_steps=5 format=3]
 
 [ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_hvfbg"]
-[ext_resource type="Script" path="res://Spells/Projectile_Spell.gd" id="1_norus"]
-[ext_resource type="PackedScene" uid="uid://b2ufgqrat5avm" path="res://base_projectile.tscn" id="2_vu7m1"]
-[ext_resource type="PackedScene" uid="uid://bqsjjce6aujbp" path="res://base_projectile_spell.tscn" id="4_1j6ue"]
+[ext_resource type="Script" path="res://Old spell System/Spells/Projectile_Spell.gd" id="1_norus"]
+[ext_resource type="PackedScene" path="res://Old spell System/base_projectile.tscn" id="2_vu7m1"]
+[ext_resource type="PackedScene" path="res://base_projectile_spell.tscn" id="4_1j6ue"]
 
 [resource]
 script = ExtResource("1_norus")

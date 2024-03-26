@@ -21,6 +21,10 @@ func saveBaseSpellStats(spell:Spell):
 	category=spell.category
 	type=spell.type
 
-# Called when the node enters the scene tree for the first time.
+# Called when a character casts the spell (presses a button)
 func activate(caster:Player):
+	pass
+
+# Called when a character releases the spell (releases a button)
+func deactivate(caster: Player):
 	pass

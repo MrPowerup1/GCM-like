@@ -3,11 +3,10 @@ class_name Player
 
 @export_range(0,100,1) var speed=0
 @export_range(0,100,1) var friction_percent=10
-@export var projectile_scene : PackedScene
-var active_spells:Array[Base_Spell] = []
-var learned_spells:Array[Base_Spell] = []
+#var active_spells:Array[Base_Spell] = []
+#var learned_spells:Array[Base_Spell] = []
 var can_move:bool = true
-
+@export var health:int = 10
 #const SPEED = 300.0
 #const JUMP_VELOCITY = -400.0
 
@@ -25,17 +24,40 @@ func _physics_process(delta):
 	else:
 		velocity = velocity* (100-friction_percent)/100
 		#velocity = velocity.move_toward(Vector2.ZERO, speed)
-	if (Input.is_action_pressed("ui_accept")):
+	if (Input.is_action_just_pressed("ui_accept")):
 		activate(0)
-	if (Input.is_action_pressed("ui_text_backspace")):
-		
+	if (Input.is_action_just_released("ui_accept")):
+		release(0)
+	if (Input.is_action_just_pressed("ui_text_backspace")):
+		activate(1)
+	if (Input.is_action_just_released("ui_text_backspace")):
 		activate(1)
 	move_and_slide()
 func activate(index:int):
-	if(active_spells.size()>index and active_spells[index]!=null):
-		active_spells[index].activate(self)
+	%"Spell Manager".activate(index)
+	
+
+func release(index:int):
+	%"Spell Manager".release(index)
+
 func add_spell(new_spell:Base_Spell):
-	learned_spells.append(new_spell)
-	#replace with spell selection later
-	active_spells.append(new_spell)
+	%"Spell Manager".learn_spell(new_spell)
+	
+func take_damage (amount:int):
+	health-=amount
+	#print ("Damaged down to %i" [health])
+	
+func anchor (set_anchor:bool=true):
+	can_move=!set_anchor
+	#print ("Anchored")
+
+func heal (amount:int):
+	health+=amount
+	#print ("Healed up to %i" [health])
+
+func get_held_time(spell_index:int):
+	return %"Spell Manager".get_held_time(spell_index)
+
+func set_sprite(new_sprite:Texture2D):
+	%Sprite2D.texture=new_sprite
 	

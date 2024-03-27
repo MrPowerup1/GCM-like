@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2ufgqrat5avm"]
+[gd_scene load_steps=3 format=3 uid="uid://b3sjjcg4feioc"]
 
-[ext_resource type="Script" path="res://Old spell System/base_projectile.gd" id="1_1nce6"]
+[ext_resource type="Script" path="res://base_projectile.gd" id="1_0yjq2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehm0a"]
 
 [node name="base_projectile" type="Area2D"]
-script = ExtResource("1_1nce6")
+script = ExtResource("1_0yjq2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ehm0a")

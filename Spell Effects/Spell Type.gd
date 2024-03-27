@@ -8,7 +8,7 @@ class_name Spell_Type
 #the held function will be called repeatedly while still held, based on timer
 @export var held_ping_time:float
 @export var cooldown_time:float
-@export var max_charge_time:float
+#@export var max_charge_time:float
 
 @export var name:String
 @export var card_image:Texture2D
@@ -26,5 +26,5 @@ func held(caster:Player,spell_index:int):
 	on_held.trigger(caster,spell_index)
 func release(caster:Player,spell_index:int):
 	on_release.trigger(caster,spell_index)
-func success(caster:Player,spell_index:int):
-	on_success.trigger(caster,spell_index)
+#func success(caster:Player,spell_index:int):
+	#on_success.trigger(caster,spell_index)

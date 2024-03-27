@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=33 format=3 uid="uid://byddyfrk5kob4"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=41 format=3 uid="uid://byddyfrk5kob4"]
 
 [ext_resource type="Script" path="res://Spell Effects/Anchor_Effect.gd" id="1_egnem"]
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_xpwhu"]
@@ -7,19 +7,29 @@
 [ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="3_g6ye7"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="4_6utue"]
 [ext_resource type="Script" path="res://Spell Effects/Animation_Effect.gd" id="4_s2akd"]
+[ext_resource type="Script" path="res://Spell Effects/Disable_Release_Effect.gd" id="5_2gvg0"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="5_3sd8s"]
+[ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="5_4fkn2"]
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="5_bgoth"]
-[ext_resource type="PackedScene" uid="uid://b2ufgqrat5avm" path="res://Old spell System/base_projectile.tscn" id="5_s0h7f"]
 [ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="6_xn24u"]
 [ext_resource type="Script" path="res://Spell Effects/projectile_effect.gd" id="7_57q0m"]
 [ext_resource type="Texture2D" uid="uid://cjj4cy2rjoitr" path="res://Art/2.png" id="7_gxobq"]
 [ext_resource type="Script" path="res://Spell Effects/Threshold_Effect.gd" id="8_1474b"]
 [ext_resource type="Texture2D" uid="uid://dpawcli1di67r" path="res://Art/3.png" id="8_ctb4n"]
 [ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="11_eoci3"]
+[ext_resource type="PackedScene" uid="uid://b3sjjcg4feioc" path="res://base_projectile.tscn" id="15_1wao0"]
 
-[sub_resource type="Resource" id="Resource_tb58c"]
+[sub_resource type="Resource" id="Resource_vk58f"]
 script = ExtResource("1_egnem")
 set_anchor_to = true
+
+[sub_resource type="Resource" id="Resource_ymduo"]
+script = ExtResource("5_2gvg0")
+release_state = true
+
+[sub_resource type="Resource" id="Resource_g18ht"]
+script = ExtResource("5_bgoth")
+spells = Array[ExtResource("2_m17o2")]([SubResource("Resource_vk58f"), SubResource("Resource_ymduo")])
 
 [sub_resource type="Resource" id="Resource_af5ls"]
 script = ExtResource("4_s2akd")
@@ -29,14 +39,25 @@ new_player_sprite = ExtResource("5_3sd8s")
 script = ExtResource("4_s2akd")
 new_player_sprite = ExtResource("7_gxobq")
 
-[sub_resource type="Resource" id="Resource_afqcn"]
+[sub_resource type="Resource" id="Resource_acis0"]
+script = ExtResource("1_egnem")
+set_anchor_to = true
+
+[sub_resource type="Resource" id="Resource_2rol2"]
 script = ExtResource("4_s2akd")
 new_player_sprite = ExtResource("8_ctb4n")
 
+[sub_resource type="Resource" id="Resource_tuo8r"]
+script = ExtResource("5_4fkn2")
+
+[sub_resource type="Resource" id="Resource_knnnc"]
+script = ExtResource("5_bgoth")
+spells = Array[ExtResource("2_m17o2")]([SubResource("Resource_acis0"), SubResource("Resource_2rol2"), SubResource("Resource_tuo8r")])
+
 [sub_resource type="Resource" id="Resource_g5w6g"]
 script = ExtResource("8_1474b")
-threshold_values = Array[float]([0.0, 1.0, 3.0])
-effects = Array[ExtResource("2_m17o2")]([SubResource("Resource_af5ls"), SubResource("Resource_17r1h"), SubResource("Resource_afqcn")])
+threshold_values = Array[float]([0.0, 1000.0, 3000.0])
+effects = Array[ExtResource("2_m17o2")]([SubResource("Resource_af5ls"), SubResource("Resource_17r1h"), SubResource("Resource_knnnc")])
 
 [sub_resource type="Resource" id="Resource_gf3ip"]
 script = ExtResource("3_g6ye7")
@@ -46,69 +67,73 @@ threshold = SubResource("Resource_g5w6g")
 script = ExtResource("1_egnem")
 set_anchor_to = false
 
-[sub_resource type="Resource" id="Resource_od25l"]
-script = ExtResource("4_6utue")
-damage_value = 100
-
-[sub_resource type="Resource" id="Resource_bt1x6"]
-script = ExtResource("7_57q0m")
-projectile_scene = ExtResource("5_s0h7f")
-projectile_sprite = ExtResource("6_xn24u")
-speed = 1000
-size = Vector2(1, 1)
-lifetime = 1.0
-cooldown = 1.0
-on_hit_effect = SubResource("Resource_od25l")
-
-[sub_resource type="Resource" id="Resource_qk55s"]
-script = ExtResource("7_57q0m")
-projectile_scene = ExtResource("5_s0h7f")
-projectile_sprite = ExtResource("6_xn24u")
-speed = 700
-size = Vector2(2, 2)
-lifetime = 6.0
-cooldown = 3.0
-on_hit_effect = SubResource("Resource_od25l")
-
-[sub_resource type="Resource" id="Resource_creq2"]
-script = ExtResource("7_57q0m")
-projectile_scene = ExtResource("5_s0h7f")
-projectile_sprite = ExtResource("6_xn24u")
-speed = 300
-size = Vector2(4, 4)
-lifetime = 10.0
-cooldown = 5.0
-on_hit_effect = SubResource("Resource_od25l")
-
-[sub_resource type="Resource" id="Resource_27tbn"]
-script = ExtResource("8_1474b")
-threshold_values = Array[float]([0.0, 1.0, 3.0])
-effects = Array[ExtResource("2_m17o2")]([SubResource("Resource_bt1x6"), SubResource("Resource_qk55s"), SubResource("Resource_creq2")])
-
-[sub_resource type="Resource" id="Resource_v4nlu"]
-script = ExtResource("3_g6ye7")
-threshold = SubResource("Resource_27tbn")
-
 [sub_resource type="Resource" id="Resource_6qfsu"]
 script = ExtResource("4_s2akd")
 new_player_sprite = ExtResource("11_eoci3")
 
+[sub_resource type="Resource" id="Resource_bsxc8"]
+script = ExtResource("5_2gvg0")
+release_state = true
+
+[sub_resource type="Resource" id="Resource_a2ogt"]
+script = ExtResource("4_6utue")
+damage_value = 50
+
+[sub_resource type="Resource" id="Resource_enhto"]
+script = ExtResource("7_57q0m")
+projectile_scene = ExtResource("15_1wao0")
+projectile_sprite = ExtResource("6_xn24u")
+speed = 1000
+size = Vector2(1, 1)
+lifetime = 3.0
+cooldown = 0.0
+on_hit_effect = SubResource("Resource_a2ogt")
+
+[sub_resource type="Resource" id="Resource_kqj6g"]
+script = ExtResource("7_57q0m")
+projectile_scene = ExtResource("15_1wao0")
+projectile_sprite = ExtResource("6_xn24u")
+speed = 600
+size = Vector2(2, 2)
+lifetime = 5.0
+cooldown = 0.0
+on_hit_effect = SubResource("Resource_a2ogt")
+
+[sub_resource type="Resource" id="Resource_xyrfb"]
+script = ExtResource("7_57q0m")
+projectile_scene = ExtResource("15_1wao0")
+projectile_sprite = ExtResource("6_xn24u")
+speed = 1000
+size = Vector2(3, 3)
+lifetime = 10.0
+cooldown = 0.0
+on_hit_effect = SubResource("Resource_a2ogt")
+
+[sub_resource type="Resource" id="Resource_rqvhn"]
+script = ExtResource("8_1474b")
+threshold_values = Array[float]([0.0, 1000.0, 3000.0])
+effects = Array[ExtResource("2_m17o2")]([SubResource("Resource_enhto"), SubResource("Resource_kqj6g"), SubResource("Resource_xyrfb")])
+
+[sub_resource type="Resource" id="Resource_3cb0j"]
+script = ExtResource("3_g6ye7")
+threshold = SubResource("Resource_rqvhn")
+
 [sub_resource type="Resource" id="Resource_sxclc"]
 script = ExtResource("5_bgoth")
-spells = Array[ExtResource("2_m17o2")]([SubResource("Resource_dofmx"), SubResource("Resource_v4nlu"), SubResource("Resource_6qfsu")])
+spells = Array[ExtResource("2_m17o2")]([SubResource("Resource_dofmx"), SubResource("Resource_6qfsu"), SubResource("Resource_bsxc8"), SubResource("Resource_3cb0j")])
 
-[sub_resource type="Resource" id="Resource_xdgln"]
+[sub_resource type="Resource" id="Resource_n7sbp"]
 script = ExtResource("2_m17o2")
 
 [resource]
 script = ExtResource("1_xpwhu")
-on_activate = SubResource("Resource_tb58c")
+on_activate = SubResource("Resource_g18ht")
 on_held = SubResource("Resource_gf3ip")
 on_release = SubResource("Resource_sxclc")
-on_success = SubResource("Resource_xdgln")
-held_ping_time = 0.5
-cooldown_time = 0.0
-max_charge_time = 5.0
+on_success = SubResource("Resource_n7sbp")
+held_ping_time = 100.0
+cooldown_time = 500.0
+max_charge_time = 5000.0
 name = "Big Fireball"
 card_image = ExtResource("6_xn24u")
 description = "Big Fireball"

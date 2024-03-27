@@ -9,12 +9,14 @@ var caster:Player
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	caster=get_parent()
+	
 	for child in get_children():
 		slots.append(child)
+	caster.num_spells=slots.size()
 	#Replace this later when there needs to be spell selection
 	if known_spells != null and known_spells.size()>0:
-		for slot in slots:
-			slot.swap_spell(known_spells[0])
+		for i in range(slots.size()):
+			slots[i].swap_spell(known_spells[i])
 			
 # Called when the node enters the scene tree for the first time.
 
@@ -33,6 +35,7 @@ func activate(spell_index:int):
 func release(spell_index:int):
 	if spell_index < slots.size():
 		slots[spell_index].release()
+		
 	else:
 		print("Releasing unknown spell slot")
 	
@@ -46,4 +49,5 @@ func learn_spell(new_spell:Spell_Type):
 	known_spells.append(new_spell)
 
 func get_held_time(spell_index:int):
+	#print("getting held time of ",spell_index)
 	return slots[spell_index].get_held_time()

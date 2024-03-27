@@ -1,0 +1,90 @@
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=27 format=3 uid="uid://wyxtkmv4et8e"]
+
+[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="1_4r7hw"]
+[ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="1_37i34"]
+[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_t0i2v"]
+[ext_resource type="Script" path="res://Spell Effects/Disable_Release_Effect.gd" id="2_aqjq0"]
+[ext_resource type="Script" path="res://Spell Effects/Speed_Effect.gd" id="4_pyvvd"]
+[ext_resource type="Script" path="res://Spell Effects/Anchor_Effect.gd" id="5_i1al3"]
+[ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="6_m7p5m"]
+[ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="7_rwebf"]
+[ext_resource type="Texture2D" uid="uid://dpawcli1di67r" path="res://Art/3.png" id="7_ye2s0"]
+[ext_resource type="Script" path="res://Spell Effects/Threshold_Effect.gd" id="8_4tvlr"]
+[ext_resource type="Script" path="res://Spell Effects/Animation_Effect.gd" id="8_pc3rs"]
+[ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="11_qqc17"]
+
+[sub_resource type="Resource" id="Resource_s5sjc"]
+script = ExtResource("4_pyvvd")
+reset_speed = false
+reset_friction = false
+set_speed = 5000
+set_friction = 0
+
+[sub_resource type="Resource" id="Resource_opykx"]
+script = ExtResource("5_i1al3")
+set_anchor_to = true
+
+[sub_resource type="Resource" id="Resource_1xxyx"]
+script = ExtResource("2_aqjq0")
+release_state = false
+
+[sub_resource type="Resource" id="Resource_c53wr"]
+script = ExtResource("1_37i34")
+spells = Array[Resource("res://Spell Effects/Spell Effect.gd")]([SubResource("Resource_s5sjc"), SubResource("Resource_opykx"), SubResource("Resource_1xxyx")])
+
+[sub_resource type="Resource" id="Resource_5clkl"]
+script = ExtResource("8_pc3rs")
+new_player_sprite = ExtResource("7_ye2s0")
+
+[sub_resource type="Resource" id="Resource_42tyq"]
+script = ExtResource("5_i1al3")
+set_anchor_to = false
+
+[sub_resource type="Resource" id="Resource_7hoi7"]
+script = ExtResource("7_rwebf")
+
+[sub_resource type="Resource" id="Resource_c6eue"]
+script = ExtResource("8_4tvlr")
+threshold_values = Array[float]([0.0, 20.0, 100.0])
+effects = Array[Resource("res://Spell Effects/Spell Effect.gd")]([SubResource("Resource_5clkl"), SubResource("Resource_42tyq"), SubResource("Resource_7hoi7")])
+
+[sub_resource type="Resource" id="Resource_wq17a"]
+script = ExtResource("6_m7p5m")
+threshold = SubResource("Resource_c6eue")
+
+[sub_resource type="Resource" id="Resource_qqohh"]
+script = ExtResource("2_aqjq0")
+release_state = true
+
+[sub_resource type="Resource" id="Resource_vo2sx"]
+script = ExtResource("4_pyvvd")
+reset_speed = true
+reset_friction = true
+set_speed = 0
+set_friction = 0
+
+[sub_resource type="Resource" id="Resource_6lm6u"]
+script = ExtResource("5_i1al3")
+set_anchor_to = false
+
+[sub_resource type="Resource" id="Resource_7qspv"]
+script = ExtResource("8_pc3rs")
+new_player_sprite = ExtResource("11_qqc17")
+
+[sub_resource type="Resource" id="Resource_c3l3q"]
+script = ExtResource("1_37i34")
+spells = Array[Resource("res://Spell Effects/Spell Effect.gd")]([SubResource("Resource_qqohh"), SubResource("Resource_vo2sx"), SubResource("Resource_6lm6u"), SubResource("Resource_7qspv")])
+
+[resource]
+script = ExtResource("1_t0i2v")
+on_activate = SubResource("Resource_c53wr")
+on_held = SubResource("Resource_wq17a")
+on_release = SubResource("Resource_c3l3q")
+held_ping_time = 10.0
+cooldown_time = 2000.0
+name = ""
+card_image = ExtResource("1_4r7hw")
+description = ""
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 1
+type = 1

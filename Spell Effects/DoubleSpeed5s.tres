@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Status_Type" load_steps=7 format=3 uid="uid://doc63bsx6pxox"]
+
+[ext_resource type="Script" path="res://Spell Effects/Status_Type.gd" id="1_jk1bu"]
+[ext_resource type="Script" path="res://Spell Effects/Speed_Effect.gd" id="1_yynmu"]
+[ext_resource type="Script" path="res://Spell Effects/Spell Effect.gd" id="2_rn8dg"]
+
+[sub_resource type="Resource" id="Resource_g10aa"]
+script = ExtResource("1_yynmu")
+reset_speed = false
+reset_friction = true
+set_speed = 200
+set_friction = 0
+
+[sub_resource type="Resource" id="Resource_yfjfd"]
+script = ExtResource("2_rn8dg")
+
+[sub_resource type="Resource" id="Resource_vn026"]
+script = ExtResource("1_yynmu")
+reset_speed = true
+reset_friction = true
+set_speed = 0
+set_friction = 0
+
+[resource]
+script = ExtResource("1_jk1bu")
+on_activate = SubResource("Resource_g10aa")
+on_held = SubResource("Resource_yfjfd")
+on_release = SubResource("Resource_vn026")
+ping_time = 1000.0
+total_effect_time = 5000.0

@@ -1,5 +1,7 @@
 extends Node
 
+@export var spell_slot_scene:PackedScene
+@export var num_slots:int = 2
 @export var known_spells:Array[Spell_Type]=[]
 var slots:Array[Spell_Slot]=[]
 
@@ -9,9 +11,16 @@ var caster:Player
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	caster=get_parent()
+	if (spell_slot_scene!=null):
+		for i in range(num_slots):
+			var new_slot=spell_slot_scene.instantiate()
+			new_slot.caster=caster
+			new_slot.spell_index=i
+			slots.append(new_slot)
+			add_child(new_slot)
+	else:
+		print("Null Spell Slot Scene")
 	
-	for child in get_children():
-		slots.append(child)
 	caster.num_spells=slots.size()
 	#Replace this later when there needs to be spell selection
 	if known_spells != null and known_spells.size()>0:
@@ -49,5 +58,5 @@ func learn_spell(new_spell:Spell_Type):
 	known_spells.append(new_spell)
 
 func get_held_time(spell_index:int):
-	#print("getting held time of ",spell_index)
+	##print("getting held time of ",spell_index)
 	return slots[spell_index].get_held_time()

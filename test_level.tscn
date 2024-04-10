@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cn07010jiuyif"]
+[gd_scene load_steps=4 format=3 uid="uid://cn07010jiuyif"]
 
 [ext_resource type="PackedScene" uid="uid://d0xwjbkk3obak" path="res://player_character.tscn" id="1_b2n5o"]
+[ext_resource type="Resource" uid="uid://b77r1w4eoef55" path="res://Base Input.tres" id="2_rwm2y"]
+[ext_resource type="Resource" uid="uid://dchfsn8nidch7" path="res://Null Input.tres" id="3_mmtjt"]
 
 [node name="Test Level" type="Node2D"]
 
 [node name="Player Character" parent="." instance=ExtResource("1_b2n5o")]
+input_keys = ExtResource("2_rwm2y")
+spawn_loc = Vector2(400, 200)
+
+[node name="Player Character2" parent="." instance=ExtResource("1_b2n5o")]
+input_keys = ExtResource("3_mmtjt")
+spawn_loc = Vector2(500, 500)

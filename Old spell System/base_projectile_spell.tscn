@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3]
-
-[ext_resource type="Script" path="res://Old spell System/base_projectile_spell.gd" id="1_fwnp8"]
-
-[node name="Base_Projectile_Spell" type="Node"]
-script = ExtResource("1_fwnp8")

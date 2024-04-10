@@ -24,6 +24,7 @@ on_activate = SubResource("Resource_3xsxi")
 on_held = SubResource("Resource_jy71w")
 on_release = SubResource("Resource_l7uru")
 on_success = SubResource("Resource_cqgfv")
+ping_asap = false
 held_ping_time = 100000.0
 cooldown_time = 1000.0
 name = ""

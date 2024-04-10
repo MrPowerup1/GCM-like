@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3]
-
-[ext_resource type="Script" path="res://Old spell System/Spells/base_charged_projectile_spell.gd" id="1_1ex6y"]
-
-[node name="base_charged_projectile_spell" type="Node"]
-script = ExtResource("1_1ex6y")

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://1piuk8n1vw2o"]
+
+[ext_resource type="Script" path="res://base_area.gd" id="1_qbprp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pjmfs"]
+radius = 300.0
+
+[node name="Base Area" type="Area2D"]
+script = ExtResource("1_qbprp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pjmfs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="End_Time" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="Ping_Time" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
+[connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

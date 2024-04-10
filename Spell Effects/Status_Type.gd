@@ -10,8 +10,11 @@ class_name Status_Type
 
 
 func activate(caster:Player,spell_index:int):
-	on_activate.trigger(caster,spell_index)
+	if(on_activate!=null):
+		on_activate.trigger(caster,spell_index)
 func held(caster:Player,spell_index:int):
-	on_held.trigger(caster,spell_index)
+	if(on_held!=null):
+		on_held.trigger(caster,spell_index)
 func release(caster:Player,spell_index:int):
-	on_release.trigger(caster,spell_index)
+	if(on_release!=null):
+		on_release.trigger(caster,spell_index)

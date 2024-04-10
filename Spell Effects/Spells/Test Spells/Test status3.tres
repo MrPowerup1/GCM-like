@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Status_Type" load_steps=8 format=3 uid="uid://u2xq0wxro04a"]
+
+[ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="1_0stu3"]
+[ext_resource type="Script" path="res://Spell Effects/Test Effect.gd" id="2_xlsob"]
+[ext_resource type="Script" path="res://Spell Effects/Print Effect.gd" id="3_j0u8x"]
+[ext_resource type="Script" path="res://Spell Effects/Status_Type.gd" id="3_s4gmb"]
+
+[sub_resource type="Resource" id="Resource_sxl1v"]
+script = ExtResource("2_xlsob")
+name = "fx3 3s"
+threshold_values = Array[float]([])
+effects = Array[Resource("res://Spell Effects/Spell Effect.gd")]([])
+
+[sub_resource type="Resource" id="Resource_smb2t"]
+script = ExtResource("1_0stu3")
+threshold = SubResource("Resource_sxl1v")
+
+[sub_resource type="Resource" id="Resource_myffn"]
+script = ExtResource("3_j0u8x")
+message = "33333333333 Test3 Done 333333333333"
+
+[resource]
+script = ExtResource("3_s4gmb")
+on_held = SubResource("Resource_smb2t")
+on_release = SubResource("Resource_myffn")
+ping_time = 1000.0
+total_effect_time = 3000.0

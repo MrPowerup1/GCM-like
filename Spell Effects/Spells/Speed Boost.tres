@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=9 format=3 uid="uid://b6knuhmolwysa"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_7d5ha"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="1_7ltmw"]
-[ext_resource type="Script" path="res://Spell Effects/Spell Effect.gd" id="1_vecf2"]
-[ext_resource type="Resource" uid="uid://doc63bsx6pxox" path="res://Spell Effects/DoubleSpeed5s.tres" id="2_3lf67"]
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_vecf2"]
+[ext_resource type="Resource" path="res://Spell Effects/Status Effects/DoubleSpeed5s.tres" id="2_3lf67"]
 
 [sub_resource type="Resource" id="Resource_3xsxi"]
 script = ExtResource("1_7ltmw")

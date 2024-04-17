@@ -16,22 +16,25 @@ func initialize(new_status:Status_Type,caster:Player,target:Player,index:int):
 	time_start=Time.get_ticks_msec()
 	status_index=index
 	$End_Time.wait_time=float(status.total_effect_time)/1000
-	$Ping_Time.wait_time=float(status.ping_time)/1000
+	if (status.ping_time!=0):
+		$Ping_Time.wait_time=float(status.ping_time)/1000
 	$End_Time.start()
 	activate()
 	
 func activate():
 	#print ("activating effect")
 	status.activate(original_caster,status_index)
-	$Ping_Time.start()
-	status.held(original_caster,status_index)
+	if (status.ping_time!=0):
+		$Ping_Time.start()
+		status.held(original_caster,status_index)
 		
 
 func release():
 	#print ("releasing effect")
 	status.release(original_caster,status_index)
 	$End_Time.stop()
-	$Ping_Time.stop
+	if (status.ping_time!=0):
+		$Ping_Time.stop()
 	affected_player.clear_status(status_index)
 
 

@@ -15,7 +15,7 @@ class_name Melee_Effect
 @export var held_distance:float
 
 #spd:int,img:Texture2D,effect:Spell_Effect,lifetime:float,size:Vector2,cast:Player,pierce:bool,on_timeout:Spell_Effect=null,on_hit:Spell_Effect=null
-func trigger(caster:Player,spell_index:int):
+func trigger(target,caster:Player,spell_index:int):
 	var new_melee=melee_scene.instantiate()
 	caster.get_parent().add_child(new_melee)
 	new_melee.transform=caster.transform

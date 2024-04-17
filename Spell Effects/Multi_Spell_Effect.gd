@@ -3,6 +3,6 @@ class_name Multi_Spell_Effect
 
 @export var spells:Array[Spell_Effect] = []
 	
-func trigger(caster:Player,spell_index:int):
+func trigger(target,caster:Player,spell_index:int):
 	for spell in spells:
-		spell.trigger(caster,spell_index)
+		spell.trigger(target,caster,spell_index)

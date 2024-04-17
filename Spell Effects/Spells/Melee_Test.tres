@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=18 format=3 uid="uid://405vrt6buug"]
+
+[ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="1_2u1ox"]
+[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_hsanp"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="4_t6w10"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="8_kwwuh"]
+[ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="9_jrr1u"]
+[ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="10_3ywvk"]
+[ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="10_ejol6"]
+[ext_resource type="Script" path="res://Spell Effects/Threshold_Effect.gd" id="10_uxhxo"]
+[ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="14_bpaqt"]
+
+[sub_resource type="Resource" id="Resource_dtiwa"]
+script = ExtResource("1_2u1ox")
+spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
+
+[sub_resource type="Resource" id="Resource_rep88"]
+script = ExtResource("4_t6w10")
+new_player_sprite = ExtResource("10_3ywvk")
+
+[sub_resource type="Resource" id="Resource_b00nd"]
+script = ExtResource("10_ejol6")
+
+[sub_resource type="Resource" id="Resource_gfj88"]
+script = ExtResource("10_uxhxo")
+threshold_values = Array[float]([0.0, 200.0])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_rep88"), SubResource("Resource_b00nd")])
+
+[sub_resource type="Resource" id="Resource_nuu77"]
+script = ExtResource("9_jrr1u")
+threshold = SubResource("Resource_gfj88")
+
+[sub_resource type="Resource" id="Resource_suloy"]
+script = ExtResource("4_t6w10")
+new_player_sprite = ExtResource("14_bpaqt")
+
+[sub_resource type="Resource" id="Resource_na8ab"]
+script = ExtResource("8_kwwuh")
+set_anchor_to = true
+
+[sub_resource type="Resource" id="Resource_x5f3j"]
+script = ExtResource("1_2u1ox")
+spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_suloy"), SubResource("Resource_na8ab")])
+
+[resource]
+script = ExtResource("1_hsanp")
+timings = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
+on_activate = SubResource("Resource_dtiwa")
+on_held = SubResource("Resource_nuu77")
+on_release = SubResource("Resource_x5f3j")
+ping_asap = true
+held_ping_time = 0.0
+cooldown_time = 500.0
+name = ""
+description = ""
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0

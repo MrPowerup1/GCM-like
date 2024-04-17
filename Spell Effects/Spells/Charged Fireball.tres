@@ -1,12 +1,11 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=53 format=3 uid="uid://karal67omqef"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=50 format=3 uid="uid://clt73mwqh8w2k"]
 
-[ext_resource type="Script" path="res://Spell Effects/Anchor_Effect.gd" id="1_egnem"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="1_egnem"]
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_xpwhu"]
-[ext_resource type="Script" path="res://Spell Effects/Spell Effect.gd" id="2_m17o2"]
 [ext_resource type="Resource" uid="uid://dehdpr3friiuo" path="res://Elements/Fire.tres" id="2_n7ekn"]
 [ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="3_g6ye7"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="4_6utue"]
-[ext_resource type="Script" path="res://Spell Effects/Animation_Effect.gd" id="4_s2akd"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="4_s2akd"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="5_3sd8s"]
 [ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="5_4fkn2"]
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="5_bgoth"]
@@ -17,24 +16,20 @@
 [ext_resource type="Script" path="res://Spell Effects/Threshold_Effect.gd" id="8_1474b"]
 [ext_resource type="Texture2D" uid="uid://dpawcli1di67r" path="res://Art/3.png" id="8_ctb4n"]
 [ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="11_eoci3"]
-[ext_resource type="PackedScene" uid="uid://b3sjjcg4feioc" path="res://base_projectile.tscn" id="15_1wao0"]
-[ext_resource type="PackedScene" uid="uid://1piuk8n1vw2o" path="res://base_area.tscn" id="15_a05ec"]
+[ext_resource type="PackedScene" uid="uid://6bd4ui3bfds0" path="res://Instanced Scenes/base_projectile.tscn" id="15_1wao0"]
+[ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="15_a05ec"]
 [ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="15_j44a5"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="16_sa6p5"]
-[ext_resource type="Script" path="res://Spell Effects/Print Effect.gd" id="16_tggvi"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Print Effect.gd" id="16_tggvi"]
 [ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="17_ep7w0"]
 
 [sub_resource type="Resource" id="Resource_vk58f"]
 script = ExtResource("1_egnem")
 set_anchor_to = true
 
-[sub_resource type="Resource" id="Resource_ymduo"]
-script = ExtResource("5_d5ojr")
-release_state = true
-
 [sub_resource type="Resource" id="Resource_g18ht"]
 script = ExtResource("5_bgoth")
-spells = Array[ExtResource("2_m17o2")]([SubResource("Resource_vk58f"), SubResource("Resource_ymduo")])
+spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_vk58f")])
 
 [sub_resource type="Resource" id="Resource_af5ls"]
 script = ExtResource("4_s2akd")
@@ -57,12 +52,12 @@ script = ExtResource("5_4fkn2")
 
 [sub_resource type="Resource" id="Resource_knnnc"]
 script = ExtResource("5_bgoth")
-spells = Array[ExtResource("2_m17o2")]([SubResource("Resource_acis0"), SubResource("Resource_2rol2"), SubResource("Resource_tuo8r")])
+spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_acis0"), SubResource("Resource_2rol2"), SubResource("Resource_tuo8r")])
 
 [sub_resource type="Resource" id="Resource_g5w6g"]
 script = ExtResource("8_1474b")
 threshold_values = Array[float]([0.0, 1000.0, 3000.0])
-effects = Array[ExtResource("2_m17o2")]([SubResource("Resource_af5ls"), SubResource("Resource_17r1h"), SubResource("Resource_knnnc")])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_af5ls"), SubResource("Resource_17r1h"), SubResource("Resource_knnnc")])
 
 [sub_resource type="Resource" id="Resource_gf3ip"]
 script = ExtResource("3_g6ye7")
@@ -114,7 +109,7 @@ projectile_sprite = ExtResource("6_xn24u")
 speed = 1000
 piercing = false
 size = Vector2(1, 1)
-lifetime = 1
+lifetime = 300
 on_hit_effect = SubResource("Resource_a2ogt")
 on_timeout_self = SubResource("Resource_1wetx")
 
@@ -130,7 +125,7 @@ projectile_sprite = ExtResource("6_xn24u")
 speed = 600
 piercing = false
 size = Vector2(2, 2)
-lifetime = 0
+lifetime = 500
 on_hit_effect = SubResource("Resource_a2ogt")
 
 [sub_resource type="Resource" id="Resource_i4um7"]
@@ -145,7 +140,7 @@ projectile_sprite = ExtResource("6_xn24u")
 speed = 1000
 piercing = true
 size = Vector2(3, 3)
-lifetime = 0
+lifetime = 1000
 on_hit_effect = SubResource("Resource_a2ogt")
 
 [sub_resource type="Resource" id="Resource_fnd77"]
@@ -156,7 +151,7 @@ effect = SubResource("Resource_xyrfb")
 [sub_resource type="Resource" id="Resource_rqvhn"]
 script = ExtResource("8_1474b")
 threshold_values = Array[float]([0.0, 1000.0, 3000.0])
-effects = Array[ExtResource("2_m17o2")]([SubResource("Resource_d1cc3"), SubResource("Resource_i4um7"), SubResource("Resource_fnd77")])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_d1cc3"), SubResource("Resource_i4um7"), SubResource("Resource_fnd77")])
 
 [sub_resource type="Resource" id="Resource_3cb0j"]
 script = ExtResource("3_g6ye7")
@@ -164,17 +159,15 @@ threshold = SubResource("Resource_rqvhn")
 
 [sub_resource type="Resource" id="Resource_sxclc"]
 script = ExtResource("5_bgoth")
-spells = Array[ExtResource("2_m17o2")]([SubResource("Resource_dofmx"), SubResource("Resource_6qfsu"), SubResource("Resource_bsxc8"), SubResource("Resource_3cb0j")])
-
-[sub_resource type="Resource" id="Resource_n7sbp"]
-script = ExtResource("2_m17o2")
+spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_dofmx"), SubResource("Resource_6qfsu"), SubResource("Resource_bsxc8"), SubResource("Resource_3cb0j")])
 
 [resource]
 script = ExtResource("1_xpwhu")
+timings = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 on_activate = SubResource("Resource_g18ht")
 on_held = SubResource("Resource_gf3ip")
 on_release = SubResource("Resource_sxclc")
-on_success = SubResource("Resource_n7sbp")
 ping_asap = false
 held_ping_time = 100.0
 cooldown_time = 500.0

@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dogo80mjebff1"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://base_melee.gd" id="1_tvo3b"]
+[ext_resource type="Script" path="res://Instanced Scenes/base_melee.gd" id="1_tvo3b"]
 [ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="2_yxblk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nksar"]

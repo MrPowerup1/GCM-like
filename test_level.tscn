@@ -1,15 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://cn07010jiuyif"]
+[gd_scene load_steps=6 format=3 uid="uid://fhwmhipqb0rd"]
 
-[ext_resource type="PackedScene" uid="uid://d0xwjbkk3obak" path="res://player_character.tscn" id="1_b2n5o"]
-[ext_resource type="Resource" uid="uid://b77r1w4eoef55" path="res://Base Input.tres" id="2_rwm2y"]
-[ext_resource type="Resource" uid="uid://dchfsn8nidch7" path="res://Null Input.tres" id="3_mmtjt"]
+[ext_resource type="PackedScene" uid="uid://dojm8ggbo0v8y" path="res://Player/player_character.tscn" id="1_b2n5o"]
+[ext_resource type="Resource" path="res://Inputs/Base Input.tres" id="2_8yuwr"]
+[ext_resource type="Resource" path="res://Inputs/Null Input.tres" id="3_jc7cq"]
+[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="4_v5ii4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vjy2c"]
 
 [node name="Test Level" type="Node2D"]
 
 [node name="Player Character" parent="." instance=ExtResource("1_b2n5o")]
-input_keys = ExtResource("2_rwm2y")
+input_keys = ExtResource("2_8yuwr")
 spawn_loc = Vector2(400, 200)
 
 [node name="Player Character2" parent="." instance=ExtResource("1_b2n5o")]
-input_keys = ExtResource("3_mmtjt")
+input_keys = ExtResource("3_jc7cq")
 spawn_loc = Vector2(500, 500)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(100, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_vjy2c")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("4_v5ii4")

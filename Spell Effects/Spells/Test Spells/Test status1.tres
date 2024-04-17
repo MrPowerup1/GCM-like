@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="Status_Type" load_steps=8 format=3 uid="uid://cybda5r2p7u25"]
+[gd_resource type="Resource" script_class="Status_Type" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="1_s0ok5"]
-[ext_resource type="Script" path="res://Spell Effects/Status_Type.gd" id="1_ycxqb"]
-[ext_resource type="Script" path="res://Spell Effects/Test Effect.gd" id="2_btktg"]
-[ext_resource type="Script" path="res://Spell Effects/Print Effect.gd" id="3_o2pod"]
+[ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="1_ycxqb"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Test Effect.gd" id="2_btktg"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Print Effect.gd" id="3_o2pod"]
 
 [sub_resource type="Resource" id="Resource_sxl1v"]
 script = ExtResource("2_btktg")

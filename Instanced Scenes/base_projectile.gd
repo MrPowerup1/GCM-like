@@ -19,10 +19,14 @@ func _physics_process(delta):
 func initialize(spd:int,img:Texture2D,effect:Spell_Effect,lifetime:int,size:Vector2,cast:Player,pierce:bool,on_timeout:Spell_Effect=null,on_hit:Spell_Effect=null):
 	speed=spd
 	get_node("Sprite2D").texture=img
-	%Timer.wait_time=lifetime/1000
+	if (lifetime>0):
+		%Timer.wait_time=float(lifetime)/1000
+		%Timer.start()
+	else:
+		printerr("Invalid Projectile Lifetime")
 	scale=size
 	hit_effect=effect
-	%Timer.start()
+	
 	caster=cast
 	move_dir=caster.facing
 	piercing=pierce
@@ -38,11 +42,11 @@ func _on_timer_timeout():
 	if (self_effect_on_timeout==null):
 		pass
 	elif (self_effect_on_timeout is Positional_Effect):
-		(self_effect_on_timeout as Positional_Effect).trigger(caster,-1,position)
+		(self_effect_on_timeout as Positional_Effect).trigger(caster,caster,-1,position)
 	else:
 		print(self_effect_on_timeout.is_class("Node"))
 		print("activating base effect at caster")
-		self_effect_on_timeout.trigger(caster,-1)
+		self_effect_on_timeout.trigger(caster,caster,-1)
 	queue_free()
 
 
@@ -50,14 +54,14 @@ func _on_body_entered(body):
 	if (hit_effect==null):
 		pass
 	elif (hit_effect is Positional_Effect):
-		(hit_effect as Positional_Effect).trigger(body,-1,position)
+		(hit_effect as Positional_Effect).trigger(body,caster,-1,position)
 	else:
-		hit_effect.trigger(body,-1)
+		hit_effect.trigger(body,caster,-1)
 	if (self_effect_on_hit==null):
 		pass
 	elif (self_effect_on_hit is Positional_Effect):
-		(self_effect_on_hit as Positional_Effect).trigger(caster,-1,position)
+		(self_effect_on_hit as Positional_Effect).trigger(caster,caster,-1,position)
 	else:
-		hit_effect.trigger(body,-1)
+		self_effect_on_hit.trigger(caster,caster,-1)
 	if (!piercing):
 		queue_free()

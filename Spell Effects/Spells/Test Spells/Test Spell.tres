@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=11 format=3 uid="uid://db7nmoq13t7ng"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="1_21jml"]
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_nphhl"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="2_nfry3"]
-[ext_resource type="Resource" uid="uid://cybda5r2p7u25" path="res://Spell Effects/Test status1.tres" id="3_2y7q3"]
-[ext_resource type="Resource" uid="uid://b343cecyndth7" path="res://Spell Effects/Test status2.tres" id="4_hcmvv"]
-[ext_resource type="Resource" uid="uid://u2xq0wxro04a" path="res://Spell Effects/Test status3.tres" id="5_ofei5"]
+[ext_resource type="Resource" uid="uid://cybda5r2p7u25" path="res://Spell Effects/Spells/Test Spells/Test status1.tres" id="3_2y7q3"]
+[ext_resource type="Resource" uid="uid://b343cecyndth7" path="res://Spell Effects/Spells/Test Spells/Test status2.tres" id="4_hcmvv"]
+[ext_resource type="Resource" uid="uid://u2xq0wxro04a" path="res://Spell Effects/Spells/Test Spells/Test status3.tres" id="5_ofei5"]
 
 [sub_resource type="Resource" id="Resource_pwl2u"]
 script = ExtResource("2_nfry3")

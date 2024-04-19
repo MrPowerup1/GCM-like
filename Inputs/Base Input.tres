@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Input_Keys" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="Input_Keys" load_steps=2 format=3 uid="uid://bdfkkc6gpq527"]
 
 [ext_resource type="Script" path="res://Inputs/Input Keys.gd" id="1_bmf7o"]
 
@@ -10,3 +10,11 @@ up = "Up"
 down = "Down"
 spell1 = "Spell1"
 spell2 = "Spell2"
+conversion = {
+"Down": "Down",
+"Left": "Left",
+"Right": "Right",
+"Spell1": "Spell1",
+"Spell2": "Spell2",
+"Up": "Up"
+}

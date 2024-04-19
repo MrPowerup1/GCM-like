@@ -6,16 +6,12 @@ var can_release:Array[bool]=[true,true]
 var facing:Vector2
 var num_spells:int
 @export var my_input:PlayerCharacterInput
-@export var input_keys:Input_Keys
-@export var spawn_loc:Vector2
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _ready():
-	position=spawn_loc
 	my_input.button_activate.connect(activate)
 	my_input.button_release.connect(release)
-	my_input.input_keys=input_keys
 
 func _physics_process(delta):
 	#input vector from arrow keys
@@ -41,6 +37,11 @@ func _physics_process(delta):
 #	if can_release[1] and (Input.is_action_just_released(input_keys.spell2)):
 #		release(1)
 #	move_and_slide()
+
+func initialize(location:Vector2,controls:Input_Keys):
+	position=location
+	my_input.input_keys=controls
+ 
 func activate(index:int):
 	%"Spell Manager".activate(index)
 	

@@ -17,3 +17,4 @@ func trigger (target,caster:Player,spell_index:int,location:Vector2=caster.posit
 	caster.get_parent().add_child(new_area)
 	new_area.position=location
 	new_area.initialize(caster,image,life_time,ping_time,on_enter,on_exit,on_ping,call_exit_on_timeout)
+	return new_area

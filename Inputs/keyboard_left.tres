@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Input_Keys" load_steps=2 format=3 uid="uid://dr8mdwdophhsb"]
+
+[ext_resource type="Script" path="res://Inputs/Input Keys.gd" id="1_j2xcp"]
+
+[resource]
+script = ExtResource("1_j2xcp")
+conversion = {
+"Down": "Down_kb_1",
+"Left": "Left_kb_1",
+"Right": "Right_kb_1",
+"Spell1": "Spell1_kb_1",
+"Spell2": "Spell2_kb_1",
+"Up": "Up_kb_1"
+}
+device = 0

@@ -8,16 +8,19 @@ var self_effect_on_hit:Spell_Effect
 var self_effect_on_timeout:Spell_Effect
 var caster:Player
 var piercing:bool
+@export var velocity:Velocity
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	position+=move_dir*speed*delta
+	pass
+	#position+=move_dir*speed*delta
 
 func initialize(spd:int,img:Texture2D,effect:Spell_Effect,lifetime:int,size:Vector2,cast:Player,pierce:bool,on_timeout:Spell_Effect=null,on_hit:Spell_Effect=null):
-	speed=spd
+	velocity.default_speed=spd
+	#speed=spd
 	get_node("Sprite2D").texture=img
 	if (lifetime>0):
 		%Timer.wait_time=float(lifetime)/1000
@@ -32,7 +35,7 @@ func initialize(spd:int,img:Texture2D,effect:Spell_Effect,lifetime:int,size:Vect
 	piercing=pierce
 	self_effect_on_timeout=on_timeout
 	self_effect_on_hit=on_hit
-	
+	velocity.constant_vel(move_dir)
 
 		
 func set_size(size:Vector2):

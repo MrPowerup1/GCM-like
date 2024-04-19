@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=13 format=3 uid="uid://t8f82866ltmu"]
+
+[ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_dbio5"]
+[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_wpmqp"]
+[ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="2_4xs2a"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_qvp1m"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_fl3s4"]
+[ext_resource type="Script" path="res://Spell Effects/scatter_effect.gd" id="5_ut1id"]
+[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="6_4h5at"]
+
+[sub_resource type="Resource" id="Resource_kx4wb"]
+script = ExtResource("3_qvp1m")
+pulse_to = false
+pulse_from = true
+strength = 400.0
+
+[sub_resource type="Resource" id="Resource_ljp2b"]
+script = ExtResource("4_fl3s4")
+image = ExtResource("2_4xs2a")
+on_enter = SubResource("Resource_kx4wb")
+call_exit_on_timeout = false
+area_scene = ExtResource("1_dbio5")
+life_time = 200
+ping_time = 0
+
+[sub_resource type="Resource" id="Resource_viogc"]
+script = ExtResource("5_ut1id")
+effect = SubResource("Resource_ljp2b")
+type = 0
+count = 9
+min_angle = -3.14
+max_angle = 3.14
+radius = 200.0
+min_offset_position = Vector2(40, 40)
+max_offset_position = Vector2(500, 500)
+
+[sub_resource type="Resource" id="Resource_j50ty"]
+script = ExtResource("4_fl3s4")
+image = ExtResource("2_4xs2a")
+on_enter = SubResource("Resource_kx4wb")
+call_exit_on_timeout = false
+area_scene = ExtResource("1_dbio5")
+life_time = 200
+ping_time = 0
+
+[sub_resource type="Resource" id="Resource_k8rgx"]
+script = ExtResource("6_4h5at")
+offset = Vector2(40, 40)
+effect = SubResource("Resource_j50ty")
+
+[resource]
+script = ExtResource("1_wpmqp")
+timings = Array[int]([0, 2])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_viogc"), SubResource("Resource_k8rgx")])
+ping_asap = false
+held_ping_time = 0.0
+cooldown_on_activate = true
+cooldown_on_release = false
+cooldown_time = 500.0
+name = ""
+description = ""
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0

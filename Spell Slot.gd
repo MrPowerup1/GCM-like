@@ -26,6 +26,8 @@ func swap_spell(new_spell:Spell_Type):
 		$Cooldown_Timer.wait_time=float(spell.cooldown_time)/1000
 	if (spell.held_ping_time>0 and !spell.ping_asap):
 		$Held_Timer.wait_time=float(spell.held_ping_time)/1000
+	if !spell.cooldown_on_activate and !spell.cooldown_on_release:
+		printerr("Spell at slot ",spell_index," has no cooldown activation")
 
 func activate():
 	if (can_activate):
@@ -33,6 +35,8 @@ func activate():
 		spell.activate(caster,spell_index)
 		if !spell.ping_asap and spell.held_ping_time>0:
 			$Held_Timer.start()
+		if spell.cooldown_on_activate:
+			$Cooldown_Timer.start()
 		currently_held=true
 		time_start_held=Time.get_ticks_msec()
 		spell.held(caster,spell_index)
@@ -43,7 +47,8 @@ func release():
 		spell.release(caster,spell_index)
 		currently_held=false
 		$Held_Timer.stop()
-		$Cooldown_Timer.start()
+		if (spell.cooldown_on_release):
+			$Cooldown_Timer.start()
 
 func _on_held_timer_timeout():
 	##print("ping")

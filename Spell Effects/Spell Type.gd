@@ -1,12 +1,12 @@
 extends Resource
 class_name Spell_Type
 
-@export_category ("Testing section (not functional)")
+@export_category ("Main Effects")
 enum effect_time {on_activate,on_held,on_release}
 @export var timings:Array[effect_time]
 @export var effects:Array[Spell_Effect]
 #@export var effects=Array[Array[Spell_Effect],Array[effect_time]]
-@export_category("Effects")
+@export_category("Old Effects (Compatibility for old tests)")
 @export var on_activate:Spell_Effect
 @export var on_held:Spell_Effect
 @export var on_release:Spell_Effect
@@ -14,6 +14,8 @@ enum effect_time {on_activate,on_held,on_release}
 @export_category("Timers (in milliseconds)")
 @export var ping_asap:bool
 @export var held_ping_time:float
+@export var cooldown_on_activate:bool
+@export var cooldown_on_release:bool
 @export var cooldown_time:float
 #@export var max_charge_time:float
 @export_category("UI and Internal")

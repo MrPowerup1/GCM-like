@@ -1,9 +1,14 @@
 extends Resource
 class_name Input_Keys
 
-@export var left:String= "Left"
-@export var right:String= "Right"
-@export var up:String= "Up"
-@export var down:String= "Down"
-@export var spell1:String= "Spell1"
-@export var spell2:String= "Spell2"
+@export var conversion:Dictionary = {
+	"Left":"Left",
+	"Right":"Right",
+	"Up":"Up",
+	"Down":"Down",
+	"Spell1":"Spell1",
+	"Spell2":"Spell2"
+	}
+	
+enum device_type {keyboard,joystick}
+@export var device:device_type

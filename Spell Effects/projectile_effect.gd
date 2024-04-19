@@ -18,4 +18,4 @@ func trigger(target,caster:Player,spell_index:int,location:Vector2=caster.positi
 	caster.get_parent().add_child(new_projectile)
 	new_projectile.position=location
 	new_projectile.initialize(speed,projectile_sprite,on_hit_effect,lifetime,size,caster,piercing,on_timeout_self,on_hit_self)
-
+	return new_projectile

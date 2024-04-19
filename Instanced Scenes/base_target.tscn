@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnkvt5plhp8al"]
+
+[ext_resource type="Script" path="res://Instanced Scenes/base_area.gd" id="1_ht4gn"]
+[ext_resource type="Script" path="res://Velocity.gd" id="2_kvjex"]
+[ext_resource type="Script" path="res://Player/PlayerCharacterInput.gd" id="2_rwxn7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pjmfs"]
+radius = 300.0
+
+[node name="Base Target" type="Area2D"]
+script = ExtResource("1_ht4gn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pjmfs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="End_Time" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="Ping_Time" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="Velocity" type="Node" parent="."]
+script = ExtResource("2_kvjex")
+max_input_vel_square = 100000.0
+speed = 1000.0
+
+[node name="PlayerCharacterInput" type="Node" parent="." node_paths=PackedStringArray("velocity_component")]
+script = ExtResource("2_rwxn7")
+velocity_component = NodePath("../Velocity")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
+[connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

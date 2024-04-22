@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://bxuaai22x5udf"]
+
+[ext_resource type="Script" path="res://UI/skin_select_panel.gd" id="1_cy8xd"]
+[ext_resource type="Texture2D" uid="uid://c5dch0g6bpaqn" path="res://Art/Left_Arrow_Grey.png" id="2_eigjx"]
+[ext_resource type="Texture2D" uid="uid://b5v5ktkedluv5" path="res://Art/Right_Arrow_Grey.png" id="3_88m4x"]
+[ext_resource type="PackedScene" uid="uid://bkdll064txmys" path="res://UI/Skin_Option.tscn" id="3_a8yx3"]
+[ext_resource type="Texture2D" uid="uid://c21pavn462u0d" path="res://Art/Left_Arrow_Gold.png" id="3_xmwhh"]
+[ext_resource type="Texture2D" uid="uid://cal31supdsnww" path="res://Art/Right_Arrow_Gold.png" id="6_p5wlo"]
+
+[sub_resource type="Animation" id="Animation_uvfwg"]
+resource_name = "Animate Join Sprite"
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j2eua"]
+_data = {
+"Animate Join Sprite": SubResource("Animation_uvfwg")
+}
+
+[node name="Skin Select" type="PanelContainer"]
+clip_contents = true
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"Panel2"
+script = ExtResource("1_cy8xd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_j2eua")
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LeftButton" type="TextureButton" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("2_eigjx")
+texture_pressed = ExtResource("3_xmwhh")
+texture_hover = ExtResource("3_xmwhh")
+texture_disabled = ExtResource("2_eigjx")
+texture_focused = ExtResource("3_xmwhh")
+
+[node name="Skin2" parent="HBoxContainer2" instance=ExtResource("3_a8yx3")]
+layout_mode = 2
+size_flags_stretch_ratio = 2.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+
+[node name="Skin3" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("3_a8yx3")]
+layout_mode = 2
+size_flags_stretch_ratio = 4.0
+
+[node name="Button" type="Button" parent="HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Select"
+
+[node name="Skin4" parent="HBoxContainer2" instance=ExtResource("3_a8yx3")]
+layout_mode = 2
+size_flags_stretch_ratio = 2.0
+
+[node name="RightButton" type="TextureButton" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("3_88m4x")
+texture_pressed = ExtResource("6_p5wlo")
+texture_hover = ExtResource("6_p5wlo")
+texture_disabled = ExtResource("3_88m4x")
+texture_focused = ExtResource("6_p5wlo")

@@ -23,8 +23,6 @@ func _ready():
 		body=get_parent()
 func pulse_to(direction,strength: float):
 	if (direction is Vector2):
-		print("Pulsing toward ", direction)
-		print("Position is ",body.position)
 		velocity+=(direction-body.position).normalized()*strength/mass
 	elif (direction is float):
 		velocity+=Vector2.from_angle(direction)*strength/mass

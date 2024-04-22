@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://uhaxst3vwmo5"]
+
+[ext_resource type="Script" path="res://UI/start_game_countdown.gd" id="1_wtnxp"]
+
+[sub_resource type="Animation" id="Animation_uvfwg"]
+resource_name = "Countdown"
+length = 3.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["Starting game in 3...", "Starting game in 2...", "Starting game in 1...", "Starting game in 0..."]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"countdown_over"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j2eua"]
+_data = {
+"Countdown": SubResource("Animation_uvfwg")
+}
+
+[node name="PanelContainer" type="PanelContainer"]
+script = ExtResource("1_wtnxp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_j2eua")
+}
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 20
+text = "Starting game in 2..."
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,14 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://fhwmhipqb0rd"]
+[gd_scene load_steps=4 format=3 uid="uid://fhwmhipqb0rd"]
 
-[ext_resource type="PackedScene" uid="uid://dojm8ggbo0v8y" path="res://Player/player_character.tscn" id="1_b2n5o"]
+[ext_resource type="PackedScene" uid="uid://gml8gorru1ib" path="res://UI/UI.tscn" id="1_dxhiy"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="4_v5ii4"]
-[ext_resource type="Script" path="res://Player Join.gd" id="5_1261s"]
-[ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="6_8ncgc"]
-[ext_resource type="Resource" uid="uid://108qxs1oy0ow" path="res://Inputs/keyboard_right.tres" id="7_elox0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjy2c"]
 
 [node name="Test Level" type="Node2D"]
+
+[node name="UI" parent="." instance=ExtResource("1_dxhiy")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(100, 100)
@@ -18,13 +17,6 @@ shape = SubResource("RectangleShape2D_vjy2c")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 texture = ExtResource("4_v5ii4")
-
-[node name="Player Join" type="Node" parent="."]
-script = ExtResource("5_1261s")
-player_scene = ExtResource("1_b2n5o")
-base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])
-keyboard_input_1 = ExtResource("6_8ncgc")
-keyboard_input_2 = ExtResource("7_elox0")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 

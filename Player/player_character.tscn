@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://dgvt58ltbeh6w" path="res://Instanced Scenes/status_effect_instance.tscn" id="4_4c1wp"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
 [ext_resource type="Resource" uid="uid://fs34q4lrnh0u" path="res://Spell Effects/Spells/Targeted Area.tres" id="7_yo1so"]
-[ext_resource type="Resource" uid="uid://clt73mwqh8w2k" path="res://Spell Effects/Spells/Charged Fireball.tres" id="8_bxwud"]
+[ext_resource type="Resource" uid="uid://c821r1u2jco06" path="res://Spell Effects/Spells/Dash_V2.tres" id="8_x8di7"]
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
-[ext_resource type="Script" path="res://Player/PlayerCharacterInput.gd" id="10_r0ub0"]
+[ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqaox"]
 
@@ -38,7 +38,7 @@ status_instance_scene = ExtResource("4_4c1wp")
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
 spell_slot_scene = ExtResource("4_tyvj0")
-known_spells = Array[Resource("res://Spell Effects/Spell Type.gd")]([ExtResource("7_yo1so"), ExtResource("8_bxwud")])
+known_spells = Array[Resource("res://Spell Effects/Spell Type.gd")]([ExtResource("7_yo1so"), ExtResource("8_x8di7")])
 
 [node name="Velocity" type="Node" parent="."]
 unique_name_in_owner = true
@@ -49,6 +49,5 @@ zero_velocity_range_square = 150.0
 speed = 5000.0
 friction = 3000.0
 
-[node name="PlayerCharacterInput" type="Node" parent="." node_paths=PackedStringArray("velocity_component")]
-script = ExtResource("10_r0ub0")
-velocity_component = NodePath("../Velocity")
+[node name="PlayerCharacterInput" parent="." node_paths=PackedStringArray("velocity") instance=ExtResource("10_twgyi")]
+velocity = NodePath("../Velocity")

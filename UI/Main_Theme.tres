@@ -1,0 +1,64 @@
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://bspowubtcgf6b"]
+
+[ext_resource type="FontFile" uid="uid://br48h6drdop81" path="res://public-pixel-font/PublicPixel-E447g.ttf" id="1_ssk5i"]
+[ext_resource type="Texture2D" uid="uid://bcaqscfm6rmmy" path="res://Art/Borders.png" id="2_87rcu"]
+[ext_resource type="Texture2D" uid="uid://c8yhmloay15ws" path="res://Art/Borders_dark.png" id="3_tnna5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvhgh"]
+bg_color = Color(0.262745, 0.266667, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w3jra"]
+bg_color = Color(0.266667, 0.768627, 0.407843, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15gsr"]
+bg_color = Color(0, 0.913725, 0.643137, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 5
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wmiej"]
+bg_color = Color(0.533333, 0.698039, 0.643137, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcxgi"]
+bg_color = Color(0.364706, 0.678431, 0.509804, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g8via"]
+texture = ExtResource("3_tnna5")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mk42h"]
+texture = ExtResource("2_87rcu")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iow4e"]
+texture = ExtResource("3_tnna5")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[resource]
+Button/fonts/font = ExtResource("1_ssk5i")
+Button/styles/disabled = SubResource("StyleBoxFlat_kvhgh")
+Button/styles/focus = SubResource("StyleBoxFlat_w3jra")
+Button/styles/hover = SubResource("StyleBoxFlat_15gsr")
+Button/styles/normal = SubResource("StyleBoxFlat_wmiej")
+Button/styles/pressed = SubResource("StyleBoxFlat_rcxgi")
+Label/fonts/font = ExtResource("1_ssk5i")
+MarginContainer/constants/margin_bottom = 32
+MarginContainer/constants/margin_left = 32
+MarginContainer/constants/margin_right = 32
+MarginContainer/constants/margin_top = 32
+Panel2/base_type = &"PanelContainer"
+Panel2/styles/panel = SubResource("StyleBoxTexture_g8via")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_mk42h")
+PanelContainer/styles/panel2 = SubResource("StyleBoxTexture_iow4e")

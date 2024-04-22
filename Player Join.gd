@@ -1,15 +1,16 @@
 extends Node
+class_name PlayerJoin
 
 @export var player_scene:PackedScene
-@export var registered_controller_ids:Array[int]=[]
-@export var registered_keyboard_ids:Array[int]=[]
+var registered_ids = {}
 @export var base_action_strings:Array[String]=[]
-enum device_type {keyboard,joystick}
-var device_keys={device_type.keyboard:"kb",device_type.joystick:"joy"}
+var device_keys={Input_Keys.device_type.KEYBOARD:"kb",Input_Keys.device_type.JOYSTICK:"joy"}
 @export var keyboard_input_1:Input_Keys
 @export var keyboard_input_2:Input_Keys
 @export var spawn_vectors:Array[Vector2]=[Vector2(100,100),Vector2(400,100),Vector2(100,400),Vector2(400,400)]
 var player_count:int =0
+
+signal added_new_player(player:Player)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,33 +23,22 @@ func _process(delta):
 
 func _unhandled_input(event):
 	var id = event.device
-	var type=device_type.keyboard
-	if event.is_action_pressed("Join_joy_1") and !registered_controller_ids.has(id):
-		type=device_type.joystick
-		registered_controller_ids.append(id)
-		var new_player = player_scene.instantiate()
-		get_parent().add_child(new_player)
+	var type=Input_Keys.device_type.JOYSTICK
+	if event.is_action_pressed("Join_joy_1") and (!registered_ids.has(id) or registered_ids[id]!=type):
+		registered_ids [id]=type
 		var new_keys=_duplicate_input(id,type)
-		new_player.initialize(next_position(),new_keys)
-		player_count+=1
-	if event.is_action_pressed("Join_kb_1") and !registered_keyboard_ids.has(1):
-		type=device_type.keyboard
-		id=1
-		registered_keyboard_ids.append(id)
-		var new_player = player_scene.instantiate()
-		get_parent().add_child(new_player)
-		new_player.initialize(next_position(),keyboard_input_1)
-		player_count+=1
-	if event.is_action_pressed("Join_kb_2") and !registered_keyboard_ids.has(2):
-		type=device_type.keyboard
-		id=2
-		registered_keyboard_ids.append(id)
-		var new_player = player_scene.instantiate()
-		get_parent().add_child(new_player)
-		new_player.initialize(next_position(),keyboard_input_2)
-		player_count+=1
+		add_player(new_keys)
+	type=Input_Keys.device_type.KEYBOARD
+	if event.is_action_pressed("Join_kb_1") and (!registered_ids.has(-1) or registered_ids[-1]!=type):
+		id=-1
+		registered_ids [id]=type
+		add_player(keyboard_input_1)
+	if event.is_action_pressed("Join_kb_2") and (!registered_ids.has(-2) or registered_ids[-2]!=type):
+		id=-2
+		registered_ids [id]=type
+		add_player(keyboard_input_2)
 	
-func _duplicate_input(id:int,type:device_type) -> Input_Keys:
+func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 	InputMap.get_actions()
 	var new_keys=Input_Keys.new()
 	for name in base_action_strings:
@@ -59,8 +49,27 @@ func _duplicate_input(id:int,type:device_type) -> Input_Keys:
 			var new_event=event.duplicate()
 			new_event.device=id
 			InputMap.action_add_event(new_name,new_event)
+	new_keys.device_id=id
+	new_keys.device=type
 	return new_keys
 
+#TODO MAKE THIS REAl
 func next_position() -> Vector2:
-	return spawn_vectors[player_count]
+	return spawn_vectors[player_count%spawn_vectors.size()]
 	
+func add_player(input:Input_Keys):
+	var new_player = player_scene.instantiate()
+	get_parent().get_parent().add_child(new_player)
+	new_player.set_start_pos(next_position())
+	new_player.add_controls(input)
+	$"..".start_round.connect(new_player.start_round)
+	player_count+=1
+	added_new_player.emit(new_player)
+
+func delete_player(player:PlayerManager):
+	print ("Deleted player here yaya")
+	var to_del_input = player.player_character.my_input.input_keys
+	if registered_ids.has(to_del_input.device_id) and registered_ids[to_del_input.device_id]==to_del_input.device:
+		registered_ids.erase(to_del_input.device_id)
+		print("Deleted id")
+	player.queue_free()

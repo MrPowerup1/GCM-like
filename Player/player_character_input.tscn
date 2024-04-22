@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgespc20acr8o"]
+
+[ext_resource type="Script" path="res://Player/PlayerCharacterInput.gd" id="1_uk3ul"]
+
+[node name="PlayerCharacterInput" type="Node"]
+script = ExtResource("1_uk3ul")
+current_mode = 1

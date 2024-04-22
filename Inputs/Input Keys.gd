@@ -10,5 +10,6 @@ class_name Input_Keys
 	"Spell2":"Spell2"
 	}
 	
-enum device_type {keyboard,joystick}
+enum device_type {KEYBOARD,JOYSTICK}
 @export var device:device_type
+@export var device_id:int

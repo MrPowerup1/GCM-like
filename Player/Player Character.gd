@@ -11,6 +11,8 @@ var num_spells:int
 func _ready():
 	my_input.button_activate.connect(activate)
 	my_input.button_release.connect(release)
+	#Seperate the material so it doesn't change with others
+	%Sprite2D.material = %Sprite2D.material.duplicate(true)
 
 func _physics_process(delta):
 	
@@ -65,3 +67,12 @@ func disable():
 	can_cast=[false,false]
 	can_release=[false,false]
 	anchor(true)
+
+func set_skin(new_skin:CharacterSkin):
+	%Sprite2D.texture=new_skin.texture
+	%Sprite2D.material.set_shader_parameter("new_color",new_skin.color)
+	
+func equip_spell(new_spell:Spell_Type,index:int):
+	if !%"Spell Manager".known_spells.has(new_spell):
+		%"Spell Manager".learn_spell(new_spell)
+	%"Spell Manager".equip_spell(%"Spell Manager".known_spells.find(new_spell),index)

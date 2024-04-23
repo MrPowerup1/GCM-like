@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharacterSkin" load_steps=3 format=3 uid="uid://c1kf8k0j7hew"]
+
+[ext_resource type="Script" path="res://Skins/CharacterSkin.gd" id="1_sj5pj"]
+[ext_resource type="Texture2D" uid="uid://85vemjcgt8b" path="res://Art/random.png" id="2_fcxrf"]
+
+[resource]
+script = ExtResource("1_sj5pj")
+texture = ExtResource("2_fcxrf")
+color = Color(0.941176, 0.94902, 0, 1)
+name = "Random"
+randomizer = true

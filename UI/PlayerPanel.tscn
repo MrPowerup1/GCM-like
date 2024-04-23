@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://vaog6h0dcfy2"]
+[gd_scene load_steps=6 format=3 uid="uid://vaog6h0dcfy2"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_3lsti"]
 [ext_resource type="PackedScene" uid="uid://bxuaai22x5udf" path="res://UI/skin_select_panel.tscn" id="2_flu3c"]
 [ext_resource type="PackedScene" uid="uid://dlv10j3yla0vr" path="res://UI/join_panel.tscn" id="2_x2hvt"]
 [ext_resource type="Script" path="res://UI/PlayerReady.gd" id="4_6ik6p"]
+[ext_resource type="PackedScene" uid="uid://bjbuvwxageuvj" path="res://UI/spell_select_panel.tscn" id="4_omtpt"]
 
 [node name="PlayerPanel" type="PanelContainer"]
 size_flags_horizontal = 3
@@ -18,16 +19,26 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
-[node name="Skin Select Panel" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_flu3c")]
+[node name="SkinSelect" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_flu3c")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_horizontal = 1
 
-[node name="Join Panel" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_x2hvt")]
+[node name="AwaitPlayer" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_x2hvt")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
+
+[node name="SpellSelect" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_omtpt")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="SpellSelect2" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_omtpt")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
 
 [node name="PlayerReady" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -49,6 +60,17 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Ready"
 
-[connection signal="exit" from="MarginContainer/VBoxContainer/Skin Select Panel" to="." method="_on_skin_select_panel_exit"]
-[connection signal="next" from="MarginContainer/VBoxContainer/Skin Select Panel" to="." method="_on_skin_select_panel_next"]
+[node name="InputCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.25
+one_shot = true
+
+[connection signal="exit" from="MarginContainer/VBoxContainer/SkinSelect" to="." method="_on_skin_select_panel_exit"]
+[connection signal="next" from="MarginContainer/VBoxContainer/SkinSelect" to="." method="_on_skin_select_panel_next"]
+[connection signal="next" from="MarginContainer/VBoxContainer/AwaitPlayer" to="." method="_on_join_panel_next"]
+[connection signal="exit" from="MarginContainer/VBoxContainer/SpellSelect" to="." method="_on_spell_select_exit"]
+[connection signal="next" from="MarginContainer/VBoxContainer/SpellSelect" to="." method="_on_spell_select_next"]
+[connection signal="exit" from="MarginContainer/VBoxContainer/SpellSelect2" to="." method="_on_spell_select_2_exit"]
+[connection signal="next" from="MarginContainer/VBoxContainer/SpellSelect2" to="." method="_on_spell_select_2_next"]
 [connection signal="exit" from="PlayerReady" to="." method="_on_player_ready_exit"]
+[connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]

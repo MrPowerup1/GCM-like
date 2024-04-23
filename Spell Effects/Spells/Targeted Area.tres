@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=21 format=3 uid="uid://fs34q4lrnh0u"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=22 format=3 uid="uid://fs34q4lrnh0u"]
 
 [ext_resource type="PackedScene" uid="uid://bnkvt5plhp8al" path="res://Instanced Scenes/base_target.tscn" id="1_b3jl1"]
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_mdfhg"]
+[ext_resource type="Texture2D" uid="uid://dpawcli1di67r" path="res://Art/3.png" id="1_out36"]
 [ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="2_r0hyt"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="3_54jak"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_oe22k"]
@@ -63,8 +64,10 @@ held_ping_time = 0.0
 cooldown_on_activate = false
 cooldown_on_release = true
 cooldown_time = 500.0
-name = ""
-description = ""
+name = "Targeted Area"
+card_image = ExtResource("1_out36")
+description = "Move an area around.  For what? Who knows!"
 requirements = Array[Resource("res://Elements/Element.gd")]([])
 category = 0
 type = 0
+randomizer = false

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxuaai22x5udf"]
+[gd_scene load_steps=10 format=3 uid="uid://bxuaai22x5udf"]
 
 [ext_resource type="Script" path="res://UI/skin_select_panel.gd" id="1_cy8xd"]
 [ext_resource type="Texture2D" uid="uid://c5dch0g6bpaqn" path="res://Art/Left_Arrow_Grey.png" id="2_eigjx"]
+[ext_resource type="Resource" uid="uid://c4nu04nbhhkp" path="res://Skins/MainSkinDeck.tres" id="2_i1rb4"]
 [ext_resource type="Texture2D" uid="uid://b5v5ktkedluv5" path="res://Art/Right_Arrow_Grey.png" id="3_88m4x"]
-[ext_resource type="PackedScene" uid="uid://bkdll064txmys" path="res://UI/Skin_Option.tscn" id="3_a8yx3"]
+[ext_resource type="PackedScene" uid="uid://yusq4gsgk282" path="res://UI/Skin_Option.tscn" id="3_a8yx3"]
 [ext_resource type="Texture2D" uid="uid://c21pavn462u0d" path="res://Art/Left_Arrow_Gold.png" id="3_xmwhh"]
 [ext_resource type="Texture2D" uid="uid://cal31supdsnww" path="res://Art/Right_Arrow_Gold.png" id="6_p5wlo"]
 
@@ -30,6 +31,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_type_variation = &"Panel2"
 script = ExtResource("1_cy8xd")
+skins = ExtResource("2_i1rb4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -53,22 +55,27 @@ texture_hover = ExtResource("3_xmwhh")
 texture_disabled = ExtResource("2_eigjx")
 texture_focused = ExtResource("3_xmwhh")
 
-[node name="Skin2" parent="HBoxContainer2" instance=ExtResource("3_a8yx3")]
+[node name="LeftSkin" parent="HBoxContainer2" instance=ExtResource("3_a8yx3")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
 layout_mode = 2
 
-[node name="Skin3" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("3_a8yx3")]
+[node name="CenterSkin" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("3_a8yx3")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_stretch_ratio = 4.0
 
-[node name="Button" type="Button" parent="HBoxContainer2/VBoxContainer"]
+[node name="SelectButton" type="Button" parent="HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 14
 text = "Select"
 
-[node name="Skin4" parent="HBoxContainer2" instance=ExtResource("3_a8yx3")]
+[node name="RightSkin" parent="HBoxContainer2" instance=ExtResource("3_a8yx3")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 

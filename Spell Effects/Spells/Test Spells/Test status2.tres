@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Status_Type" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="Status_Type" load_steps=8 format=3 uid="uid://cpvaubib4f0af"]
 
 [ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="1_64hf6"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Test Effect.gd" id="2_d40i7"]
@@ -9,7 +9,7 @@
 script = ExtResource("2_d40i7")
 name = "fx2 5s"
 threshold_values = Array[float]([])
-effects = Array[Resource("res://Spell Effects/Spell Effect.gd")]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 
 [sub_resource type="Resource" id="Resource_smb2t"]
 script = ExtResource("1_64hf6")

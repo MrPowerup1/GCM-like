@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=20 format=3 uid="uid://c3e23vexawwyf"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=21 format=3 uid="uid://c3e23vexawwyf"]
 
 [ext_resource type="Texture2D" uid="uid://uxm1r401t4dm" path="res://Art/Melee.png" id="1_7k1do"]
+[ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="1_7pnip"]
 [ext_resource type="PackedScene" uid="uid://bv27tc5e5gqen" path="res://Instanced Scenes/melee_area.tscn" id="1_go82l"]
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_wv2ef"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="2_7mwt7"]
@@ -66,8 +67,11 @@ held_ping_time = 0.0
 cooldown_on_activate = true
 cooldown_on_release = false
 cooldown_time = 0.0
-name = ""
-description = ""
+name = "Melee"
+card_image = ExtResource("1_7pnip")
+description = "Slash ahead of yourself with melee
+"
 requirements = Array[Resource("res://Elements/Element.gd")]([])
 category = 0
 type = 0
+randomizer = false

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Status_Type" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="Status_Type" load_steps=7 format=3 uid="uid://wuutqs302j4"]
 
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="1_hgdpk"]
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="2_jmqw0"]

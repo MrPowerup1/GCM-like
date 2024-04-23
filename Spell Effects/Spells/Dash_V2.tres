@@ -44,3 +44,4 @@ description = ""
 requirements = Array[Resource("res://Elements/Element.gd")]([])
 category = 0
 type = 0
+randomizer = false

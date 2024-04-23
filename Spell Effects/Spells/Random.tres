@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=3 format=3 uid="uid://diyaw1a0viw2h"]
+
+[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_koyau"]
+[ext_resource type="Texture2D" uid="uid://85vemjcgt8b" path="res://Art/random.png" id="1_njfcu"]
+
+[resource]
+script = ExtResource("1_koyau")
+timings = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
+ping_asap = false
+held_ping_time = 0.0
+cooldown_on_activate = false
+cooldown_on_release = false
+cooldown_time = 0.0
+name = "Random"
+card_image = ExtResource("1_njfcu")
+description = "Choose a random spell
+"
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0
+randomizer = true

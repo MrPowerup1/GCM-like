@@ -32,11 +32,16 @@ func player_join(player:PlayerManager):
 func _on_player_quit(player:PlayerManager):
 	current_players-=1
 	player_quit.emit(player)
+	#Timer because there seemed to be a race condition on signal emissions
+	await get_tree().create_timer(0.1).timeout
+	_on_player_ready()
 
 func _on_player_ready():
+	print("Ready Called")
 	if current_players >= min_players:
 		for panel in get_children():
 			if panel is PlayerPanel and !(panel as PlayerPanel).now_ready:
+				print ("Not all are ready")
 				return
 		for panel in get_children():
 			if panel is PlayerPanel and (panel as PlayerPanel).current_player == null:
@@ -49,7 +54,7 @@ func _on_player_unready():
 		new_panel()
 	players_unready.emit()
 	starting=false
-	print ("player unready")
+	
 
 func new_panel():
 	most_recent_panel =  player_panel.instantiate()

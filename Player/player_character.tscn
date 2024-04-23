@@ -1,9 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://dojm8ggbo0v8y"]
+[gd_scene load_steps=14 format=3 uid="uid://dojm8ggbo0v8y"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
-[ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="2_lu85g"]
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
 [ext_resource type="Script" path="res://Status Manager.gd" id="3_mdj26"]
+[ext_resource type="Texture2D" uid="uid://cjr147ia5b070" path="res://Art/Wizard2.png" id="3_wrwx0"]
 [ext_resource type="PackedScene" uid="uid://dgvt58ltbeh6w" path="res://Instanced Scenes/status_effect_instance.tscn" id="4_4c1wp"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
 [ext_resource type="Resource" uid="uid://fs34q4lrnh0u" path="res://Spell Effects/Spells/Targeted Area.tres" id="7_yo1so"]
@@ -12,6 +12,25 @@
 [ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqaox"]
+
+[sub_resource type="Shader" id="Shader_obj0k"]
+code = "shader_type canvas_item;
+
+uniform vec4 new_color: source_color;
+
+void fragment() {
+	vec4 curr_color = texture(TEXTURE, UV);
+	// Find only blue pixels
+	if (curr_color.rga == vec3(0,0,1)  && curr_color.b > 0.0) {
+		COLOR.rgb = new_color.rgb* curr_color.b;
+	}
+		
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbhbm"]
+shader = SubResource("Shader_obj0k")
+shader_parameter/new_color = Color(0.890196, 0.639216, 0.172549, 1)
 
 [node name="Player Character" type="CharacterBody2D" node_paths=PackedStringArray("my_input")]
 position = Vector2(3, 6)
@@ -27,7 +46,8 @@ shape = SubResource("RectangleShape2D_hqaox")
 unique_name_in_owner = true
 texture_filter = 1
 texture_repeat = 1
-texture = ExtResource("2_lu85g")
+material = SubResource("ShaderMaterial_lbhbm")
+texture = ExtResource("3_wrwx0")
 
 [node name="Status Manager" type="Node" parent="."]
 unique_name_in_owner = true
@@ -51,3 +71,4 @@ friction = 3000.0
 
 [node name="PlayerCharacterInput" parent="." node_paths=PackedStringArray("velocity") instance=ExtResource("10_twgyi")]
 velocity = NodePath("../Velocity")
+current_mode = 0

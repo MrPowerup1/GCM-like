@@ -26,6 +26,7 @@ enum effect_time {on_activate,on_held,on_release}
 @export var requirements:Array[Element] = []
 @export_enum("Passive","Active") var category:int
 @export_enum("Buff","Movement","Attack","Defense") var type:int
+@export var randomizer = false
 #@export var spell_scene:PackedScene
 
 

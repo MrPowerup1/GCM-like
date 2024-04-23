@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=9 format=3]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=9 format=3 uid="uid://ci8v0erwoh7nb"]
 
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_7d5ha"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="1_7ltmw"]
+[ext_resource type="Texture2D" uid="uid://uxm1r401t4dm" path="res://Art/Melee.png" id="1_mp4gc"]
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_vecf2"]
-[ext_resource type="Resource" path="res://Spell Effects/Status Effects/DoubleSpeed5s.tres" id="2_3lf67"]
+[ext_resource type="Resource" uid="uid://wuutqs302j4" path="res://Spell Effects/Status Effects/DoubleSpeed5s.tres" id="2_3lf67"]
 
 [sub_resource type="Resource" id="Resource_3xsxi"]
 script = ExtResource("1_7ltmw")
@@ -15,20 +16,22 @@ script = ExtResource("1_vecf2")
 [sub_resource type="Resource" id="Resource_l7uru"]
 script = ExtResource("1_vecf2")
 
-[sub_resource type="Resource" id="Resource_cqgfv"]
-script = ExtResource("1_vecf2")
-
 [resource]
 script = ExtResource("1_7d5ha")
+timings = Array[int]([])
+effects = Array[ExtResource("1_vecf2")]([])
 on_activate = SubResource("Resource_3xsxi")
 on_held = SubResource("Resource_jy71w")
 on_release = SubResource("Resource_l7uru")
-on_success = SubResource("Resource_cqgfv")
 ping_asap = false
 held_ping_time = 100000.0
+cooldown_on_activate = false
+cooldown_on_release = false
 cooldown_time = 1000.0
-name = ""
-description = ""
+name = "Speed Boost"
+card_image = ExtResource("1_mp4gc")
+description = "Gain a boost of speed for a few secons"
 requirements = Array[Resource("res://Elements/Element.gd")]([])
 category = 0
 type = 0
+randomizer = false

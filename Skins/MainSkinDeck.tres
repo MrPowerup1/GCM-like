@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkinDeck" load_steps=7 format=3 uid="uid://c4nu04nbhhkp"]
+
+[ext_resource type="Script" path="res://Skins/SkinDeck.gd" id="1_h6sbr"]
+[ext_resource type="Resource" uid="uid://bm1hvnogsyc46" path="res://Skins/GreenSkin.tres" id="2_ang3q"]
+[ext_resource type="Resource" uid="uid://k61aax4me1eq" path="res://Skins/OrangeSkin.tres" id="3_5apov"]
+[ext_resource type="Resource" path="res://Skins/PurpleSkin.tres" id="4_bof6s"]
+[ext_resource type="Resource" uid="uid://bdpadmad6b6k0" path="res://Skins/RedSkin.tres" id="5_j85ie"]
+[ext_resource type="Resource" uid="uid://c1kf8k0j7hew" path="res://Skins/RandomSkin.tres" id="6_mjghu"]
+
+[resource]
+script = ExtResource("1_h6sbr")
+skins = Array[Resource("res://Skins/CharacterSkin.gd")]([ExtResource("2_ang3q"), ExtResource("3_5apov"), ExtResource("4_bof6s"), ExtResource("5_j85ie"), ExtResource("6_mjghu")])
+allowed = Array[bool]([true, true, true, true, true])

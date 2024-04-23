@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterSkin" load_steps=3 format=3 uid="uid://bm1hvnogsyc46"]
+
+[ext_resource type="Script" path="res://Skins/CharacterSkin.gd" id="1_m4wf5"]
+[ext_resource type="Texture2D" uid="uid://cjr147ia5b070" path="res://Art/Wizard2.png" id="2_4n1pg"]
+
+[resource]
+script = ExtResource("1_m4wf5")
+texture = ExtResource("2_4n1pg")
+color = Color(0.227451, 0.513726, 0.352941, 1)
+name = "Green Wizard"

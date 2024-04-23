@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=13 format=3 uid="uid://t8f82866ltmu"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=14 format=3 uid="uid://t8f82866ltmu"]
 
 [ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_dbio5"]
+[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="1_wk2an"]
 [ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_wpmqp"]
 [ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="2_4xs2a"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_qvp1m"]
@@ -57,8 +58,10 @@ held_ping_time = 0.0
 cooldown_on_activate = true
 cooldown_on_release = false
 cooldown_time = 500.0
-name = ""
-description = ""
+name = "Scatter Test"
+card_image = ExtResource("1_wk2an")
+description = "This ones just a test"
 requirements = Array[Resource("res://Elements/Element.gd")]([])
 category = 0
 type = 0
+randomizer = false

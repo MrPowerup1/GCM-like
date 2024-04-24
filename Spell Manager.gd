@@ -2,7 +2,7 @@ extends Node
 
 @export var spell_slot_scene:PackedScene
 @export var num_slots:int = 2
-@export var known_spells:Array[Spell_Type]=[]
+@export var known_spells:Array[Spell]=[]
 var slots:Array[Spell_Slot]=[]
 
 
@@ -49,12 +49,24 @@ func release(spell_index:int):
 		print("Releasing unknown spell slot")
 	
 
-func equip_spell(known_index:int,equip_index:int=0):
+func equip_spell(known_index:int,equip_index:int=-1):
 	if known_index < known_spells.size():
-		if equip_index < slots.size():
+		if equip_index == -1:
+			for i in range(slots.size()):
+				if slots[i].is_empty:
+					equip_index=i
+		if equip_index!= -1 and equip_index < slots.size():
 			slots[equip_index].swap_spell(known_spells[known_index])
+
+func unequip_spell(equip_index:int=-1):
+	if equip_index == -1:
+		for i in range(slots.size()):
+			if !slots[slots.size()-1-i].is_empty:
+				equip_index=i
+	if equip_index!= -1 and equip_index < slots.size():
+			slots[equip_index].swap_spell(null)
 	
-func learn_spell(new_spell:Spell_Type):
+func learn_spell(new_spell:Spell):
 	known_spells.append(new_spell)
 
 func get_held_time(spell_index:int):

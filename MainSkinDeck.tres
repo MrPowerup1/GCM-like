@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="SkinDeck" load_steps=2 format=3 uid="uid://cjj5rhdjc02u3"]
-
-[ext_resource type="Script" path="res://SkinDeck.gd" id="1_13ruh"]
-
-[resource]
-script = ExtResource("1_13ruh")
-skins = Array[Resource("res://CharacterSkin.gd")]([])
-allowed = Array[bool]([])

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=18 format=3 uid="uid://405vrt6buug"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="1_2u1ox"]
-[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_hsanp"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_hsanp"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="4_t6w10"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="8_kwwuh"]
 [ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="9_jrr1u"]

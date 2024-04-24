@@ -1,17 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://dojm8ggbo0v8y"]
+[gd_scene load_steps=12 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
+[ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_umfx1"]
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
 [ext_resource type="Script" path="res://Status Manager.gd" id="3_mdj26"]
-[ext_resource type="Texture2D" uid="uid://cjr147ia5b070" path="res://Art/Wizard2.png" id="3_wrwx0"]
 [ext_resource type="PackedScene" uid="uid://dgvt58ltbeh6w" path="res://Instanced Scenes/status_effect_instance.tscn" id="4_4c1wp"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
-[ext_resource type="Resource" uid="uid://fs34q4lrnh0u" path="res://Spell Effects/Spells/Targeted Area.tres" id="7_yo1so"]
-[ext_resource type="Resource" uid="uid://c821r1u2jco06" path="res://Spell Effects/Spells/Dash_V2.tres" id="8_x8di7"]
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
 [ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqaox"]
+size = Vector2(16, 24)
 
 [sub_resource type="Shader" id="Shader_obj0k"]
 code = "shader_type canvas_item;
@@ -47,7 +46,7 @@ unique_name_in_owner = true
 texture_filter = 1
 texture_repeat = 1
 material = SubResource("ShaderMaterial_lbhbm")
-texture = ExtResource("3_wrwx0")
+texture = ExtResource("2_umfx1")
 
 [node name="Status Manager" type="Node" parent="."]
 unique_name_in_owner = true
@@ -58,7 +57,7 @@ status_instance_scene = ExtResource("4_4c1wp")
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
 spell_slot_scene = ExtResource("4_tyvj0")
-known_spells = Array[Resource("res://Spell Effects/Spell Type.gd")]([ExtResource("7_yo1so"), ExtResource("8_x8di7")])
+known_spells = Array[Resource("res://Spell Effects/Spell.gd")]([null, null])
 
 [node name="Velocity" type="Node" parent="."]
 unique_name_in_owner = true

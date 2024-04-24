@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=11 format=3 uid="uid://c2xrqueoa6vn6"]
+[gd_resource type="Resource" script_class="Spell" load_steps=11 format=3 uid="uid://ccx2vqmon25r7"]
 
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="1_21jml"]
-[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_nphhl"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_nphhl"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="2_nfry3"]
 [ext_resource type="Resource" uid="uid://8cm6vfvrle6w" path="res://Spell Effects/Spells/Test Spells/Test status1.tres" id="3_2y7q3"]
 [ext_resource type="Resource" uid="uid://cpvaubib4f0af" path="res://Spell Effects/Spells/Test Spells/Test status2.tres" id="4_hcmvv"]

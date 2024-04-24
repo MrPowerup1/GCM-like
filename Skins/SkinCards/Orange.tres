@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SkinCard" load_steps=4 format=3 uid="uid://52yasw3y0q12"]
+
+[ext_resource type="Texture2D" uid="uid://cjr147ia5b070" path="res://Art/Wizard2.png" id="1_vcl2g"]
+[ext_resource type="Script" path="res://SkinCard.gd" id="2_r6r32"]
+[ext_resource type="Resource" uid="uid://k61aax4me1eq" path="res://Skins/OrangeSkin.tres" id="3_ao88b"]
+
+[resource]
+script = ExtResource("2_r6r32")
+skin = ExtResource("3_ao88b")
+name = "Green"
+image = ExtResource("1_vcl2g")
+description = ""

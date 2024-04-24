@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhryy77waq6s8"]
+
+[ext_resource type="Script" path="res://UI/card_select_panel.gd" id="1_g3f8n"]
+[ext_resource type="Texture2D" uid="uid://c5dch0g6bpaqn" path="res://Art/Left_Arrow_Grey.png" id="4_3c30d"]
+[ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="4_rjlbt"]
+[ext_resource type="Texture2D" uid="uid://c21pavn462u0d" path="res://Art/Left_Arrow_Gold.png" id="5_yntxk"]
+[ext_resource type="Texture2D" uid="uid://b5v5ktkedluv5" path="res://Art/Right_Arrow_Grey.png" id="7_dj4g8"]
+[ext_resource type="Texture2D" uid="uid://cal31supdsnww" path="res://Art/Right_Arrow_Gold.png" id="8_lqdjd"]
+
+[sub_resource type="Animation" id="Animation_uvfwg"]
+resource_name = "Animate Join Sprite"
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j2eua"]
+_data = {
+"Animate Join Sprite": SubResource("Animation_uvfwg")
+}
+
+[node name="CardSelect" type="PanelContainer"]
+clip_contents = true
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"Panel2"
+script = ExtResource("1_g3f8n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_j2eua")
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LeftButton" type="TextureButton" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("4_3c30d")
+texture_pressed = ExtResource("5_yntxk")
+texture_hover = ExtResource("5_yntxk")
+texture_disabled = ExtResource("4_3c30d")
+texture_focused = ExtResource("5_yntxk")
+
+[node name="LeftCard" parent="HBoxContainer2" instance=ExtResource("4_rjlbt")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+
+[node name="CenterCard" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("4_rjlbt")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SelectButton" type="Button" parent="HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Select"
+
+[node name="RightCard" parent="HBoxContainer2" instance=ExtResource("4_rjlbt")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RightButton" type="TextureButton" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("7_dj4g8")
+texture_pressed = ExtResource("8_lqdjd")
+texture_hover = ExtResource("8_lqdjd")
+texture_disabled = ExtResource("7_dj4g8")
+texture_focused = ExtResource("8_lqdjd")

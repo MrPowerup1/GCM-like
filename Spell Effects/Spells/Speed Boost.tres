@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=9 format=3 uid="uid://ci8v0erwoh7nb"]
+[gd_resource type="Resource" script_class="Spell" load_steps=9 format=3 uid="uid://c7rhfh8ge5c2x"]
 
-[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_7d5ha"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_7d5ha"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="1_7ltmw"]
 [ext_resource type="Texture2D" uid="uid://uxm1r401t4dm" path="res://Art/Melee.png" id="1_mp4gc"]
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_vecf2"]

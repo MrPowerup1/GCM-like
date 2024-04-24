@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://vaog6h0dcfy2"]
+[gd_scene load_steps=7 format=3 uid="uid://vaog6h0dcfy2"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_3lsti"]
-[ext_resource type="PackedScene" uid="uid://bxuaai22x5udf" path="res://UI/skin_select_panel.tscn" id="2_flu3c"]
+[ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="2_kbems"]
 [ext_resource type="PackedScene" uid="uid://dlv10j3yla0vr" path="res://UI/join_panel.tscn" id="2_x2hvt"]
+[ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="3_0638b"]
+[ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="4_0wvmp"]
 [ext_resource type="Script" path="res://UI/PlayerReady.gd" id="4_6ik6p"]
-[ext_resource type="PackedScene" uid="uid://bjbuvwxageuvj" path="res://UI/spell_select_panel.tscn" id="4_omtpt"]
 
 [node name="PlayerPanel" type="PanelContainer"]
 size_flags_horizontal = 3
@@ -15,30 +16,37 @@ script = ExtResource("1_3lsti")
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Unselected" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="SkinSelect" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_flu3c")]
+[node name="Selected" type="HBoxContainer" parent="MarginContainer/Unselected"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SkinSelect" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-size_flags_horizontal = 1
+cards = ExtResource("3_0638b")
 
-[node name="AwaitPlayer" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_x2hvt")]
+[node name="SpellSelect1" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+cards = ExtResource("4_0wvmp")
+
+[node name="SpellSelect2" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+cards = ExtResource("4_0wvmp")
+
+[node name="AwaitPlayer" parent="MarginContainer/Unselected" instance=ExtResource("2_x2hvt")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
-
-[node name="SpellSelect" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_omtpt")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="SpellSelect2" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_omtpt")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
 
 [node name="PlayerReady" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -58,6 +66,7 @@ offset_top = -19.0
 offset_right = 40.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_type_variation = &"HeaderLarge"
 text = "Ready"
 
 [node name="InputCooldown" type="Timer" parent="."]
@@ -65,12 +74,12 @@ unique_name_in_owner = true
 wait_time = 0.25
 one_shot = true
 
-[connection signal="exit" from="MarginContainer/VBoxContainer/SkinSelect" to="." method="_on_skin_select_panel_exit"]
-[connection signal="next" from="MarginContainer/VBoxContainer/SkinSelect" to="." method="_on_skin_select_panel_next"]
-[connection signal="next" from="MarginContainer/VBoxContainer/AwaitPlayer" to="." method="_on_join_panel_next"]
-[connection signal="exit" from="MarginContainer/VBoxContainer/SpellSelect" to="." method="_on_spell_select_exit"]
-[connection signal="next" from="MarginContainer/VBoxContainer/SpellSelect" to="." method="_on_spell_select_next"]
-[connection signal="exit" from="MarginContainer/VBoxContainer/SpellSelect2" to="." method="_on_spell_select_2_exit"]
-[connection signal="next" from="MarginContainer/VBoxContainer/SpellSelect2" to="." method="_on_spell_select_2_next"]
+[connection signal="exit" from="MarginContainer/Unselected/SkinSelect" to="." method="_on_skin_select_exit"]
+[connection signal="next" from="MarginContainer/Unselected/SkinSelect" to="." method="_on_skin_select_next"]
+[connection signal="exit" from="MarginContainer/Unselected/SpellSelect1" to="." method="_on_spell_select_1_exit"]
+[connection signal="next" from="MarginContainer/Unselected/SpellSelect1" to="." method="_on_spell_select_1_next"]
+[connection signal="exit" from="MarginContainer/Unselected/SpellSelect2" to="." method="_on_spell_select_2_exit"]
+[connection signal="next" from="MarginContainer/Unselected/SpellSelect2" to="." method="_on_spell_select_2_next"]
+[connection signal="next" from="MarginContainer/Unselected/AwaitPlayer" to="." method="_on_join_panel_next"]
 [connection signal="exit" from="PlayerReady" to="." method="_on_player_ready_exit"]
 [connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]

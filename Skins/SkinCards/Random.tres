@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RandomCard" load_steps=3 format=3 uid="uid://cumu5tpm88y5r"]
+
+[ext_resource type="Script" path="res://RandomCard.gd" id="1_2whw2"]
+[ext_resource type="Texture2D" uid="uid://dcllxkei13sej" path="res://Art/random_small.png" id="1_avfxi"]
+
+[resource]
+script = ExtResource("1_2whw2")
+randomize = true
+name = "Random"
+image = ExtResource("1_avfxi")
+description = "Randomize"
+card_style = 2

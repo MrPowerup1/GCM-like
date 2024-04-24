@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=12 format=3 uid="uid://c76htlukbfj68"]
+
+[ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="1_ohu1u"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_pif4w"]
+[ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="2_rg5up"]
+[ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="3_carja"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_s2mmy"]
+[ext_resource type="PackedScene" uid="uid://6bd4ui3bfds0" path="res://Instanced Scenes/base_projectile.tscn" id="5_776so"]
+[ext_resource type="Script" path="res://Spell Effects/projectile_effect.gd" id="6_antw2"]
+
+[sub_resource type="Resource" id="Resource_0kpmc"]
+script = ExtResource("1_ohu1u")
+damage_value = 0
+
+[sub_resource type="Resource" id="Resource_oy4uf"]
+script = ExtResource("1_ohu1u")
+damage_value = 0
+
+[sub_resource type="Resource" id="Resource_st5mw"]
+script = ExtResource("4_s2mmy")
+image = ExtResource("3_carja")
+on_enter = SubResource("Resource_oy4uf")
+call_exit_on_timeout = false
+area_scene = ExtResource("2_rg5up")
+life_time = 2000
+ping_time = 0
+
+[sub_resource type="Resource" id="Resource_k6fm1"]
+script = ExtResource("6_antw2")
+projectile_scene = ExtResource("5_776so")
+projectile_sprite = ExtResource("3_carja")
+speed = 300
+piercing = true
+size = Vector2(2, 2)
+lifetime = 3000
+on_hit_effect = SubResource("Resource_0kpmc")
+on_timeout_self = SubResource("Resource_st5mw")
+
+[resource]
+script = ExtResource("1_pif4w")
+timings = Array[int]([0])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_k6fm1")])
+ping_asap = false
+held_ping_time = 0.0
+cooldown_on_activate = true
+cooldown_on_release = false
+cooldown_time = 1000.0

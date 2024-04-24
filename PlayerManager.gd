@@ -34,5 +34,8 @@ func set_skin(new_skin:CharacterSkin):
 	skin=new_skin
 	player_character.set_skin(new_skin)
 
-func set_spell(index:int,new_spell:Spell_Type):
-	player_character.equip_spell(new_spell,index)
+func set_spell(new_spell:Spell):
+	if new_spell==null:
+		player_character.unequip_spell()
+	else:
+		player_character.equip_spell(new_spell)

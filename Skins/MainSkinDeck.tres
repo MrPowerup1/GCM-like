@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Skins/SkinDeck.gd" id="1_h6sbr"]
 [ext_resource type="Resource" uid="uid://bm1hvnogsyc46" path="res://Skins/GreenSkin.tres" id="2_ang3q"]
 [ext_resource type="Resource" uid="uid://k61aax4me1eq" path="res://Skins/OrangeSkin.tres" id="3_5apov"]
-[ext_resource type="Resource" path="res://Skins/PurpleSkin.tres" id="4_bof6s"]
+[ext_resource type="Resource" uid="uid://c5cpvyyex5jiv" path="res://Skins/PurpleSkin.tres" id="4_bof6s"]
 [ext_resource type="Resource" uid="uid://bdpadmad6b6k0" path="res://Skins/RedSkin.tres" id="5_j85ie"]
 [ext_resource type="Resource" uid="uid://c1kf8k0j7hew" path="res://Skins/RandomSkin.tres" id="6_mjghu"]
 

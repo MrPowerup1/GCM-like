@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=25 format=3 uid="uid://bamtibaietpx0"]
+[gd_resource type="Resource" script_class="Spell_Type" load_steps=25 format=3]
 
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="1_4r7hw"]
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="1_37i34"]
-[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_t0i2v"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_t0i2v"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="4_pyvvd"]
 [ext_resource type="Script" path="res://Spell Effects/Release_Effect.gd" id="5_5ammy"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="5_i1al3"]

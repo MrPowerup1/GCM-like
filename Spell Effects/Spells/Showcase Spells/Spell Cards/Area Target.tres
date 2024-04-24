@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=4 format=3 uid="uid://cfqfg1b3dpbgq"]
+
+[ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_7ftd2"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="2_ohwxd"]
+[ext_resource type="Resource" uid="uid://ddrfx2hpk7x7l" path="res://Spell Effects/Spells/Targeted Area.tres" id="3_od8to"]
+
+[resource]
+script = ExtResource("2_ohwxd")
+spell = ExtResource("3_od8to")
+name = "Target"
+image = ExtResource("1_7ftd2")
+description = "Does nothing really"
+card_style = 0

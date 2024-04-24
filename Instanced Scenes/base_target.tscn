@@ -26,9 +26,10 @@ script = ExtResource("2_kvjex")
 max_input_vel_square = 100000.0
 speed = 1000.0
 
-[node name="PlayerCharacterInput" type="Node" parent="." node_paths=PackedStringArray("velocity_component")]
+[node name="PlayerCharacterInput" type="Node" parent="." node_paths=PackedStringArray("velocity")]
 script = ExtResource("2_rwxn7")
-velocity_component = NodePath("../Velocity")
+velocity = NodePath("../Velocity")
+current_mode = 1
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

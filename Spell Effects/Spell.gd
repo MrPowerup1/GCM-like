@@ -1,5 +1,5 @@
 extends Resource
-class_name Spell_Type
+class_name Spell
 
 @export_category ("Main Effects")
 enum effect_time {on_activate,on_held,on_release}
@@ -18,15 +18,7 @@ enum effect_time {on_activate,on_held,on_release}
 @export var cooldown_on_release:bool
 @export var cooldown_time:float
 #@export var max_charge_time:float
-@export_category("UI and Internal")
-@export var name:String
-@export var card_image:Texture2D
-@export_multiline var description:String
-@export var element:Element
-@export var requirements:Array[Element] = []
-@export_enum("Passive","Active") var category:int
-@export_enum("Buff","Movement","Attack","Defense") var type:int
-@export var randomizer = false
+
 #@export var spell_scene:PackedScene
 
 

@@ -10,7 +10,7 @@
 [node name="UI" parent="." instance=ExtResource("1_dxhiy")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(100, 100)
+position = Vector2(352, 184)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_vjy2c")
@@ -18,7 +18,7 @@ shape = SubResource("RectangleShape2D_vjy2c")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 texture = ExtResource("4_v5ii4")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+[node name="Outer Border" type="StaticBody2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
-polygon = PackedVector2Array(0, 0, 3, 648, 1159, 646, 1161, -8, 27, 0, 28, 31, 1125, 24, 1119, 628, 27, 618, 27, 0, 0, 0)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Outer Border"]
+polygon = PackedVector2Array(0, 0, 0, 360, 640, 360, 640, 0, 8, 0, 16, 8, 632, 8, 632, 352, 8, 352, 8, 0, 0, 0)

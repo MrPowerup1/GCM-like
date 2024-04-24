@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=14 format=3 uid="uid://t8f82866ltmu"]
+[gd_resource type="Resource" script_class="Spell" load_steps=14 format=3 uid="uid://b4dmyo0yret0k"]
 
 [ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_dbio5"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="1_wk2an"]
-[ext_resource type="Script" path="res://Spell Effects/Spell Type.gd" id="1_wpmqp"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_wpmqp"]
 [ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="2_4xs2a"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_qvp1m"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_fl3s4"]

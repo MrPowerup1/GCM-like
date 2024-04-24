@@ -7,7 +7,7 @@ var registered_ids = {}
 var device_keys={Input_Keys.device_type.KEYBOARD:"kb",Input_Keys.device_type.JOYSTICK:"joy"}
 @export var keyboard_input_1:Input_Keys
 @export var keyboard_input_2:Input_Keys
-@export var spawn_vectors:Array[Vector2]=[Vector2(100,100),Vector2(400,100),Vector2(100,400),Vector2(400,400)]
+@export var spawn_vectors:Array[Vector2]=[Vector2(100,100),Vector2(200,100),Vector2(100,200),Vector2(200,200)]
 var player_count:int =0
 
 signal added_new_player(player:Player)

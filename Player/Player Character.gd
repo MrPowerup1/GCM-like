@@ -69,10 +69,14 @@ func disable():
 	anchor(true)
 
 func set_skin(new_skin:CharacterSkin):
+	#Commented out to test smaller skin version
 	%Sprite2D.texture=new_skin.texture
 	%Sprite2D.material.set_shader_parameter("new_color",new_skin.color)
 	
-func equip_spell(new_spell:Spell_Type,index:int):
+func equip_spell(new_spell:Spell):
 	if !%"Spell Manager".known_spells.has(new_spell):
 		%"Spell Manager".learn_spell(new_spell)
-	%"Spell Manager".equip_spell(%"Spell Manager".known_spells.find(new_spell),index)
+	%"Spell Manager".equip_spell(%"Spell Manager".known_spells.find(new_spell))
+
+func unequip_spell():
+	%"Spell Manager".unequip_spell()

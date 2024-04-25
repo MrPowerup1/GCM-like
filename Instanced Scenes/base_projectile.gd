@@ -42,6 +42,9 @@ func set_size(size:Vector2):
 	scale=size
 
 func _on_timer_timeout():
+	release()
+
+func release():
 	if (self_effect_on_timeout==null):
 		pass
 	elif (self_effect_on_timeout is Positional_Effect):
@@ -51,8 +54,7 @@ func _on_timer_timeout():
 		print("activating base effect at caster")
 		self_effect_on_timeout.trigger(caster,caster,-1)
 	queue_free()
-
-
+	
 func _on_body_entered(body):
 	if (hit_effect==null):
 		pass

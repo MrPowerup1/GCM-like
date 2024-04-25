@@ -22,12 +22,13 @@ image = ExtResource("2_r0hyt")
 on_enter = SubResource("Resource_okdke")
 call_exit_on_timeout = false
 area_scene = ExtResource("1_b3jl1")
-life_time = 1000
+life_time = 100000
 ping_time = 0
 
 [sub_resource type="Resource" id="Resource_40g5o"]
 script = ExtResource("5_7xrmm")
 effect_to_control = SubResource("Resource_8bc5g")
+save_until_release = true
 
 [sub_resource type="Resource" id="Resource_ui2my"]
 script = ExtResource("6_kj80j")
@@ -40,7 +41,11 @@ set_anchor_to = true
 
 [sub_resource type="Resource" id="Resource_vyuj4"]
 script = ExtResource("8_jfnbd")
-release_state = false
+release_state = true
+
+[sub_resource type="Resource" id="Resource_86lbr"]
+script = ExtResource("7_cphyg")
+set_anchor_to = false
 
 [sub_resource type="Resource" id="Resource_fc2v7"]
 script = ExtResource("9_lxolf")
@@ -50,14 +55,10 @@ script = ExtResource("10_rr2kq")
 delay_time = 1000
 effect = SubResource("Resource_fc2v7")
 
-[sub_resource type="Resource" id="Resource_86lbr"]
-script = ExtResource("7_cphyg")
-set_anchor_to = false
-
 [resource]
 script = ExtResource("1_mdfhg")
-timings = Array[int]([0, 0, 0, 0, 2])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ui2my"), SubResource("Resource_vxdoe"), SubResource("Resource_vyuj4"), SubResource("Resource_4r38f"), SubResource("Resource_86lbr")])
+timings = Array[int]([0, 0, 0, 2, 2])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ui2my"), SubResource("Resource_vxdoe"), SubResource("Resource_vyuj4"), SubResource("Resource_86lbr"), SubResource("Resource_4r38f")])
 ping_asap = false
 held_ping_time = 0.0
 cooldown_on_activate = false

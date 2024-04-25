@@ -2,6 +2,7 @@ extends Positional_Effect
 class_name Control_Effect
 
 @export var effect_to_control:Spell_Effect
+@export var save_until_release:bool
 
 func trigger(target,caster:Player,spell_index:int,position:Vector2=target.position):
 	var returned_target=null
@@ -15,3 +16,7 @@ func trigger(target,caster:Player,spell_index:int,position:Vector2=target.positi
 		to_control.input_keys = caster_control.input_keys
 		to_control.device_id = caster_control.device_id
 		to_control.device = caster_control.device
+		if save_until_release:
+			await caster.spell_released
+			if (returned_target!=null):
+				returned_target.release()

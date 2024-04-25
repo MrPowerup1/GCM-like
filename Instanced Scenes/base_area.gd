@@ -28,11 +28,14 @@ func initialize(cast:Player,img:Texture2D,life_time:int,ping_time:int,enter:Spel
 		%Ping_Time.start()
 	caster=cast
 
-func _on_end_time_timeout():
+func release():
 	if (exit_trigger_on_timeout):
 		for body in get_overlapping_bodies():
 			trigger_spell(exit_effect,body)	
 	queue_free()
+
+func _on_end_time_timeout():
+	release()
 
 func _on_ping_time_timeout():
 	for body in get_overlapping_bodies():

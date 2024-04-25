@@ -8,6 +8,9 @@ var facing:Vector2
 var num_spells:int
 @export var my_input:PlayerCharacterInput
 
+signal spell_activated(index:int)
+signal spell_released(index:int)
+
 func _ready():
 	my_input.button_activate.connect(activate)
 	my_input.button_release.connect(release)
@@ -22,10 +25,12 @@ func _physics_process(delta):
 func activate(index:int):
 	if can_cast[index]:
 		%"Spell Manager".activate(index)
+		spell_activated.emit(index)
 	
 func release(index:int):
 	if can_release[index]:
 		%"Spell Manager".release(index)
+		spell_released.emit(index)
 	
 func add_status_effect(status:Status_Type,caster:Player):
 	%"Status Manager".new_status(status,caster)

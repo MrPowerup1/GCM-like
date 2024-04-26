@@ -14,6 +14,7 @@
 script = ExtResource("1_pyrsy")
 
 [node name="PlayerJoin" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("5_p0knl")
 player_scene = ExtResource("3_0l3n3")
 base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])

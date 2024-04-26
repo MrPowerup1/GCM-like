@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=13 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_umfx1"]
@@ -30,6 +30,11 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lbhbm"]
 shader = SubResource("Shader_obj0k")
 shader_parameter/new_color = Color(0.890196, 0.639216, 0.172549, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8vhl8"]
+properties/0/path = NodePath(".:syncpos")
+properties/0/spawn = true
+properties/0/sync = true
 
 [node name="Player Character" type="CharacterBody2D"]
 position = Vector2(3, 6)
@@ -67,3 +72,7 @@ max_input_vel_square = 100000.0
 zero_velocity_range_square = 150.0
 speed = 5000.0
 friction = 3000.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_8vhl8")

@@ -39,6 +39,7 @@ func _on_player_quit(player:PlayerManager):
 
 func _on_player_ready():
 	if current_players >= min_players:
+		print("a player is ready")
 		for panel in get_children():
 			if panel is PlayerPanel and !(panel as PlayerPanel).now_ready:
 				return

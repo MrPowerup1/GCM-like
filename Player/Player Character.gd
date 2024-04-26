@@ -9,6 +9,8 @@ var num_spells:int
 @export var input_scene:PackedScene
 @export var my_input:PlayerCharacterInput = null
 
+@export var syncpos:Vector2
+
 signal spell_activated(index:int)
 signal spell_released(index:int)
 
@@ -16,9 +18,13 @@ func _ready():
 	
 	#Seperate the material so it doesn't change with others
 	%Sprite2D.material = %Sprite2D.material.duplicate(true)
+	
 
 func _physics_process(delta):
-	
+	if %MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+		position = position.lerp(syncpos, 0.5)
+	else:
+		syncpos=position
 	if %Velocity.can_move and !velocity.is_zero_approx():
 		facing=velocity.normalized().snapped(Vector2.ONE)
  
@@ -95,4 +101,6 @@ func add_input(keys:Input_Keys):
 	my_input.device=my_input.device_type.LOCAL
 	my_input.button_activate.connect(activate)
 	my_input.button_release.connect(release)
-	
+
+func new_auth(id:int):
+	%MultiplayerSynchronizer.set_multiplayer_authority(id)

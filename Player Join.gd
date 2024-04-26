@@ -10,6 +10,8 @@ var device_keys={Input_Keys.device_type.KEYBOARD:"kb",Input_Keys.device_type.JOY
 @export var spawn_vectors:Array[Vector2]=[Vector2(100,100),Vector2(200,100),Vector2(100,200),Vector2(200,200)]
 var player_count:int =0
 
+var searching:bool=false
+
 signal added_new_player(player:Player)
 
 # Called when the node enters the scene tree for the first time.
@@ -21,24 +23,25 @@ func _process(delta):
 	pass
 
 func _unhandled_input(event):
-	var id = event.device
-	var type=Input_Keys.device_type.JOYSTICK
-	if event.is_action_pressed("Join_joy_1") and (!registered_ids.has(id) or registered_ids[id]!=type):
-		registered_ids [id]=type
-		var new_keys=_duplicate_input(id,type)
-		add_player(new_keys)
-		add_remote_player.rpc()
-	type=Input_Keys.device_type.KEYBOARD
-	if event.is_action_pressed("Join_kb_1") and (!registered_ids.has(-1) or registered_ids[-1]!=type):
-		id=-1
-		registered_ids [id]=type
-		add_player(keyboard_input_1)
-		add_remote_player.rpc()
-	if event.is_action_pressed("Join_kb_2") and (!registered_ids.has(-2) or registered_ids[-2]!=type):
-		id=-2
-		registered_ids [id]=type
-		add_player(keyboard_input_2)
-		add_remote_player.rpc()
+	if searching:
+		var id = event.device
+		var type=Input_Keys.device_type.JOYSTICK
+		if event.is_action_pressed("Join_joy_1") and (!registered_ids.has(id) or registered_ids[id]!=type):
+			registered_ids [id]=type
+			var new_keys=_duplicate_input(id,type)
+			add_player(new_keys)
+			add_remote_player.rpc()
+		type=Input_Keys.device_type.KEYBOARD
+		if event.is_action_pressed("Join_kb_1") and (!registered_ids.has(-1) or registered_ids[-1]!=type):
+			id=-1
+			registered_ids [id]=type
+			add_player(keyboard_input_1)
+			add_remote_player.rpc()
+		if event.is_action_pressed("Join_kb_2") and (!registered_ids.has(-2) or registered_ids[-2]!=type):
+			id=-2
+			registered_ids [id]=type
+			add_player(keyboard_input_2)
+			add_remote_player.rpc()
 	
 func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 	InputMap.get_actions()
@@ -61,6 +64,7 @@ func next_position() -> Vector2:
 
 func add_player(input:Input_Keys):
 	var new_player = player_scene.instantiate()
+	new_player.device_id = multiplayer.get_unique_id()
 	get_parent().get_parent().add_child(new_player,true)
 	new_player.set_start_pos(next_position())
 	new_player.add_controls(input)
@@ -72,6 +76,7 @@ func add_player(input:Input_Keys):
 @rpc("call_remote","any_peer")
 func add_remote_player():
 	var new_player = player_scene.instantiate()
+	new_player.device_id = multiplayer.get_remote_sender_id()
 	get_parent().get_parent().add_child(new_player,true)
 	new_player.set_start_pos(next_position())
 	$"..".start_round.connect(new_player.start_round)
@@ -81,8 +86,9 @@ func add_remote_player():
 	
 func delete_player(player:PlayerManager):
 	print ("Deleted player here yaya")
-	var to_del_input = player.player_character.my_input.input_keys
-	if registered_ids.has(to_del_input.device_id) and registered_ids[to_del_input.device_id]==to_del_input.device:
-		registered_ids.erase(to_del_input.device_id)
-		print("Deleted id")
+	if player.player_character.my_input!=null:
+		var to_del_input = player.player_character.my_input.input_keys
+		if registered_ids.has(to_del_input.device_id) and registered_ids[to_del_input.device_id]==to_del_input.device:
+			registered_ids.erase(to_del_input.device_id)
+			print("Deleted id")
 	player.queue_free()

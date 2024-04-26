@@ -15,6 +15,8 @@ var default_friction:float
 var default_mass:float
 var can_move:bool=true
 
+var anchored_pos:Vector2
+
 func _ready():
 	default_speed=speed
 	default_friction=friction
@@ -57,6 +59,7 @@ func constant_vel(direction:Vector2):
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor
 	velocity=Vector2.ZERO
+	anchored_pos=body.position
 
 func set_speed(new_speed:float=default_speed):
 	speed=new_speed
@@ -87,5 +90,6 @@ func _physics_process(delta):
 			velocity=body.velocity
 		else:
 			body.position+=velocity*delta
-	
+	if can_move==false:
+		body.position=body.position.lerp(anchored_pos,0.5)
 	

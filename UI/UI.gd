@@ -16,6 +16,7 @@ func transition_state(new_state:state):
 		%HostGame.visible=true
 		%"Player Select Menu".visible=false
 	elif  new_state==state.PLAYERS_JOINING:
+		%PlayerJoin.searching=true
 		%HostGame.visible=false
 		%"Player Select Menu".visible=true
 		%StartGamePanel.visible=false

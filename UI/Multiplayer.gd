@@ -26,6 +26,7 @@ func player_disconnected(id):
 #Called just on this client
 func connected_to_server():
 	print("Connected to server")
+	send_player_info.rpc_id(1, multiplayer.get_unique_id(), 0)
 
 #Called just on this client
 func connection_failed():
@@ -34,6 +35,17 @@ func connection_failed():
 #@rpc("any_peer","call_local")
 #func start_game():
 #	wait_for_players.emit()
+
+@rpc("any_peer")
+func send_player_info(id,local_index):
+	if !GameManager.players.has(id):
+		GameManager.players [id] = {
+			"id":id,
+			"local_index":local_index
+		}
+	if multiplayer.is_server():
+		for player in GameManager.players:
+			send_player_info.rpc(player,GameManager.players[player].local_index)
 
 func _on_local_button_down():
 	wait_for_players.emit()
@@ -49,6 +61,7 @@ func _on_host_button_down():
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	print("Now waiting for players ")
+	send_player_info(multiplayer.get_unique_id(),0)
 	wait_for_players.emit()
 	
 

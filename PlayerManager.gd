@@ -6,10 +6,13 @@ var skin:CharacterSkin
 @export var spawn_loc:Vector2
 enum control_mode {ROUND_CONTROL,UI_CONTROL}
 var current_mode = control_mode.UI_CONTROL
+var device_id:int
+var player_index:int
 
 func _ready():
 	player_character=%"Player Character"
 	player_character.disable()
+	player_character.new_auth(device_id)
 
 func add_controls(controls:Input_Keys):
 	print("Adding controls, ", controls)

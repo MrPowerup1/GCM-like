@@ -15,6 +15,7 @@ signal player_quit(player:PlayerManager)
 func _ready():
 	most_recent_panel=get_child(0)
 
+#@rpc("any_peer","call_local")
 func player_join(player:PlayerManager):
 	if !starting and current_players < max_players:
 		most_recent_panel.player_join(player)
@@ -37,11 +38,9 @@ func _on_player_quit(player:PlayerManager):
 	_on_player_ready()
 
 func _on_player_ready():
-	print("Ready Called")
 	if current_players >= min_players:
 		for panel in get_children():
 			if panel is PlayerPanel and !(panel as PlayerPanel).now_ready:
-				print ("Not all are ready")
 				return
 		for panel in get_children():
 			if panel is PlayerPanel and (panel as PlayerPanel).current_player == null:
@@ -58,7 +57,7 @@ func _on_player_unready():
 
 func new_panel():
 	most_recent_panel =  player_panel.instantiate()
-	add_child(most_recent_panel)
+	add_child(most_recent_panel,true)
 	most_recent_panel.player_ready.connect(_on_player_ready)
 	most_recent_panel.player_quit.connect(_on_player_quit)
 	most_recent_panel.player_unready.connect(_on_player_unready)

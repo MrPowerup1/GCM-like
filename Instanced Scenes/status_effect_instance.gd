@@ -22,7 +22,6 @@ func initialize(new_status:Status_Type,caster:Player,target:Player,index:int):
 	activate()
 	
 func activate():
-	#print ("activating effect")
 	status.activate(original_caster,status_index)
 	if (status.ping_time!=0):
 		$Ping_Time.start()
@@ -30,7 +29,6 @@ func activate():
 		
 
 func release():
-	#print ("releasing effect")
 	status.release(original_caster,status_index)
 	$End_Time.stop()
 	if (status.ping_time!=0):

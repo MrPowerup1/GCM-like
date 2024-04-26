@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://gml8gorru1ib"]
+[gd_scene load_steps=10 format=3 uid="uid://gml8gorru1ib"]
 
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
@@ -8,16 +8,20 @@
 [ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="4_6v6gd"]
 [ext_resource type="Resource" uid="uid://108qxs1oy0ow" path="res://Inputs/keyboard_right.tres" id="5_a5xvl"]
 [ext_resource type="Script" path="res://Player Join.gd" id="5_p0knl"]
+[ext_resource type="Script" path="res://UI/Multiplayer.gd" id="6_pu1lh"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_pyrsy")
 
-[node name="LocalPlayerJoin" type="Node" parent="."]
+[node name="PlayerJoin" type="Node" parent="."]
 script = ExtResource("5_p0knl")
 player_scene = ExtResource("3_0l3n3")
 base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])
 keyboard_input_1 = ExtResource("4_6v6gd")
 keyboard_input_2 = ExtResource("5_a5xvl")
+
+[node name="Multiplayer" type="Node" parent="."]
+script = ExtResource("6_pu1lh")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -26,13 +30,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="HostGame" type="MarginContainer" parent="PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Matchmaking Menu" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="Matchmaking Menu" type="VBoxContainer" parent="PanelContainer/HostGame"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/Matchmaking Menu"]
+[node name="Label" type="Label" parent="PanelContainer/HostGame/Matchmaking Menu"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
@@ -40,14 +45,14 @@ text = "Local"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Local" type="Button" parent="PanelContainer/MarginContainer/Matchmaking Menu"]
+[node name="Local" type="Button" parent="PanelContainer/HostGame/Matchmaking Menu"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 theme_override_font_sizes/font_size = 30
 text = "Start Local Game"
 
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/Matchmaking Menu"]
+[node name="Label2" type="Label" parent="PanelContainer/HostGame/Matchmaking Menu"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
@@ -56,12 +61,12 @@ text = "Online
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/Matchmaking Menu"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HostGame/Matchmaking Menu"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Host" type="Button" parent="PanelContainer/MarginContainer/Matchmaking Menu/HBoxContainer"]
+[node name="Host" type="Button" parent="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -69,11 +74,11 @@ theme_override_font_sizes/font_size = 30
 text = "Host Online Game
 "
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/Matchmaking Menu/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Join" type="Button" parent="PanelContainer/MarginContainer/Matchmaking Menu/HBoxContainer/VBoxContainer"]
+[node name="Join" type="Button" parent="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -82,11 +87,11 @@ theme_override_font_sizes/font_size = 30
 text = "Join Online Game
 "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/Matchmaking Menu/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Label3" type="Label" parent="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -96,13 +101,25 @@ text = "IP:
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="IP" type="LineEdit" parent="PanelContainer/MarginContainer/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="IP" type="LineEdit" parent="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 
+[node name="Start" type="Button" parent="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Start Game
+
+"
+
 [node name="Player Select Menu" type="VBoxContainer" parent="PanelContainer"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
@@ -123,8 +140,13 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[connection signal="added_new_player" from="LocalPlayerJoin" to="." method="add_player"]
-[connection signal="player_quit" from="PanelContainer/Player Select Menu/PlayerSelectScreen" to="LocalPlayerJoin" method="delete_player"]
+[connection signal="added_new_player" from="PlayerJoin" to="." method="add_player"]
+[connection signal="wait_for_players" from="Multiplayer" to="." method="_on_multiplayer_wait_for_players"]
+[connection signal="button_down" from="PanelContainer/HostGame/Matchmaking Menu/Local" to="Multiplayer" method="_on_local_button_down"]
+[connection signal="button_down" from="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/Host" to="Multiplayer" method="_on_host_button_down"]
+[connection signal="button_down" from="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/Join" to="Multiplayer" method="_on_join_button_down"]
+[connection signal="button_down" from="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/Start" to="Multiplayer" method="_on_start_button_down"]
+[connection signal="player_quit" from="PanelContainer/Player Select Menu/PlayerSelectScreen" to="PlayerJoin" method="delete_player"]
 [connection signal="players_ready" from="PanelContainer/Player Select Menu/PlayerSelectScreen" to="." method="_on_player_select_screen_players_ready"]
 [connection signal="players_unready" from="PanelContainer/Player Select Menu/PlayerSelectScreen" to="." method="_on_player_select_screen_players_unready"]
 [connection signal="player_quit" from="PanelContainer/Player Select Menu/PlayerSelectScreen/PlayerPanel1" to="PanelContainer/Player Select Menu/PlayerSelectScreen" method="_on_player_quit"]

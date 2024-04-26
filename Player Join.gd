@@ -16,7 +16,6 @@ signal added_new_player(player:Player)
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -28,15 +27,18 @@ func _unhandled_input(event):
 		registered_ids [id]=type
 		var new_keys=_duplicate_input(id,type)
 		add_player(new_keys)
+		add_remote_player.rpc()
 	type=Input_Keys.device_type.KEYBOARD
 	if event.is_action_pressed("Join_kb_1") and (!registered_ids.has(-1) or registered_ids[-1]!=type):
 		id=-1
 		registered_ids [id]=type
 		add_player(keyboard_input_1)
+		add_remote_player.rpc()
 	if event.is_action_pressed("Join_kb_2") and (!registered_ids.has(-2) or registered_ids[-2]!=type):
 		id=-2
 		registered_ids [id]=type
 		add_player(keyboard_input_2)
+		add_remote_player.rpc()
 	
 func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 	InputMap.get_actions()
@@ -56,16 +58,27 @@ func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 #TODO MAKE THIS REAl
 func next_position() -> Vector2:
 	return spawn_vectors[player_count%spawn_vectors.size()]
-	
+
 func add_player(input:Input_Keys):
 	var new_player = player_scene.instantiate()
-	get_parent().get_parent().add_child(new_player)
+	get_parent().get_parent().add_child(new_player,true)
 	new_player.set_start_pos(next_position())
 	new_player.add_controls(input)
 	$"..".start_round.connect(new_player.start_round)
 	player_count+=1
 	added_new_player.emit(new_player)
+	print("Added new_player")
 
+@rpc("call_remote","any_peer")
+func add_remote_player():
+	var new_player = player_scene.instantiate()
+	get_parent().get_parent().add_child(new_player,true)
+	new_player.set_start_pos(next_position())
+	$"..".start_round.connect(new_player.start_round)
+	player_count+=1
+	added_new_player.emit(new_player)
+	print("Added new_player")
+	
 func delete_player(player:PlayerManager):
 	print ("Deleted player here yaya")
 	var to_del_input = player.player_character.my_input.input_keys

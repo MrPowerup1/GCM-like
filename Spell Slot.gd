@@ -56,7 +56,6 @@ func release():
 			$Cooldown_Timer.start()
 
 func _on_held_timer_timeout():
-	##print("ping")
 	spell.held(caster,spell_index)
 	
 func _on_cooldown_timer_timeout():

@@ -57,7 +57,6 @@ func constant_vel(direction:Vector2):
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor
 	velocity=Vector2.ZERO
-	print("Setting Anchor to ",set_anchor)
 
 func set_speed(new_speed:float=default_speed):
 	speed=new_speed

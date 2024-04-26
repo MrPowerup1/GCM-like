@@ -9,7 +9,6 @@ func random() -> Card:
 	return cards[index]
 
 func start_cards() -> Array:
-	print(cards[0].name)
 	return next_cards(cards[0])
 
 func next_cards(new_center_card:Card) -> Array:

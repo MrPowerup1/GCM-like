@@ -12,7 +12,8 @@ func _ready():
 	player_character.disable()
 
 func add_controls(controls:Input_Keys):
-	player_character.my_input.input_keys=controls
+	print("Adding controls, ", controls)
+	player_character.add_input(controls)
 
 func set_start_pos(position:Vector2):
 	spawn_loc=position
@@ -21,8 +22,9 @@ func start_round():
 	player_character.enable()
 	player_character.position=spawn_loc
 	current_mode=control_mode.ROUND_CONTROL
-	player_character.my_input.current_mode=PlayerCharacterInput.input_mode.GAMEPLAY
-	player_character.my_input.input_mode_changed.emit(player_character.my_input.current_mode)
+	if player_character.my_input!=null:
+		player_character.my_input.current_mode=PlayerCharacterInput.input_mode.GAMEPLAY
+		player_character.my_input.input_mode_changed.emit(player_character.my_input.current_mode)
 	
 func stop_round():
 	player_character.disable()

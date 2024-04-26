@@ -19,7 +19,7 @@ func _ready():
 			slots.append(new_slot)
 			add_child(new_slot)
 	else:
-		print("Null Spell Slot Scene")
+		printerr("Null Spell Slot Scene")
 	
 	caster.num_spells=slots.size()
 	#Replace this later when there needs to be spell selection
@@ -37,7 +37,7 @@ func activate(spell_index:int):
 	if spell_index < slots.size():
 		slots[spell_index].activate()
 	else:
-		print("Activating unknown spell slot")
+		printerr("Activating unknown spell slot")
 	#active_spells[spell_index].activate(caster)
 
 
@@ -46,7 +46,7 @@ func release(spell_index:int):
 		slots[spell_index].release()
 		
 	else:
-		print("Releasing unknown spell slot")
+		printerr("Releasing unknown spell slot")
 	
 
 func equip_spell(known_index:int,equip_index:int=-1):
@@ -70,5 +70,4 @@ func learn_spell(new_spell:Spell):
 	known_spells.append(new_spell)
 
 func get_held_time(spell_index:int):
-	##print("getting held time of ",spell_index)
 	return slots[spell_index].get_held_time()

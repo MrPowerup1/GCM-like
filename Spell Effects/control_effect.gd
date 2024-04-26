@@ -14,8 +14,6 @@ func trigger(target,caster:Player,spell_index:int,position:Vector2=target.positi
 		var to_control=(returned_target as Node2D).get_node("PlayerCharacterInput")
 		var caster_control=caster.get_node("PlayerCharacterInput")
 		to_control.input_keys = caster_control.input_keys
-		to_control.device_id = caster_control.device_id
-		to_control.device = caster_control.device
 		if save_until_release:
 			await caster.spell_released
 			if (returned_target!=null):

@@ -6,6 +6,7 @@ class_name CardSelectPanel
 @export var center_card:Card
 @export var right_card:Card
 @export var center_display:CardDisplay
+@export var player:PlayerManager
 enum display_mode {SELECTED,SELECTING}
 var current_mode:display_mode
 
@@ -13,7 +14,6 @@ var current_mode:display_mode
 
 func _ready():
 	#Get the default skins and display them
-	print(cards)
 	var to_display = cards.start_cards()
 	new_cards(to_display)
 	%LeftCard.reset_shader()
@@ -24,17 +24,20 @@ func _ready():
 signal exit()
 signal next()
 
+@rpc("any_peer","call_local")
 func left():
 	new_cards(cards.next_cards(left_card))
-	print("Go Left")
+@rpc("any_peer","call_local")
 func right():
 	new_cards(cards.next_cards(right_card))
-	print ("Go Right")
+@rpc("any_peer","call_local")
 func up():
 	pass
+@rpc("any_peer","call_local")
 func down():
 	pass
-func select(player:PlayerManager):
+@rpc("any_peer","call_local")
+func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
 	if cards.select(center_card):
@@ -42,11 +45,13 @@ func select(player:PlayerManager):
 		new_cards(cards.next_cards(center_card))
 		next.emit()
 	else:
-		print ("Can't Select")
+		pass
+@rpc("any_peer","call_local")
 func back():
 	exit.emit()
 
-func unselect(player:PlayerManager):
+@rpc("any_peer","call_local")
+func unselect():
 	cards.unselect(center_card)
 	center_card.unselect(player)
 	new_cards(cards.next_cards(center_card))
@@ -88,3 +93,15 @@ func transition_display_mode(new_mode:display_mode):
 		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 	current_mode=new_mode
+
+
+func _on_left_button_button_down():
+	left()
+
+
+func _on_right_button_button_down():
+	right()
+
+
+func _on_select_button_button_down():
+	select()

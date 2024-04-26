@@ -50,8 +50,6 @@ func release():
 	elif (self_effect_on_timeout is Positional_Effect):
 		(self_effect_on_timeout as Positional_Effect).trigger(caster,caster,-1,position)
 	else:
-		print(self_effect_on_timeout.is_class("Node"))
-		print("activating base effect at caster")
 		self_effect_on_timeout.trigger(caster,caster,-1)
 	queue_free()
 	

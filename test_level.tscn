@@ -22,3 +22,7 @@ texture = ExtResource("4_v5ii4")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Outer Border"]
 polygon = PackedVector2Array(0, 0, 0, 360, 640, 360, 640, 0, 8, 0, 16, 8, 632, 8, 632, 352, 8, 352, 8, 0, 0, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+spawn_limit = 4

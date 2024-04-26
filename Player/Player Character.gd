@@ -6,14 +6,14 @@ var can_release:Array[bool]=[true,true]
 var can_cast:Array[bool]=[true,true]
 var facing:Vector2
 var num_spells:int
-@export var my_input:PlayerCharacterInput
+@export var input_scene:PackedScene
+@export var my_input:PlayerCharacterInput = null
 
 signal spell_activated(index:int)
 signal spell_released(index:int)
 
 func _ready():
-	my_input.button_activate.connect(activate)
-	my_input.button_release.connect(release)
+	
 	#Seperate the material so it doesn't change with others
 	%Sprite2D.material = %Sprite2D.material.duplicate(true)
 
@@ -85,3 +85,14 @@ func equip_spell(new_spell:Spell):
 
 func unequip_spell():
 	%"Spell Manager".unequip_spell()
+
+func add_input(keys:Input_Keys):
+	my_input=input_scene.instantiate()
+	add_child(my_input)
+	my_input.input_keys=keys
+	my_input.velocity=%Velocity
+	my_input.current_mode=my_input.input_mode.UI
+	my_input.device=my_input.device_type.LOCAL
+	my_input.button_activate.connect(activate)
+	my_input.button_release.connect(release)
+	

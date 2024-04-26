@@ -1,5 +1,5 @@
 extends Card
 class_name RandomCard
 
-@export var randomize:bool=true
+@export var set_random:bool=true
 

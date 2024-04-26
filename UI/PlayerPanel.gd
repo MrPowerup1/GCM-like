@@ -17,18 +17,21 @@ signal player_unready()
 func player_join(player:PlayerManager):
 	current_player=player
 	transition_style(style.SKIN_SELECT)
+	%SkinSelect.player=current_player
+	%SpellSelect1.player=current_player
+	%SpellSelect2.player=current_player
 	#Timer to wait out the initial input to join
 	%InputCooldown.start()
 	cooldown_ready=false
-	current_player.player_character.my_input.button_activate.connect(button_input)
-	current_player.player_character.my_input.direction_pressed.connect(directional_input)
-	current_player.player_character.my_input.input_mode_changed.connect(change_input_mode)
+	if current_player.player_character.my_input!=null:
+		current_player.player_character.my_input.button_activate.connect(button_input)
+		current_player.player_character.my_input.direction_pressed.connect(directional_input)
+		current_player.player_character.my_input.input_mode_changed.connect(change_input_mode)
 	
 
 func quit():
 	player_quit.emit(current_player)
 	current_player=null
-	print ("I quit")
 	queue_free()
 	
 func transition_style(new_style:style):
@@ -68,22 +71,22 @@ func directional_input(direction:Vector2):
 		cooldown_ready=false
 		%InputCooldown.start()
 		if direction.x >0:
-			active_panel.right()
+			active_panel.right.rpc()
 		if direction.x < 0:
-			active_panel.left()
+			active_panel.left.rpc()
 		if direction.y < 0:
-			active_panel.up()
+			active_panel.up.rpc()
 		if direction.y > 0:
-			active_panel.down()	
+			active_panel.down.rpc()	
 
 func button_input(button_index:int):
 	if cooldown_ready and reading_inputs and active_panel != null:
 		cooldown_ready=false
 		%InputCooldown.start()
 		if button_index == 0:
-			active_panel.select(current_player)
+			active_panel.select.rpc()
 		if button_index == 1:
-			active_panel.back()
+			active_panel.back.rpc()
 
 func change_input_mode(new_style:PlayerCharacterInput.input_mode):
 	if new_style == PlayerCharacterInput.input_mode.GAMEPLAY:
@@ -102,8 +105,7 @@ func unselect(panel:Control):
 func _on_player_ready_exit():
 	transition_style(style.SPELL_SELECT2)
 	player_unready.emit()
-	print ("player unready here")
-	%SpellSelect2.unselect(current_player)
+	%SpellSelect2.unselect()
 
 
 func _on_join_panel_next():
@@ -116,7 +118,7 @@ func _on_input_cooldown_timeout():
 
 func _on_spell_select_2_exit():
 	transition_style(style.SPELL_SELECT1)
-	%SpellSelect1.unselect(current_player)
+	%SpellSelect1.unselect()
 	#unselect(%SpellSelect1)
 	#unselect(%SpellSelect1.center_display)
 

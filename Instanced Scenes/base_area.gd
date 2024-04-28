@@ -27,6 +27,7 @@ func initialize(cast:Player,img:Texture2D,life_time:int,ping_time:int,enter:Spel
 	if (ping_effect!=null):
 		%Ping_Time.start()
 	caster=cast
+	%MultiplayerSynchronizer.set_multiplayer_authority(caster.get_parent().device_id)
 
 func release():
 	if (exit_trigger_on_timeout):

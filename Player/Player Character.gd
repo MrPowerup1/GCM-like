@@ -28,14 +28,15 @@ func _physics_process(delta):
 	if %Velocity.can_move and !velocity.is_zero_approx():
 		facing=velocity.normalized().snapped(Vector2.ONE)
  
+
 func activate(index:int):
 	if can_cast[index]:
-		%"Spell Manager".activate(index)
+		%"Spell Manager".activate.rpc(index)
 		spell_activated.emit(index)
-	
+
 func release(index:int):
 	if can_release[index]:
-		%"Spell Manager".release(index)
+		%"Spell Manager".release.rpc(index)
 		spell_released.emit(index)
 	
 func add_status_effect(status:Status_Type,caster:Player):

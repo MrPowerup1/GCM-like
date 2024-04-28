@@ -41,6 +41,7 @@ func transition_style(new_style:style):
 		%SpellSelect1.visible=false
 		%SkinSelect.transition_display_mode(CardSelectPanel.display_mode.SELECTING)
 		active_panel=%"SkinSelect"
+		now_ready=false
 		
 	if (new_style==style.SPELL_SELECT1):
 		active_panel=%SpellSelect1
@@ -109,7 +110,7 @@ func _on_player_ready_exit():
 
 
 func _on_join_panel_next():
-	pass # Replace with function body.
+	now_ready=false
 
 func _on_input_cooldown_timeout():
 	cooldown_ready=true
@@ -128,6 +129,7 @@ func _on_spell_select_2_next():
 
 
 func _on_skin_select_exit():
+	now_ready=true
 	transition_style(style.AWAIT_PLAYER)
 	#%Unselected.add_child(%SkinSelect.center_display)
 	quit()

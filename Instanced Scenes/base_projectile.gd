@@ -19,6 +19,7 @@ func _physics_process(delta):
 	#position+=move_dir*speed*delta
 
 func initialize(spd:int,img:Texture2D,effect:Spell_Effect,lifetime:int,size:Vector2,cast:Player,pierce:bool,on_timeout:Spell_Effect=null,on_hit:Spell_Effect=null):
+	
 	velocity.default_speed=spd
 	#speed=spd
 	get_node("Sprite2D").texture=img
@@ -36,6 +37,7 @@ func initialize(spd:int,img:Texture2D,effect:Spell_Effect,lifetime:int,size:Vect
 	self_effect_on_timeout=on_timeout
 	self_effect_on_hit=on_hit
 	velocity.constant_vel(move_dir)
+	%MultiplayerSynchronizer.set_multiplayer_authority(caster.get_parent().device_id)
 
 		
 func set_size(size:Vector2):

@@ -33,6 +33,7 @@ func _ready():
 func _process(delta):
 	pass
 
+@rpc("any_peer","call_local")
 func activate(spell_index:int):
 	if spell_index < slots.size():
 		slots[spell_index].activate()
@@ -40,7 +41,7 @@ func activate(spell_index:int):
 		printerr("Activating unknown spell slot")
 	#active_spells[spell_index].activate(caster)
 
-
+@rpc("any_peer","call_local")
 func release(spell_index:int):
 	if spell_index < slots.size():
 		slots[spell_index].release()

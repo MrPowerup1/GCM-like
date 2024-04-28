@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnkvt5plhp8al"]
+[gd_scene load_steps=6 format=3 uid="uid://bnkvt5plhp8al"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/base_area.gd" id="1_ht4gn"]
 [ext_resource type="Script" path="res://Velocity.gd" id="2_kvjex"]
@@ -6,6 +6,11 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pjmfs"]
 radius = 300.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c6ox0"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
 
 [node name="Base Target" type="Area2D"]
 script = ExtResource("1_ht4gn")
@@ -30,6 +35,10 @@ speed = 1000.0
 script = ExtResource("2_rwxn7")
 velocity = NodePath("../Velocity")
 current_mode = 1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_c6ox0")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

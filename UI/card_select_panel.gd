@@ -96,12 +96,15 @@ func transition_display_mode(new_mode:display_mode):
 
 
 func _on_left_button_button_down():
-	left()
+	if player.device_id == multiplayer.get_unique_id():
+		left()
 
 
 func _on_right_button_button_down():
-	right()
+	if player.device_id == multiplayer.get_unique_id():
+		right()
 
 
 func _on_select_button_button_down():
-	select()
+	if player.device_id == multiplayer.get_unique_id():
+		select()

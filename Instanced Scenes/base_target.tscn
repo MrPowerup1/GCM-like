@@ -34,6 +34,7 @@ speed = 1000.0
 [node name="PlayerCharacterInput" type="Node" parent="." node_paths=PackedStringArray("velocity")]
 script = ExtResource("2_rwxn7")
 velocity = NodePath("../Velocity")
+device = 1
 current_mode = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

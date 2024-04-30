@@ -29,6 +29,7 @@ func initialize(cast:Player,img:Texture2D,life_time:int,ping_time:int,enter:Spel
 	caster=cast
 	%MultiplayerSynchronizer.set_multiplayer_authority(caster.get_parent().device_id)
 
+@rpc("any_peer","call_local")
 func release():
 	if (exit_trigger_on_timeout):
 		for body in get_overlapping_bodies():
@@ -36,7 +37,7 @@ func release():
 	queue_free()
 
 func _on_end_time_timeout():
-	release()
+	release.rpc()
 
 func _on_ping_time_timeout():
 	for body in get_overlapping_bodies():

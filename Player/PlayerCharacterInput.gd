@@ -17,7 +17,7 @@ signal input_mode_changed(new_mode:input_mode)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if (device!=device_type.REMOTE):
+	if (device!=device_type.REMOTE and input_keys!=null):
 		var direction = Vector2(Input.get_axis(input_keys.conversion["Left"], input_keys.conversion["Right"]),Input.get_axis(input_keys.conversion["Up"],input_keys.conversion["Down"]))
 		if (velocity!=null and current_mode == input_mode.GAMEPLAY):
 			velocity.move_input(direction,delta)

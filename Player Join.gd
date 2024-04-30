@@ -29,19 +29,19 @@ func _unhandled_input(event):
 		if event.is_action_pressed("Join_joy_1") and (!registered_ids.has(id) or registered_ids[id]!=type):
 			registered_ids [id]=type
 			var new_keys=_duplicate_input(id,type)
-			add_player(new_keys)
-			add_remote_player.rpc()
+			add_player(id,new_keys)
+			add_remote_player.rpc(id)
 		type=Input_Keys.device_type.KEYBOARD
 		if event.is_action_pressed("Join_kb_1") and (!registered_ids.has(-1) or registered_ids[-1]!=type):
 			id=-1
 			registered_ids [id]=type
-			add_player(keyboard_input_1)
-			add_remote_player.rpc()
+			add_player(id,keyboard_input_1)
+			add_remote_player.rpc(id)
 		if event.is_action_pressed("Join_kb_2") and (!registered_ids.has(-2) or registered_ids[-2]!=type):
 			id=-2
 			registered_ids [id]=type
-			add_player(keyboard_input_2)
-			add_remote_player.rpc()
+			add_player(id,keyboard_input_2)
+			add_remote_player.rpc(id)
 	
 func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 	InputMap.get_actions()
@@ -62,7 +62,7 @@ func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 func next_position() -> Vector2:
 	return spawn_vectors[player_count%spawn_vectors.size()]
 
-func add_player(input:Input_Keys):
+func add_player(local_id:int, input:Input_Keys):
 	var new_player = player_scene.instantiate()
 	new_player.device_id = multiplayer.get_unique_id()
 	get_parent().get_parent().add_child(new_player,true)
@@ -72,9 +72,14 @@ func add_player(input:Input_Keys):
 	player_count+=1
 	added_new_player.emit(new_player)
 	print("Added new_player")
+	var multiplayer_id = multiplayer.get_unique_id()
+	GameManager.players [multiplayer_id] = {
+			"id":multiplayer_id,
+			"local_index":local_id
+		}
 
 @rpc("call_remote","any_peer")
-func add_remote_player():
+func add_remote_player(local_id:int):
 	var new_player = player_scene.instantiate()
 	new_player.device_id = multiplayer.get_remote_sender_id()
 	get_parent().get_parent().add_child(new_player,true)
@@ -83,6 +88,11 @@ func add_remote_player():
 	player_count+=1
 	added_new_player.emit(new_player)
 	print("Added new_player")
+	var multiplayer_id = multiplayer.get_remote_sender_id()
+	GameManager.players [multiplayer_id] = {
+			"id":multiplayer_id,
+			"local_index":local_id
+		}
 	
 func delete_player(player:PlayerManager):
 	print ("Deleted player here yaya")

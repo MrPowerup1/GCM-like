@@ -44,8 +44,9 @@ func set_size(size:Vector2):
 	scale=size
 
 func _on_timer_timeout():
-	release()
+	release.rpc()
 
+@rpc("any_peer","call_local")
 func release():
 	if (self_effect_on_timeout==null):
 		pass

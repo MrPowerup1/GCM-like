@@ -32,10 +32,59 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HostGame" type="MarginContainer" parent="PanelContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 
+[node name="Waiting For Connect" type="VBoxContainer" parent="PanelContainer/HostGame"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Waiting for Players" type="Label" parent="PanelContainer/HostGame/Waiting For Connect"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Waiting for Players
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HostGame/Waiting For Connect"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Players" type="Label" parent="PanelContainer/HostGame/Waiting For Connect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Players Joined: 
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NumPlayers" type="Label" parent="PanelContainer/HostGame/Waiting For Connect/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartRound" type="Button" parent="PanelContainer/HostGame/Waiting For Connect"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Start Game
+
+"
+
 [node name="Matchmaking Menu" type="VBoxContainer" parent="PanelContainer/HostGame"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Label" type="Label" parent="PanelContainer/HostGame/Matchmaking Menu"]
@@ -142,7 +191,9 @@ visible = false
 layout_mode = 2
 
 [connection signal="added_new_player" from="PlayerJoin" to="." method="add_player"]
+[connection signal="player_joined" from="Multiplayer" to="." method="_on_multiplayer_player_joined"]
 [connection signal="wait_for_players" from="Multiplayer" to="." method="_on_multiplayer_wait_for_players"]
+[connection signal="button_down" from="PanelContainer/HostGame/Waiting For Connect/StartRound" to="." method="_on_start_round_button_down"]
 [connection signal="button_down" from="PanelContainer/HostGame/Matchmaking Menu/Local" to="Multiplayer" method="_on_local_button_down"]
 [connection signal="button_down" from="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/Host" to="Multiplayer" method="_on_host_button_down"]
 [connection signal="button_down" from="PanelContainer/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/Join" to="Multiplayer" method="_on_join_button_down"]

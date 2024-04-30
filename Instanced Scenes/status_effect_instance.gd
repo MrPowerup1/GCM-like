@@ -27,7 +27,7 @@ func activate():
 		$Ping_Time.start()
 		status.held(original_caster,status_index)
 		
-
+@rpc("any_peer","call_local")
 func release():
 	status.release(original_caster,status_index)
 	$End_Time.stop()
@@ -42,7 +42,7 @@ func get_held_time():
 
 
 func _on_end_time_timeout():
-	release()
+	release.rpc()
 
 
 func _on_ping_time_timeout():

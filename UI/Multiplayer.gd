@@ -6,6 +6,7 @@ extends Node
 var peer
 
 signal wait_for_players
+signal player_joined
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,6 +28,7 @@ func player_disconnected(id):
 func connected_to_server():
 	print("Connected to server")
 	send_player_info.rpc_id(1, multiplayer.get_unique_id(), 0)
+	player_joined.emit()
 
 #Called just on this client
 func connection_failed():
@@ -69,13 +71,16 @@ func _on_host_button_down():
 func _on_join_button_down():
 	print("Joining")
 	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_client(address,port)
+	var error
+	if %IP.text == "":
+		error = peer.create_client(address,port)
+	else:
+		error = peer.create_client(%IP.text,port)
 	if error != OK:
 		printerr("Can't join, error appeared ", error)
 		return
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
-	print(%IP.text)
 	wait_for_players.emit()
 	
 

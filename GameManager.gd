@@ -2,12 +2,14 @@ extends Node
 
 var players = {}
 
+var alive_players:Array[PlayerManager] =[]
+enum game_states{PLAYING,SELECTING}
+var state = game_states.SELECTING
+var skin_deck:Deck
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+signal round_end
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if state==game_states.PLAYING and alive_players.size() == 1:
+		round_end.emit()
+		alive_players.clear()

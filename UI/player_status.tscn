@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://knpxehglpha1"]
+
+[ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="1_a007s"]
+[ext_resource type="Script" path="res://UI/player_status.gd" id="1_kqv04"]
+
+[node name="Player Status" type="PanelContainer"]
+offset_left = 46.0
+offset_top = 15.0
+offset_right = 195.0
+offset_bottom = 50.0
+script = ExtResource("1_kqv04")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("1_a007s")
+
+[node name="P1 Health" type="Label" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderLarge"
+text = "P1"
+
+[node name="DamageDelay" type="Timer" parent="HBoxContainer"]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[node name="DamageBar" type="ProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 7.0
+theme_type_variation = &"DamageBar"
+value = 100.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="HBoxContainer/DamageBar"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 7.0
+theme_type_variation = &"HealthBar"
+value = 60.0
+show_percentage = false
+
+[connection signal="timeout" from="HBoxContainer/DamageDelay" to="." method="_on_damage_delay_timeout"]

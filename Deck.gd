@@ -28,6 +28,8 @@ func select(card:Card) -> bool:
 func unselect(card:Card) -> bool:
 	var index = cards.find(card)
 	if !allowed[index]:
+		print ("Found and unselected")
 		allowed[index] = true
 		return true
+	print("Couldn't find to unselect")
 	return false

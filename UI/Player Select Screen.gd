@@ -41,7 +41,7 @@ func _on_player_ready():
 	if current_players >= min_players:
 		print("a player is ready")
 		for panel in get_children():
-			if panel is PlayerPanel and !(panel as PlayerPanel).now_ready:
+			if panel is PlayerPanel and !((panel as PlayerPanel).now_ready or (panel as PlayerPanel).current_style==PlayerPanel.style.AWAIT_PLAYER):
 				return
 		for panel in get_children():
 			if panel is PlayerPanel and (panel as PlayerPanel).current_player == null:
@@ -57,8 +57,15 @@ func _on_player_unready():
 	
 
 func new_panel():
-	most_recent_panel =  player_panel.instantiate()
-	add_child(most_recent_panel,true)
-	most_recent_panel.player_ready.connect(_on_player_ready)
-	most_recent_panel.player_quit.connect(_on_player_quit)
-	most_recent_panel.player_unready.connect(_on_player_unready)
+	if get_child_count() < current_players + 1:
+		most_recent_panel =  player_panel.instantiate()
+		add_child(most_recent_panel,true)
+		most_recent_panel.player_ready.connect(_on_player_ready)
+		most_recent_panel.player_quit.connect(_on_player_quit)
+		most_recent_panel.player_unready.connect(_on_player_unready)
+
+func reset_panels():
+	for child in get_children():
+		if child is PlayerPanel and child.now_ready:
+			print("resetting")
+			(child as PlayerPanel).reset()

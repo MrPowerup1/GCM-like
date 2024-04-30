@@ -18,6 +18,7 @@ func _ready():
 	
 	#Seperate the material so it doesn't change with others
 	%Sprite2D.material = %Sprite2D.material.duplicate(true)
+	%"Player Status".init_health(%Health.max_health)
 	
 
 func _physics_process(delta):
@@ -105,3 +106,10 @@ func add_input(keys:Input_Keys):
 
 func new_auth(id:int):
 	%MultiplayerSynchronizer.set_multiplayer_authority(id)
+
+
+func reset():
+	%Health.reset()
+
+func _on_health_dead():
+	GameManager.alive_players.erase(get_parent())

@@ -16,10 +16,15 @@ func _ready():
 	#Get the default skins and display them
 	var to_display = cards.start_cards()
 	new_cards(to_display)
+	refresh()
+	
+	
+
+func refresh():
+	new_cards(cards.next_cards(center_card))
 	%LeftCard.reset_shader()
 	%CenterCard.reset_shader()
 	%RightCard.reset_shader()
-	
 
 signal exit()
 signal next()
@@ -75,6 +80,7 @@ func new_cards(to_display:Array):
 
 func transition_display_mode(new_mode:display_mode):
 	if new_mode==display_mode.SELECTED:
+		visible=false
 		%LeftButton.visible=false
 		%LeftCard.visible=false
 		%SelectButton.visible=false
@@ -84,6 +90,7 @@ func transition_display_mode(new_mode:display_mode):
 		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 	if new_mode==display_mode.SELECTING:
+		visible=true
 		%LeftButton.visible=true
 		%LeftCard.visible=true
 		%SelectButton.visible=true

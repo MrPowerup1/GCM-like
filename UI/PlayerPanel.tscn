@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://vaog6h0dcfy2"]
+[gd_scene load_steps=8 format=3 uid="uid://vaog6h0dcfy2"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_3lsti"]
 [ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="2_kbems"]
+[ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="2_s85jy"]
 [ext_resource type="PackedScene" uid="uid://dlv10j3yla0vr" path="res://UI/join_panel.tscn" id="2_x2hvt"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="3_0638b"]
 [ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="4_0wvmp"]
@@ -12,9 +13,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_type_variation = &"Panel2"
 script = ExtResource("1_3lsti")
+card_scene = ExtResource("2_s85jy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="Unselected" type="VBoxContainer" parent="MarginContainer"]
 unique_name_in_owner = true
@@ -24,6 +30,7 @@ alignment = 1
 [node name="Selected" type="HBoxContainer" parent="MarginContainer/Unselected"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="SkinSelect" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
 unique_name_in_owner = true

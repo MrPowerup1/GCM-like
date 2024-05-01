@@ -1,7 +1,7 @@
 extends Node
 class_name Velocity
 
-var velocity:Vector2 = Vector2.ZERO
+@export var velocity:Vector2 = Vector2.ZERO
 @export var body:Node2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel_square:float

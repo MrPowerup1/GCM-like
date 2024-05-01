@@ -11,5 +11,9 @@ signal round_end
 
 func _process(delta):
 	if state==game_states.PLAYING and alive_players.size() == 1:
-		round_end.emit()
-		alive_players.clear()
+		end_round()
+
+@rpc("any_peer","call_local")
+func end_round():
+	round_end.emit()
+	alive_players.clear()

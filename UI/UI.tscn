@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://gml8gorru1ib"]
+[gd_scene load_steps=15 format=3 uid="uid://gml8gorru1ib"]
 
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
@@ -8,7 +8,8 @@
 [ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="4_6v6gd"]
 [ext_resource type="Resource" uid="uid://108qxs1oy0ow" path="res://Inputs/keyboard_right.tres" id="5_a5xvl"]
 [ext_resource type="Script" path="res://Player Join.gd" id="5_p0knl"]
-[ext_resource type="Script" path="res://UI/Multiplayer.gd" id="6_pu1lh"]
+[ext_resource type="Script" path="res://UI/Client.gd" id="7_mwm4a"]
+[ext_resource type="Script" path="res://UI/Server.gd" id="8_ju531"]
 [ext_resource type="Script" path="res://UI/EndGamePanel.gd" id="10_04730"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="10_ff2bt"]
 [ext_resource type="Shader" path="res://UI/Recolor_Shader.gdshader" id="11_e7ygd"]
@@ -29,7 +30,12 @@ keyboard_input_1 = ExtResource("4_6v6gd")
 keyboard_input_2 = ExtResource("5_a5xvl")
 
 [node name="Multiplayer" type="Node" parent="."]
-script = ExtResource("6_pu1lh")
+
+[node name="Client" type="Node" parent="."]
+script = ExtResource("7_mwm4a")
+
+[node name="Server" type="Node" parent="."]
+script = ExtResource("8_ju531")
 
 [node name="SelectionUI" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -42,6 +48,87 @@ grow_vertical = 2
 [node name="HostGame" type="MarginContainer" parent="SelectionUI"]
 layout_mode = 2
 
+[node name="Matchmaking Menu" type="VBoxContainer" parent="SelectionUI/HostGame"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SelectionUI/HostGame/Matchmaking Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Local"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Local" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Start Local Game"
+
+[node name="Label2" type="Label" parent="SelectionUI/HostGame/Matchmaking Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Online
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/HostGame/Matchmaking Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Server" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Start Server
+"
+
+[node name="Host" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Host Online Game
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label3" type="Label" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Lobby:
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IP" type="LineEdit" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="Join" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Join Online Game
+"
+
 [node name="Waiting For Connect" type="VBoxContainer" parent="SelectionUI/HostGame"]
 unique_name_in_owner = true
 visible = false
@@ -52,6 +139,31 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
 text = "Waiting for Players
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SelectionUI/HostGame/Waiting For Connect"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Lobby" type="Label" parent="SelectionUI/HostGame/Waiting For Connect/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Current Lobby: 
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LobbyID" type="Label" parent="SelectionUI/HostGame/Waiting For Connect/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "1
 "
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -91,94 +203,12 @@ text = "Start Game
 
 "
 
-[node name="Matchmaking Menu" type="VBoxContainer" parent="SelectionUI/HostGame"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SelectionUI/HostGame/Matchmaking Menu"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 30
-text = "Local"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Local" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_font_sizes/font_size = 30
-text = "Start Local Game"
-
-[node name="Label2" type="Label" parent="SelectionUI/HostGame/Matchmaking Menu"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 30
-text = "Online
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/HostGame/Matchmaking Menu"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="Host" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 30
-text = "Host Online Game
-"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Join" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_font_sizes/font_size = 30
-text = "Join Online Game
-"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label3" type="Label" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 30
-text = "IP:
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="IP" type="LineEdit" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 5.0
-
-[node name="Start" type="Button" parent="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_font_sizes/font_size = 30
-text = "Start Game
-
-"
-
 [node name="Player Select Menu" type="VBoxContainer" parent="SelectionUI"]
 unique_name_in_owner = true
 visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="SelectionUI/Player Select Menu"]
 layout_mode = 2
 
 [node name="PlayerSelectScreen" type="GridContainer" parent="SelectionUI/Player Select Menu"]
@@ -240,13 +270,17 @@ text = "Play Again
 "
 
 [connection signal="added_new_player" from="PlayerJoin" to="." method="add_player"]
-[connection signal="player_joined" from="Multiplayer" to="." method="_on_multiplayer_player_joined"]
-[connection signal="wait_for_players" from="Multiplayer" to="." method="_on_multiplayer_wait_for_players"]
-[connection signal="button_down" from="SelectionUI/HostGame/Waiting For Connect/StartRound" to="." method="_on_start_round_button_down"]
-[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/Local" to="Multiplayer" method="_on_local_button_down"]
-[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/Host" to="Multiplayer" method="_on_host_button_down"]
-[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/Join" to="Multiplayer" method="_on_join_button_down"]
-[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/Start" to="Multiplayer" method="_on_start_button_down"]
+[connection signal="new_lobby_id" from="Client" to="." method="update_lobby_id"]
+[connection signal="player_joined" from="Client" to="." method="_on_multiplayer_player_joined"]
+[connection signal="start" from="Client" to="." method="_on_start_round_button_down"]
+[connection signal="wait_for_players" from="Client" to="." method="_on_multiplayer_wait_for_players"]
+[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/Local" to="." method="_on_local_button_down"]
+[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/Server" to="Server" method="_on_start_server_button_down"]
+[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/Host" to="Client" method="_on_start_client_button_down"]
+[connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/Join" to="Client" method="_on_join_lobby_button_down"]
+[connection signal="button_down" from="SelectionUI/HostGame/Waiting For Connect/StartRound" to="Client" method="_on_button_button_down"]
+[connection signal="button_down" from="SelectionUI/HostGame/Waiting For Connect/StartRound" to="Client" method="_on_start_round_button_down"]
+[connection signal="button_down" from="SelectionUI/Player Select Menu/Button" to="Server" method="_on_button_button_down"]
 [connection signal="player_quit" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="PlayerJoin" method="delete_player"]
 [connection signal="players_ready" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="." method="_on_player_select_screen_players_ready"]
 [connection signal="players_unready" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="." method="_on_player_select_screen_players_unready"]

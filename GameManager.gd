@@ -2,6 +2,7 @@ extends Node
 
 var players = {}
 
+
 var alive_players:Array[PlayerManager] =[]
 enum game_states{PLAYING,SELECTING}
 var state = game_states.SELECTING

@@ -63,8 +63,10 @@ func _on_multiplayer_player_joined():
 
 @rpc("any_peer","call_local")
 func update_player_count():
-	%NumPlayers.text=str(str(%NumPlayers.text).to_int()+1)
+	%NumPlayers.text=str(GameManager.players.size())
 
+func update_lobby_id(new_id:String):
+	%LobbyID.text=new_id
 
 func _on_start_round_button_down():
 	start.rpc()
@@ -74,9 +76,14 @@ func start():
 	transition_state(state.PLAYER_SELECT)
 
 
+
 func _on_restart_button_down():
 	start.rpc()
 
 func _on_round_end():
 	transition_state(state.END_GAME)
 	GameManager.state=GameManager.game_states.SELECTING
+
+
+func _on_local_button_down():
+	start()

@@ -2,6 +2,9 @@ extends CanvasLayer
 
 #var player_select_screen:PlayerSelectScreen
 
+const LOG_FILE_DIRECTORY = 'user://detailed_logs'
+
+var logging_enabled:bool = true
 
 signal start_round()
 
@@ -14,19 +17,30 @@ func _ready():
 func add_player(player:PlayerManager):
 	%PlayerSelectScreen.player_join(player)
 
-
-
 func update_lobby_id(new_id:String):
 	%LobbyID.text=new_id
 
-
 func _on_SyncManager_sync_started():
 	print ("YOYOYOYO the sync started")
-	pass
+	if logging_enabled:
+		var dir=DirAccess.open(LOG_FILE_DIRECTORY)
+		if not dir:
+			dir=DirAccess.make_dir_absolute(LOG_FILE_DIRECTORY)
+		var datetime = Time.get_datetime_dict_from_system(true)
+		var log_file_name = "%04d%02d%02d-%02d%02d%02d-peer-%d.log"%[
+			datetime['year'],
+			datetime['month'],
+			datetime['day'],
+			datetime['hour'],
+			datetime['minute'],
+			datetime['second'],
+			multiplayer.get_unique_id(),
+		]
+		SyncManager.start_logging(LOG_FILE_DIRECTORY+ '/' + log_file_name)
 
 func _on_SyncManager_sync_stopped():
 	print ("YOYOYOYO the sync stopped")
-	pass
+	SyncManager.stop_logging()
 
 func _on_SyncManager_sync_lost():
 	print("Lost Sync")

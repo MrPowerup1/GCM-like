@@ -105,11 +105,16 @@ func new_auth(id:int):
 
 func _save_state() ->Dictionary:
 	return {
-		position=position
+		position_x=position.x,
+		position_y=position.y,
+		velocity_x=%Velocity.velocity.x,
+		velocity_y=%Velocity.velocity.y
 	}
 
 func _load_state(state:Dictionary) ->void:
-	position = state['position']
+	position = Vector2(state['position_x'],state['position_y'])
+	velocity = Vector2(state['velocity_x'],state['velocity_y'])
+	
 
 func reset():
 	%Health.reset()

@@ -161,3 +161,4 @@ sync_debug={
 [network]
 
 rollback/classes/network_adaptor="res://---Rollback Edits---/MyRPCNetworkAdaptor.gd"
+rollback/debug/rollback_ticks=4

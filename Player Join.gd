@@ -84,7 +84,7 @@ func add_remote_player(local_id:int):
 	new_player.device_id = multiplayer.get_remote_sender_id()
 	get_parent().get_parent().add_child(new_player,true)
 	new_player.set_start_pos(next_position())
-	$"..".start_round.connect(new_player.start_round)
+	$"../StateManager/RoundStarting".start_round.connect(new_player.start_round)
 	player_count+=1
 	added_new_player.emit(new_player)
 	print("Added new_player")

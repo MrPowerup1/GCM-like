@@ -14,12 +14,7 @@ func _ready():
 func add_player(player:PlayerManager):
 	%PlayerSelectScreen.player_join(player)
 
-func _on_multiplayer_player_joined():
-	update_player_count.rpc()
 
-@rpc("any_peer","call_local")
-func update_player_count():
-	%NumPlayers.text=str(GameManager.players.size())
 
 func update_lobby_id(new_id:String):
 	%LobbyID.text=new_id

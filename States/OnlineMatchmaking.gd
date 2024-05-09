@@ -8,6 +8,8 @@ func enter():
 func exit():
 	%"Matchmaking Menu".visible=false
 
-
-func _on_client_wait_for_players():
+	
+func _on_client_wait_for_peers():
 	Transition.emit(self,"WaitingForPlayers")
+
+

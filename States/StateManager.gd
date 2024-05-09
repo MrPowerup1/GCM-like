@@ -4,6 +4,7 @@ class_name StateManager
 
 @export var starting_state:State
 var current_state:State
+var current_state_name:String
 var states:Dictionary = {}
 
 
@@ -15,11 +16,14 @@ func _ready():
 			(child as State).Transition.connect(on_transition)
 	if starting_state:
 		current_state=starting_state
+		current_state_name=states.find_key(current_state)
 		current_state.enter()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if current_state:
+		if current_state_name != states.find_key(current_state):
+			current_state=states[current_state_name]
 		current_state.process(delta)
 
 func _physics_process(delta):
@@ -36,5 +40,6 @@ func on_transition(state,new_state_name):
 		return
 	if current_state:
 		current_state.exit()
+	current_state_name = new_state_name.to_lower()
 	new_state.enter()
 	current_state=new_state

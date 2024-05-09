@@ -22,8 +22,8 @@ var lobbyValue = ""
 var lobbyInfo = {}
 
 signal start
-signal wait_for_players
-signal player_joined
+signal wait_for_peers
+signal peer_joined
 signal new_lobby_id(new_id:String)
 
 
@@ -39,7 +39,7 @@ func RTCServerConnected():
 
 func RTCPeerConnected(id):
 	print("rtc peer connected " + str(id))
-	player_joined.emit()
+	peer_joined.emit()
 	SyncManager.add_peer(id)
 	
 	
@@ -72,7 +72,7 @@ func _process(delta):
 				GameManager.players = JSON.parse_string(data.players)
 				hostId = data.host
 				lobbyValue = data.lobbyValue
-				wait_for_players.emit()
+				wait_for_peers.emit()
 				new_lobby_id.emit(lobbyValue)
 				
 			if data.message == Message.candidate:

@@ -9,3 +9,7 @@ func exit():
 	
 func _on_client_start():
 	Transition.emit(self,"PlayerSelect")
+
+
+func _on_client_peer_joined():
+	%NumPlayers.text=str(GameManager.players.size())

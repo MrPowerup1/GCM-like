@@ -3,6 +3,7 @@ class_name RoundInProgress
 
 func enter():
 	%SelectionUI.visible=false
+	print("Round started")
 	#HACK: Only call once (if player is server) 
 	if multiplayer.get_unique_id() == 1:
 		SyncManager.start()

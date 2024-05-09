@@ -5,8 +5,7 @@ class_name Velocity
 @export var body:Node2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel_square:float
-#Currently unused
-@export_range(100,200.0) var zero_velocity_range_square:float
+
 @export var speed:float
 var default_speed:float
 @export var friction:float
@@ -43,12 +42,12 @@ func pulse_from(direction,strength: float):
 	else:
 		printerr("Cannot pulse from direction of type ",direction.name)
 
-func move_input(direction:Vector2,delta:float):
+func move_input(direction:Vector2):
 	if can_move and direction!=null:
 		if !stop_input_at_max_vel:
-			velocity+=direction*speed*delta/mass
+			velocity+=direction*speed/mass
 		elif stop_input_at_max_vel and velocity.length_squared()<max_input_vel_square:
-			velocity+=direction*speed*delta/mass
+			velocity+=direction*speed/mass
 	else:
 		pass
 
@@ -81,8 +80,6 @@ func _physics_process(delta):
 		velocity -= velocity.normalized()*friction*delta
 	else:
 		velocity=Vector2.ZERO
-#	if (velocity.length_squared()<zero_velocity_range_square):
-#		velocity=Vector2.ZERO
 	if body!=null:
 		if (body is CharacterBody2D):
 			body.velocity=velocity

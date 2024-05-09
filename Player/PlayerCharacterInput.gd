@@ -18,9 +18,9 @@ signal input_mode_changed(new_mode:input_mode)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if (device!=device_type.REMOTE and input_keys!=null):
-		var direction = Vector2(Input.get_axis(input_keys.conversion["Left"], input_keys.conversion["Right"]),Input.get_axis(input_keys.conversion["Up"],input_keys.conversion["Down"]))
-		if (velocity!=null and current_mode == input_mode.GAMEPLAY):
-			velocity.move_input(direction,delta)
+		var direction = Input.get_vector(input_keys.conversion["Left"],input_keys.conversion["Right"],input_keys.conversion["Up"],input_keys.conversion["Down"])
+		#if (velocity!=null and current_mode == input_mode.GAMEPLAY):
+		#	velocity.move_input(direction)
 		if (current_mode == input_mode.UI and direction != Vector2.ZERO):
 			direction_pressed.emit(direction)
 		if (Input.is_action_just_pressed(input_keys.conversion["Spell1"])):
@@ -32,4 +32,15 @@ func _physics_process(delta):
 		if (Input.is_action_just_released(input_keys.conversion["Spell2"])):
 			button_release.emit(1)
 
+func _get_local_input() -> Dictionary:
+	var input_vector = Input.get_vector(input_keys.conversion["Left"],input_keys.conversion["Right"],input_keys.conversion["Up"],input_keys.conversion["Down"])
+	var input = {}
 	
+	if input_vector != Vector2.ZERO:
+		input["input_vector"]=input_vector
+	
+	return input
+
+func _network_process(input: Dictionary) -> void:
+	var move_vector=input.get("input_vector", Vector2.ZERO)
+	velocity.move_input(move_vector)

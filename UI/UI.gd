@@ -21,9 +21,11 @@ func update_lobby_id(new_id:String):
 
 
 func _on_SyncManager_sync_started():
+	print ("YOYOYOYO the sync started")
 	pass
 
 func _on_SyncManager_sync_stopped():
+	print ("YOYOYOYO the sync stopped")
 	pass
 
 func _on_SyncManager_sync_lost():

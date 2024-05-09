@@ -163,10 +163,10 @@ func iceCandidateCreated(midName, indexName, sdpName, id):
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	pass
 
+#Connect to websocket server
 func connectToServer(ip):
 	peer.create_client("ws://127.0.0.1:8915")
 	print("started client")
-
 
 func _on_start_client_button_down():
 	connectToServer("")
@@ -194,7 +194,9 @@ func _on_join_lobby_button_down():
 		"lobbyValue" : %IP.text
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-	
+	#TODO: Consider... What if failed to create lobby?
+	if %IP.text == "":
+		GameManager.is_host=true
 	pass # Replace with function body.
 	
 

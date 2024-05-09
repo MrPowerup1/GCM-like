@@ -6,10 +6,8 @@ var can_release:Array[bool]=[true,true]
 var can_cast:Array[bool]=[true,true]
 var facing:Vector2
 var num_spells:int
-@export var input_scene:PackedScene
+#@export var input_scene:PackedScene
 @export var my_input:PlayerCharacterInput = null
-
-@export var syncpos:Vector2
 
 signal spell_activated(index:int)
 signal spell_released(index:int)
@@ -19,13 +17,11 @@ func _ready():
 	#Seperate the material so it doesn't change with others
 	%Sprite2D.material = %Sprite2D.material.duplicate(true)
 	%"Player Status".init_health(%Health.max_health)
+	my_input.button_activate.connect(activate)
+	my_input.button_release.connect(release)
 	
 
 func _physics_process(delta):
-	if %MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
-		position = position.lerp(syncpos, 0.5)
-	else:
-		syncpos=position
 	if %Velocity.can_move and !velocity.is_zero_approx():
 		facing=velocity.normalized().snapped(Vector2.ONE)
  
@@ -95,20 +91,25 @@ func unequip_spell():
 	%"Spell Manager".unequip_spell()
 
 func add_input(keys:Input_Keys):
-	my_input=input_scene.instantiate()
-	add_child(my_input)
 	my_input.input_keys=keys
 	my_input.velocity=%Velocity
 	my_input.current_mode=my_input.input_mode.UI
 	my_input.device=my_input.device_type.LOCAL
-	my_input.button_activate.connect(activate)
-	my_input.button_release.connect(release)
 
 func new_auth(id:int):
-	%MultiplayerSynchronizer.set_multiplayer_authority(id)
+	set_multiplayer_authority(id)
+	my_input.set_multiplayer_authority(id)
+	#%MultiplayerSynchronizer.set_multiplayer_authority(id)
 	pass
 	
 
+func _save_state() ->Dictionary:
+	return {
+		position=position
+	}
+
+func _load_state(state:Dictionary) ->void:
+	position = state['position']
 
 func reset():
 	%Health.reset()

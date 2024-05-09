@@ -68,7 +68,7 @@ func add_player(local_id:int, input:Input_Keys):
 	get_parent().get_parent().add_child(new_player,true)
 	new_player.set_start_pos(next_position())
 	new_player.add_controls(input)
-	$"..".start_round.connect(new_player.start_round)
+	$"../StateManager/RoundStarting".start_round.connect(new_player.start_round)
 	player_count+=1
 	added_new_player.emit(new_player)
 	print("Added new_player")

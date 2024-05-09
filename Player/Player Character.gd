@@ -106,10 +106,14 @@ func add_input(keys:Input_Keys):
 
 func new_auth(id:int):
 	%MultiplayerSynchronizer.set_multiplayer_authority(id)
+	pass
+	
 
 
 func reset():
 	%Health.reset()
+	for i in range(num_spells):
+		unequip_spell()
 
 func _on_health_dead():
 	GameManager.alive_players.erase(get_parent())

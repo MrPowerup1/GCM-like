@@ -71,8 +71,9 @@ func JoinLobby(user):
 		user.lobbyValue = generateRandomString()
 		lobbies[user.lobbyValue] = Lobby.new(user.id)
 		print(user.lobbyValue)
-	var player = lobbies[user.lobbyValue].AddPlayer(user.id, user.name)
-	
+	if !lobbies.has(user.lobbyValue):
+		return
+	lobbies[user.lobbyValue].AddPlayer(user.id, user.name)
 	for p in lobbies[user.lobbyValue].Players:
 		
 		var data = {

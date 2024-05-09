@@ -37,6 +37,7 @@ func initialize(spd:int,img:Texture2D,effect:Spell_Effect,lifetime:int,size:Vect
 	self_effect_on_timeout=on_timeout
 	self_effect_on_hit=on_hit
 	velocity.constant_vel(move_dir)
+	
 	%MultiplayerSynchronizer.set_multiplayer_authority(caster.get_parent().device_id)
 
 		

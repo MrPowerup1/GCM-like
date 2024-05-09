@@ -40,9 +40,13 @@ func RTCServerConnected():
 func RTCPeerConnected(id):
 	print("rtc peer connected " + str(id))
 	player_joined.emit()
+	SyncManager.add_peer(id)
+	
+	
 	
 func RTCPeerDisconnected(id):
 	print("rtc peer disconnected " + str(id))
+	SyncManager.remove_peer(id)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends SGCharacterBody2D
 class_name Player
 
 @export var health:int = 10
@@ -6,6 +6,7 @@ var can_release:Array[bool]=[true,true]
 var can_cast:Array[bool]=[true,true]
 var facing:Vector2
 var num_spells:int
+var snap_to_0:int = 65536/100
 #@export var input_scene:PackedScene
 @export var my_input:PlayerCharacterInput = null
 
@@ -22,8 +23,8 @@ func _ready():
 	
 
 func _physics_process(delta):
-	if %Velocity.can_move and !velocity.is_zero_approx():
-		facing=velocity.normalized().snapped(Vector2.ONE)
+	if %Velocity.can_move and (velocity.length_squared() > snap_to_0):
+		facing=velocity.normalized().to_float().snapped(Vector2.ONE)
  
 
 func activate(index:int):
@@ -105,17 +106,19 @@ func new_auth(id:int):
 
 func _save_state() ->Dictionary:
 	return {
-		position_x=position.x,
-		position_y=position.y,
+		position_x=fixed_position_x,
+		position_y=fixed_position_y,
 		velocity_x=%Velocity.velocity.x,
 		velocity_y=%Velocity.velocity.y
 	}
 
 func _load_state(state:Dictionary) ->void:
-	position = Vector2(state['position_x'],state['position_y'])
-	velocity = Vector2(state['velocity_x'],state['velocity_y'])
+	fixed_position_x = state['position_x']
+	fixed_position_y = state['position_y']
+	velocity.x=state['velocity_x']
+	velocity.y=state['velocity_y']
+	sync_to_physics_engine()
 	
-
 func reset():
 	%Health.reset()
 	for i in range(num_spells):

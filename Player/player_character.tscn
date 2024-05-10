@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=14 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_umfx1"]
@@ -11,9 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://knpxehglpha1" path="res://UI/player_status.tscn" id="10_3tqh8"]
 [ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
 [ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="11_yip05"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqaox"]
-size = Vector2(16, 24)
 
 [sub_resource type="Shader" id="Shader_obj0k"]
 code = "shader_type canvas_item;
@@ -34,15 +31,12 @@ void fragment() {
 shader = SubResource("Shader_obj0k")
 shader_parameter/new_color = Color(0.890196, 0.639216, 0.172549, 1)
 
-[node name="Player Character" type="CharacterBody2D" node_paths=PackedStringArray("my_input") groups=["network_sync"]]
+[node name="Player Character" type="SGCharacterBody2D" node_paths=PackedStringArray("my_input") groups=["network_sync"]]
 position = Vector2(3, 6)
-motion_mode = 1
-wall_min_slide_angle = 0.349066
 script = ExtResource("1_o8ybw")
 my_input = NodePath("PlayerCharacterInput")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_hqaox")
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -66,9 +60,9 @@ known_spells = Array[Resource("res://Spell Effects/Spell.gd")]([null, null])
 unique_name_in_owner = true
 script = ExtResource("9_hac0t")
 stop_input_at_max_vel = true
-max_input_vel_square = 10000.0
-speed = 200.0
-friction = 5000.0
+max_input_vel_square = 100
+speed = 4
+friction = 4
 
 [node name="Health" type="Node" parent="."]
 unique_name_in_owner = true

@@ -42,5 +42,6 @@ func _get_local_input() -> Dictionary:
 	return input
 
 func _network_process(input: Dictionary) -> void:
-	var move_vector=input.get("input_vector", Vector2.ZERO)
+	var move_vector = SGFixedVector2.new()
+	move_vector.from_float(input.get("input_vector", Vector2.ZERO))
 	velocity.move_input(move_vector)

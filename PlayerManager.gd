@@ -3,7 +3,7 @@ class_name PlayerManager
 
 var player_character:Player
 var skin:CharacterSkin
-@export var spawn_loc:Vector2
+var spawn_loc:SGFixedVector2=SGFixedVector2.new()
 enum control_mode {ROUND_CONTROL,UI_CONTROL}
 var current_mode = control_mode.UI_CONTROL
 var device_id:int
@@ -22,12 +22,14 @@ func add_controls(controls:Input_Keys):
 	player_character.add_input(controls)
 
 func set_start_pos(position:Vector2):
-	spawn_loc=position
+	if position!=null:
+		spawn_loc.from_float(position)
 
 func start_round():
 	player_character.enable()
 	player_character.reset()
-	player_character.position=spawn_loc
+	player_character.fixed_position=spawn_loc
+	print (player_character.fixed_position.to_float())
 	GameManager.alive_players.append(self)
 	current_mode=control_mode.ROUND_CONTROL
 	if player_character.my_input!=null:

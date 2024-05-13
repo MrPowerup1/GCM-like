@@ -1,27 +1,77 @@
-[gd_scene load_steps=4 format=3 uid="uid://fhwmhipqb0rd"]
+[gd_scene load_steps=6 format=3 uid="uid://fhwmhipqb0rd"]
 
 [ext_resource type="PackedScene" uid="uid://gml8gorru1ib" path="res://UI/UI.tscn" id="1_dxhiy"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="4_v5ii4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vjy2c"]
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_imu53"]
+extents_x = 1890126
+extents_y = 1834980
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_epkfj"]
+extents_x = 826568
+extents_y = 11827774
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_02xnt"]
+extents_x = 23208972
 
 [node name="Test Level" type="Node2D"]
+position = Vector2(0, -1)
 
 [node name="UI" parent="." instance=ExtResource("1_dxhiy")]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(352, 184)
+[node name="StaticBody2D" type="SGStaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+fixed_position_x = 18350080
+fixed_position_y = 12255232
+position = Vector2(280, 187)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_vjy2c")
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_imu53")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 texture = ExtResource("4_v5ii4")
 
-[node name="Outer Border" type="StaticBody2D" parent="."]
+[node name="Left" type="SGStaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+fixed_position_y = 11599872
+position = Vector2(0, 177)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Outer Border"]
-polygon = PackedVector2Array(0, 0, 0, 360, 640, 360, 640, 0, 8, 0, 16, 8, 632, 8, 632, 352, 8, 352, 8, 0, 0, 0)
+[node name="Left" type="SGCollisionShape2D" parent="Left"]
+shape = SubResource("SGRectangleShape2D_epkfj")
+
+[node name="Right" type="SGStaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+fixed_position_x = 41943040
+fixed_position_y = 11599872
+position = Vector2(640, 177)
+
+[node name="Left" type="SGCollisionShape2D" parent="Right"]
+shape = SubResource("SGRectangleShape2D_epkfj")
+
+[node name="Top" type="SGStaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+fixed_position_x = 20971520
+fixed_position_y = 65536
+position = Vector2(320, 1)
+
+[node name="Top" type="SGCollisionShape2D" parent="Top"]
+shape = SubResource("SGRectangleShape2D_02xnt")
+
+[node name="Bottom" type="SGStaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+fixed_position_x = 20971520
+fixed_position_y = 23134208
+position = Vector2(320, 353)
+
+[node name="Bottom" type="SGCollisionShape2D" parent="Bottom"]
+shape = SubResource("SGRectangleShape2D_02xnt")
+fixed_position_y = -65536
+position = Vector2(0, -1)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")

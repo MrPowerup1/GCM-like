@@ -45,3 +45,4 @@ func _network_process(input: Dictionary) -> void:
 	var move_vector = SGFixedVector2.new()
 	move_vector.from_float(input.get("input_vector", Vector2.ZERO))
 	velocity.move_input(move_vector)
+	velocity.update_pos()

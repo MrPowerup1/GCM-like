@@ -118,13 +118,11 @@ func update_pos():
 	#TEST
 	if body!=null:
 		if (body is SGCharacterBody2D):
-			print("Moving as character")
 			body.velocity=velocity
 			body.move_and_slide()
 			velocity=body.velocity
 		elif body is SGFixedNode2D:
-			
-			body.fixed_position = velocity
+			body.fixed_position.iadd(velocity)
 		else:
 			printerr("Can't update position of non SGPhysics body")
 			pass

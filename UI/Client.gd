@@ -69,7 +69,7 @@ func _process(delta):
 				
 				
 			if data.message == Message.lobby:
-				GameManager.players = JSON.parse_string(data.players)
+				GameManager.peers = JSON.parse_string(data.players)
 				hostId = data.host
 				lobbyValue = data.lobbyValue
 				wait_for_peers.emit()

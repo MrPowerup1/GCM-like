@@ -1,47 +1,28 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnkvt5plhp8al"]
+[gd_scene load_steps=4 format=3 uid="uid://bnkvt5plhp8al"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/base_area.gd" id="1_ht4gn"]
 [ext_resource type="Script" path="res://Velocity.gd" id="2_kvjex"]
-[ext_resource type="Script" path="res://Player/PlayerCharacterInput.gd" id="2_rwxn7"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_pqj4k"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pjmfs"]
-radius = 70.0
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c6ox0"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/sync = true
-
-[node name="Base Target" type="Area2D"]
+[node name="Base Target" type="SGArea2D"]
 script = ExtResource("1_ht4gn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_pjmfs")
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
-[node name="End_Time" type="Timer" parent="."]
+[node name="End_Time" type="Node" parent="."]
 unique_name_in_owner = true
+script = ExtResource("2_pqj4k")
 
-[node name="Ping_Time" type="Timer" parent="."]
+[node name="Ping_Time" type="Node" parent="."]
 unique_name_in_owner = true
+script = ExtResource("2_pqj4k")
 
 [node name="Velocity" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_kvjex")
-max_input_vel_square = 100000.0
 speed = 1000.0
 
-[node name="PlayerCharacterInput" type="Node" parent="." node_paths=PackedStringArray("velocity")]
-script = ExtResource("2_rwxn7")
-velocity = NodePath("../Velocity")
-device = 1
-current_mode = 1
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-unique_name_in_owner = true
-replication_config = SubResource("SceneReplicationConfig_c6ox0")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

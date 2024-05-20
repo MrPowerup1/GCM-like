@@ -12,4 +12,4 @@ func _on_client_start():
 
 
 func _on_client_peer_joined():
-	%NumPlayers.text=str(GameManager.players.size())
+	%NumPlayers.text=str(GameManager.peers.size())

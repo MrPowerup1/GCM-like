@@ -13,7 +13,7 @@ class_name Projectile_Effect
 @export var on_timeout_self:Spell_Effect
 
 #spd:int,img:Texture2D,effect:Spell_Effect,lifetime:float,size:Vector2,cast:Player,pierce:bool,on_timeout:Spell_Effect=null,on_hit:Spell_Effect=null
-func trigger(target,caster:Player,spell_index:int,location:Vector2=caster.position):
+func trigger(target,caster:Player,spell_index:int,location:SGFixedVector2=caster.fixed_position):
 	var new_projectile=projectile_scene.instantiate()
 	caster.get_parent().add_child(new_projectile)
 	new_projectile.position=location

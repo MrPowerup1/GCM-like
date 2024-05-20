@@ -1,4 +1,4 @@
-extends Area2D
+extends SGArea2D
 class_name projectile
 
 var speed=100.0
@@ -52,7 +52,7 @@ func release():
 	if (self_effect_on_timeout==null):
 		pass
 	elif (self_effect_on_timeout is Positional_Effect):
-		(self_effect_on_timeout as Positional_Effect).trigger(caster,caster,-1,position)
+		(self_effect_on_timeout as Positional_Effect).trigger(caster,caster,-1,fixed_position)
 	else:
 		self_effect_on_timeout.trigger(caster,caster,-1)
 	queue_free()
@@ -61,13 +61,13 @@ func _on_body_entered(body):
 	if (hit_effect==null):
 		pass
 	elif (hit_effect is Positional_Effect):
-		(hit_effect as Positional_Effect).trigger(body,caster,-1,position)
+		(hit_effect as Positional_Effect).trigger(body,caster,-1,fixed_position)
 	else:
 		hit_effect.trigger(body,caster,-1)
 	if (self_effect_on_hit==null):
 		pass
 	elif (self_effect_on_hit is Positional_Effect):
-		(self_effect_on_hit as Positional_Effect).trigger(caster,caster,-1,position)
+		(self_effect_on_hit as Positional_Effect).trigger(caster,caster,-1,fixed_position)
 	else:
 		self_effect_on_hit.trigger(caster,caster,-1)
 	if (!piercing):

@@ -11,7 +11,11 @@ const input_path_mapping = {
 }
 
 enum HeaderFlags {
-	HAS_INPUT_VECTOR = 0x01
+	HAS_INPUT_VECTOR = 0x01,
+	SPELL_1_CAST = 0x02,
+	SPELL_1_RELEASE = 0x04,
+	SPELL_2_CAST = 0x08,
+	SPELL_2_RELEASE = 0x10
 }
 
 var input_path_mapping_reverse := {}
@@ -40,6 +44,14 @@ func serialize_input(all_input: Dictionary) -> PackedByteArray:
 		if input.has('input_vector'):
 			#Set header flag with bitwise OR
 			header |= HeaderFlags.HAS_INPUT_VECTOR
+		if input.get('spell_1_pressed',false):
+			header |= HeaderFlags.SPELL_1_CAST
+		if input.get('spell_1_released',false):
+			header |= HeaderFlags.SPELL_1_RELEASE
+		if input.get('spell_2_pressed',false):
+			header |= HeaderFlags.SPELL_2_CAST
+		if input.get('spell_2_released',false):
+			header |= HeaderFlags.SPELL_2_RELEASE
 		buffer.put_u8(header)
 		
 		if input.has('input_vector'):
@@ -68,6 +80,14 @@ func unserialize_input(serialized: PackedByteArray) -> Dictionary:
 		#Check for input vector with bitwise and
 		if header & HeaderFlags.HAS_INPUT_VECTOR:
 			input["input_vector"] = SGFixed.vector2(buffer.get_64(),buffer.get_64())
+		if header & HeaderFlags.SPELL_1_CAST:
+			input['spell_1_pressed']=true
+		if header & HeaderFlags.SPELL_1_RELEASE:
+			input['spell_1_released']=true
+		if header & HeaderFlags.SPELL_2_CAST:
+			input['spell_2_pressed']=true
+		if header & HeaderFlags.SPELL_2_RELEASE:
+			input['spell_2_released']=true
 		all_input[path] = input
 		
 	return all_input

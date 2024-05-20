@@ -21,8 +21,7 @@ func update_lobby_id(new_id:String):
 	%LobbyID.text=new_id
 
 func _on_SyncManager_sync_started():
-	print ("YOYOYOYO the sync started")
-	if logging_enabled:
+	if logging_enabled and not SyncReplay.active:
 		var dir=DirAccess.open(LOG_FILE_DIRECTORY)
 		if not dir:
 			dir=DirAccess.make_dir_absolute(LOG_FILE_DIRECTORY)
@@ -36,10 +35,9 @@ func _on_SyncManager_sync_started():
 			datetime['second'],
 			multiplayer.get_unique_id(),
 		]
-		SyncManager.start_logging(LOG_FILE_DIRECTORY+ '/' + log_file_name)
+		SyncManager.start_logging(LOG_FILE_DIRECTORY+ '/' + log_file_name,{"PlayerCount":GameManager.players.size()})
 
 func _on_SyncManager_sync_stopped():
-	print ("YOYOYOYO the sync stopped")
 	SyncManager.stop_logging()
 
 func _on_SyncManager_sync_lost():
@@ -47,3 +45,6 @@ func _on_SyncManager_sync_lost():
 
 func _on_SyncManager_sync_regained():
 	print("Regained Sync")
+
+func setup_match_for_replay(my_peer_id:int,peer_ids: Array,match_info:Dictionary)-> void:
+	self.visible=false

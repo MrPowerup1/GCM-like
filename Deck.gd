@@ -33,3 +33,11 @@ func unselect(card:Card) -> bool:
 		return true
 	print("Couldn't find to unselect")
 	return false
+
+func construct_subdeck(indices:Array[int]) -> Deck:
+	var new_deck = Deck.new()
+	for index in indices:
+		new_deck.cards.append(cards[index])
+		new_deck.allowed.append(allowed[index]) 
+	return new_deck
+		

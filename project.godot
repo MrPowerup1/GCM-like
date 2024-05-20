@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameManager="*res://GameManager.gd"
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
 SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
+SyncReplay="*res://addons/godot-rollback-netcode/SyncReplay.gd"
 
 [display]
 
@@ -162,3 +163,6 @@ sync_debug={
 
 rollback/classes/network_adaptor="res://---Rollback Edits---/MyRPCNetworkAdaptor.gd"
 rollback/classes/message_serializer="res://---Rollback Edits---/CustomSerializer.gd"
+rollback/debug/rollback_ticks=4
+rollback/debug/random_rollback_ticks=10
+rollback/log_inspector/replay_match_scene_path="res://test_level.tscn"

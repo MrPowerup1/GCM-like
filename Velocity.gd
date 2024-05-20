@@ -4,7 +4,7 @@ class_name Velocity
 const fixed_point_factor = 65536
 
 var velocity:SGFixedVector2 = SGFixedVector2.new()
-@export var body:Node2D
+@export var body:SGFixedNode2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel:float
 var max_input_vel_fixed:int
@@ -20,7 +20,7 @@ var mass_fixed:int
 var default_mass:float
 var can_move:bool=true
 
-var anchored_pos:Vector2
+var anchored_pos:SGFixedVector2
 
 func _ready():
 	velocity.from_float(Vector2.ZERO)
@@ -36,11 +36,14 @@ func _ready():
 func pulse_to(direction,strength: float):
 	var pulse_dir = SGFixedVector2.new()
 	if (direction is Vector2):
+		printerr('pulsing with a float is a no no I think')
 		pulse_dir.from_float((direction-body.position).normalized())
 	elif (direction is float):
 		pulse_dir.from_float(Vector2.from_angle(direction))
 	elif (direction is Node2D):
 		pulse_dir.from_float((direction.position-body.position).normalized())
+	elif (direction is SGFixedVector2):
+		pulse_dir=direction.sub(body.fixed_position).normalized()
 	else:
 		printerr("Cannot pulse to direction of type ",direction.name)
 	var fixed_strength:int = strength*fixed_point_factor
@@ -53,6 +56,8 @@ func pulse_from(direction,strength: float):
 		pulse_dir.from_float(Vector2.from_angle(direction))
 	elif (direction is Node2D):
 		pulse_dir.from_float((direction.position-body.position).normalized())
+	elif (direction is SGFixedVector2):
+		pulse_dir=direction.sub(body.fixed_position).normalized()
 	else:
 		printerr("Cannot pulse from direction of type ",direction.name)
 	var fixed_strength:int = strength*fixed_point_factor
@@ -80,7 +85,7 @@ func constant_vel(direction:Vector2):
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor
 	velocity.from_float(Vector2.ZERO)
-	anchored_pos=body.position
+	anchored_pos=body.fixed_position
 
 func set_speed(new_speed:float=default_speed):
 	speed=new_speed
@@ -127,4 +132,5 @@ func update_pos():
 			printerr("Can't update position of non SGPhysics body")
 			pass
 	if can_move==false:
-		body.position=body.position.lerp(anchored_pos,0.5)
+		body.fixed_position= SGFixed.vector2(lerp(body.fixed_position_x,anchored_pos.x,0.5),lerp(body.fixed_position_y,anchored_pos.y,0.5))
+		pass

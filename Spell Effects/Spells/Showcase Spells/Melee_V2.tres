@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Spell" load_steps=20 format=3 uid="uid://d28tjd0rf37cu"]
 
-[ext_resource type="PackedScene" uid="uid://bv27tc5e5gqen" path="res://Instanced Scenes/melee_area.tscn" id="2_x2gka"]
+[ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_b1x17"]
 [ext_resource type="Texture2D" uid="uid://uxm1r401t4dm" path="res://Art/Melee.png" id="3_3ed5d"]
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="4_ib6pf"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="5_d7yq8"]
@@ -35,7 +35,7 @@ script = ExtResource("8_prnhg")
 image = ExtResource("3_3ed5d")
 on_enter = SubResource("Resource_jjv1m")
 call_exit_on_timeout = false
-area_scene = ExtResource("2_x2gka")
+area_scene = ExtResource("1_b1x17")
 life_time = 300
 ping_time = 0
 

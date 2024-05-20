@@ -63,7 +63,7 @@ func next_position() -> Vector2:
 	return spawn_vectors[player_count%spawn_vectors.size()]
 
 func add_player(local_id:int, input:Input_Keys):
-	var new_player = player_scene.instantiate()
+	var new_player = GameManager.add_player()
 	new_player.device_id = multiplayer.get_unique_id()
 	get_parent().get_parent().add_child(new_player,true)
 	new_player.set_start_pos(next_position())
@@ -71,28 +71,16 @@ func add_player(local_id:int, input:Input_Keys):
 	$"../StateManager/RoundStarting".start_round.connect(new_player.start_round)
 	player_count+=1
 	added_new_player.emit(new_player)
-	print("Added new_player")
-	var multiplayer_id = multiplayer.get_unique_id()
-	GameManager.players [multiplayer_id] = {
-			"id":multiplayer_id,
-			"local_index":local_id
-		}
 
 @rpc("call_remote","any_peer")
 func add_remote_player(local_id:int):
-	var new_player = player_scene.instantiate()
+	var new_player = GameManager.add_player()
 	new_player.device_id = multiplayer.get_remote_sender_id()
 	get_parent().get_parent().add_child(new_player,true)
 	new_player.set_start_pos(next_position())
 	$"../StateManager/RoundStarting".start_round.connect(new_player.start_round)
 	player_count+=1
 	added_new_player.emit(new_player)
-	print("Added new_player")
-	var multiplayer_id = multiplayer.get_remote_sender_id()
-	GameManager.players [multiplayer_id] = {
-			"id":multiplayer_id,
-			"local_index":local_id
-		}
 	
 func delete_player(player:PlayerManager):
 	print ("Deleted player here yaya")
@@ -100,5 +88,7 @@ func delete_player(player:PlayerManager):
 		var to_del_input = player.player_character.my_input.input_keys
 		if registered_ids.has(to_del_input.device_id) and registered_ids[to_del_input.device_id]==to_del_input.device:
 			registered_ids.erase(to_del_input.device_id)
+			if GameManager.players.has(player.player_index):
+				GameManager.players.erase(player.player_index)
 			print("Deleted id")
 	player.queue_free()

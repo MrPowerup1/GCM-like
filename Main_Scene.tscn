@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://fhwmhipqb0rd"]
+
+[ext_resource type="Script" path="res://Match.gd" id="1_34fhp"]
+[ext_resource type="PackedScene" uid="uid://gml8gorru1ib" path="res://UI/UI.tscn" id="1_usjvf"]
+[ext_resource type="PackedScene" uid="uid://bfi3h4c85n05t" path="res://Basic_Level.tscn" id="2_phpxu"]
+
+[node name="Match" type="Node2D"]
+position = Vector2(0, -1)
+script = ExtResource("1_34fhp")
+
+[node name="UI" parent="." instance=ExtResource("1_usjvf")]
+
+[node name="Basic Level" parent="." instance=ExtResource("2_phpxu")]
+
+[node name="Players" type="Node" parent="."]

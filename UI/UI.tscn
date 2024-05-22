@@ -315,7 +315,6 @@ text = "End
 
 "
 
-[connection signal="added_new_player" from="PlayerJoin" to="." method="add_player"]
 [connection signal="new_lobby_id" from="Client" to="." method="update_lobby_id"]
 [connection signal="peer_joined" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_peer_joined"]
 [connection signal="start" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_start"]

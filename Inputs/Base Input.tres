@@ -4,12 +4,6 @@
 
 [resource]
 script = ExtResource("1_bmf7o")
-left = "Left"
-right = "Right"
-up = "Up"
-down = "Down"
-spell1 = "Spell1"
-spell2 = "Spell2"
 conversion = {
 "Down": "Down",
 "Left": "Left",
@@ -18,3 +12,5 @@ conversion = {
 "Spell2": "Spell2",
 "Up": "Up"
 }
+device = 0
+device_id = 0

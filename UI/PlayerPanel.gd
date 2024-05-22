@@ -21,6 +21,7 @@ func player_join(player:PlayerManager):
 	%SkinSelect.player=current_player
 	%SpellSelect1.player=current_player
 	%SpellSelect2.player=current_player
+	
 	#Timer to wait out the initial input to join
 	%InputCooldown.start()
 	cooldown_ready=false

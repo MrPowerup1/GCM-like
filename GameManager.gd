@@ -1,12 +1,12 @@
 extends Node
 
-var player_scene:PackedScene = load("res://PlayerManager.tscn")
+
 
 
 #Info about all the players
 var players = {}
 
-#This doesn't do much right now, just holds player unique ids (It's never checked or used during the game)
+#TODO: Delete? This doesn't do much right now, just holds player unique ids (It's never checked or used during the game)
 var peers = {}
 
 var alive_players:Array[PlayerManager] =[]
@@ -16,30 +16,49 @@ var universal_skin_deck:Deck = load("res://TestSkinDeck.tres")
 
 var universal_spell_deck:Deck = load("res://TestSpellDeck.tres")
 
-#Just used to ensure one time activations
-var is_host:bool = false
+var universal_level_deck:Deck = load("res://TestLevelDeck.tres")
+var temporary_level:PackedScene = load("res://test_level.tscn")
+var player_scene:PackedScene = load("res://PlayerManager.tscn")
 
-#FROM PLAYER JOIN: func add_player(local_id:int, input:Input_Keys):
-func add_player() -> PlayerManager:
-	var new_player = player_scene.instantiate()
-	var multiplayer_id = multiplayer.get_unique_id()
-	var unique_player_index = players.size()
-	new_player.player_index = unique_player_index
-	players [unique_player_index] = {
+var base_input = preload("res://Inputs/Base Input.tres").to_dict()
+
+var default_player_dict = {
 			"player_data": {
-				#
+				"client_id": -1,
+				"input_keys":base_input,
 				"known_spells": [0,1,2],
 				"selected_skin": 0
 			},
 			"match_data": {
 				#TODO: FIX Garbage Data
 				"selected_spells":[0,1],
+				"selected_level":[0]
 			}
 		}
-	return new_player
 
-#TODO: Implement for replay feature
-func load_players(player_data:Dictionary) -> Array[PlayerManager]:
+
+#Just used to ensure one time activations
+var is_host:bool = false
+
+signal added_player(player:PlayerManager)
+
+func add_player(client_id:int=-1,input:Input_Keys = null,player_data:Dictionary=default_player_dict):
+	var new_player = player_scene.instantiate()
+	var unique_player_index = get_player_id()
+	new_player.player_index = unique_player_index
+	GameManager.players [unique_player_index] = player_data
+	new_player.from_dict(player_data)
+	added_player.emit(new_player)
 	
-	
-	return []
+	if input!=null:
+		new_player.add_controls(input)
+	if client_id!=-1:
+		new_player.device_id=client_id
+	players[unique_player_index]['player_data']['client_id']=client_id
+
+func get_player_id()->int:
+	for i in range(6):
+		if not players.has(i):
+			return i
+	printerr("Out of bounds of player count for player ID")
+	return -1

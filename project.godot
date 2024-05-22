@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Grand Class Melee but Wizards"
-run/main_scene="res://test_level.tscn"
+run/main_scene="res://Main_Scene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -165,4 +165,4 @@ rollback/classes/network_adaptor="res://---Rollback Edits---/MyRPCNetworkAdaptor
 rollback/classes/message_serializer="res://---Rollback Edits---/CustomSerializer.gd"
 rollback/debug/rollback_ticks=4
 rollback/debug/random_rollback_ticks=10
-rollback/log_inspector/replay_match_scene_path="res://test_level.tscn"
+rollback/log_inspector/replay_match_scene_path="res://Main_Scene.tscn"

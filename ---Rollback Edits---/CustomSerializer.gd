@@ -2,12 +2,12 @@ extends "res://addons/godot-rollback-netcode/MessageSerializer.gd"
 
 
 const input_path_mapping = {
-	"/root/Test Level/PlayerManager/Player Character/PlayerCharacterInput":1,
-	"/root/Test Level/PlayerManager2/Player Character/PlayerCharacterInput":2,
-	"/root/Test Level/PlayerManager3/Player Character/PlayerCharacterInput":3,
-	"/root/Test Level/PlayerManager4/Player Character/PlayerCharacterInput":4,
-	"/root/Test Level/PlayerManager5/Player Character/PlayerCharacterInput":5,
-	"/root/Test Level/PlayerManager6/Player Character/PlayerCharacterInput":6,
+	"/root/Match/PlayerManager/Player Character/PlayerCharacterInput":1,
+	"/root/Match/PlayerManager2/Player Character/PlayerCharacterInput":2,
+	"/root/Match/PlayerManager3/Player Character/PlayerCharacterInput":3,
+	"/root/Match/PlayerManager4/Player Character/PlayerCharacterInput":4,
+	"/root/Match/PlayerManager5/Player Character/PlayerCharacterInput":5,
+	"/root/Match/PlayerManager6/Player Character/PlayerCharacterInput":6,
 }
 
 enum HeaderFlags {

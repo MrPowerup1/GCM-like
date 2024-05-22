@@ -12,8 +12,6 @@ var player_count:int =0
 
 var searching:bool=false
 
-signal added_new_player(player:Player)
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -63,24 +61,13 @@ func next_position() -> Vector2:
 	return spawn_vectors[player_count%spawn_vectors.size()]
 
 func add_player(local_id:int, input:Input_Keys):
-	var new_player = GameManager.add_player()
-	new_player.device_id = multiplayer.get_unique_id()
-	get_parent().get_parent().add_child(new_player,true)
-	new_player.set_start_pos(next_position())
-	new_player.add_controls(input)
-	$"../StateManager/RoundStarting".start_round.connect(new_player.start_round)
+	GameManager.add_player(multiplayer.get_unique_id(),input)
 	player_count+=1
-	added_new_player.emit(new_player)
 
 @rpc("call_remote","any_peer")
 func add_remote_player(local_id:int):
-	var new_player = GameManager.add_player()
-	new_player.device_id = multiplayer.get_remote_sender_id()
-	get_parent().get_parent().add_child(new_player,true)
-	new_player.set_start_pos(next_position())
-	$"../StateManager/RoundStarting".start_round.connect(new_player.start_round)
+	var new_player = GameManager.add_player(multiplayer.get_remote_sender_id())
 	player_count+=1
-	added_new_player.emit(new_player)
 	
 func delete_player(player:PlayerManager):
 	print ("Deleted player here yaya")

@@ -5,8 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://blo8vwrgo5te8" path="res://Player/player_character.tscn" id="2_rfmn5"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="3_jhyxp"]
 
-[node name="PlayerManager" type="Node"]
+[node name="PlayerManager" type="Node" node_paths=PackedStringArray("player_character")]
 script = ExtResource("1_746o3")
+player_character = NodePath("Player Character")
 spell_deck = ExtResource("2_1o3tq")
 skin_deck = ExtResource("3_jhyxp")
 

@@ -13,6 +13,8 @@ func reset_shader():
 	%Image.material = %Image.material.duplicate(true)
 
 func set_new_card (new_card:Card):
+	if new_card ==null:
+		return
 	card=new_card
 	new_card.display(self)
 	

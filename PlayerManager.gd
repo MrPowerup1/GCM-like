@@ -21,6 +21,7 @@ func add_controls(controls:Input_Keys):
 	player_character.add_input(controls)
 
 func start_round():
+	player_character.new_auth(device_id)
 	player_character.enable()
 	player_character.reset()
 	player_character.fixed_position=spawn_loc

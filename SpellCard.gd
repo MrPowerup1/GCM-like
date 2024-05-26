@@ -8,11 +8,13 @@ class_name SpellCard
 @export_enum("Buff","Movement","Attack","Defense") var type:int
 @export var randomizer = false
 
-func select(player:PlayerManager):
-	player.set_spell(spell)
+func select(player_index:int):
+	var player_data = GameManager.players[player_index]
+	player_data['selected_spells'].append(GameManager.universal_spell_deck.get_index(self))
 
-func unselect(player:PlayerManager):
-	player.set_spell(null)
+func unselect(player_index:int):
+	var player_data = GameManager.players[player_index]
+	player_data['selected_spells'].erase(GameManager.universal_spell_deck.get_index(self))
 
 func display(card:CardDisplay):
 	card.set_cardname(name)

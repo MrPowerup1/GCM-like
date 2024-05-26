@@ -6,7 +6,8 @@ class_name CardSelectPanel
 @export var center_card:Card
 @export var right_card:Card
 @export var center_display:CardDisplay
-@export var player:PlayerManager
+#@export var player:PlayerManager
+@export var player_index:int
 enum display_mode {SELECTED,SELECTING}
 var current_mode:display_mode
 
@@ -46,7 +47,7 @@ func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
 	if cards.select(center_card):
-		center_card.select(player)
+		center_card.select(player_index)
 		new_cards(cards.next_cards(center_card))
 		next.emit()
 	else:
@@ -58,7 +59,7 @@ func back():
 @rpc("any_peer","call_local")
 func unselect():
 	cards.unselect(center_card)
-	center_card.unselect(player)
+	center_card.unselect(player_index)
 	new_cards(cards.next_cards(center_card))
 	
 func new_cards(to_display:Array):
@@ -103,15 +104,15 @@ func transition_display_mode(new_mode:display_mode):
 
 
 func _on_left_button_button_down():
-	if player.device_id == multiplayer.get_unique_id():
+	if GameManager.players[player_index].get("local",false):
 		left()
 
 
 func _on_right_button_button_down():
-	if player.device_id == multiplayer.get_unique_id():
+	if GameManager.players[player_index].get("local",false):
 		right()
 
 
 func _on_select_button_button_down():
-	if player.device_id == multiplayer.get_unique_id():
+	if GameManager.players[player_index].get("local",false):
 		select()

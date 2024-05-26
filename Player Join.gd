@@ -2,15 +2,19 @@ extends Node
 class_name PlayerJoin
 
 @export var player_scene:PackedScene
+@export var player_ui_scene:PackedScene
 var registered_ids = {}
 @export var base_action_strings:Array[String]=[]
 var device_keys={Input_Keys.device_type.KEYBOARD:"kb",Input_Keys.device_type.JOYSTICK:"joy"}
+@export var null_input:Input_Keys
 @export var keyboard_input_1:Input_Keys
 @export var keyboard_input_2:Input_Keys
 @export var spawn_vectors:Array[Vector2]=[Vector2(100,100),Vector2(200,100),Vector2(100,200),Vector2(200,200)]
 var player_count:int =0
 
 var searching:bool=false
+
+signal player_joined(new_player:PlayerUIInput,index:int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,12 +65,20 @@ func next_position() -> Vector2:
 	return spawn_vectors[player_count%spawn_vectors.size()]
 
 func add_player(local_id:int, input:Input_Keys):
-	GameManager.add_player(multiplayer.get_unique_id(),input)
+	var player_index = GameManager.add_player(multiplayer.get_unique_id(),input)
+	var new_player = player_ui_scene.instantiate()
+	add_child(new_player)
+	new_player.input_keys = input
+	player_joined.emit(new_player,player_index)
 	player_count+=1
 
 @rpc("call_remote","any_peer")
 func add_remote_player(local_id:int):
-	var new_player = GameManager.add_player(multiplayer.get_remote_sender_id())
+	var player_index = GameManager.add_player(multiplayer.get_remote_sender_id(),null_input)
+	var new_player = player_ui_scene.instantiate()
+	add_child(new_player)
+	new_player.input_keys = null_input
+	player_joined.emit(new_player,player_index)
 	player_count+=1
 	
 func delete_player(player:PlayerManager):

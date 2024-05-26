@@ -15,10 +15,11 @@ signal player_quit(player:PlayerManager)
 func _ready():
 	most_recent_panel=get_child(0)
 
-#@rpc("any_peer","call_local")
-func player_join(player:PlayerManager):
+#@rpc("any_peer","call_local") 
+
+func player_join(player:PlayerUIInput,player_index:int):
 	if !starting and current_players < max_players:
-		most_recent_panel.player_join(player)
+		most_recent_panel.player_join(player,player_index)
 		current_players+=1
 		if (current_players < max_players):
 			new_panel()

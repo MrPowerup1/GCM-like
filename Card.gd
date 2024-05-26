@@ -4,12 +4,14 @@ class_name Card
 @export var name:String
 @export var image:Texture2D
 @export var description:String
+enum CardContext {LEARNING,SELECTING}
+@export var context:CardContext
 
-func select(player:PlayerManager):
+func select(player_index:int):
 	printerr ("Selected a base card, (IDK WHAT TO DO)")
 	pass
 
-func unselect(player:PlayerManager):
+func unselect(player_index:int):
 	printerr ("Selected a base card, (IDK WHAT TO DO)")
 	pass
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://vaog6h0dcfy2"]
+[gd_scene load_steps=14 format=3 uid="uid://vaog6h0dcfy2"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_3lsti"]
 [ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="2_kbems"]
@@ -7,6 +7,12 @@
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="3_0638b"]
 [ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="4_0wvmp"]
 [ext_resource type="Script" path="res://UI/PlayerReady.gd" id="4_6ik6p"]
+[ext_resource type="Script" path="res://States/StateManager.gd" id="8_ik0ej"]
+[ext_resource type="Script" path="res://States/UI States/Player Panel States/SelectSkin.gd" id="9_au7yq"]
+[ext_resource type="Script" path="res://States/UI States/Player Panel States/AwaitingPlayer.gd" id="9_novjl"]
+[ext_resource type="Script" path="res://States/UI States/Player Panel States/SelectSpell.gd" id="11_h325i"]
+[ext_resource type="Script" path="res://States/UI States/Player Panel States/SelectSpell2.gd" id="12_o16sc"]
+[ext_resource type="Script" path="res://States/UI States/Player Panel States/Ready.gd" id="13_a4768"]
 
 [node name="PlayerPanel" type="PanelContainer"]
 size_flags_horizontal = 3
@@ -81,12 +87,31 @@ unique_name_in_owner = true
 wait_time = 0.25
 one_shot = true
 
-[connection signal="exit" from="MarginContainer/Unselected/SkinSelect" to="." method="_on_skin_select_exit"]
-[connection signal="next" from="MarginContainer/Unselected/SkinSelect" to="." method="_on_skin_select_next"]
-[connection signal="exit" from="MarginContainer/Unselected/SpellSelect1" to="." method="_on_spell_select_1_exit"]
-[connection signal="next" from="MarginContainer/Unselected/SpellSelect1" to="." method="_on_spell_select_1_next"]
-[connection signal="exit" from="MarginContainer/Unselected/SpellSelect2" to="." method="_on_spell_select_2_exit"]
-[connection signal="next" from="MarginContainer/Unselected/SpellSelect2" to="." method="_on_spell_select_2_next"]
-[connection signal="next" from="MarginContainer/Unselected/AwaitPlayer" to="." method="_on_join_panel_next"]
-[connection signal="exit" from="PlayerReady" to="." method="_on_player_ready_exit"]
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("8_ik0ej")
+starting_state = NodePath("AwaitingPlayer")
+
+[node name="AwaitingPlayer" type="Node" parent="StateManager"]
+script = ExtResource("9_novjl")
+
+[node name="SelectSkin" type="Node" parent="StateManager"]
+script = ExtResource("9_au7yq")
+
+[node name="SelectSpell" type="Node" parent="StateManager"]
+script = ExtResource("11_h325i")
+
+[node name="SelectSpell2" type="Node" parent="StateManager"]
+script = ExtResource("12_o16sc")
+
+[node name="Ready" type="Node" parent="StateManager"]
+script = ExtResource("13_a4768")
+
+[connection signal="exit" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_exit"]
+[connection signal="next" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_next"]
+[connection signal="exit" from="MarginContainer/Unselected/SpellSelect1" to="StateManager/SelectSpell" method="_on_spell_select_1_exit"]
+[connection signal="next" from="MarginContainer/Unselected/SpellSelect1" to="StateManager/SelectSpell" method="_on_spell_select_1_next"]
+[connection signal="exit" from="MarginContainer/Unselected/SpellSelect2" to="StateManager/SelectSpell2" method="_on_spell_select_2_exit"]
+[connection signal="next" from="MarginContainer/Unselected/SpellSelect2" to="StateManager/SelectSpell2" method="_on_spell_select_2_next"]
+[connection signal="next" from="MarginContainer/Unselected/AwaitPlayer" to="StateManager/AwaitingPlayer" method="_on_await_player_next"]
+[connection signal="exit" from="PlayerReady" to="StateManager/Ready" method="_on_player_ready_exit"]
 [connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]

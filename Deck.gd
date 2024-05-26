@@ -11,6 +11,9 @@ func random() -> Card:
 func get_card(index:int) -> Card:
 	return cards[index]
 
+func get_index(card:Card) -> int:
+	return cards.find(card)
+
 func start_cards() -> Array:
 	return next_cards(cards[0])
 
@@ -37,7 +40,7 @@ func unselect(card:Card) -> bool:
 	print("Couldn't find to unselect")
 	return false
 
-func construct_subdeck(indices:Array) -> Deck:
+func subdeck(indices:Array) -> Deck:
 	var new_deck = Deck.new()
 	for index in indices:
 		new_deck.cards.append(cards[index])

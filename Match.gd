@@ -15,18 +15,14 @@ func _ready():
 	SyncManager.sync_stopped.connect(_on_SyncManager_sync_stopped)
 	SyncManager.sync_lost.connect(_on_SyncManager_sync_lost)
 	SyncManager.sync_regained.connect(_on_SyncManager_sync_regained)
-	GameManager.added_player.connect(on_GameManager_add_player)
 
 #FROM PLAYER JOIN: func add_player(local_id:int, input:Input_Keys):
-
-func on_GameManager_add_player(player:PlayerManager):
-	$Players.add_child(player)
 
 func load_players(player_data:Dictionary):
 	GameManager.players = player_data.duplicate()
 	for player_id in player_data:
 		print("Player number ", player_id)
-		var new_player = GameManager.add_player(-1,null,player_data[player_id])
+		var new_player = GameManager.load_player(player_data[player_id])
 		print(new_player)
 		%Players.add_child(new_player)
 		print(%Players.get_child_count())

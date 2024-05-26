@@ -4,12 +4,12 @@ class_name LevelCard
 
 @export var level:PackedScene
 
-func select(player:PlayerManager):
+func select(player_index:int):
 	#TODO: Add functionality
 	pass
 	#player.set_skin(skin)
 
-func unselect(player:PlayerManager):
+func unselect(player_index:int):
 	pass
 
 func display(card:CardDisplay):

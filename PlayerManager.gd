@@ -65,7 +65,7 @@ func set_spell(new_spell:Spell):
 
 func from_dict(player_data:Dictionary):
 	print(player_data['player_data'].get('known_spells',[]))
-	spell_deck=GameManager.universal_spell_deck.construct_subdeck(player_data['player_data'].get('known_spells',[]))
+	spell_deck=GameManager.universal_spell_deck.subdeck(player_data['player_data'].get('known_spells',[]))
 	skin_deck = GameManager.universal_skin_deck
 	set_skin(skin_deck.get_card(player_data['player_data'].get('selected_skin',0)).skin)
 	for spell_index in player_data['match_data'].get('selected_spells'):

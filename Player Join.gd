@@ -1,7 +1,6 @@
 extends Node
 class_name PlayerJoin
 
-@export var player_scene:PackedScene
 @export var player_ui_scene:PackedScene
 var registered_ids = {}
 @export var base_action_strings:Array[String]=[]
@@ -81,7 +80,7 @@ func add_remote_player(local_id:int):
 	player_joined.emit(new_player,player_index)
 	player_count+=1
 	
-func delete_player(player:PlayerManager):
+func delete_player(player:Player):
 	print ("Deleted player here yaya")
 	if player.player_character.my_input!=null:
 		var to_del_input = player.player_character.my_input.input_keys

@@ -8,7 +8,7 @@ var players = {}
 #TODO: Delete? This doesn't do much right now, just holds player unique ids (It's never checked or used during the game)
 var peers = {}
 
-var alive_players:Array[PlayerManager] =[]
+var alive_players:Array[Player] =[]
 
 #Sync the skin deck selection for all players
 var universal_skin_deck:Deck = load("res://TestSkinDeck.tres")
@@ -17,7 +17,6 @@ var universal_spell_deck:Deck = load("res://TestSpellDeck.tres")
 
 var universal_level_deck:Deck = load("res://TestLevelDeck.tres")
 var temporary_level:PackedScene = load("res://Basic_Level.tscn")
-var player_scene:PackedScene = load("res://PlayerManager.tscn")
 
 var base_input = preload("res://Inputs/Base Input.tres").to_dict()
 

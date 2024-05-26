@@ -6,7 +6,6 @@ class_name CardSelectPanel
 @export var center_card:Card
 @export var right_card:Card
 @export var center_display:CardDisplay
-#@export var player:PlayerManager
 @export var player_index:int
 enum display_mode {SELECTED,SELECTING}
 var current_mode:display_mode

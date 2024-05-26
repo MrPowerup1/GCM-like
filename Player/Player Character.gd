@@ -7,8 +7,14 @@ var can_cast:Array[bool]=[true,true]
 var facing:Vector2
 var num_spells:int
 var snap_to_0:int = 65536/100
-#@export var input_scene:PackedScene
-@export var my_input:PlayerCharacterInput = null
+@export var input:PlayerCharacterInput = null
+var skin:CharacterSkin
+var spawn_loc:SGFixedVector2=SGFixedVector2.new()
+var device_id:int
+var player_index:int
+@export var spell_deck:Deck
+@export var skin_deck:Deck
+
 
 signal spell_activated(index:int)
 signal spell_released(index:int)
@@ -18,8 +24,12 @@ func _ready():
 	#Seperate the material so it doesn't change with others
 	%Sprite2D.material = %Sprite2D.material.duplicate(true)
 	%"Player Status".init_health(%Health.max_health)
-	my_input.button_activate.connect(activate)
-	my_input.button_release.connect(release)
+	input.button_activate.connect(activate)
+	input.button_release.connect(release)
+	#Is this really needed?
+	disable()
+	new_auth(device_id)
+	spell_deck=spell_deck.duplicate()
 	
 
 func _physics_process(delta):
@@ -78,28 +88,32 @@ func disable():
 	can_release=[false,false]
 	anchor(true)
 
-func set_skin(new_skin:CharacterSkin):
+func set_skin(new_skin):
 	#Commented out to test smaller skin version
-	%Sprite2D.texture=new_skin.texture
-	%Sprite2D.material.set_shader_parameter("new_color",new_skin.color)
+	if new_skin is CharacterSkin:
+		skin=new_skin
+	elif new_skin is int:
+		skin = skin_deck.get_card(new_skin).skin
 	
-func equip_spell(new_spell:Spell):
+	%Sprite2D.texture=skin.texture
+	%Sprite2D.material.set_shader_parameter("new_color",skin.color)
+	
+func equip_spell(new_spell:Spell,index:int):
 	if !%"Spell Manager".known_spells.has(new_spell):
 		%"Spell Manager".learn_spell(new_spell)
-	%"Spell Manager".equip_spell(%"Spell Manager".known_spells.find(new_spell))
+	%"Spell Manager".equip_spell(%"Spell Manager".known_spells.find(new_spell),index)
 
-func unequip_spell():
-	%"Spell Manager".unequip_spell()
+func unequip_spell(index:int):
+	%"Spell Manager".unequip_spell(index)
 
 func add_input(keys:Input_Keys):
-	my_input.input_keys=keys
-	my_input.velocity=%Velocity
-	my_input.current_mode=my_input.input_mode.UI
-	my_input.device=my_input.device_type.LOCAL
+	input.input_keys=keys
+	input.velocity=%Velocity
+	input.device=input.device_type.LOCAL
 
 func new_auth(id:int):
 	set_multiplayer_authority(id)
-	my_input.set_multiplayer_authority(id)
+	input.set_multiplayer_authority(id)
 	#%MultiplayerSynchronizer.set_multiplayer_authority(id)
 	pass
 	
@@ -122,7 +136,40 @@ func _load_state(state:Dictionary) ->void:
 func reset():
 	%Health.reset()
 	for i in range(num_spells):
-		unequip_spell()
+		unequip_spell(i)
 
 func _on_health_dead():
 	GameManager.alive_players.erase(get_parent())
+
+func start_round():
+	new_auth(device_id)
+	enable()
+	reset()
+	fixed_position=spawn_loc
+	GameManager.alive_players.append(self)
+	
+func stop_round():
+	disable()
+
+#func from_dict(player_data:Dictionary):
+	#print(player_data['player_data'].get('known_spells',[]))
+	#spell_deck=GameManager.universal_spell_deck.subdeck(player_data['player_data'].get('known_spells',[]))
+	#skin_deck = GameManager.universal_skin_deck
+	#set_skin(skin_deck.get_card(player_data['player_data'].get('selected_skin',0)).skin)
+	#for spell_index in player_data['match_data'].get('selected_spells'):
+		#set_spell(spell_deck.get_card(spell_index).spell)
+#
+#func to_dict()-> Dictionary:
+	##TODO: Change to actual player data
+	#return  {
+			#"player_data": {
+				#"known_spells": [0,1,2],
+				#"selected_skin": 0
+			#},
+			#"match_data": {
+				##TODO: FIX Garbage Data
+				#"selected_spells":[0,1],
+				#"selected_level":[0]
+			#}
+		#}
+	#

@@ -1,10 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://gml8gorru1ib"]
+[gd_scene load_steps=24 format=3 uid="uid://gml8gorru1ib"]
 
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
 [ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="2_kslxp"]
 [ext_resource type="Script" path="res://States/StateManager.gd" id="2_p5w6j"]
-[ext_resource type="PackedScene" uid="uid://wlvjpfrdffbj" path="res://PlayerManager.tscn" id="3_0l3n3"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/LocalOrOnline.gd" id="3_46e2s"]
 [ext_resource type="PackedScene" uid="uid://vaog6h0dcfy2" path="res://UI/PlayerPanel.tscn" id="3_e8kt2"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/OnlineMatchmaking.gd" id="4_2rc4e"]
@@ -59,7 +58,6 @@ script = ExtResource("9_in05g")
 [node name="PlayerJoin" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_p0knl")
-player_scene = ExtResource("3_0l3n3")
 player_ui_scene = ExtResource("12_cxwyj")
 base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])
 null_input = ExtResource("13_qr0bh")
@@ -329,8 +327,8 @@ text = "End
 [connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/Server" to="Server" method="_on_start_server_button_down"]
 [connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/Host" to="Client" method="_on_start_client_button_down"]
 [connection signal="button_down" from="SelectionUI/HostGame/Matchmaking Menu/HBoxContainer/VBoxContainer/Join" to="Client" method="_on_join_lobby_button_down"]
-[connection signal="button_down" from="SelectionUI/HostGame/Waiting For Connect/StartRound" to="Client" method="_on_start_round_button_down"]
 [connection signal="button_down" from="SelectionUI/HostGame/Waiting For Connect/StartRound" to="Client" method="_on_button_button_down"]
+[connection signal="button_down" from="SelectionUI/HostGame/Waiting For Connect/StartRound" to="Client" method="_on_start_round_button_down"]
 [connection signal="button_down" from="SelectionUI/Player Select Menu/Button" to="Server" method="_on_button_button_down"]
 [connection signal="player_quit" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="PlayerJoin" method="delete_player"]
 [connection signal="players_ready" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="StateManager/PlayerSelect" method="_on_player_select_screen_players_ready"]

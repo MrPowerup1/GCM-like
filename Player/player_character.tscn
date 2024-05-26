@@ -35,14 +35,13 @@ void fragment() {
 shader = SubResource("Shader_obj0k")
 shader_parameter/new_color = Color(0.890196, 0.639216, 0.172549, 1)
 
-[node name="Player Character" type="SGCharacterBody2D" node_paths=PackedStringArray("my_input") groups=["network_sync"]]
+[node name="Player Character" type="SGCharacterBody2D" groups=["network_sync"]]
 collision_layer = 3
 collision_mask = 3
 fixed_position_x = 196608
 fixed_position_y = 393216
 position = Vector2(3, 6)
 script = ExtResource("1_o8ybw")
-my_input = NodePath("PlayerCharacterInput")
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_4pwhl")
@@ -100,7 +99,6 @@ unique_name_in_owner = true
 input_keys = ExtResource("11_yip05")
 velocity = NodePath("../Velocity")
 device = 1
-current_mode = 0
 
 [connection signal="dead" from="Health" to="." method="_on_health_dead"]
 [connection signal="health_changed" from="Health" to="Player Status" method="health_changed"]

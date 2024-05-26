@@ -10,7 +10,7 @@ var starting:bool = false
 
 signal players_ready()
 signal players_unready()
-signal player_quit(player:PlayerManager)
+signal player_quit(player:Player)
 
 func _ready():
 	most_recent_panel=get_child(0)
@@ -31,7 +31,7 @@ func player_join(player:PlayerUIInput,player_index:int):
 		print ("Too many players")	
 
 
-func _on_player_quit(player:PlayerManager):
+func _on_player_quit(player:Player):
 	current_players-=1
 	player_quit.emit(player)
 	#Timer because there seemed to be a race condition on signal emissions

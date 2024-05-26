@@ -12,7 +12,7 @@ var reading_inputs:bool = true
 var cooldown_ready:bool = true
 @export var card_scene:PackedScene
 
-signal player_quit(player:PlayerManager)
+signal player_quit(player:Player)
 signal player_ready()
 signal player_unready()
 

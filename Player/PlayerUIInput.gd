@@ -5,6 +5,7 @@ var player_index:int
 @export var input_keys:Input_Keys
 enum device_type {LOCAL,REMOTE}
 @export var device:device_type
+var taking_inputs = true
 
 signal button_activate(index:int)
 signal button_release(index:int)
@@ -12,7 +13,7 @@ signal direction_pressed(direction:Vector2)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if input_keys !=null:
+	if input_keys !=null and taking_inputs:
 		var direction = Input.get_vector(input_keys.conversion["Left"],input_keys.conversion["Right"],input_keys.conversion["Up"],input_keys.conversion["Down"])
 		if (not direction.is_zero_approx()):
 			direction_pressed.emit(direction)

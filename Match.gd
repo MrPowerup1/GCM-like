@@ -5,6 +5,7 @@ class_name Match
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
+@export var player_scene:PackedScene
 
 var logging_enabled:bool = true
 
@@ -15,17 +16,31 @@ func _ready():
 	SyncManager.sync_stopped.connect(_on_SyncManager_sync_stopped)
 	SyncManager.sync_lost.connect(_on_SyncManager_sync_lost)
 	SyncManager.sync_regained.connect(_on_SyncManager_sync_regained)
-
-#FROM PLAYER JOIN: func add_player(local_id:int, input:Input_Keys):
+	#HACK: Just a test method
+	#SyncManager.scene_spawned.connect(_test_method)
+	#SyncManager.scene_despawned.connect(_test_method_2)
+	
+#func _test_method(name: String, spawned_node: Node, scene: PackedScene, data: Dictionary):
+	#print("Scene spawned")
+	#print(name)
+	#print(spawned_node)
+	#print(scene)
+	##print(data)
+	#print(SyncManager._spawn_manager.spawn_records)
+#
+#func _test_method_2(name: String, node: Node):
+	#print("Scene despawned")
+	#print(name)
+	#print(node)
+	#print(SyncManager._spawn_manager.spawn_records)
 
 func load_players(player_data:Dictionary):
-	GameManager.players = player_data.duplicate()
 	for player_id in player_data:
-		print("Player number ", player_id)
+		#print("Player number ", player_id)
 		var new_player = GameManager.load_player(player_data[player_id])
-		print(new_player)
+		#print(new_player)
 		%Players.add_child(new_player)
-		print(%Players.get_child_count())
+		#print(%Players.get_child_count())
 
 func _on_SyncManager_sync_started():
 	start_match()
@@ -49,6 +64,8 @@ func _on_SyncManager_sync_started():
 			#TODO:Add Functionality to level index
 			"level_index":0
 		}
+		#print("------match info------")
+		#print(match_info)
 		SyncManager.start_logging(LOG_FILE_DIRECTORY+ '/' + log_file_name,match_info)
 
 func _on_SyncManager_sync_stopped():
@@ -56,22 +73,26 @@ func _on_SyncManager_sync_stopped():
 
 func _on_SyncManager_sync_lost():
 	print("Lost Sync")
+	pass
 
 func _on_SyncManager_sync_regained():
 	print("Regained Sync")
+	pass
 
 func setup_match_for_replay(my_peer_id:int,peer_ids: Array,match_info:Dictionary)-> void:
-	print("We're setting it up now")
+	#print("We're setting it up now")
+	#print(match_info)
 	$UI.visible=false
 	load_players(match_info.get("players"))
-	start_match()
 
 func start_match():
-	var player_count = $Players.get_child_count()
-	print("Player count",player_count)
-	print ($Players.get_children())
+	var player_count = GameManager.players.size()
+	#print("Player count",player_count)
 	var positions = $"Basic Level".get_starting_positions(player_count)
 	for i in range(player_count):
-		var player=$Players.get_child(i)
-		player.spawn_loc=positions[i]
-		player.player_character.fixed_position=positions[i]
+		#print(i)
+		var player_data = GameManager.players[i]
+		player_data['spawn_position_x']=positions[i].x
+		player_data['spawn_position_y']=positions[i].y
+		#print("Spawning player with data ",player_data)
+		var new_player = SyncManager.spawn('Player',%Players,player_scene,player_data)

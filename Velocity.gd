@@ -4,6 +4,8 @@ class_name Velocity
 const fixed_point_factor = 65536
 
 var velocity:SGFixedVector2 = SGFixedVector2.new()
+var facing:SGFixedVector2 = SGFixedVector2.new()
+var fixed_zero =SGFixed.vector2(0,0)
 @export var body:SGFixedNode2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel:float
@@ -34,6 +36,8 @@ func _ready():
 	if body==null:
 		body=get_parent()
 func pulse_to(direction,strength: float):
+	print("Pulsing to", direction)
+	print("With strength",strength)
 	var pulse_dir = SGFixedVector2.new()
 	if (direction is Vector2):
 		printerr('pulsing with a float is a no no I think')
@@ -49,6 +53,7 @@ func pulse_to(direction,strength: float):
 	var fixed_strength:int = strength*fixed_point_factor
 	velocity.iadd(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
 func pulse_from(direction,strength: float):
+	print("Pulsing from")
 	var pulse_dir = SGFixedVector2.new()
 	if (direction is Vector2):
 		pulse_dir.from_float((direction-body.position).normalized())
@@ -64,6 +69,8 @@ func pulse_from(direction,strength: float):
 	velocity.isub(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
 
 func move_input(direction:SGFixedVector2):
+	if not direction.is_equal_approx(fixed_zero):
+		facing = direction
 	var add_to_vel = direction
 	#print("Before",add_to_vel.to_float())
 	#print("Multiplied by ",(speed_fixed/mass_fixed)/fixed_point_factor)
@@ -105,6 +112,7 @@ func reset_stats():
 	set_friction()
 	set_mass()
 	set_speed()
+
 
 func _physics_process(delta):
 	#print("Trying to move speed ")

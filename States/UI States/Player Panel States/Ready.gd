@@ -4,7 +4,7 @@ class_name Ready
 
 
 func enter():
-	$"../..".active_panel=%Ready
+	$"../..".active_panel=%PlayerReady
 	%PlayerReady.visible=true
 	$"../..".now_ready=true
 	$"../..".player_ready.emit()

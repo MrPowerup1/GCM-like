@@ -5,6 +5,8 @@ extends Node
 #Info about all the players
 var players = {}
 
+var local_players = {}
+
 #TODO: Delete? This doesn't do much right now, just holds player unique ids (It's never checked or used during the game)
 var peers = {}
 
@@ -21,20 +23,22 @@ var temporary_level:PackedScene = load("res://Basic_Level.tscn")
 var base_input = preload("res://Inputs/Base Input.tres").to_dict()
 
 var default_player_dict = {
-			"local":false,
 			"peer_id": -1,
-			"input_keys":base_input,
+			"player_index":-1,
 			"known_spells": [0,1,2],
 			"selected_skin": 0,
 			"selected_spells":[],
 			"selected_level":-1
 		}
 
+var default_local_player_dict = {
+	'input_keys':base_input
+}
 
 #Just used to ensure one time activations
 var is_host:bool = false
 
-
+#TODO: This is unused... why does Snopek use it?
 class PlayerData:
 	var peer_id:int
 	var name: String
@@ -69,38 +73,25 @@ class PlayerData:
 			selected_spells=selected_spells,
 		}
 
-
-#func oldadd_player(client_id:int=-1,input:Input_Keys = null,player_data:Dictionary=default_player_dict):
-	#print("Added player")
-	#var new_player = player_scene.instantiate()
-	#var unique_player_index = get_player_id()
-	#new_player.name="PlayerManager" + str(unique_player_index)
-	#new_player.player_index = unique_player_index
-	#GameManager.players [unique_player_index] = player_data
-	#new_player.from_dict(player_data)
-	#added_player.emit(new_player)
-	#get_node("/root/Match/Players").add_child(new_player)
-	#print (get_node("/root/Match/Players").get_child_count())
-	#if input!=null:
-		#new_player.add_controls(input)
-	#if client_id!=-1:
-		#new_player.device_id=client_id
-	#players[unique_player_index]['player_data']['client_id']=client_id
-	#return new_player
-
 func add_player(peer_id:int,input:Input_Keys):
 	var player_index = get_player_id()
-	players[player_index] = default_player_dict
+	players[player_index] = default_player_dict.duplicate(true)
 	players[player_index]['peer_id']=peer_id
-	if peer_id == multiplayer.get_unique_id():
-		players[player_index]['local']=true
-	else:
-		players[player_index]['local']=false
-	players[player_index]['input']=input
+	players[player_index]['player_index']=player_index
+	if peer_id==multiplayer.get_unique_id():
+		local_players[player_index] = {
+			'input_keys':input.to_dict()
+		}
+	print("New player at index, ",player_index," Has data ",players[player_index])
+	for old_player_index in players:
+		if old_player_index!=player_index:
+			print("old player at index, ",old_player_index," Has data ",players[old_player_index])
 	return player_index
 
 func load_player(player_data:Dictionary):
+	#HACK: assumes players in dictionary are sorted
 	players[get_player_id()]=player_data
+		 
 
 
 func get_player_id()->int:

@@ -9,8 +9,7 @@ var num_spells:int
 var snap_to_0:int = 65536/100
 @export var input:PlayerCharacterInput = null
 var skin:CharacterSkin
-var spawn_loc:SGFixedVector2=SGFixedVector2.new()
-var device_id:int
+var peer_id:int
 var player_index:int
 @export var spell_deck:Deck
 @export var skin_deck:Deck
@@ -27,10 +26,12 @@ func _ready():
 	input.button_activate.connect(activate)
 	input.button_release.connect(release)
 	#Is this really needed?
-	disable()
-	new_auth(device_id)
-	spell_deck=spell_deck.duplicate()
+	new_auth(peer_id)
+	skin_deck=GameManager.universal_skin_deck.duplicate()
 	
+func get_facing() -> SGFixedVector2:
+	return %Velocity.facing
+
 
 func _physics_process(delta):
 	if %Velocity.can_move and (velocity.length_squared() > snap_to_0):
@@ -139,37 +140,40 @@ func reset():
 		unequip_spell(i)
 
 func _on_health_dead():
-	GameManager.alive_players.erase(get_parent())
+	GameManager.alive_players.erase(self)
 
 func start_round():
-	new_auth(device_id)
+	new_auth(peer_id)
 	enable()
 	reset()
-	fixed_position=spawn_loc
 	GameManager.alive_players.append(self)
 	
 func stop_round():
 	disable()
 
-#func from_dict(player_data:Dictionary):
-	#print(player_data['player_data'].get('known_spells',[]))
-	#spell_deck=GameManager.universal_spell_deck.subdeck(player_data['player_data'].get('known_spells',[]))
-	#skin_deck = GameManager.universal_skin_deck
-	#set_skin(skin_deck.get_card(player_data['player_data'].get('selected_skin',0)).skin)
-	#for spell_index in player_data['match_data'].get('selected_spells'):
-		#set_spell(spell_deck.get_card(spell_index).spell)
-#
-#func to_dict()-> Dictionary:
-	##TODO: Change to actual player data
-	#return  {
-			#"player_data": {
-				#"known_spells": [0,1,2],
-				#"selected_skin": 0
-			#},
-			#"match_data": {
-				##TODO: FIX Garbage Data
-				#"selected_spells":[0,1],
-				#"selected_level":[0]
-			#}
+
+#var default_player_dict = {
+			#"peer_id": -1,
+			#"input_keys":base_input,
+			#"known_spells": [0,1,2],
+			#"selected_skin": 0,
+			#"selected_spells":[],
+			#"selected_level":-1
 		#}
-	#
+func _network_spawn(data: Dictionary) -> void:
+	fixed_position_x=data['spawn_position_x']
+	fixed_position_y=data['spawn_position_y']
+	peer_id = data['peer_id']
+	player_index = data['player_index']
+	new_auth(peer_id)
+	#input.input_keys= Input_Keys.from_dict(data['input_keys'])
+	if not SyncReplay.active and peer_id == multiplayer.get_unique_id():
+		input.input_keys = Input_Keys.from_dict(GameManager.local_players[player_index]['input_keys'])
+	spell_deck=GameManager.universal_spell_deck.subdeck(data['known_spells'])
+	set_skin(data['selected_skin'])
+	var selected_spells = data['selected_spells']
+	var index = 0 
+	for spell_index in selected_spells:
+		var new_spell = spell_deck.get_card(spell_index).spell
+		equip_spell(new_spell,index)
+		index+=1

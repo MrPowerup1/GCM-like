@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://tm2psxgle1mc"]
+
+[ext_resource type="Script" path="res://Delayed Cast Instance.gd" id="1_8jmcc"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_ro655"]
+
+[node name="Delayed Cast Instance" type="Node"]
+script = ExtResource("1_8jmcc")
+
+[node name="Delay" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_ro655")
+
+[connection signal="timeout" from="Delay" to="." method="_on_delay_timeout"]

@@ -47,6 +47,7 @@ func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	return data
 
 func _network_spawn(data: Dictionary) -> void:
+	print("Spawning")
 	fixed_position_x=data['position'].x
 	fixed_position_y=data['position'].y
 	caster = get_node(data['caster_path'])
@@ -59,6 +60,7 @@ func _network_spawn(data: Dictionary) -> void:
 	if data.has('img_path'):
 		get_node("Sprite2D").texture = load(data['img_path'])
 	%End_Time.wait_ticks=data['life_time']
+	print(%End_Time.wait_ticks)
 	if (data['ping_time'] !=0):
 		%Ping_Time.wait_ticks=data['ping_time']
 	exit_trigger_on_timeout = data['trigger_exit_on_timeout']
@@ -69,8 +71,9 @@ func _network_spawn(data: Dictionary) -> void:
 
 #@rpc("any_peer","call_local")
 func release():
+	print("released")
 	#HACK: Should be its own effect only in the target moving version
-	caster.my_input.reset_velocity_reference()	
+	caster.input.reset_velocity_reference()	
 	
 	if (exit_trigger_on_timeout):
 		for body in get_overlapping_bodies():

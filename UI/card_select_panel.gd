@@ -103,15 +103,15 @@ func transition_display_mode(new_mode:display_mode):
 
 
 func _on_left_button_button_down():
-	if GameManager.players[player_index].get("local",false):
+	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
 		left()
 
 
 func _on_right_button_button_down():
-	if GameManager.players[player_index].get("local",false):
+	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
 		right()
 
 
 func _on_select_button_button_down():
-	if GameManager.players[player_index].get("local",false):
+	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
 		select()

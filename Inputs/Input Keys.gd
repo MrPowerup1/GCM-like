@@ -21,7 +21,11 @@ func to_dict()->Dictionary:
 		"device_id":device_id
 	}
 
-func from_dict(keys_dict:Dictionary)->void:
-	conversion=keys_dict.get("conversion")
-	device = keys_dict.get("device_type")
-	device_id = keys_dict.get("device_id")
+static func from_dict(keys_dict:Dictionary)->Input_Keys:
+	var new_input = Input_Keys.new()
+	print(keys_dict)
+	print(keys_dict.get("conversion"))
+	new_input.conversion=keys_dict.get("conversion")
+	new_input.device = keys_dict.get("device_type")
+	new_input.device_id = keys_dict.get("device_id")
+	return new_input

@@ -1,7 +1,7 @@
 extends State
 class_name EndScreen
 
-
+signal end_round
 	
 func enter():
 	%EndGamePanel.visible=true

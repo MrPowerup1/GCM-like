@@ -18,8 +18,6 @@ signal direction_pressed(direction:Vector2)
 func _ready():
 	fixed_zero_vector.from_float(Vector2.ZERO)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-
 
 func _get_local_input() -> Dictionary:
 	var input_vector = SGFixedVector2.new()

@@ -48,7 +48,6 @@ func reset():
 
 
 func directional_input(direction:Vector2):
-	print("directional input")
 	if cooldown_ready and reading_inputs and active_panel != null:
 		cooldown_ready=false
 		%InputCooldown.start()
@@ -62,7 +61,6 @@ func directional_input(direction:Vector2):
 			active_panel.down.rpc()	
 
 func button_input(button_index:int):
-	print("button input")
 	if cooldown_ready and reading_inputs and active_panel != null:
 		cooldown_ready=false
 		%InputCooldown.start()

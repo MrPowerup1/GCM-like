@@ -13,10 +13,10 @@ enum effect_time {on_activate,on_held,on_release}
 #the held function will be called repeatedly while still held, based on timer
 @export_category("Timers (in milliseconds)")
 @export var ping_asap:bool
-@export var held_ping_time:float
+@export var held_ping_time:int
 @export var cooldown_on_activate:bool
 @export var cooldown_on_release:bool
-@export var cooldown_time:float
+@export var cooldown_time:int
 #@export var max_charge_time:float
 
 #@export var spell_scene:PackedScene

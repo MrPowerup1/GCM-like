@@ -27,6 +27,8 @@ damage_value = 100
 
 [sub_resource type="Resource" id="Resource_5lht1"]
 script = ExtResource("4_vnt4b")
+timings = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 on_activate = SubResource("Resource_cloi1")
 on_held = SubResource("Resource_u7n17")
 ping_time = 200.0
@@ -70,7 +72,7 @@ script = ExtResource("1_5r47u")
 timings = Array[int]([0])
 effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_e2kt8")])
 ping_asap = false
-held_ping_time = 0.0
+held_ping_time = 0
 cooldown_on_activate = true
 cooldown_on_release = false
 cooldown_time = 2000.0

@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://8jmt2slvcqg"]
+[gd_scene load_steps=3 format=3 uid="uid://8jmt2slvcqg"]
 
 [ext_resource type="Script" path="res://Spell Slot.gd" id="1_7x0q0"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_dpjmo"]
 
-[node name="Spell Slot" type="Node"]
+[node name="Spell Slot" type="Node" groups=["network_sync"]]
 script = ExtResource("1_7x0q0")
 
-[node name="Cooldown_Timer" type="Timer" parent="."]
+[node name="Cooldown_Timer" type="Node" parent="."]
+script = ExtResource("2_dpjmo")
 one_shot = true
 
-[node name="Held_Timer" type="Timer" parent="."]
+[node name="Held_Timer" type="Node" parent="."]
+script = ExtResource("2_dpjmo")
 
 [connection signal="timeout" from="Cooldown_Timer" to="." method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="Held_Timer" to="." method="_on_held_timer_timeout"]

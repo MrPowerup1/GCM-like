@@ -28,9 +28,9 @@ func swap_spell(new_spell:Spell):
 		$Held_Timer.stop()
 		spell=new_spell
 		if (spell.cooldown_time>0):
-			$Cooldown_Timer.wait_time=float(spell.cooldown_time)/1000
+			$Cooldown_Timer.wait_ticks=spell.cooldown_time
 		if (spell.held_ping_time>0 and !spell.ping_asap):
-			$Held_Timer.wait_time=float(spell.held_ping_time)/1000
+			$Held_Timer.wait_time=spell.held_ping_time
 		if !spell.cooldown_on_activate and !spell.cooldown_on_release:
 			printerr("Spell at slot ",spell_index," has no cooldown activation")
 
@@ -42,6 +42,7 @@ func activate():
 			$Held_Timer.start()
 		if spell.cooldown_on_activate:
 			$Cooldown_Timer.start()
+			print("cooldown started")
 		currently_held=true
 		time_start_held=Time.get_ticks_msec()
 		spell.held(caster,spell_index)
@@ -59,8 +60,22 @@ func _on_held_timer_timeout():
 	spell.held(caster,spell_index)
 	
 func _on_cooldown_timer_timeout():
+	print("cooldown finished")
 	can_activate=true
 
 func get_held_time():
+	#TODO: Is there an issue here with rollback?
 	var time=(Time.get_ticks_msec()-time_start_held)
 	return time
+	
+func _save_state() ->Dictionary:
+	return {
+		can_activate=can_activate,
+		currently_held = currently_held,
+		time_start_held = time_start_held,
+	}
+
+func _load_state(state:Dictionary) ->void:
+	can_activate = state['can_activate']
+	currently_held = state['currently_held']
+	time_start_held=state['time_start_held']

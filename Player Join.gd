@@ -90,3 +90,13 @@ func delete_player(player:Player):
 				GameManager.players.erase(player.player_index)
 			print("Deleted id")
 	player.queue_free()
+
+
+func _on_round_starting_start_round():
+	for child in get_children():
+		child.taking_inputs=false
+
+
+func _on_end_screen_end_round():
+	for child in get_children():
+		child.taking_inputs=true

@@ -6,6 +6,7 @@ var exit_effect:Spell_Effect
 var exit_trigger_on_timeout:bool
 var ping_effect:Spell_Effect
 var caster:Player
+var last_frame_bodies:Array = []
 #unused
 var spell_index:int
 
@@ -14,6 +15,8 @@ func _ready():
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
+func _physics_process(delta):
+	check_overlaps()
 #func initialize(cast:Player,img:Texture2D,life_time:int,ping_time:int,enter:Spell_Effect,exit:Spell_Effect,ping:Spell_Effect,trigger_exit_on_timeout:bool):
 	#get_node("Sprite2D").texture=img
 	#%End_Time.wait_time=float(life_time)/1000
@@ -93,6 +96,16 @@ func _on_body_entered(body):
 func _on_body_exited(body):
 	trigger_spell(exit_effect,body)
 
+func check_overlaps():
+	var this_frame_bodies = get_overlapping_bodies()
+	for body in this_frame_bodies:
+		if not last_frame_bodies.has(body):
+			trigger_spell(enter_effect,body)
+	for body in last_frame_bodies:
+		if not this_frame_bodies.has(body):
+			trigger_spell(exit_effect,body)
+	last_frame_bodies = this_frame_bodies	
+
 func trigger_spell(effect:Spell_Effect,target):
 	if (effect==null):
 		pass
@@ -100,3 +113,16 @@ func trigger_spell(effect:Spell_Effect,target):
 		(effect as Positional_Effect).trigger(target,caster,-1,fixed_position)
 	else:
 		effect.trigger(target,caster,-1)
+
+func _save_state() ->Dictionary:
+	return {
+		position_x=fixed_position_x,
+		position_y=fixed_position_y,
+		last_frame_bodies=last_frame_bodies
+	}
+
+func _load_state(state:Dictionary) ->void:
+	fixed_position_x = state['position_x']
+	fixed_position_y = state['position_y']
+	last_frame_bodies=state['last_frame_bodies']
+	sync_to_physics_engine()

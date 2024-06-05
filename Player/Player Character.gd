@@ -1,7 +1,6 @@
 extends SGCharacterBody2D
 class_name Player
 
-@export var health:int = 10
 var can_release:Array[bool]=[true,true]
 var can_cast:Array[bool]=[true,true]
 var facing:Vector2
@@ -50,17 +49,9 @@ func release(index:int):
 	
 func add_status_effect(status:Status_Type,caster:Player):
 	%"Status Manager".new_status(status,caster)
-
-#TODO: REDO WITH COMPONENTS
-func take_damage (amount:int):
-	health-=amount
 	
 func anchor (set_anchor:bool=true):
 	%Velocity.anchor(set_anchor)
-
-#TODO: REDO WITH COMPONENTS
-func heal (amount:int):
-	health+=amount
 
 func get_held_time(spell_index:int):
 	if spell_index < num_spells:
@@ -124,7 +115,9 @@ func _save_state() ->Dictionary:
 		position_x=fixed_position_x,
 		position_y=fixed_position_y,
 		velocity_x=%Velocity.velocity.x,
-		velocity_y=%Velocity.velocity.y
+		velocity_y=%Velocity.velocity.y,
+		anchored=%Velocity.can_move,
+		health=%Health.current_health
 	}
 
 func _load_state(state:Dictionary) ->void:
@@ -132,6 +125,8 @@ func _load_state(state:Dictionary) ->void:
 	fixed_position_y = state['position_y']
 	velocity.x=state['velocity_x']
 	velocity.y=state['velocity_y']
+	%Velocity.can_move=state['anchored']
+	%Health.current_health=state['health']
 	sync_to_physics_engine()
 	
 func reset():

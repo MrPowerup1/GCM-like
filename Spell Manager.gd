@@ -13,11 +13,8 @@ func _ready():
 	caster=get_parent()
 	if (spell_slot_scene!=null):
 		for i in range(num_slots):
-			var new_slot=spell_slot_scene.instantiate()
-			new_slot.caster=caster
-			new_slot.spell_index=i
+			var new_slot = SyncManager.spawn('Spell Slot',self,spell_slot_scene,{caster=caster,spell_index=i})
 			slots.append(new_slot)
-			add_child(new_slot)
 	else:
 		printerr("Null Spell Slot Scene")
 	

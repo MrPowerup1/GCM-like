@@ -6,9 +6,8 @@ var caster:Player
 var spell_index:int
 var can_activate:bool = true
 var currently_held:bool = false
-var time_start_held:int
 var is_empty=true
-#var held_time:float
+var held_pings:int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,12 +16,24 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (currently_held and spell.ping_asap):
+		held_pings+=1
 		spell.held(caster,spell_index)
+
+
+func _network_spawn_preprocess(data:Dictionary)->Dictionary:
+	data['caster_path']=data['caster'].get_path()
+	data.erase('caster')
+	return data
+	
+func _network_spawn(data:Dictionary)->void:
+	caster=get_node(data['caster_path'])
+	spell_index=data['spell_index']
 
 func swap_spell(new_spell:Spell):
 	if new_spell==null:
 		is_empty=true
 	else:
+		held_pings=0
 		is_empty=false
 		$Cooldown_Timer.stop()
 		$Held_Timer.stop()
@@ -44,7 +55,6 @@ func activate():
 			$Cooldown_Timer.start()
 			print("cooldown started")
 		currently_held=true
-		time_start_held=Time.get_ticks_msec()
 		spell.held(caster,spell_index)
 		
 
@@ -55,8 +65,10 @@ func release():
 		$Held_Timer.stop()
 		if (spell.cooldown_on_release):
 			$Cooldown_Timer.start()
+		held_pings=0
 
 func _on_held_timer_timeout():
+	held_pings+=1
 	spell.held(caster,spell_index)
 	
 func _on_cooldown_timer_timeout():
@@ -65,17 +77,20 @@ func _on_cooldown_timer_timeout():
 
 func get_held_time():
 	#TODO: Is there an issue here with rollback?
-	var time=(Time.get_ticks_msec()-time_start_held)
-	return time
+	return held_pings
+	
 	
 func _save_state() ->Dictionary:
 	return {
 		can_activate=can_activate,
 		currently_held = currently_held,
-		time_start_held = time_start_held,
+		held_pings = held_pings,
 	}
 
 func _load_state(state:Dictionary) ->void:
 	can_activate = state['can_activate']
 	currently_held = state['currently_held']
-	time_start_held=state['time_start_held']
+	held_pings = state['held_pings']
+
+
+	

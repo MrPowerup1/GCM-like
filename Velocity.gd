@@ -51,7 +51,9 @@ func pulse_to(direction,strength: float):
 	else:
 		printerr("Cannot pulse to direction of type ",direction.name)
 	var fixed_strength:int = strength*fixed_point_factor
+	print("Pre pulse",velocity.to_float())
 	velocity.iadd(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
+	print("Post pulse",velocity.to_float())
 func pulse_from(direction,strength: float):
 	print("Pulsing from", direction)
 	print("With strength",strength)
@@ -68,9 +70,9 @@ func pulse_from(direction,strength: float):
 	else:
 		printerr("Cannot pulse from direction of type ",direction.name)
 	var fixed_strength:int = strength*fixed_point_factor
-	print(velocity.to_float())
+	print("Pre pulse",velocity.to_float())
 	velocity.isub(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
-	print(velocity.to_float())
+	print("Post pulse",velocity.to_float())
 
 func move_input(direction:SGFixedVector2):
 	if not direction.is_equal_approx(fixed_zero):
@@ -136,6 +138,7 @@ func update_pos():
 	if body!=null:
 		if (body is SGCharacterBody2D):
 			body.velocity=velocity
+			#print("Setting body vel to ",body.velocity.to_float())
 			body.move_and_slide()
 			velocity=body.velocity
 		elif body is SGFixedNode2D:

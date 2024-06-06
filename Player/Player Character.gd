@@ -116,6 +116,8 @@ func _save_state() ->Dictionary:
 		position_y=fixed_position_y,
 		velocity_x=%Velocity.velocity.x,
 		velocity_y=%Velocity.velocity.y,
+		my_vel_x=velocity.x,
+		my_vel_y=velocity.y,
 		anchored=%Velocity.can_move,
 		health=%Health.current_health
 	}
@@ -123,8 +125,10 @@ func _save_state() ->Dictionary:
 func _load_state(state:Dictionary) ->void:
 	fixed_position_x = state['position_x']
 	fixed_position_y = state['position_y']
-	velocity.x=state['velocity_x']
-	velocity.y=state['velocity_y']
+	%Velocity.velocity.x=state['velocity_x']
+	%Velocity.velocity.y=state['velocity_y']
+	velocity.x=state['my_vel_x']
+	velocity.y=state['my_vel_y']
 	%Velocity.can_move=state['anchored']
 	%Health.current_health=state['health']
 	sync_to_physics_engine()
@@ -135,7 +139,9 @@ func reset():
 		unequip_spell(i)
 
 func _on_health_dead():
+	print("dead")
 	GameManager.alive_players.erase(self)
+	SyncManager.despawn(self)
 
 func start_round():
 	new_auth(peer_id)
@@ -155,6 +161,13 @@ func stop_round():
 			#"selected_spells":[],
 			#"selected_level":-1
 		#}
+func _network_despawn() ->void:
+	for status in %"Status Manager".get_children():
+		SyncManager.despawn(status)
+	for spell in %"Spell Manager".get_children():
+		SyncManager.despawn(spell)
+
+
 func _network_spawn(data: Dictionary) -> void:
 	fixed_position_x=data['spawn_position_x']
 	fixed_position_y=data['spawn_position_y']
@@ -172,3 +185,4 @@ func _network_spawn(data: Dictionary) -> void:
 		var new_spell = spell_deck.get_card(spell_index).spell
 		equip_spell(new_spell,index)
 		index+=1
+	sync_to_physics_engine()

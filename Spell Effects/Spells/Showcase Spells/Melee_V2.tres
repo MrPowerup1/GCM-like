@@ -17,7 +17,7 @@
 script = ExtResource("5_d7yq8")
 pulse_to = false
 pulse_from = true
-strength = 100.0
+strength = 10.0
 
 [sub_resource type="Resource" id="Resource_3hg2n"]
 script = ExtResource("6_gd1gl")

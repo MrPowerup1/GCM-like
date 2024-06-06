@@ -15,22 +15,8 @@ func _ready():
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
-func _physics_process(delta):
+func _network_process(input: Dictionary) -> void:
 	check_overlaps()
-#func initialize(cast:Player,img:Texture2D,life_time:int,ping_time:int,enter:Spell_Effect,exit:Spell_Effect,ping:Spell_Effect,trigger_exit_on_timeout:bool):
-	#get_node("Sprite2D").texture=img
-	#%End_Time.wait_time=float(life_time)/1000
-	#if (ping_time!=0):
-		#%Ping_Time.wait_time=float(ping_time)/1000
-	#enter_effect=enter
-	#exit_effect=exit
-	#ping_effect=ping
-	#exit_trigger_on_timeout=trigger_exit_on_timeout
-	#%End_Time.start()
-	#if (ping_effect!=null):
-		#%Ping_Time.start()
-	#caster=cast
-	##%MultiplayerSynchronizer.set_multiplayer_authority(caster.get_parent().device_id)
 
 func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	data['caster_path'] = data['caster'].get_path()
@@ -70,6 +56,7 @@ func _network_spawn(data: Dictionary) -> void:
 	%End_Time.start()
 	if ping_effect!=null:
 		%Ping_Time.start()
+	sync_to_physics_engine()
 	
 
 #@rpc("any_peer","call_local")

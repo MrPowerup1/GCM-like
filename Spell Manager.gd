@@ -1,7 +1,7 @@
 extends Node
 
-@export var spell_slot_scene:PackedScene
-@export var num_slots:int = 2
+#@export var spell_slot_scene:PackedScene
+#@export var num_slots:int = 2
 @export var known_spells:Array[Spell]=[]
 var slots:Array[Spell_Slot]=[]
 
@@ -11,12 +11,14 @@ var caster:Player
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	caster=get_parent()
-	if (spell_slot_scene!=null):
-		for i in range(num_slots):
-			var new_slot = SyncManager.spawn('Spell Slot',self,spell_slot_scene,{caster=caster,spell_index=i})
-			slots.append(new_slot)
-	else:
-		printerr("Null Spell Slot Scene")
+	for slot in get_children():
+		slots.append(slot)
+	#if (spell_slot_scene!=null):
+		##for i in range(num_slots):
+			##var new_slot = SyncManager.spawn('Spell Slot',self,spell_slot_scene,{caster=caster,spell_index=i})
+			##slots.append(new_slot)
+	#else:
+		#printerr("Null Spell Slot Scene")
 	
 	caster.num_spells=slots.size()
 	#Replace this later when there needs to be spell selection

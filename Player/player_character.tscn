@@ -64,8 +64,14 @@ status_instance_scene = ExtResource("4_4c1wp")
 [node name="Spell Manager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
-spell_slot_scene = ExtResource("4_tyvj0")
 known_spells = Array[Resource("res://Spell Effects/Spell.gd")]([null, null])
+
+[node name="Spell Slot" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
+caster = NodePath("../..")
+
+[node name="Spell Slot2" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
+caster = NodePath("../..")
+spell_index = 1
 
 [node name="Velocity" type="Node" parent="."]
 unique_name_in_owner = true

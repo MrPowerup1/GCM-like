@@ -25,5 +25,6 @@ func reset():
 	$"../..".unselect(%SkinSelect)
 	Transition.emit(self,"SelectSkin")
 	#TODO: Fix this to work for new UI players
-	if $"../..".current_player !=null:
-		$"../..".current_player.stop_round()
+	
+	#if $"../..".current_player !=null:
+		#$"../..".current_player.stop_round()

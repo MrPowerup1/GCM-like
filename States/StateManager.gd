@@ -30,6 +30,9 @@ func _physics_process(delta):
 	if current_state:
 		current_state.physics_process(delta)
 
+func _network_process(input:Dictionary)->void:
+	if current_state:
+		current_state.network_process(input)
 func on_transition(state,new_state_name):
 	if state!=current_state:
 		print("Trying to transition from a state that you aren't in")

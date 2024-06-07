@@ -2,8 +2,8 @@ extends Node
 class_name Spell_Slot
 
 @export var spell:Spell
-var caster:Player
-var spell_index:int
+@export var caster:Player
+@export var spell_index:int
 var can_activate:bool = true
 var currently_held:bool = false
 var is_empty=true

@@ -16,8 +16,6 @@ func exit():
 	%SelectionUI.visible=true
 	SyncManager.stop()
 
-func process(delta:float):
+func physics_process(delta:float):
 	if GameManager.alive_players.size() == 1:
 		Transition.emit(self,"EndScreen")
-
-

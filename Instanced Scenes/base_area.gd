@@ -102,14 +102,19 @@ func trigger_spell(effect:Spell_Effect,target):
 		effect.trigger(target,caster,-1)
 
 func _save_state() ->Dictionary:
+	var last_frame_bodies_paths = []
+	for body in last_frame_bodies:
+		last_frame_bodies_paths.append(body.get_path())
 	return {
 		position_x=fixed_position_x,
 		position_y=fixed_position_y,
-		last_frame_bodies=last_frame_bodies
+		last_frame_bodies_paths=last_frame_bodies_paths
 	}
 
 func _load_state(state:Dictionary) ->void:
 	fixed_position_x = state['position_x']
 	fixed_position_y = state['position_y']
-	last_frame_bodies=state['last_frame_bodies']
+	last_frame_bodies.clear()
+	for path in state['last_frame_bodies_paths']:
+		last_frame_bodies.append(get_node(path))
 	sync_to_physics_engine()

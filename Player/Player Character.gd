@@ -140,7 +140,7 @@ func reset():
 
 func _on_health_dead():
 	print("dead")
-	GameManager.alive_players.erase(self)
+	
 	SyncManager.despawn(self)
 
 func start_round():
@@ -162,10 +162,13 @@ func stop_round():
 			#"selected_level":-1
 		#}
 func _network_despawn() ->void:
+	print("Despawning player")
 	for status in %"Status Manager".get_children():
 		SyncManager.despawn(status)
-	for spell in %"Spell Manager".get_children():
-		SyncManager.despawn(spell)
+	GameManager.alive_players.erase(self)
+	#for spell in %"Spell Manager".get_children():
+		#SyncManager.despawn(spell)
+	#%"Spell Manager".slots.clear()
 
 
 func _network_spawn(data: Dictionary) -> void:
@@ -185,4 +188,5 @@ func _network_spawn(data: Dictionary) -> void:
 		var new_spell = spell_deck.get_card(spell_index).spell
 		equip_spell(new_spell,index)
 		index+=1
+	GameManager.alive_players.append(self)
 	sync_to_physics_engine()

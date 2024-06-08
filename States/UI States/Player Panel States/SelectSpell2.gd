@@ -14,7 +14,7 @@ func exit():
 	%SpellSelect2.refresh()
 
 func _on_spell_select_2_exit():
-	$"../..".unselect(%SpellSelect)
+	$"../..".unselect(%SpellSelect1)
 	Transition.emit(self,"SelectSpell")
 
 func _on_spell_select_2_next():

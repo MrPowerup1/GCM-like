@@ -4,6 +4,7 @@ class_name EndScreen
 signal end_round
 	
 func enter():
+	end_round.emit()
 	%EndGamePanel.visible=true
 	%EndGamePanel.end()
 	GameManager.alive_players.clear()

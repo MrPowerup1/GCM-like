@@ -140,8 +140,8 @@ func reset():
 
 func _on_health_dead():
 	print("dead")
-	
-	SyncManager.despawn(self)
+	pre_despawn()
+	%DespawnDelay.start()
 
 func start_round():
 	new_auth(peer_id)
@@ -162,14 +162,16 @@ func stop_round():
 			#"selected_level":-1
 		#}
 func _network_despawn() ->void:
+	GameManager.alive_players.erase(self)
+	assert(%"Status Manager".get_child_count()==0,"Child")
+
+func pre_despawn()->void:
 	print("Despawning player")
 	for status in %"Status Manager".get_children():
 		SyncManager.despawn(status)
-	GameManager.alive_players.erase(self)
 	#for spell in %"Spell Manager".get_children():
 		#SyncManager.despawn(spell)
 	#%"Spell Manager".slots.clear()
-
 
 func _network_spawn(data: Dictionary) -> void:
 	fixed_position_x=data['spawn_position_x']
@@ -190,3 +192,7 @@ func _network_spawn(data: Dictionary) -> void:
 		index+=1
 	GameManager.alive_players.append(self)
 	sync_to_physics_engine()
+
+
+func _on_despawn_delay_timeout():
+	SyncManager.despawn(self)

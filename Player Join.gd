@@ -80,10 +80,10 @@ func add_remote_player(local_id:int):
 	player_joined.emit(new_player,player_index)
 	player_count+=1
 	
-func delete_player(player:Player):
+func delete_player(player:PlayerUIInput):
 	print ("Deleted player here yaya")
-	if player.player_character.my_input!=null:
-		var to_del_input = player.player_character.my_input.input_keys
+	if player!=null:
+		var to_del_input = player.input_keys
 		if registered_ids.has(to_del_input.device_id) and registered_ids[to_del_input.device_id]==to_del_input.device:
 			registered_ids.erase(to_del_input.device_id)
 			if GameManager.players.has(player.player_index):

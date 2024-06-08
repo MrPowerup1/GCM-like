@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=17 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_umfx1"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://knpxehglpha1" path="res://UI/player_status.tscn" id="10_3tqh8"]
 [ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
 [ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="11_yip05"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="13_aymwb"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_4pwhl"]
 extents_x = 513799
@@ -109,5 +110,11 @@ input_keys = ExtResource("11_yip05")
 velocity = NodePath("../Velocity")
 device = 1
 
+[node name="DespawnDelay" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("13_aymwb")
+wait_ticks = 20
+
 [connection signal="dead" from="Health" to="." method="_on_health_dead"]
 [connection signal="health_changed" from="Health" to="Player Status" method="health_changed"]
+[connection signal="timeout" from="DespawnDelay" to="." method="_on_despawn_delay_timeout"]

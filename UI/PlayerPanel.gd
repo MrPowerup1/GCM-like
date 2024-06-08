@@ -15,6 +15,7 @@ var cooldown_ready:bool = true
 signal player_quit(player:Player)
 signal player_ready()
 signal player_unready()
+signal player_joined()
 
 func player_join(player:PlayerUIInput,player_index:int):
 	print ('A player joined ',player)
@@ -35,10 +36,12 @@ func player_join(player:PlayerUIInput,player_index:int):
 	var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[current_player_index].get('known_spells'))
 	%SpellSelect1.cards=spell_deck
 	%SpellSelect2.cards=spell_deck
-
+	player_joined.emit()
+	
 func quit():
 	if current_player!=null:
 		player_quit.emit(current_player)
+		current_player.queue_free()
 		current_player=null
 		queue_free()
 

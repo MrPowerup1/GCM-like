@@ -106,6 +106,7 @@ script = ExtResource("12_o16sc")
 [node name="Ready" type="Node" parent="StateManager"]
 script = ExtResource("13_a4768")
 
+[connection signal="player_joined" from="." to="StateManager/AwaitingPlayer" method="_on_player_panel_player_joined"]
 [connection signal="exit" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_exit"]
 [connection signal="next" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_next"]
 [connection signal="exit" from="MarginContainer/Unselected/SpellSelect1" to="StateManager/SelectSpell" method="_on_spell_select_1_exit"]

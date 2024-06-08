@@ -16,5 +16,9 @@ func exit():
 	
 
 func _on_await_player_next():
-	print("Here")
+	print("Shouldn't Be here")
+	
+
+
+func _on_player_panel_player_joined():
 	Transition.emit(self,"SelectSkin")

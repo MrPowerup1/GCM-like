@@ -90,10 +90,10 @@ func move_input(direction:SGFixedVector2):
 	else:
 		pass
 
-func constant_vel(direction:Vector2):
+func constant_vel(direction:SGFixedVector2):
 	friction=0
 	friction_fixed=friction*fixed_point_factor
-	velocity.from_float(direction*speed_fixed)
+	velocity = direction.mul(speed_fixed)
 
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor

@@ -3,7 +3,7 @@ class_name Player
 
 var can_release:Array[bool]=[true,true]
 var can_cast:Array[bool]=[true,true]
-var facing:Vector2
+#var facing:Vector2
 var num_spells:int
 var snap_to_0:int = 65536/100
 @export var input:PlayerCharacterInput = null
@@ -32,9 +32,9 @@ func get_facing() -> SGFixedVector2:
 	return %Velocity.facing
 
 
-func _physics_process(delta):
-	if %Velocity.can_move and (velocity.length_squared() > snap_to_0):
-		facing=velocity.normalized().to_float().snapped(Vector2.ONE)
+#func _physics_process(delta):
+	##if %Velocity.can_move and (velocity.length_squared() > snap_to_0):
+		##facing=velocity.normalized().to_float().snapped(Vector2.ONE)
  
 
 func activate(index:int):

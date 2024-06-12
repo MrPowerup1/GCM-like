@@ -53,7 +53,6 @@ func activate():
 			$Held_Timer.start()
 		if spell.cooldown_on_activate:
 			$Cooldown_Timer.start()
-			print("cooldown started")
 		currently_held=true
 		spell.held(caster,spell_index)
 		
@@ -72,7 +71,6 @@ func _on_held_timer_timeout():
 	spell.held(caster,spell_index)
 	
 func _on_cooldown_timer_timeout():
-	print("cooldown finished")
 	can_activate=true
 
 func get_held_time():

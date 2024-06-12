@@ -36,8 +36,8 @@ func _ready():
 	if body==null:
 		body=get_parent()
 func pulse_to(direction,strength: float):
-	print("Pulsing to", direction)
-	print("With strength",strength)
+	#print("Pulsing to", direction)
+	#print("With strength",strength)
 	var pulse_dir = SGFixedVector2.new()
 	if (direction is Vector2):
 		printerr('pulsing with a float is a no no I think')
@@ -51,12 +51,12 @@ func pulse_to(direction,strength: float):
 	else:
 		printerr("Cannot pulse to direction of type ",direction.name)
 	var fixed_strength:int = strength*fixed_point_factor
-	print("Pre pulse",velocity.to_float())
+	#print("Pre pulse",velocity.to_float())
 	velocity.iadd(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
-	print("Post pulse",velocity.to_float())
+	#print("Post pulse",velocity.to_float())
 func pulse_from(direction,strength: float):
-	print("Pulsing from", direction)
-	print("With strength",strength)
+	#print("Pulsing from", direction)
+	#print("With strength",strength)
 	var pulse_dir = SGFixedVector2.new()
 	if (direction is Vector2):
 		pulse_dir.from_float((direction-body.position).normalized())
@@ -70,9 +70,9 @@ func pulse_from(direction,strength: float):
 	else:
 		printerr("Cannot pulse from direction of type ",direction.name)
 	var fixed_strength:int = strength*fixed_point_factor
-	print("Pre pulse",velocity.to_float())
+	#print("Pre pulse",velocity.to_float())
 	velocity.isub(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
-	print("Post pulse",velocity.to_float())
+	#print("Post pulse",velocity.to_float())
 
 func move_input(direction:SGFixedVector2):
 	if not direction.is_equal_approx(fixed_zero):
@@ -127,10 +127,14 @@ func _physics_process(delta):
 func update_pos():
 	#print("Before",velocity.to_float())
 	#print(velocity.length()," vs ", friction_fixed)
-	if velocity.length()>friction_fixed:
-		velocity.isub(velocity.normalized().mul(friction_fixed))
-	else:
+	velocity.imul(fixed_point_factor-friction_fixed)
+	if velocity.is_equal_approx(fixed_zero):
 		velocity.from_float(Vector2.ZERO)
+	#TODO: Does this still work?
+	#if velocity.length()>friction_fixed:
+		#velocity.isub(velocity.normalized().mul(friction_fixed))
+	#else:
+		#velocity.from_float(Vector2.ZERO)
 	#TEST
 	#print("After",velocity.to_float())
 	#velocity.from_float(Vector2.ONE*speed/fixed_point_factor)

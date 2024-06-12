@@ -80,7 +80,7 @@ script = ExtResource("9_hac0t")
 stop_input_at_max_vel = true
 max_input_vel = 4.0
 speed = 1.0
-friction = 0.8
+friction = 0.2
 
 [node name="Health" type="Node" parent="."]
 unique_name_in_owner = true

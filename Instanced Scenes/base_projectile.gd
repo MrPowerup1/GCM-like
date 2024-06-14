@@ -14,6 +14,8 @@ var last_frame_bodies:Array = []
 func _ready():
 	pass
 
+#func _physics_process(delta):
+	
 
 func _network_process(input: Dictionary) -> void:
 	check_overlaps()
@@ -84,12 +86,7 @@ func _on_timer_timeout():
 
 @rpc("any_peer","call_local")
 func release():
-	if (self_effect_on_timeout==null):
-		pass
-	elif (self_effect_on_timeout is Positional_Effect):
-		(self_effect_on_timeout as Positional_Effect).trigger(caster,caster,-1,fixed_position)
-	else:
-		self_effect_on_timeout.trigger(caster,caster,-1)
+	trigger_spell(self_effect_on_timeout,caster)
 	queue_free()
 	
 
@@ -116,3 +113,30 @@ func trigger_spell(effect:Spell_Effect,target):
 		(effect as Positional_Effect).trigger(target,caster,-1,fixed_position)
 	else:
 		effect.trigger(target,caster,-1)
+
+func _save_state() ->Dictionary:
+	var last_frame_bodies_paths = []
+	for body in last_frame_bodies:
+		last_frame_bodies_paths.append(body.get_path())
+	return {
+		position_x=fixed_position_x,
+		position_y=fixed_position_y,
+		last_frame_bodies_paths=last_frame_bodies_paths,
+		velocity_x=velocity.velocity.x,
+		velocity_y=velocity.velocity.y,
+		friction = velocity.friction_fixed,
+		anchored=velocity.can_move
+		
+		}	
+
+func _load_state(state:Dictionary) ->void:
+	fixed_position_x = state['position_x']
+	fixed_position_y = state['position_y']
+	velocity.velocity.x=state['velocity_x']
+	velocity.velocity.y=state['velocity_y']
+	velocity.friction_fixed=state['friction']
+	velocity.can_move=state['anchored']
+	last_frame_bodies.clear()
+	for path in state['last_frame_bodies_paths']:
+		last_frame_bodies.append(get_node(path))
+	sync_to_physics_engine()

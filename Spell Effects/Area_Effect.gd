@@ -13,6 +13,7 @@ class_name Area_Effect
 
 #func initialize(cast:Player,img:Texture2D,life_time:int,ping_time:int,enter:Spell_Effect,exit:Spell_Effect,ping:Spell_Effect,trigger_exit_on_timeout:bool):
 func trigger (target,caster:Player,spell_index:int,location:SGFixedVector2=caster.fixed_position):
+	print(location.to_float())
 	var new_area = SyncManager.spawn('Area',caster.get_parent().get_parent(),area_scene,{
 		'position'=location,
 		'caster'=caster,

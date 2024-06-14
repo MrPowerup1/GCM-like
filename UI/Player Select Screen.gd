@@ -10,7 +10,7 @@ var starting:bool = false
 
 signal players_ready()
 signal players_unready()
-signal player_quit(player:Player)
+signal player_quit(player:PlayerUIInput)
 
 func _ready():
 	most_recent_panel=get_child(0)

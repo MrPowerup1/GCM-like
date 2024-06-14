@@ -24,7 +24,7 @@ effect = SubResource("Resource_14fv2")
 
 [sub_resource type="Resource" id="Resource_nxkfm"]
 script = ExtResource("5_qrwwm")
-delay_time = 3
+delay_time = 5
 effect = SubResource("Resource_2xcay")
 delayed_cast_instance = ExtResource("2_nsup4")
 
@@ -34,7 +34,7 @@ set_anchor_to = false
 
 [sub_resource type="Resource" id="Resource_sig1f"]
 script = ExtResource("5_qrwwm")
-delay_time = 5
+delay_time = 8
 effect = SubResource("Resource_6mcly")
 delayed_cast_instance = ExtResource("2_nsup4")
 

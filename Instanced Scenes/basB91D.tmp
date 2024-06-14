@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://6bd4ui3bfds0"]
+
+[ext_resource type="Script" path="res://Instanced Scenes/base_projectile.gd" id="1_apbbl"]
+[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_34um2"]
+[ext_resource type="Script" path="res://Velocity.gd" id="2_vio7d"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_nilqr"]
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_6u01q"]
+extents_x = 1078215
+extents_y = 1084366
+
+[node name="base_projectile" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync"]]
+script = ExtResource("1_apbbl")
+velocity = NodePath("Velocity")
+
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGRectangleShape2D_6u01q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_34um2")
+
+[node name="Timer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_nilqr")
+one_shot = true
+
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("2_vio7d")
+body = NodePath("..")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

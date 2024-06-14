@@ -139,7 +139,7 @@ func update_pos():
 	#print("After",velocity.to_float())
 	#velocity.from_float(Vector2.ONE*speed/fixed_point_factor)
 	#TEST
-	if body!=null:
+	elif body!=null:
 		if (body is SGCharacterBody2D):
 			body.velocity=velocity
 			#print("Setting body vel to ",body.velocity.to_float())

@@ -68,6 +68,7 @@ func add_player(local_id:int, input:Input_Keys):
 	var new_player = player_ui_scene.instantiate()
 	add_child(new_player)
 	new_player.input_keys = input
+	new_player.player_index = player_index
 	player_joined.emit(new_player,player_index)
 	player_count+=1
 
@@ -77,18 +78,20 @@ func add_remote_player(local_id:int):
 	var new_player = player_ui_scene.instantiate()
 	add_child(new_player)
 	new_player.input_keys = null_input
+	new_player.player_index = player_index
 	player_joined.emit(new_player,player_index)
 	player_count+=1
 	
 func delete_player(player:PlayerUIInput):
-	print ("Deleted player here yaya")
+	print ("System ", multiplayer.get_unique_id()," Trying to remove player")
 	if player!=null:
 		var to_del_input = player.input_keys
 		if registered_ids.has(to_del_input.device_id) and registered_ids[to_del_input.device_id]==to_del_input.device:
 			registered_ids.erase(to_del_input.device_id)
-			if GameManager.players.has(player.player_index):
-				GameManager.players.erase(player.player_index)
-			print("Deleted id")
+		if GameManager.remove_player(player.player_index):
+			print("Sucessfully removed player at index ",player.player_index)
+		else:
+			print ("Couldn't find player at index ",player.player_index)
 	player.queue_free()
 
 

@@ -33,7 +33,7 @@ func player_join(player:PlayerUIInput,player_index:int):
 
 func _on_player_quit(player:PlayerUIInput):
 	current_players-=1
-	print("Player Quit")
+	#print("Player Quit")
 	player_quit.emit(player)
 	#Timer because there seemed to be a race condition on signal emissions
 	await get_tree().create_timer(0.1).timeout
@@ -43,7 +43,7 @@ func _on_player_ready():
 	if current_players >= min_players:
 		print("a player is ready")
 		for panel in get_children():
-			if panel is PlayerPanel and !((panel as PlayerPanel).now_ready or (panel as PlayerPanel).current_style==PlayerPanel.style.AWAIT_PLAYER):
+			if panel is PlayerPanel and !((panel as PlayerPanel).now_ready):# or (panel as PlayerPanel).current_style==PlayerPanel.style.AWAIT_PLAYER):
 				return
 		for panel in get_children():
 			if panel is PlayerPanel and (panel as PlayerPanel).current_player == null:
@@ -69,5 +69,5 @@ func new_panel():
 func reset_panels():
 	for child in get_children():
 		if child is PlayerPanel and child.now_ready:
-			print("resetting")
+			#print("resetting")
 			(child as PlayerPanel).reset()

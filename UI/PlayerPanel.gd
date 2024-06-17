@@ -12,15 +12,16 @@ var reading_inputs:bool = true
 var cooldown_ready:bool = true
 @export var card_scene:PackedScene
 
-signal player_quit(player:Player)
+signal player_quit(player:PlayerUIInput)
 signal player_ready()
 signal player_unready()
 signal player_joined()
 
 func player_join(player:PlayerUIInput,player_index:int):
-	print ('A player joined ',player)
+	#print ('A player joined ',player)
 	current_player=player
 	current_player_index=player_index
+	%Label.text=str(player_index)
 	%SkinSelect.player_index=current_player_index
 	%SpellSelect1.player_index=current_player_index
 	%SpellSelect2.player_index=current_player_index

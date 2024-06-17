@@ -87,11 +87,12 @@ func setup_match_for_replay(my_peer_id:int,peer_ids: Array,match_info:Dictionary
 
 func start_match():
 	var player_count = GameManager.players.size()
+	var players =GameManager.players.values()
 	#print("Player count",player_count)
 	var positions = $"Basic Level".get_starting_positions(player_count)
 	for i in range(player_count):
 		#print(i)
-		var player_data = GameManager.players[i]
+		var player_data = players[i]
 		player_data['spawn_position_x']=positions[i].x
 		player_data['spawn_position_y']=positions[i].y
 		#print("Spawning player with data ",player_data)

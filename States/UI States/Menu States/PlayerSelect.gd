@@ -8,7 +8,6 @@ func enter():
 	%"Player Select Menu".visible=true
 	%PlayerSelectScreen.reset_panels()
 	%PlayerJoin.searching=true
-	print("Entering Player Select")
 
 func exit():
 	%"Player Select Menu".visible=false

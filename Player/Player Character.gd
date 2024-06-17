@@ -166,7 +166,7 @@ func _network_despawn() ->void:
 	assert(%"Status Manager".get_child_count()==0,"Child")
 
 func pre_despawn()->void:
-	print("Despawning player")
+	#print("Despawning player")
 	for status in %"Status Manager".get_children():
 		SyncManager.despawn(status)
 	#for spell in %"Spell Manager".get_children():

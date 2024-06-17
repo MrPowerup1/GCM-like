@@ -33,6 +33,10 @@ unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
+[node name="Label" type="Label" parent="MarginContainer/Unselected"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Selected" type="HBoxContainer" parent="MarginContainer/Unselected"]
 unique_name_in_owner = true
 layout_mode = 2

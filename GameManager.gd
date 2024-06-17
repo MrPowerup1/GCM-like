@@ -93,8 +93,16 @@ func load_player(player_data:Dictionary):
 	players[get_player_id()]=player_data
 		 
 
+func remove_player(player_index:int) -> bool:
+	if players.has(player_index):
+		players.erase(player_index)
+		if local_players.has(player_index):
+			local_players.erase(player_index)
+		return true
+	return false
 
 func get_player_id()->int:
+	print("Current keys ",players.keys())
 	for i in range(100):
 		if not players.has(i):
 			return i

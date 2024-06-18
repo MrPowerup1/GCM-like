@@ -3,8 +3,8 @@ class_name PlayerUIInput
 
 var player_index:int
 @export var input_keys:Input_Keys
-enum device_type {LOCAL,REMOTE}
-@export var device:device_type
+#enum device_type {LOCAL,REMOTE}
+#@export var device:device_type
 var taking_inputs = true
 
 signal button_activate(index:int)

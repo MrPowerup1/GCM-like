@@ -74,7 +74,7 @@ caster = NodePath("../..")
 caster = NodePath("../..")
 spell_index = 1
 
-[node name="Velocity" type="Node" parent="."]
+[node name="Velocity" type="Node" parent="." groups=["network_sync"]]
 unique_name_in_owner = true
 script = ExtResource("9_hac0t")
 stop_input_at_max_vel = true

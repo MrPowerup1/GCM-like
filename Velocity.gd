@@ -121,24 +121,11 @@ func reset_stats():
 
 
 func _physics_process(delta):
-	#print("Trying to move speed ")
-	#print (velocity.to_float())
 	pass
 func update_pos():
-	#print("Before",velocity.to_float())
-	#print(velocity.length()," vs ", friction_fixed)
 	velocity.imul(fixed_point_factor-friction_fixed)
 	if velocity.is_equal_approx(fixed_zero):
 		velocity.from_float(Vector2.ZERO)
-	#TODO: Does this still work?
-	#if velocity.length()>friction_fixed:
-		#velocity.isub(velocity.normalized().mul(friction_fixed))
-	#else:
-		#velocity.from_float(Vector2.ZERO)
-	#TEST
-	#print("After",velocity.to_float())
-	#velocity.from_float(Vector2.ONE*speed/fixed_point_factor)
-	#TEST
 	elif body!=null:
 		if (body is SGCharacterBody2D):
 			body.velocity=velocity
@@ -153,3 +140,14 @@ func update_pos():
 	if can_move==false:
 		body.fixed_position= SGFixed.vector2(lerp(body.fixed_position_x,anchored_pos.x,0.5),lerp(body.fixed_position_y,anchored_pos.y,0.5))
 		pass
+
+func _save_state() ->Dictionary:
+	return {
+		velocity_x=velocity.x,
+		velocity_y=velocity.y,
+		can_move=can_move
+	}
+func _load_state(state:Dictionary) ->void:
+	velocity.x=state['velocity_x']
+	velocity.y=state['velocity_y']
+	can_move=state['can_move']

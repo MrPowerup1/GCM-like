@@ -114,22 +114,12 @@ func _save_state() ->Dictionary:
 	return {
 		position_x=fixed_position_x,
 		position_y=fixed_position_y,
-		velocity_x=%Velocity.velocity.x,
-		velocity_y=%Velocity.velocity.y,
-		my_vel_x=velocity.x,
-		my_vel_y=velocity.y,
-		anchored=%Velocity.can_move,
 		health=%Health.current_health
 	}
 
 func _load_state(state:Dictionary) ->void:
 	fixed_position_x = state['position_x']
 	fixed_position_y = state['position_y']
-	%Velocity.velocity.x=state['velocity_x']
-	%Velocity.velocity.y=state['velocity_y']
-	velocity.x=state['my_vel_x']
-	velocity.y=state['my_vel_y']
-	%Velocity.can_move=state['anchored']
 	%Health.current_health=state['health']
 	sync_to_physics_engine()
 	

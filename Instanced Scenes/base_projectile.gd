@@ -62,24 +62,6 @@ func _network_spawn(data: Dictionary) -> void:
 func start_moving():
 	velocity.constant_vel(caster.get_facing())
 	
-#func initialize(spd:int,img:Texture2D,effect:Spell_Effect,lifetime:int,size:Vector2,cast:Player,pierce:bool,on_timeout:Spell_Effect=null,on_hit:Spell_Effect=null):
-	#
-	#velocity.default_speed=spd
-	##speed=spd
-	#get_node("Sprite2D").texture=img
-	#if (lifetime>0):
-		#%Timer.wait_time=float(lifetime)/1000
-		#%Timer.start()
-	#else:
-		#printerr("Invalid Projectile Lifetime")
-	#hit_effect=effect
-	#
-	#caster=cast
-	#move_dir=caster.facing
-	#piercing=pierce
-	#self_effect_on_timeout=on_timeout
-	#self_effect_on_hit=on_hit
-	#velocity.constant_vel(move_dir)
 
 func _on_timer_timeout():
 	release.rpc()
@@ -122,20 +104,11 @@ func _save_state() ->Dictionary:
 		position_x=fixed_position_x,
 		position_y=fixed_position_y,
 		last_frame_bodies_paths=last_frame_bodies_paths,
-		velocity_x=velocity.velocity.x,
-		velocity_y=velocity.velocity.y,
-		friction = velocity.friction_fixed,
-		anchored=velocity.can_move
-		
 		}	
 
 func _load_state(state:Dictionary) ->void:
 	fixed_position_x = state['position_x']
 	fixed_position_y = state['position_y']
-	velocity.velocity.x=state['velocity_x']
-	velocity.velocity.y=state['velocity_y']
-	velocity.friction_fixed=state['friction']
-	velocity.can_move=state['anchored']
 	last_frame_bodies.clear()
 	for path in state['last_frame_bodies_paths']:
 		last_frame_bodies.append(get_node(path))

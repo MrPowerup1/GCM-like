@@ -30,13 +30,6 @@ func _ready():
 	
 func get_facing() -> SGFixedVector2:
 	return %Velocity.facing
-
-
-#func _physics_process(delta):
-	##if %Velocity.can_move and (velocity.length_squared() > snap_to_0):
-		##facing=velocity.normalized().to_float().snapped(Vector2.ONE)
- 
-
 func activate(index:int):
 	if can_cast[index]:
 		%"Spell Manager".activate.rpc(index)
@@ -186,3 +179,8 @@ func _network_spawn(data: Dictionary) -> void:
 
 func _on_despawn_delay_timeout():
 	SyncManager.despawn(self)
+
+func _interpolate_state(old_state:Dictionary, new_state:Dictionary, weight:float) -> void:
+	fixed_position_x = lerp(old_state['position_x'],new_state['position_x'],weight)
+	fixed_position_y = lerp(old_state['position_y'],new_state['position_y'],weight)
+	

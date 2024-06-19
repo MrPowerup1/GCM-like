@@ -9,7 +9,7 @@ var fixed_zero =SGFixed.vector2(0,0)
 @export var body:SGFixedNode2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel:float
-var max_input_vel_fixed:int
+var max_input_vel_fixed_squared:int
 
 @export var speed:float
 var speed_fixed:int
@@ -32,7 +32,7 @@ func _ready():
 	default_speed=speed
 	default_friction=friction
 	default_mass=mass
-	max_input_vel_fixed=max_input_vel*fixed_point_factor
+	max_input_vel_fixed_squared=max_input_vel*max_input_vel*fixed_point_factor
 	if body==null:
 		body=get_parent()
 func pulse_to(direction,strength: float):
@@ -78,14 +78,11 @@ func move_input(direction:SGFixedVector2):
 	if not direction.is_equal_approx(fixed_zero):
 		facing = direction
 	var add_to_vel = direction
-	#print("Before",add_to_vel.to_float())
-	#print("Multiplied by ",(speed_fixed/mass_fixed)/fixed_point_factor)
 	add_to_vel.imul(speed_fixed/mass_fixed*fixed_point_factor)
-	#print("After",add_to_vel.to_float())
 	if can_move and direction!=null:
 		if !stop_input_at_max_vel:
 			velocity.iadd(add_to_vel)
-		elif stop_input_at_max_vel and velocity.length()<max_input_vel_fixed:
+		elif stop_input_at_max_vel and velocity.length_squared()<max_input_vel_fixed_squared:
 			velocity.iadd(add_to_vel)
 	else:
 		pass
@@ -123,13 +120,15 @@ func reset_stats():
 func _physics_process(delta):
 	pass
 func update_pos():
+	# Velocity*= (1-friction)
 	velocity.imul(fixed_point_factor-friction_fixed)
+	# Set velocity to 0 if its close
 	if velocity.is_equal_approx(fixed_zero):
 		velocity.from_float(Vector2.ZERO)
+	
 	elif body!=null:
 		if (body is SGCharacterBody2D):
 			body.velocity=velocity
-			#print("Setting body vel to ",body.velocity.to_float())
 			body.move_and_slide()
 			velocity=body.velocity
 		elif body is SGFixedNode2D:
@@ -145,9 +144,11 @@ func _save_state() ->Dictionary:
 	return {
 		velocity_x=velocity.x,
 		velocity_y=velocity.y,
-		can_move=can_move
+		can_move=can_move,
+		friction = friction_fixed
 	}
 func _load_state(state:Dictionary) ->void:
 	velocity.x=state['velocity_x']
 	velocity.y=state['velocity_y']
 	can_move=state['can_move']
+	friction_fixed=state['friction']

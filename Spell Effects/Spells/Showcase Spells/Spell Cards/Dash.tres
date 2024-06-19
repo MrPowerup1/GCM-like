@@ -7,7 +7,11 @@
 [resource]
 script = ExtResource("1_ypac8")
 spell = ExtResource("3_ubn67")
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0
+randomizer = false
 name = "Dash"
 image = ExtResource("1_7ye8t")
 description = "Get there fast"
-card_style = 0
+context = 0

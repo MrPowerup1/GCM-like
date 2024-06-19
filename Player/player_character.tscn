@@ -37,7 +37,7 @@ void fragment() {
 shader = SubResource("Shader_obj0k")
 shader_parameter/new_color = Color(0.890196, 0.639216, 0.172549, 1)
 
-[node name="Player Character" type="SGCharacterBody2D" node_paths=PackedStringArray("input") groups=["network_sync"]]
+[node name="Player Character" type="SGCharacterBody2D" node_paths=PackedStringArray("input") groups=["network_sync", "pierceable"]]
 collision_layer = 3
 collision_mask = 3
 fixed_position_x = 196608
@@ -79,7 +79,7 @@ unique_name_in_owner = true
 script = ExtResource("9_hac0t")
 stop_input_at_max_vel = true
 max_input_vel = 4.0
-speed = 1.0
+speed = 1.4
 friction = 0.2
 
 [node name="Health" type="Node" parent="."]
@@ -113,7 +113,7 @@ device = 1
 [node name="DespawnDelay" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("13_aymwb")
-wait_ticks = 20
+wait_ticks = 10
 
 [connection signal="dead" from="Health" to="." method="_on_health_dead"]
 [connection signal="health_changed" from="Health" to="Player Status" method="health_changed"]

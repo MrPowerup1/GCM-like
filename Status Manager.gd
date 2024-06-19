@@ -6,36 +6,28 @@ var effected_player:Player
 func _ready():
 	effected_player=get_parent()
 
-#func activate(spell_index:int):
-#	if spell_index < slots.size():
-#		slots[spell_index].activate()
-#	else:
-#		#print("Activating unknown spell slot")
-#	#active_spells[spell_index].activate(caster)
-
-
-#func release(spell_index:int):
-#	if spell_index < slots.size():
-#		slots[spell_index].release()
-#
-#	else:
-#		#print("Releasing unknown spell slot")
-	
-
 func new_status(status:Status_Type,caster:Player):
-	var status_instance=status_instance_scene.instantiate()
-	add_child(status_instance)
 	var index=effected_player.num_spells+get_child_count()-1
-	status_instance.initialize(status,caster,effected_player,index)
+	var status_data = {
+		status=status,
+		caster=caster,
+		effected_player=effected_player,
+		#Is this needed?
+		index=index
+	}
+	SyncManager.spawn('Status',self,status_instance_scene,status_data)
 	
 
 func get_held_time(index:int):
-	##print("getting held time of ",spell_index)
 	return get_child(index-effected_player.num_spells).get_held_time()
 
-func clear_status(index:int):
-	for i in range(get_child_count()):
-		if (i==index):
+func clear_status(index:int=-1):
+	if index >=0:	
+		for i in range(get_child_count()):
+			if (i==index):
+				SyncManager.despawn(get_child(i))
+			elif (i>index):
+				get_child(i).lower_index()
+	else:
+		for i in range(get_child_count()):
 			get_child(i).queue_free()
-		elif (i>index):
-			get_child(i).lower_index()

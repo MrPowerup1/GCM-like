@@ -1,0 +1,80 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=22 format=3 uid="uid://b4olkbsnrds6j"]
+
+[ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_dhx78"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_ktp7w"]
+[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_rr6sm"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_rd6ty"]
+[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="4_eeg7r"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="5_v4yy4"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Test_Position.gd" id="6_7lwr1"]
+[ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="7_wiaug"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Print Effect.gd" id="8_4j2fv"]
+[ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="9_rp6l0"]
+
+[sub_resource type="Resource" id="Resource_apd40"]
+script = ExtResource("3_rd6ty")
+pulse_to = true
+pulse_from = false
+strength = 0.0
+
+[sub_resource type="Resource" id="Resource_t0nod"]
+script = ExtResource("4_eeg7r")
+offset = Vector2(0, -100)
+effect = SubResource("Resource_apd40")
+
+[sub_resource type="Resource" id="Resource_nqvah"]
+script = ExtResource("5_v4yy4")
+image = ExtResource("2_rr6sm")
+on_ping = SubResource("Resource_t0nod")
+call_exit_on_timeout = false
+area_scene = ExtResource("1_dhx78")
+life_time = 600
+ping_time = 30
+
+[sub_resource type="Resource" id="Resource_rbieg"]
+script = ExtResource("4_eeg7r")
+offset = Vector2(0, 100)
+effect = SubResource("Resource_nqvah")
+
+[sub_resource type="Resource" id="Resource_vit2q"]
+script = ExtResource("3_rd6ty")
+pulse_to = true
+pulse_from = false
+strength = 10.0
+
+[sub_resource type="Resource" id="Resource_tdhsx"]
+script = ExtResource("4_eeg7r")
+offset = Vector2(1, 0)
+effect = SubResource("Resource_vit2q")
+
+[sub_resource type="Resource" id="Resource_q1voj"]
+script = ExtResource("6_7lwr1")
+
+[sub_resource type="Resource" id="Resource_vyjd4"]
+script = ExtResource("8_4j2fv")
+message = "Test"
+
+[sub_resource type="Resource" id="Resource_f4fux"]
+script = ExtResource("8_4j2fv")
+message = "THIS EFFECT IS OVER!!!!!"
+
+[sub_resource type="Resource" id="Resource_q36j8"]
+script = ExtResource("9_rp6l0")
+timings = Array[int]([0, 2])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_vyjd4"), SubResource("Resource_f4fux")])
+ping_time = 0
+total_effect_time = 10000
+
+[sub_resource type="Resource" id="Resource_ivvcd"]
+script = ExtResource("7_wiaug")
+status = SubResource("Resource_q36j8")
+
+[resource]
+script = ExtResource("1_ktp7w")
+timings = Array[int]([0, 0, 0, 0])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_rbieg"), SubResource("Resource_tdhsx"), SubResource("Resource_q1voj"), SubResource("Resource_ivvcd")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = true
+cooldown_on_release = false
+cooldown_time = 20

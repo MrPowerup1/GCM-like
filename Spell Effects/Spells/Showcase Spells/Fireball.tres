@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=12 format=3 uid="uid://c76htlukbfj68"]
+[gd_resource type="Resource" script_class="Spell" load_steps=14 format=3 uid="uid://c76htlukbfj68"]
 
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="1_ohu1u"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_pif4w"]
@@ -7,41 +7,50 @@
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_s2mmy"]
 [ext_resource type="PackedScene" uid="uid://6bd4ui3bfds0" path="res://Instanced Scenes/base_projectile.tscn" id="5_776so"]
 [ext_resource type="Script" path="res://Spell Effects/projectile_effect.gd" id="6_antw2"]
+[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="7_8jn1d"]
 
 [sub_resource type="Resource" id="Resource_0kpmc"]
 script = ExtResource("1_ohu1u")
-damage_value = 0
+damage_value = 50
 
 [sub_resource type="Resource" id="Resource_oy4uf"]
 script = ExtResource("1_ohu1u")
-damage_value = 0
+damage_value = 10
 
 [sub_resource type="Resource" id="Resource_st5mw"]
 script = ExtResource("4_s2mmy")
-image = ExtResource("3_carja")
-on_enter = SubResource("Resource_oy4uf")
+timings = Array[int]([3])
+locations = Array[int]([1])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_oy4uf")])
 call_exit_on_timeout = false
+image = ExtResource("3_carja")
 area_scene = ExtResource("2_rg5up")
-life_time = 2000
-ping_time = 0
+life_time = 30
+ping_time = 5
 
 [sub_resource type="Resource" id="Resource_k6fm1"]
 script = ExtResource("6_antw2")
+timings = Array[int]([0, 1])
+locations = Array[int]([1, 2])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_0kpmc"), SubResource("Resource_st5mw")])
+ping_time = 0
+life_time = 0
+speed = 5
+piercing = true
 projectile_scene = ExtResource("5_776so")
 projectile_sprite = ExtResource("3_carja")
-speed = 300
-piercing = true
-size = Vector2(2, 2)
-lifetime = 3000
-on_hit_effect = SubResource("Resource_0kpmc")
-on_timeout_self = SubResource("Resource_st5mw")
+
+[sub_resource type="Resource" id="Resource_ayxi2"]
+script = ExtResource("7_8jn1d")
+offset = Vector2(50, 0)
+effect = SubResource("Resource_k6fm1")
 
 [resource]
 script = ExtResource("1_pif4w")
 timings = Array[int]([0])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_k6fm1")])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ayxi2")])
 ping_asap = false
-held_ping_time = 0.0
+held_ping_time = 0
 cooldown_on_activate = true
 cooldown_on_release = false
-cooldown_time = 1000.0
+cooldown_time = 20

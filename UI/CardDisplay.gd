@@ -6,11 +6,15 @@ enum DisplayStyle {ZOOMED,ICON,STANDARD}
 @export var current_style:DisplayStyle
 #var image_ref:TextureRect
 
+func _ready():
+	reset_shader()
 
 func reset_shader():
 	%Image.material = %Image.material.duplicate(true)
 
 func set_new_card (new_card:Card):
+	if new_card ==null:
+		return
 	card=new_card
 	new_card.display(self)
 	

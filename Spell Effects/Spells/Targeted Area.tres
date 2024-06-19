@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=21 format=3 uid="uid://ddrfx2hpk7x7l"]
+[gd_resource type="Resource" script_class="Spell" load_steps=22 format=3 uid="uid://ddrfx2hpk7x7l"]
 
 [ext_resource type="PackedScene" uid="uid://bnkvt5plhp8al" path="res://Instanced Scenes/base_target.tscn" id="1_b3jl1"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_mdfhg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="6_kj80j"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="7_cphyg"]
 [ext_resource type="Script" path="res://Spell Effects/Release_Effect.gd" id="8_jfnbd"]
+[ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="9_6dqs1"]
 [ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="9_lxolf"]
 [ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="10_rr2kq"]
 
@@ -54,13 +55,14 @@ script = ExtResource("9_lxolf")
 script = ExtResource("10_rr2kq")
 delay_time = 1000
 effect = SubResource("Resource_fc2v7")
+delayed_cast_instance = ExtResource("9_6dqs1")
 
 [resource]
 script = ExtResource("1_mdfhg")
 timings = Array[int]([0, 0, 0, 2, 2])
 effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ui2my"), SubResource("Resource_vxdoe"), SubResource("Resource_vyuj4"), SubResource("Resource_86lbr"), SubResource("Resource_4r38f")])
 ping_asap = false
-held_ping_time = 0.0
+held_ping_time = 0
 cooldown_on_activate = false
 cooldown_on_release = true
 cooldown_time = 500.0

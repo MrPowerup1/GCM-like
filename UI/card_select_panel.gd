@@ -6,6 +6,7 @@ class_name CardSelectPanel
 @export var center_card:Card
 @export var right_card:Card
 @export var center_display:CardDisplay
+@export var player_index:int
 enum display_mode {SELECTED,SELECTING}
 var current_mode:display_mode
 
@@ -13,42 +14,51 @@ var current_mode:display_mode
 
 func _ready():
 	#Get the default skins and display them
-	print(cards)
 	var to_display = cards.start_cards()
 	new_cards(to_display)
+	refresh()
+	
+	
+
+func refresh():
+	new_cards(cards.next_cards(center_card))
 	%LeftCard.reset_shader()
 	%CenterCard.reset_shader()
 	%RightCard.reset_shader()
-	
 
 signal exit()
 signal next()
 
+@rpc("any_peer","call_local")
 func left():
 	new_cards(cards.next_cards(left_card))
-	print("Go Left")
+@rpc("any_peer","call_local")
 func right():
 	new_cards(cards.next_cards(right_card))
-	print ("Go Right")
+@rpc("any_peer","call_local")
 func up():
 	pass
+@rpc("any_peer","call_local")
 func down():
 	pass
-func select(player:PlayerManager):
+@rpc("any_peer","call_local")
+func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
 	if cards.select(center_card):
-		center_card.select(player)
+		center_card.select(player_index)
 		new_cards(cards.next_cards(center_card))
 		next.emit()
 	else:
-		print ("Can't Select")
+		pass
+@rpc("any_peer","call_local")
 func back():
 	exit.emit()
 
-func unselect(player:PlayerManager):
+@rpc("any_peer","call_local")
+func unselect():
 	cards.unselect(center_card)
-	center_card.unselect(player)
+	center_card.unselect(player_index)
 	new_cards(cards.next_cards(center_card))
 	
 func new_cards(to_display:Array):
@@ -70,6 +80,7 @@ func new_cards(to_display:Array):
 
 func transition_display_mode(new_mode:display_mode):
 	if new_mode==display_mode.SELECTED:
+		visible=false
 		%LeftButton.visible=false
 		%LeftCard.visible=false
 		%SelectButton.visible=false
@@ -79,6 +90,7 @@ func transition_display_mode(new_mode:display_mode):
 		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 	if new_mode==display_mode.SELECTING:
+		visible=true
 		%LeftButton.visible=true
 		%LeftCard.visible=true
 		%SelectButton.visible=true
@@ -88,3 +100,18 @@ func transition_display_mode(new_mode:display_mode):
 		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 	current_mode=new_mode
+
+
+func _on_left_button_button_down():
+	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
+		left()
+
+
+func _on_right_button_button_down():
+	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
+		right()
+
+
+func _on_select_button_button_down():
+	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
+		select()

@@ -10,14 +10,16 @@ var starting:bool = false
 
 signal players_ready()
 signal players_unready()
-signal player_quit(player:PlayerManager)
+signal player_quit(player:PlayerUIInput)
 
 func _ready():
 	most_recent_panel=get_child(0)
 
-func player_join(player:PlayerManager):
+#@rpc("any_peer","call_local") 
+
+func player_join(player:PlayerUIInput,player_index:int):
 	if !starting and current_players < max_players:
-		most_recent_panel.player_join(player)
+		most_recent_panel.player_join(player,player_index)
 		current_players+=1
 		if (current_players < max_players):
 			new_panel()
@@ -29,19 +31,19 @@ func player_join(player:PlayerManager):
 		print ("Too many players")	
 
 
-func _on_player_quit(player:PlayerManager):
+func _on_player_quit(player:PlayerUIInput):
 	current_players-=1
+	#print("Player Quit")
 	player_quit.emit(player)
 	#Timer because there seemed to be a race condition on signal emissions
 	await get_tree().create_timer(0.1).timeout
 	_on_player_ready()
 
 func _on_player_ready():
-	print("Ready Called")
 	if current_players >= min_players:
+		print("a player is ready")
 		for panel in get_children():
-			if panel is PlayerPanel and !(panel as PlayerPanel).now_ready:
-				print ("Not all are ready")
+			if panel is PlayerPanel and !((panel as PlayerPanel).now_ready):# or (panel as PlayerPanel).current_style==PlayerPanel.style.AWAIT_PLAYER):
 				return
 		for panel in get_children():
 			if panel is PlayerPanel and (panel as PlayerPanel).current_player == null:
@@ -57,8 +59,15 @@ func _on_player_unready():
 	
 
 func new_panel():
-	most_recent_panel =  player_panel.instantiate()
-	add_child(most_recent_panel)
-	most_recent_panel.player_ready.connect(_on_player_ready)
-	most_recent_panel.player_quit.connect(_on_player_quit)
-	most_recent_panel.player_unready.connect(_on_player_unready)
+	if get_child_count() < current_players + 1:
+		most_recent_panel =  player_panel.instantiate()
+		add_child(most_recent_panel,true)
+		most_recent_panel.player_ready.connect(_on_player_ready)
+		most_recent_panel.player_quit.connect(_on_player_quit)
+		most_recent_panel.player_unready.connect(_on_player_unready)
+
+func reset_panels():
+	for child in get_children():
+		if child is PlayerPanel and child.now_ready:
+			#print("resetting")
+			(child as PlayerPanel).reset()

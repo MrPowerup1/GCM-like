@@ -84,3 +84,7 @@ texture_pressed = ExtResource("8_lqdjd")
 texture_hover = ExtResource("8_lqdjd")
 texture_disabled = ExtResource("7_dj4g8")
 texture_focused = ExtResource("8_lqdjd")
+
+[connection signal="button_down" from="HBoxContainer2/LeftButton" to="." method="_on_left_button_button_down"]
+[connection signal="button_down" from="HBoxContainer2/VBoxContainer/SelectButton" to="." method="_on_select_button_button_down"]
+[connection signal="button_down" from="HBoxContainer2/RightButton" to="." method="_on_right_button_button_down"]

@@ -1,72 +1,114 @@
 extends Node
 class_name Velocity
 
-var velocity:Vector2 = Vector2.ZERO
-@export var body:Node2D
+const fixed_point_factor = 65536
+
+var velocity:SGFixedVector2 = SGFixedVector2.new()
+var facing:SGFixedVector2 = SGFixedVector2.new()
+var fixed_zero =SGFixed.vector2(0,0)
+@export var body:SGFixedNode2D
 @export var stop_input_at_max_vel:bool
-@export var max_input_vel_square:float
-#Currently unused
-@export_range(100,200.0) var zero_velocity_range_square:float
+@export var max_input_vel:float
+var max_input_vel_fixed_squared:int
+
 @export var speed:float
+var speed_fixed:int
 var default_speed:float
 @export var friction:float
+var friction_fixed:int
 var default_friction:float
 @export var mass:float = 1
+var mass_fixed:int
 var default_mass:float
 var can_move:bool=true
 
+var anchored_pos:SGFixedVector2
+
 func _ready():
+	velocity.from_float(Vector2.ZERO)
+	speed_fixed=speed*fixed_point_factor
+	friction_fixed=friction*fixed_point_factor
+	mass_fixed=mass*fixed_point_factor
 	default_speed=speed
 	default_friction=friction
 	default_mass=mass
+	max_input_vel_fixed_squared=max_input_vel*max_input_vel*fixed_point_factor
 	if body==null:
 		body=get_parent()
 func pulse_to(direction,strength: float):
+	#print("Pulsing to", direction)
+	#print("With strength",strength)
+	var pulse_dir = SGFixedVector2.new()
 	if (direction is Vector2):
-		velocity+=(direction-body.position).normalized()*strength/mass
+		printerr('pulsing with a float is a no no I think')
+		pulse_dir.from_float((direction-body.position).normalized())
 	elif (direction is float):
-		velocity+=Vector2.from_angle(direction)*strength/mass
+		pulse_dir.from_float(Vector2.from_angle(direction))
 	elif (direction is Node2D):
-		velocity+=(direction.position-body.position).normalized()*strength/mass
+		pulse_dir.from_float((direction.position-body.position).normalized())
+	elif (direction is SGFixedVector2):
+		pulse_dir=direction.sub(body.fixed_position).normalized()
 	else:
 		printerr("Cannot pulse to direction of type ",direction.name)
-	
+	var fixed_strength:int = strength*fixed_point_factor
+	#print("Pre pulse",velocity.to_float())
+	velocity.iadd(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
+	#print("Post pulse",velocity.to_float())
 func pulse_from(direction,strength: float):
+	#print("Pulsing from", direction)
+	#print("With strength",strength)
+	var pulse_dir = SGFixedVector2.new()
 	if (direction is Vector2):
-		velocity-=(direction-body.position).normalized()*strength/mass
+		pulse_dir.from_float((direction-body.position).normalized())
 	elif (direction is float):
-		velocity-=Vector2.from_angle(direction)*strength/mass
+		pulse_dir.from_float(Vector2.from_angle(direction))
 	elif (direction is Node2D):
-		velocity-=(direction.position-body.position).normalized()*strength/mass
+		pulse_dir.from_float((direction.position-body.position).normalized())
+	elif (direction is SGFixedVector2):
+		print("Pulse from ",direction.to_float())
+		pulse_dir=direction.sub(body.fixed_position).normalized()
 	else:
 		printerr("Cannot pulse from direction of type ",direction.name)
+	var fixed_strength:int = strength*fixed_point_factor
+	#print("Pre pulse",velocity.to_float())
+	velocity.isub(pulse_dir.mul(fixed_strength*fixed_point_factor/mass_fixed))
+	#print("Post pulse",velocity.to_float())
 
-func move_input(direction:Vector2,delta:float):
+func move_input(direction:SGFixedVector2):
+	if not direction.is_equal_approx(fixed_zero):
+		facing = direction
+	var add_to_vel = direction
+	add_to_vel.imul(speed_fixed/mass_fixed*fixed_point_factor)
 	if can_move and direction!=null:
 		if !stop_input_at_max_vel:
-			velocity+=direction*speed*delta/mass
-		elif stop_input_at_max_vel and velocity.length_squared()<max_input_vel_square:
-			velocity+=direction*speed*delta/mass
+			velocity.iadd(add_to_vel)
+		elif stop_input_at_max_vel and velocity.length_squared()<max_input_vel_fixed_squared:
+			velocity.iadd(add_to_vel)
 	else:
 		pass
 
-func constant_vel(direction:Vector2):
+func constant_vel(direction:SGFixedVector2):
 	friction=0
-	velocity=direction*speed
+	friction_fixed=friction*fixed_point_factor
+	velocity = direction.mul(speed_fixed)
 
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor
-	velocity=Vector2.ZERO
-	print("Setting Anchor to ",set_anchor)
+	velocity.from_float(Vector2.ZERO)
+	anchored_pos=body.fixed_position
 
 func set_speed(new_speed:float=default_speed):
 	speed=new_speed
+	speed_fixed=speed*fixed_point_factor
+	
 
 func set_friction(new_friction:float=default_friction):
 	friction=new_friction
+	friction_fixed = friction*fixed_point_factor
 
 func set_mass(new_mass:float=default_mass):
 	mass=new_mass
+	mass_fixed=mass*fixed_point_factor
 
 func reset_stats():
 	anchor()
@@ -74,19 +116,39 @@ func reset_stats():
 	set_mass()
 	set_speed()
 
+
 func _physics_process(delta):
-	if velocity.length()>friction*delta:
-		velocity -= velocity.normalized()*friction*delta
-	else:
-		velocity=Vector2.ZERO
-#	if (velocity.length_squared()<zero_velocity_range_square):
-#		velocity=Vector2.ZERO
-	if body!=null:
-		if (body is CharacterBody2D):
+	pass
+func update_pos():
+	# Velocity*= (1-friction)
+	velocity.imul(fixed_point_factor-friction_fixed)
+	# Set velocity to 0 if its close
+	if velocity.is_equal_approx(fixed_zero):
+		velocity.from_float(Vector2.ZERO)
+	
+	elif body!=null:
+		if (body is SGCharacterBody2D):
 			body.velocity=velocity
 			body.move_and_slide()
 			velocity=body.velocity
+		elif body is SGFixedNode2D:
+			body.fixed_position.iadd(velocity)
 		else:
-			body.position+=velocity*delta
-	
-	
+			printerr("Can't update position of non SGPhysics body")
+			pass
+	if can_move==false:
+		body.fixed_position= SGFixed.vector2(lerp(body.fixed_position_x,anchored_pos.x,0.5),lerp(body.fixed_position_y,anchored_pos.y,0.5))
+		pass
+
+func _save_state() ->Dictionary:
+	return {
+		velocity_x=velocity.x,
+		velocity_y=velocity.y,
+		can_move=can_move,
+		friction = friction_fixed
+	}
+func _load_state(state:Dictionary) ->void:
+	velocity.x=state['velocity_x']
+	velocity.y=state['velocity_y']
+	can_move=state['can_move']
+	friction_fixed=state['friction']

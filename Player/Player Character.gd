@@ -1,50 +1,50 @@
-extends CharacterBody2D
+extends SGCharacterBody2D
 class_name Player
 
-@export var health:int = 10
 var can_release:Array[bool]=[true,true]
 var can_cast:Array[bool]=[true,true]
-var facing:Vector2
+#var facing:Vector2
 var num_spells:int
-@export var my_input:PlayerCharacterInput
+var snap_to_0:int = 65536/100
+@export var input:PlayerCharacterInput = null
+var skin:CharacterSkin
+var peer_id:int
+var player_index:int
+@export var spell_deck:Deck
+@export var skin_deck:Deck
+
 
 signal spell_activated(index:int)
 signal spell_released(index:int)
 
 func _ready():
-	my_input.button_activate.connect(activate)
-	my_input.button_release.connect(release)
+	
 	#Seperate the material so it doesn't change with others
 	%Sprite2D.material = %Sprite2D.material.duplicate(true)
-
-func _physics_process(delta):
+	%"Player Status".init_health(%Health.max_health)
+	input.button_activate.connect(activate)
+	input.button_release.connect(release)
+	#Is this really needed?
+	new_auth(peer_id)
+	skin_deck=GameManager.universal_skin_deck.duplicate()
 	
-	if %Velocity.can_move and !velocity.is_zero_approx():
-		facing=velocity.normalized().snapped(Vector2.ONE)
- 
+func get_facing() -> SGFixedVector2:
+	return %Velocity.facing
 func activate(index:int):
 	if can_cast[index]:
-		%"Spell Manager".activate(index)
+		%"Spell Manager".activate.rpc(index)
 		spell_activated.emit(index)
-	
+
 func release(index:int):
 	if can_release[index]:
-		%"Spell Manager".release(index)
+		%"Spell Manager".release.rpc(index)
 		spell_released.emit(index)
 	
 func add_status_effect(status:Status_Type,caster:Player):
 	%"Status Manager".new_status(status,caster)
-
-#TODO: REDO WITH COMPONENTS
-func take_damage (amount:int):
-	health-=amount
 	
 func anchor (set_anchor:bool=true):
 	%Velocity.anchor(set_anchor)
-
-#TODO: REDO WITH COMPONENTS
-func heal (amount:int):
-	health+=amount
 
 func get_held_time(spell_index:int):
 	if spell_index < num_spells:
@@ -73,15 +73,114 @@ func disable():
 	can_release=[false,false]
 	anchor(true)
 
-func set_skin(new_skin:CharacterSkin):
+func set_skin(new_skin):
 	#Commented out to test smaller skin version
-	%Sprite2D.texture=new_skin.texture
-	%Sprite2D.material.set_shader_parameter("new_color",new_skin.color)
+	if new_skin is CharacterSkin:
+		skin=new_skin
+	elif new_skin is int:
+		skin = skin_deck.get_card(new_skin).skin
 	
-func equip_spell(new_spell:Spell):
+	%Sprite2D.texture=skin.texture
+	%Sprite2D.material.set_shader_parameter("new_color",skin.color)
+	
+func equip_spell(new_spell:Spell,index:int):
 	if !%"Spell Manager".known_spells.has(new_spell):
 		%"Spell Manager".learn_spell(new_spell)
-	%"Spell Manager".equip_spell(%"Spell Manager".known_spells.find(new_spell))
+	%"Spell Manager".equip_spell(%"Spell Manager".known_spells.find(new_spell),index)
 
-func unequip_spell():
-	%"Spell Manager".unequip_spell()
+func unequip_spell(index:int):
+	%"Spell Manager".unequip_spell(index)
+
+func add_input(keys:Input_Keys):
+	input.input_keys=keys
+	input.velocity=%Velocity
+	input.device=input.device_type.LOCAL
+
+func new_auth(id:int):
+	set_multiplayer_authority(id)
+	input.set_multiplayer_authority(id)
+	#%MultiplayerSynchronizer.set_multiplayer_authority(id)
+	pass
+	
+
+func _save_state() ->Dictionary:
+	return {
+		position_x=fixed_position_x,
+		position_y=fixed_position_y,
+		health=%Health.current_health
+	}
+
+func _load_state(state:Dictionary) ->void:
+	fixed_position_x = state['position_x']
+	fixed_position_y = state['position_y']
+	%Health.current_health=state['health']
+	sync_to_physics_engine()
+	
+func reset():
+	%Health.reset()
+	for i in range(num_spells):
+		unequip_spell(i)
+
+func _on_health_dead():
+	print("dead")
+	pre_despawn()
+	%DespawnDelay.start()
+
+func start_round():
+	new_auth(peer_id)
+	enable()
+	reset()
+	GameManager.alive_players.append(self)
+	
+func stop_round():
+	disable()
+
+
+#var default_player_dict = {
+			#"peer_id": -1,
+			#"input_keys":base_input,
+			#"known_spells": [0,1,2],
+			#"selected_skin": 0,
+			#"selected_spells":[],
+			#"selected_level":-1
+		#}
+func _network_despawn() ->void:
+	GameManager.alive_players.erase(self)
+	assert(%"Status Manager".get_child_count()==0,"Child")
+
+func pre_despawn()->void:
+	#print("Despawning player")
+	for status in %"Status Manager".get_children():
+		SyncManager.despawn(status)
+	#for spell in %"Spell Manager".get_children():
+		#SyncManager.despawn(spell)
+	#%"Spell Manager".slots.clear()
+
+func _network_spawn(data: Dictionary) -> void:
+	fixed_position_x=data['spawn_position_x']
+	fixed_position_y=data['spawn_position_y']
+	peer_id = data['peer_id']
+	player_index = data['player_index']
+	new_auth(peer_id)
+	#input.input_keys= Input_Keys.from_dict(data['input_keys'])
+	if not SyncReplay.active and peer_id == multiplayer.get_unique_id():
+		input.input_keys = Input_Keys.from_dict(GameManager.local_players[player_index]['input_keys'])
+	spell_deck=GameManager.universal_spell_deck.subdeck(data['known_spells'])
+	set_skin(data['selected_skin'])
+	var selected_spells = data['selected_spells']
+	var index = 0 
+	for spell_index in selected_spells:
+		var new_spell = spell_deck.get_card(spell_index).spell
+		equip_spell(new_spell,index)
+		index+=1
+	GameManager.alive_players.append(self)
+	sync_to_physics_engine()
+
+
+func _on_despawn_delay_timeout():
+	SyncManager.despawn(self)
+
+func _interpolate_state(old_state:Dictionary, new_state:Dictionary, weight:float) -> void:
+	fixed_position_x = lerp(old_state['position_x'],new_state['position_x'],weight)
+	fixed_position_y = lerp(old_state['position_y'],new_state['position_y'],weight)
+	

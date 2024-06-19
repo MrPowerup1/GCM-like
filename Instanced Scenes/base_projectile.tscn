@@ -1,29 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://6bd4ui3bfds0"]
+[gd_scene load_steps=6 format=3 uid="uid://6bd4ui3bfds0"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/base_projectile.gd" id="1_apbbl"]
+[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_34um2"]
 [ext_resource type="Script" path="res://Velocity.gd" id="2_vio7d"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_nilqr"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ehm0a"]
-radius = 20.0
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_6u01q"]
+extents_x = 1078215
+extents_y = 1084366
 
-[node name="base_projectile" type="Area2D" node_paths=PackedStringArray("velocity")]
+[node name="base_projectile" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync", "pierceable"]]
 script = ExtResource("1_apbbl")
 velocity = NodePath("Velocity")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ehm0a")
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGRectangleShape2D_6u01q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+texture = ExtResource("2_34um2")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Pingtime" type="Node" parent="."]
 unique_name_in_owner = true
+script = ExtResource("3_nilqr")
+
+[node name="Lifetime" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_nilqr")
 one_shot = true
 
-[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body")]
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
 script = ExtResource("2_vio7d")
 body = NodePath("..")
-speed = 100.0
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Pingtime" to="." method="_on_pingtime_timeout"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

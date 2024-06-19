@@ -10,3 +10,4 @@ skin = ExtResource("3_dvwx8")
 name = "Green"
 image = ExtResource("1_0pehs")
 description = ""
+context = 0

@@ -1,16 +1,22 @@
-[gd_scene load_steps=12 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=17 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_umfx1"]
+[ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="2_yhupi"]
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
 [ext_resource type="Script" path="res://Status Manager.gd" id="3_mdj26"]
 [ext_resource type="PackedScene" uid="uid://dgvt58ltbeh6w" path="res://Instanced Scenes/status_effect_instance.tscn" id="4_4c1wp"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
+[ext_resource type="Script" path="res://Health.gd" id="9_hrbbv"]
+[ext_resource type="PackedScene" uid="uid://knpxehglpha1" path="res://UI/player_status.tscn" id="10_3tqh8"]
 [ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
+[ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="11_yip05"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="13_aymwb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqaox"]
-size = Vector2(16, 24)
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_4pwhl"]
+extents_x = 513799
+extents_y = 778747
 
 [sub_resource type="Shader" id="Shader_obj0k"]
 code = "shader_type canvas_item;
@@ -31,15 +37,18 @@ void fragment() {
 shader = SubResource("Shader_obj0k")
 shader_parameter/new_color = Color(0.890196, 0.639216, 0.172549, 1)
 
-[node name="Player Character" type="CharacterBody2D" node_paths=PackedStringArray("my_input")]
+[node name="Player Character" type="SGCharacterBody2D" node_paths=PackedStringArray("input") groups=["network_sync", "pierceable"]]
+collision_layer = 3
+collision_mask = 3
+fixed_position_x = 196608
+fixed_position_y = 393216
 position = Vector2(3, 6)
-motion_mode = 1
-wall_min_slide_angle = 0.349066
 script = ExtResource("1_o8ybw")
-my_input = NodePath("PlayerCharacterInput")
+input = NodePath("PlayerCharacterInput")
+skin_deck = ExtResource("2_yhupi")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_hqaox")
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGRectangleShape2D_4pwhl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -56,18 +65,56 @@ status_instance_scene = ExtResource("4_4c1wp")
 [node name="Spell Manager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
-spell_slot_scene = ExtResource("4_tyvj0")
 known_spells = Array[Resource("res://Spell Effects/Spell.gd")]([null, null])
 
-[node name="Velocity" type="Node" parent="."]
+[node name="Spell Slot" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
+caster = NodePath("../..")
+
+[node name="Spell Slot2" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
+caster = NodePath("../..")
+spell_index = 1
+
+[node name="Velocity" type="Node" parent="." groups=["network_sync"]]
 unique_name_in_owner = true
 script = ExtResource("9_hac0t")
 stop_input_at_max_vel = true
-max_input_vel_square = 100000.0
-zero_velocity_range_square = 150.0
-speed = 5000.0
-friction = 3000.0
+max_input_vel = 4.0
+speed = 1.4
+friction = 0.2
+
+[node name="Health" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_hrbbv")
+max_health = 1000
+current_health = 1000
+
+[node name="Player Status" parent="." instance=ExtResource("10_3tqh8")]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -33.0
+offset_right = 34.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="PlayerCharacterInput" parent="." node_paths=PackedStringArray("velocity") instance=ExtResource("10_twgyi")]
+unique_name_in_owner = true
+input_keys = ExtResource("11_yip05")
 velocity = NodePath("../Velocity")
-current_mode = 0
+device = 1
+
+[node name="DespawnDelay" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("13_aymwb")
+wait_ticks = 10
+
+[connection signal="dead" from="Health" to="." method="_on_health_dead"]
+[connection signal="health_changed" from="Health" to="Player Status" method="health_changed"]
+[connection signal="timeout" from="DespawnDelay" to="." method="_on_despawn_delay_timeout"]

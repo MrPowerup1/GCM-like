@@ -3,7 +3,7 @@ class_name While_Held_Effect
 
 @export var effect_to_control:Spell_Effect
 
-func trigger(target,caster:Player,spell_index:int,position:Vector2=target.position):
+func trigger(target,caster:Player,spell_index:int,position:SGFixedVector2=target.fixed_position):
 	var returned_target=null
 	if effect_to_control is Positional_Effect:
 		returned_target=(effect_to_control as Positional_Effect).trigger(target,caster,spell_index,position)

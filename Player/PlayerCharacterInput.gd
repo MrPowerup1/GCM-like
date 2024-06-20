@@ -37,10 +37,9 @@ func _get_local_input() -> Dictionary:
 		
 	return input
 
-func _network_process(input: Dictionary) -> void:
+func _network_postprocess(input: Dictionary) -> void:
 	var move_vector = input.get('input_vector',fixed_zero_vector) #SGFixed.vector2(input.get('input_vector_x', 0),input.get('input_vector_y', 0))
 	velocity.move_input(move_vector)
-	velocity.update_pos()
 	if input.get('spell_1_pressed',false):
 		button_activate.emit(0)
 	if input.get('spell_1_released',false):
@@ -49,7 +48,7 @@ func _network_process(input: Dictionary) -> void:
 		button_activate.emit(1)
 	if input.get('spell_2_released',false):
 		button_release.emit(1)
-
+	velocity.update_pos()
 func _predict_remote_input(previous_input:Dictionary, ticks_since_last_input: int) -> Dictionary:
 	var input = previous_input.duplicate()
 	input.erase('spell_1_pressed')

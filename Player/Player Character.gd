@@ -30,7 +30,7 @@ func _ready():
 	new_auth(peer_id)
 	skin_deck=GameManager.universal_skin_deck.duplicate()
 	
-func get_facing() -> SGFixedVector2:
+func get_facing() -> int:
 	return %Velocity.facing
 
 func activate(index:int):

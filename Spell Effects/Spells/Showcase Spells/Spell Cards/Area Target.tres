@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_7ftd2"]
 [ext_resource type="Script" path="res://SpellCard.gd" id="2_ohwxd"]
-[ext_resource type="Resource" uid="uid://ddrfx2hpk7x7l" path="res://Spell Effects/Spells/Targeted Area.tres" id="3_od8to"]
+[ext_resource type="Resource" uid="uid://ddrfx2hpk7x7l" path="res://Spell Effects/Spells/Showcase Spells/Targeted Area.tres" id="3_33fol"]
 
 [resource]
 script = ExtResource("2_ohwxd")
-spell = ExtResource("3_od8to")
+spell = ExtResource("3_33fol")
 requirements = Array[Resource("res://Elements/Element.gd")]([])
 category = 0
 type = 0
@@ -14,3 +14,4 @@ randomizer = false
 name = "Target"
 image = ExtResource("1_7ftd2")
 description = "Does nothing really"
+context = 0

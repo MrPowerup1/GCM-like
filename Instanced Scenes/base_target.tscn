@@ -19,10 +19,13 @@ script = ExtResource("2_pqj4k")
 unique_name_in_owner = true
 script = ExtResource("2_pqj4k")
 
-[node name="Velocity" type="Node" parent="."]
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body")]
 unique_name_in_owner = true
 script = ExtResource("2_kvjex")
-speed = 1000.0
+body = NodePath("..")
+max_input_vel = 30.0
+speed = 20.0
+friction = 0.5
 
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=14 format=3 uid="uid://b4dmyo0yret0k"]
+[gd_resource type="Resource" script_class="Spell" load_steps=13 format=3 uid="uid://b4dmyo0yret0k"]
 
 [ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_dbio5"]
-[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="1_wk2an"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_wpmqp"]
 [ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="2_4xs2a"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_qvp1m"]
@@ -17,9 +16,12 @@ strength = 400.0
 
 [sub_resource type="Resource" id="Resource_ljp2b"]
 script = ExtResource("4_fl3s4")
-image = ExtResource("2_4xs2a")
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 on_enter = SubResource("Resource_kx4wb")
 call_exit_on_timeout = false
+image = ExtResource("2_4xs2a")
 area_scene = ExtResource("1_dbio5")
 life_time = 200
 ping_time = 0
@@ -37,16 +39,20 @@ max_offset_position = Vector2(500, 500)
 
 [sub_resource type="Resource" id="Resource_j50ty"]
 script = ExtResource("4_fl3s4")
-image = ExtResource("2_4xs2a")
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 on_enter = SubResource("Resource_kx4wb")
 call_exit_on_timeout = false
+image = ExtResource("2_4xs2a")
 area_scene = ExtResource("1_dbio5")
 life_time = 200
 ping_time = 0
 
 [sub_resource type="Resource" id="Resource_k8rgx"]
 script = ExtResource("6_4h5at")
-offset = Vector2(40, 40)
+offset_x = 0
+offset_y = 0
 effect = SubResource("Resource_j50ty")
 
 [resource]
@@ -54,14 +60,7 @@ script = ExtResource("1_wpmqp")
 timings = Array[int]([0, 2])
 effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_viogc"), SubResource("Resource_k8rgx")])
 ping_asap = false
-held_ping_time = 0.0
+held_ping_time = 0
 cooldown_on_activate = true
 cooldown_on_release = false
 cooldown_time = 500.0
-name = "Scatter Test"
-card_image = ExtResource("1_wk2an")
-description = "This ones just a test"
-requirements = Array[Resource("res://Elements/Element.gd")]([])
-category = 0
-type = 0
-randomizer = false

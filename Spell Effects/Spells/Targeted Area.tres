@@ -19,9 +19,12 @@ damage_value = 0
 
 [sub_resource type="Resource" id="Resource_8bc5g"]
 script = ExtResource("4_oe22k")
-image = ExtResource("2_r0hyt")
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 on_enter = SubResource("Resource_okdke")
 call_exit_on_timeout = false
+image = ExtResource("2_r0hyt")
 area_scene = ExtResource("1_b3jl1")
 life_time = 100000
 ping_time = 0

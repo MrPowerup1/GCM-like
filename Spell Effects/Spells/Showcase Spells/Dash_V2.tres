@@ -15,16 +15,17 @@ set_anchor_to = true
 script = ExtResource("3_7lo0x")
 pulse_to = true
 pulse_from = false
-strength = 75.0
+strength = 40.0
 
 [sub_resource type="Resource" id="Resource_2xcay"]
 script = ExtResource("4_626v3")
-offset = Vector2(1, 0)
+offset_x = 1
+offset_y = 0
 effect = SubResource("Resource_14fv2")
 
 [sub_resource type="Resource" id="Resource_nxkfm"]
 script = ExtResource("5_qrwwm")
-delay_time = 2
+delay_time = 10
 effect = SubResource("Resource_2xcay")
 delayed_cast_instance = ExtResource("2_nsup4")
 
@@ -34,7 +35,7 @@ set_anchor_to = false
 
 [sub_resource type="Resource" id="Resource_sig1f"]
 script = ExtResource("5_qrwwm")
-delay_time = 3
+delay_time = 20
 effect = SubResource("Resource_6mcly")
 delayed_cast_instance = ExtResource("2_nsup4")
 

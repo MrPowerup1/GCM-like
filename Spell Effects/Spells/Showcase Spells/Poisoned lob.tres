@@ -40,22 +40,29 @@ status = SubResource("Resource_5lht1")
 
 [sub_resource type="Resource" id="Resource_6lwgh"]
 script = ExtResource("7_afpph")
-image = ExtResource("6_5bplb")
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 on_enter = SubResource("Resource_cpx8g")
 call_exit_on_timeout = false
+image = ExtResource("6_5bplb")
 area_scene = ExtResource("5_y2tjg")
 life_time = 10000
 ping_time = 0
 
 [sub_resource type="Resource" id="Resource_bpjs1"]
 script = ExtResource("10_tvxtr")
-projectile_scene = ExtResource("8_2ylbc")
-projectile_sprite = ExtResource("9_povc4")
-speed = 200
-piercing = false
-lifetime = 10000
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
 on_hit_effect = SubResource("Resource_cpx8g")
 on_timeout_self = SubResource("Resource_6lwgh")
+ping_time = 0
+life_time = 0
+speed = 200
+piercing = false
+projectile_scene = ExtResource("8_2ylbc")
+projectile_sprite = ExtResource("9_povc4")
 
 [sub_resource type="Resource" id="Resource_eaqih"]
 script = ExtResource("11_umw18")

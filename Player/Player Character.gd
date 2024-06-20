@@ -17,8 +17,10 @@ var player_index:int
 signal spell_activated(index:int)
 signal spell_released(index:int)
 
+func _network_preprocess(input: Dictionary) -> void:
+	sync_to_physics_engine()
+
 func _ready():
-	
 	#Seperate the material so it doesn't change with others
 	%Sprite2D.material = %Sprite2D.material.duplicate(true)
 	%"Player Status".init_health(%Health.max_health)
@@ -30,6 +32,7 @@ func _ready():
 	
 func get_facing() -> SGFixedVector2:
 	return %Velocity.facing
+
 func activate(index:int):
 	if can_cast[index]:
 		%"Spell Manager".activate.rpc(index)

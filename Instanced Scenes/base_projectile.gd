@@ -30,10 +30,12 @@ func _ready():
 
 #func _physics_process(delta):
 	
+func _network_preprocess(input: Dictionary) -> void:
+	sync_to_physics_engine()
 
 func _network_process(input: Dictionary) -> void:
-	check_overlaps()
 	velocity.update_pos()
+	check_overlaps()
 
 func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	data['caster_path'] = data['caster'].get_path()

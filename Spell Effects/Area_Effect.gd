@@ -36,6 +36,7 @@ func trigger (target,caster:Player,spell_index:int,location:SGFixedVector2=caste
 		'enter'=on_enter,
 		'exit'=on_exit,
 		'ping'=on_ping,
-		'trigger_exit_on_timeout'=call_exit_on_timeout
+		'trigger_exit_on_timeout'=call_exit_on_timeout,
+		'spell_index'=spell_index
 	})
 	return new_area

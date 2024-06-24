@@ -48,7 +48,6 @@ func _network_postprocess(input: Dictionary) -> void:
 		button_activate.emit(1)
 	if input.get('spell_2_released',false):
 		button_release.emit(1)
-	velocity.update_pos()
 func _predict_remote_input(previous_input:Dictionary, ticks_since_last_input: int) -> Dictionary:
 	var input = previous_input.duplicate()
 	input.erase('spell_1_pressed')

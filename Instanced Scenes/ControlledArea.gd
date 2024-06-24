@@ -23,8 +23,12 @@ var spell_index:int
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-	
+
+func _network_preprocess(input: Dictionary) -> void:
+	sync_to_physics_engine()
+
 func _network_process(input: Dictionary) -> void:
+	velocity.update_pos()
 	check_overlaps()
 
 func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
@@ -51,6 +55,7 @@ func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 
 func _network_spawn(data: Dictionary) -> void:
 	#print("Spawning")
+	spell_index=data['spell_index']
 	fixed_position_x=data['position'].x
 	fixed_position_y=data['position'].y
 	caster = get_node(data['caster_path'])
@@ -83,6 +88,7 @@ func _network_spawn(data: Dictionary) -> void:
 	sync_to_physics_engine()
 	
 func _network_despawn() ->void:
+	print("Despawned")
 	caster.get_node("PlayerCharacterInput").reset_velocity_reference()
 
 func spell_released(index:int):

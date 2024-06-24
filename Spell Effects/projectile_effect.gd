@@ -2,7 +2,7 @@ extends Positional_Effect
 class_name Projectile_Effect
 
 @export_category ("Main Effects")
-enum effect_time {ON_HIT,ON_TIMEOUT,ON_PING}
+enum effect_time {ON_HIT,ON_TIMEOUT,ON_PING,ON_SPAWN}
 enum effect_location {CASTER,TARGET,PROJECTILE}
 @export var timings:Array[effect_time]
 @export var locations:Array[effect_location]

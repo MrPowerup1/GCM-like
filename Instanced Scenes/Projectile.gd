@@ -3,7 +3,7 @@ class_name projectile
 
 
 @export_category ("Main Effects")
-enum effect_time {ON_HIT,ON_TIMEOUT,ON_PING}
+enum effect_time {ON_HIT,ON_TIMEOUT,ON_PING,ON_SPAWN}
 enum effect_location {CASTER,TARGET,PROJECTILE}
 @export var timings:Array[effect_time]
 @export var locations:Array[effect_location]
@@ -95,6 +95,7 @@ func _network_spawn(data: Dictionary) -> void:
 	velocity.set_speed(data['speed'])
 	piercing=data['piercing']
 	start_moving()
+	trigger_effects_at_time(effect_time.ON_SPAWN)
 	
 	
 func start_moving():

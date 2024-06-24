@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://6bd4ui3bfds0"]
 
-[ext_resource type="Script" path="res://Instanced Scenes/base_projectile.gd" id="1_apbbl"]
+[ext_resource type="Script" path="res://Instanced Scenes/Projectile.gd" id="1_la33n"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_34um2"]
 [ext_resource type="Script" path="res://Velocity.gd" id="2_vio7d"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_nilqr"]
@@ -10,7 +10,7 @@ extents_x = 1078215
 extents_y = 1084366
 
 [node name="base_projectile" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync", "pierceable"]]
-script = ExtResource("1_apbbl")
+script = ExtResource("1_la33n")
 velocity = NodePath("Velocity")
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]

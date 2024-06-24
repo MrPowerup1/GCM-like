@@ -4,4 +4,3 @@
 
 [node name="PlayerCharacterInput" type="Node" groups=["network_sync"]]
 script = ExtResource("1_uk3ul")
-current_mode = 1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bp4jn11syhdyx"]
 
-[ext_resource type="Script" path="res://Instanced Scenes/base_area.gd" id="1_2evsh"]
+[ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_bs4pg"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_wwof1"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_x1yrt"]
 
@@ -9,7 +9,7 @@ extents_x = 1038778
 extents_y = 1101672
 
 [node name="Base Area" type="SGArea2D" groups=["network_sync", "pierceable"]]
-script = ExtResource("1_2evsh")
+script = ExtResource("1_bs4pg")
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_u01od")

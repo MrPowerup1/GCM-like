@@ -19,6 +19,9 @@ signal spell_released(index:int)
 
 func _network_preprocess(input: Dictionary) -> void:
 	sync_to_physics_engine()
+	
+func _network_process(frame_input:Dictionary) -> void:
+	input.velocity.update_pos()
 
 func _ready():
 	#Seperate the material so it doesn't change with others

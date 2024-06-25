@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://6bd4ui3bfds0"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/Projectile.gd" id="1_la33n"]
-[ext_resource type="Texture2D" uid="uid://ks0kvlrcg1x7" path="res://Art/teset-Sheet.png" id="2_aayqm"]
+[ext_resource type="Texture2D" uid="uid://ks0kvlrcg1x7" path="res://Spell Effects/Spells/Showcase Spells/Fireball/Fireball_sprites.png" id="2_oorm4"]
 [ext_resource type="Script" path="res://Velocity.gd" id="2_vio7d"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_nilqr"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="5_ky4y3"]
@@ -58,7 +58,7 @@ shape = SubResource("SGRectangleShape2D_6u01q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_aayqm")
+texture = ExtResource("2_oorm4")
 hframes = 3
 
 [node name="Ping_Time" type="Node" parent="."]

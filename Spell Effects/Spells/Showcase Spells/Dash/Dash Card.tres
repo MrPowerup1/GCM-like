@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b5v5ktkedluv5" path="res://Art/Right_Arrow_Grey.png" id="1_7ye8t"]
 [ext_resource type="Script" path="res://SpellCard.gd" id="1_ypac8"]
-[ext_resource type="Resource" uid="uid://bkf81j8t0qrbs" path="res://Spell Effects/Spells/Showcase Spells/Dash_V2.tres" id="3_ubn67"]
+[ext_resource type="Resource" uid="uid://bkf81j8t0qrbs" path="res://Spell Effects/Spells/Showcase Spells/Dash/Dash Spell.tres" id="3_ubn67"]
 
 [resource]
 script = ExtResource("1_ypac8")

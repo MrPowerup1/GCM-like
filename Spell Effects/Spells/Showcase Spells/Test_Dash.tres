@@ -1,8 +1,7 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=22 format=3 uid="uid://b4olkbsnrds6j"]
+[gd_resource type="Resource" script_class="Spell" load_steps=19 format=3 uid="uid://b4olkbsnrds6j"]
 
 [ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_dhx78"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_ktp7w"]
-[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_rr6sm"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_rd6ty"]
 [ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="4_eeg7r"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="5_v4yy4"]
@@ -11,29 +10,9 @@
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Print Effect.gd" id="8_4j2fv"]
 [ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="9_rp6l0"]
 
-[sub_resource type="Resource" id="Resource_apd40"]
-script = ExtResource("3_rd6ty")
-pulse_to = true
-pulse_from = false
-strength = 0.0
-
-[sub_resource type="Resource" id="Resource_t0nod"]
-script = ExtResource("4_eeg7r")
-offset_x = 0
-offset_y = 0
-effect = SubResource("Resource_apd40")
-
 [sub_resource type="Resource" id="Resource_nqvah"]
 script = ExtResource("5_v4yy4")
-timings = Array[int]([])
-locations = Array[int]([])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
-on_ping = SubResource("Resource_t0nod")
-call_exit_on_timeout = false
-image = ExtResource("2_rr6sm")
 area_scene = ExtResource("1_dhx78")
-life_time = 600
-ping_time = 30
 
 [sub_resource type="Resource" id="Resource_rbieg"]
 script = ExtResource("4_eeg7r")

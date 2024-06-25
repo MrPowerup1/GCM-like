@@ -31,13 +31,3 @@ func _on_end_time_timeout():
 func _on_ping_time_timeout():	
 	trigger_effects_at_time(effect_time.ON_PING,last_frame_bodies)
 
-func trigger_effects_at_time(timing:effect_time,targets=null):
-	for i in range(timings.size()):
-		if timings[i]==timing:
-			if locations[i]==effect_location.TARGET:
-				for target in targets:
-					trigger_effect(effects[i],target)
-			elif locations[i]==effect_location.CASTER:
-				trigger_effect(effects[i],caster)
-			elif locations[i]==effect_location.THIS_AREA:
-				trigger_effect(effects[i],self)

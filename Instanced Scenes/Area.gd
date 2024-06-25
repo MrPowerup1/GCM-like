@@ -3,7 +3,7 @@ class_name Area
 
 @export_category ("Main Effects")
 enum effect_time {ON_ENTER,ON_EXIT,ON_TIMEOUT,ON_PING,ON_SPAWN}
-enum effect_location {CASTER,TARGET,THIS_AREA}
+enum effect_location {CASTER,ALL_TARGETS,NON_CASTER_TARGETS,THIS_AREA}
 @export var timings:Array[effect_time]
 @export var locations:Array[effect_location]
 @export var effects:Array[Spell_Effect]
@@ -23,15 +23,15 @@ func _network_process(input: Dictionary) -> void:
 
 func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	data['caster_path'] = data['caster'].get_path()
-	if data.get('effects',false):
-		var effects_paths= []
-		for effect in data['effects']:			
-			effects_paths.append(effect.get_path())
-		data['effects_paths']=effects_paths
-		data.erase('effects')
-	if data.get('img',false):
-		data['img_path'] = data['img'].get_path()
-		data.erase('img')
+	#if data.get('effects',false):
+		#var effects_paths= []
+		#for effect in data['effects']:			
+			#effects_paths.append(effect.get_path())
+		#data['effects_paths']=effects_paths
+		#data.erase('effects')
+	#if data.get('img',false):
+		#data['img_path'] = data['img'].get_path()
+		#data.erase('img')
 	return data
 
 func _network_spawn(data: Dictionary) -> void:
@@ -39,16 +39,20 @@ func _network_spawn(data: Dictionary) -> void:
 	fixed_position_x=data['position'].x
 	fixed_position_y=data['position'].y
 	caster = get_node(data['caster_path'])
-	if data.has('effects_paths'):
-		effects.clear()
-		for path in data['effects_paths']:
-			effects.append(load(path))
-	timings = data['timings']
-	locations=data['locations']
-	if data.has('img_path'):
-		get_node("Sprite2D").texture = load(data['img_path'])
-	life_time=data['life_time']
-	ping_time=data['ping_time']
+	#if data.has('effects_paths'):
+		#effects.clear()
+		#for path in data['effects_paths']:
+			#effects.append(load(path))
+	#if data.has('timings'):
+		#timings = data['timings']
+	#if data.has('locations'):
+		#locations=data['locations']
+	#if data.has('img_path'):
+		#get_node("Sprite2D").texture = load(data['img_path'])
+	#if data.has('life_time'):
+		#life_time=data['life_time']
+	#if data.has('ping_time'):
+		#ping_time=data['ping_time']
 	%End_Time.wait_ticks=life_time
 	%End_Time.start()
 	if (ping_time>0):
@@ -103,9 +107,13 @@ func trigger_effect(effect:Spell_Effect,target):
 func trigger_effects_at_time(timing:effect_time,targets=null):
 	for i in range(timings.size()):
 		if timings[i]==timing:
-			if locations[i]==effect_location.TARGET:
+			if locations[i]==effect_location.ALL_TARGETS:
 				for target in targets:
 					trigger_effect(effects[i],target)
+			elif locations[i]==effect_location.NON_CASTER_TARGETS:
+				for target in targets:
+					if target != caster:
+						trigger_effect(effects[i],target)
 			elif locations[i]==effect_location.CASTER:
 				trigger_effect(effects[i],caster)
 			elif locations[i]==effect_location.THIS_AREA:

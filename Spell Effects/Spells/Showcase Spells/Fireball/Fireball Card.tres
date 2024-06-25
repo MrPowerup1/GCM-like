@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="1_a83pw"]
 [ext_resource type="Script" path="res://SpellCard.gd" id="2_87pw1"]
-[ext_resource type="Resource" uid="uid://c76htlukbfj68" path="res://Spell Effects/Spells/Showcase Spells/Fireball.tres" id="3_jmloe"]
+[ext_resource type="Resource" uid="uid://c76htlukbfj68" path="res://Spell Effects/Spells/Showcase Spells/Fireball/Fireball Spell.tres" id="3_jmloe"]
 
 [resource]
 script = ExtResource("2_87pw1")

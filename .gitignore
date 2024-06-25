@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 detailed_logs/
+sg-physics-2d/lib/~libsgphysics2d.windows.template_debug.x86_64.dll
+webrtc/lib/~libwebrtc_native.windows.template_debug.x86_64.dll

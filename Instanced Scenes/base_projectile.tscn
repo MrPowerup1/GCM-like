@@ -61,11 +61,11 @@ texture_filter = 1
 texture = ExtResource("2_aayqm")
 hframes = 3
 
-[node name="Pingtime" type="Node" parent="."]
+[node name="Ping_Time" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_nilqr")
 
-[node name="Lifetime" type="Node" parent="."]
+[node name="End_Time" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_nilqr")
 one_shot = true
@@ -73,6 +73,7 @@ one_shot = true
 [node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
 script = ExtResource("2_vio7d")
 body = NodePath("..")
+speed = 2.0
 
 [node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -81,5 +82,5 @@ libraries = {
 }
 script = ExtResource("5_ky4y3")
 
-[connection signal="timeout" from="Pingtime" to="." method="_on_pingtime_timeout"]
-[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
+[connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]
+[connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]

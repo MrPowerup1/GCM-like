@@ -6,19 +6,15 @@ enum scatter_type {line,arc,grid}
 @export var type:scatter_type
 @export var count:int
 @export_category("Arc Type")
-@export var min_angle:float
-@export var max_angle:float
-@export var radius:float
+@export var min_angle:int
+@export var max_angle:int
+@export var radius:int
 @export_category("Line/Grid Type")
-var min_offset_position:Vector2
-var max_offset_position:Vector2
 @export var min_offset_x:int
 @export var min_offset_y:int
 @export var max_offset_x:int
 @export var max_offset_y:int
 const fixed_factor:int = 65536
-var min_offset_fixed:SGFixedVector2 = SGFixedVector2.new()
-var max_offset_fixed:SGFixedVector2 = SGFixedVector2.new()
 
 # Called when the node enters the scene tree for the first time.
 func trigger(target,caster:Player,spell_index:int,position:SGFixedVector2=target.fixed_position):
@@ -40,7 +36,7 @@ func positions_in_arc(root:SGFixedVector2,angle:int) ->Array[SGFixedVector2]:
 	var positions:Array[SGFixedVector2] = []
 	var angle_between = deg_to_rad((max_angle-min_angle)/count*fixed_factor)
 	for i in range(count):
-		var rot_angle = (-angle+fixed_factor*deg_to_rad(min_angle)+i*angle_between)
+		var rot_angle = (angle+fixed_factor*deg_to_rad(min_angle)+i*angle_between)
 		var ray = SGFixed.vector2(int(fixed_factor*radius),0).rotated(rot_angle)
 		print("Angle rotated is ",rot_angle)
 		print("Change is ",ray.to_float())

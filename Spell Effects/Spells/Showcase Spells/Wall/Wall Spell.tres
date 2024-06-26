@@ -15,9 +15,9 @@ script = ExtResource("1_4srle")
 effect = SubResource("Resource_evifg")
 type = 1
 count = 5
-min_angle = -30.0
-max_angle = 30.0
-radius = 100.0
+min_angle = -30
+max_angle = 30
+radius = 100
 min_offset_x = 0
 min_offset_y = -100
 max_offset_x = 0
@@ -25,7 +25,7 @@ max_offset_y = 100
 
 [sub_resource type="Resource" id="Resource_xcmvb"]
 script = ExtResource("4_4scny")
-offset_x = 100
+offset_x = -70
 offset_y = 0
 effect = SubResource("Resource_enict")
 

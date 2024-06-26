@@ -62,6 +62,7 @@ life_time = 150
 shape = SubResource("SGRectangleShape2D_u01od")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
 texture = ExtResource("2_h1sa5")
 hframes = 8
 

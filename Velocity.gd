@@ -82,8 +82,6 @@ func move_input(direction:SGFixedVector2):
 		facing = direction.angle()
 	if can_move and direction!=null:
 		var add_to_vel = direction
-		print(speed)
-		print(speed_fixed)
 		add_to_vel.imul(speed_fixed/mass_fixed*fixed_point_factor)
 		if !stop_input_at_max_vel:
 			velocity.iadd(add_to_vel)
@@ -102,14 +100,13 @@ func anchor(set_anchor:bool=false):
 	velocity.from_float(Vector2.ZERO)
 	anchored_pos=body.fixed_position
 
-func set_speed(new_speed:float=default_speed):
-	print("New speed is ",new_speed)
-	speed=new_speed
+func set_speed(speed_factor:float=1.00):
+	speed=default_speed*speed_factor
 	speed_fixed=speed*fixed_point_factor
 	
 
-func set_friction(new_friction:float=default_friction):
-	friction=new_friction
+func set_friction(friction_factor:float=1.00):
+	friction=default_friction*friction_factor
 	friction_fixed = friction*fixed_point_factor
 
 func set_mass(new_mass:float=default_mass):

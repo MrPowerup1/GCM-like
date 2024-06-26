@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmr36cxa7lt8n"]
+[gd_scene load_steps=20 format=3 uid="uid://cmr36cxa7lt8n"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_b0dfj"]
 [ext_resource type="Texture2D" uid="uid://b162026lik22v" path="res://Spell Effects/Spells/Showcase Spells/Beam/Beam-Sheet.png" id="2_1uvq5"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="4_bsu21"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="4_veeu5"]
 [ext_resource type="Resource" uid="uid://bkb58x5o43edb" path="res://Spell Effects/Spells/Showcase Spells/Beam/Slow Status.tres" id="5_hc5rk"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="6_il8xd"]
+[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="7_edc7e"]
 
 [sub_resource type="Resource" id="Resource_ntang"]
 script = ExtResource("2_y0bsv")
@@ -20,6 +22,18 @@ damage_value = 20
 [sub_resource type="Resource" id="Resource_ff3p0"]
 script = ExtResource("4_veeu5")
 status = ExtResource("5_hc5rk")
+
+[sub_resource type="Resource" id="Resource_hvb1p"]
+script = ExtResource("6_il8xd")
+pulse_to = false
+pulse_from = true
+strength = 0.5
+
+[sub_resource type="Resource" id="Resource_sruwj"]
+script = ExtResource("7_edc7e")
+offset_x = -5
+offset_y = 0
+effect = SubResource("Resource_hvb1p")
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_u01od"]
 extents_x = 30584032
@@ -66,9 +80,9 @@ _data = {
 
 [node name="Beam Area" type="SGArea2D" groups=["network_sync", "pierceable"]]
 script = ExtResource("1_b0dfj")
-timings = Array[int]([4, 3, 0])
-locations = Array[int]([3, 2, 2])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ntang"), SubResource("Resource_mvq0k"), SubResource("Resource_ff3p0")])
+timings = Array[int]([4, 3, 0, 3])
+locations = Array[int]([3, 2, 1, 2])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ntang"), SubResource("Resource_mvq0k"), SubResource("Resource_ff3p0"), SubResource("Resource_sruwj")])
 ping_time = 6
 life_time = 60
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmviupldp2e4p"]
+[gd_scene load_steps=20 format=3 uid="uid://cmviupldp2e4p"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/Projectile.gd" id="1_wc0me"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="2_pj4ge"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" path="res://Velocity.gd" id="4_biqqo"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="4_pm1pl"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="5_efamt"]
+[ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="6_2gheb"]
 [ext_resource type="Texture2D" uid="uid://ks0kvlrcg1x7" path="res://Spell Effects/Spells/Showcase Spells/Fireball/Fireball_sprites.png" id="6_410oy"]
+[ext_resource type="Resource" uid="uid://bkb58x5o43edb" path="res://Spell Effects/Spells/Showcase Spells/Beam/Slow Status.tres" id="7_nt2nj"]
 
 [sub_resource type="Resource" id="Resource_phwlq"]
 script = ExtResource("2_pj4ge")
@@ -21,6 +23,10 @@ area_scene = ExtResource("3_0i8tk")
 [sub_resource type="Resource" id="Resource_yw62v"]
 script = ExtResource("4_pm1pl")
 animation_name = "fire"
+
+[sub_resource type="Resource" id="Resource_vs8um"]
+script = ExtResource("6_2gheb")
+status = ExtResource("7_nt2nj")
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_6u01q"]
 extents_x = 1078215
@@ -69,9 +75,9 @@ _data = {
 script = ExtResource("1_wc0me")
 piercing = true
 velocity = NodePath("Velocity")
-timings = Array[int]([0, 2, 4])
-locations = Array[int]([2, 3, 3])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_phwlq"), SubResource("Resource_khwtr"), SubResource("Resource_yw62v")])
+timings = Array[int]([0, 2, 4, 0])
+locations = Array[int]([2, 3, 3, 2])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_phwlq"), SubResource("Resource_khwtr"), SubResource("Resource_yw62v"), SubResource("Resource_vs8um")])
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_6u01q")

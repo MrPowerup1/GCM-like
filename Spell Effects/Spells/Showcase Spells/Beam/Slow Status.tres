@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Status_Type" load_steps=5 format=3 uid="uid://bkb58x5o43edb"]
+
+[ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="1_fm4d1"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="1_qstaw"]
+
+[sub_resource type="Resource" id="Resource_xjvmh"]
+script = ExtResource("1_qstaw")
+set_speed = true
+set_friction = false
+speed_factor = 0.75
+friction_factor = 0.0
+
+[sub_resource type="Resource" id="Resource_h2f1a"]
+script = ExtResource("1_qstaw")
+set_speed = true
+set_friction = false
+speed_factor = 1.0
+friction_factor = 0.0
+
+[resource]
+script = ExtResource("1_fm4d1")
+timings = Array[int]([0, 2])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
+ping_time = 0
+total_effect_time = 60

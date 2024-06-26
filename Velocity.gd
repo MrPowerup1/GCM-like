@@ -100,13 +100,13 @@ func anchor(set_anchor:bool=false):
 	velocity.from_float(Vector2.ZERO)
 	anchored_pos=body.fixed_position
 
-func set_speed(new_speed:float=default_speed):
-	speed=new_speed
+func set_speed(speed_factor:float=1.00):
+	speed=default_speed*speed_factor
 	speed_fixed=speed*fixed_point_factor
 	
 
-func set_friction(new_friction:float=default_friction):
-	friction=new_friction
+func set_friction(friction_factor:float=1.00):
+	friction=default_friction*friction_factor
 	friction_fixed = friction*fixed_point_factor
 
 func set_mass(new_mass:float=default_mass):
@@ -150,7 +150,8 @@ func _save_state() ->Dictionary:
 		velocity_y=velocity.y,
 		facing=facing,
 		can_move=can_move,
-		friction = friction_fixed
+		friction = friction_fixed,
+		speed = speed_fixed
 	}
 func _load_state(state:Dictionary) ->void:
 	velocity.x=state['velocity_x']
@@ -158,3 +159,4 @@ func _load_state(state:Dictionary) ->void:
 	facing=state['facing']
 	can_move=state['can_move']
 	friction_fixed=state['friction']
+	speed_fixed=state['speed']

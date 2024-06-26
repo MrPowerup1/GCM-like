@@ -20,7 +20,7 @@ signal spell_released(index:int)
 func _network_preprocess(input: Dictionary) -> void:
 	sync_to_physics_engine()
 	
-func _network_process(frame_input:Dictionary) -> void:
+func _network_postprocess(frame_input:Dictionary) -> void:
 	input.velocity.update_pos()
 
 func _ready():

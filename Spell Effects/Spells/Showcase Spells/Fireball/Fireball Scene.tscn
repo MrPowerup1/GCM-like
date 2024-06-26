@@ -73,7 +73,6 @@ _data = {
 
 [node name="Fireball" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync", "pierceable"]]
 script = ExtResource("1_wc0me")
-piercing = true
 velocity = NodePath("Velocity")
 timings = Array[int]([0, 2, 4, 0])
 locations = Array[int]([2, 3, 3, 2])

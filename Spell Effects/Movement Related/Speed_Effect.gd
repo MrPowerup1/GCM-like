@@ -3,8 +3,8 @@ class_name Speed_Effect
 
 @export var reset_speed:bool
 @export var reset_friction:bool
-@export var set_speed:int
-@export var set_friction:int
+@export var set_speed:float
+@export var set_friction:float
 
 
 func trigger (target,caster:Player,spell_index:int):

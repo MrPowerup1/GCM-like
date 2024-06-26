@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Deck" load_steps=8 format=3 uid="uid://6lfphqkx7jyp"]
+[gd_resource type="Resource" script_class="Deck" load_steps=9 format=3 uid="uid://6lfphqkx7jyp"]
 
 [ext_resource type="Script" path="res://Deck.gd" id="1_0h7c1"]
+[ext_resource type="Resource" uid="uid://c22fntv8t1gh" path="res://Spell Effects/Spells/Showcase Spells/Beam/Beam Card.tres" id="1_75r8a"]
 [ext_resource type="Resource" uid="uid://c76y7w4sab3rl" path="res://Spell Effects/Spells/Showcase Spells/Dash/Dash Card.tres" id="1_eaac2"]
 [ext_resource type="Resource" uid="uid://cfqfg1b3dpbgq" path="res://Spell Effects/Spells/Showcase Spells/Spell Cards/Area Target.tres" id="1_mi8nu"]
 [ext_resource type="Resource" uid="uid://ejgkwofialxf" path="res://Spell Effects/Spells/Showcase Spells/Spell Cards/Test_Dash.tres" id="1_rsdvl"]
@@ -10,5 +11,5 @@
 
 [resource]
 script = ExtResource("1_0h7c1")
-cards = Array[Resource("res://Card.gd")]([ExtResource("1_eaac2"), ExtResource("4_a47es"), ExtResource("2_wuxpe"), ExtResource("1_mi8nu"), ExtResource("5_u7l5l"), ExtResource("1_rsdvl")])
-allowed = Array[bool]([true, true, true, true, true, true])
+cards = Array[Resource("res://Card.gd")]([ExtResource("1_75r8a"), ExtResource("1_eaac2"), ExtResource("4_a47es"), ExtResource("2_wuxpe"), ExtResource("1_mi8nu"), ExtResource("5_u7l5l"), ExtResource("1_rsdvl")])
+allowed = Array[bool]([true, true, true, true, true, true, true])

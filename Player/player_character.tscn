@@ -81,6 +81,8 @@ stop_input_at_max_vel = true
 max_input_vel = 4.0
 speed = 1.2
 friction = 0.15
+turning_speed = 5.0
+acceleration = 10.0
 
 [node name="Health" type="Node" parent="."]
 unique_name_in_owner = true

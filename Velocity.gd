@@ -6,12 +6,15 @@ const fixed_point_factor = 65536
 var velocity:SGFixedVector2 = SGFixedVector2.new()
 var facing:int
 var fixed_zero =SGFixed.vector2(0,0)
+#Currently implemented: Player
+enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET}
+@export var movement_style:movement_styles
 @export var body:SGFixedNode2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel:float
 const fixed_zero_range:int = 32
 var max_input_vel_fixed_squared:int
-
+@export_category("Player Style Movement")
 @export_range(0.5,5) var speed:float
 var speed_fixed:int
 var default_speed:float
@@ -22,6 +25,15 @@ var default_friction:float
 var mass_fixed:int
 var default_mass:float
 var can_move:bool=true
+
+@export_category("Tank Style Movement")
+@export var turning_speed:float
+var turning_speed_fixed:int
+var default_turning_speed:float
+@export var acceleration:float
+var acceleration_fixed:int
+var default_acceleration:float
+
 
 var anchored_pos:SGFixedVector2
 
@@ -78,6 +90,12 @@ func pulse_from(direction,strength: float):
 	#print("Post pulse",velocity.to_float())
 
 func move_input(direction:SGFixedVector2):
+	if movement_style == movement_styles.PLAYER:
+		player_move_input(direction)
+	if movement_style == movement_styles.TANK:
+		tank_move_input(direction)
+
+func player_move_input(direction:SGFixedVector2):
 	if not direction.is_equal_approx(fixed_zero):
 		facing = direction.angle()
 	if can_move and direction!=null:
@@ -89,6 +107,13 @@ func move_input(direction:SGFixedVector2):
 			velocity.iadd(add_to_vel)
 	else:
 		pass
+
+func tank_move_input(direction:SGFixedVector2):
+	facing += direction.x*turning_speed_fixed/fixed_point_factor
+	if can_move:
+		speed+=direction.y*acceleration_fixed
+		var add_to_vel = SGFixed.vector2(speed_fixed,0).rotated(facing)
+		velocity.iadd(add_to_vel)
 
 func constant_vel(angle:int):
 	friction=0

@@ -15,7 +15,7 @@ enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET}
 const fixed_zero_range:int = 32
 var max_input_vel_fixed_squared:int
 @export_category("Player Style Movement")
-@export_range(0.5,5) var speed:float
+@export_range(0,5) var speed:float
 var speed_fixed:int
 var default_speed:float
 @export_range(0,1) var friction:float
@@ -34,7 +34,6 @@ var default_turning_speed:float
 var acceleration_fixed:int
 var default_acceleration:float
 
-
 var anchored_pos:SGFixedVector2
 
 func _ready():
@@ -45,6 +44,10 @@ func _ready():
 	default_speed=speed
 	default_friction=friction
 	default_mass=mass
+	default_turning_speed=turning_speed
+	turning_speed_fixed=turning_speed*fixed_point_factor
+	default_acceleration=acceleration
+	acceleration_fixed=acceleration*fixed_point_factor
 	max_input_vel_fixed_squared=max_input_vel*max_input_vel*fixed_point_factor
 	if body==null:
 		body=get_parent()
@@ -107,13 +110,19 @@ func player_move_input(direction:SGFixedVector2):
 			velocity.iadd(add_to_vel)
 	else:
 		pass
-
+	velocity.imul(fixed_point_factor-friction_fixed)
+	
 func tank_move_input(direction:SGFixedVector2):
 	facing += direction.x*turning_speed_fixed/fixed_point_factor
 	if can_move:
-		speed+=direction.y*acceleration_fixed
+		speed_fixed-=direction.y*acceleration
+		if speed_fixed < 0:
+			speed_fixed=0
+		if speed_fixed > max_input_vel*fixed_point_factor:
+			speed_fixed=max_input_vel*fixed_point_factor
 		var add_to_vel = SGFixed.vector2(speed_fixed,0).rotated(facing)
 		velocity.iadd(add_to_vel)
+	speed_fixed*=(1-friction)
 
 func constant_vel(angle:int):
 	friction=0
@@ -148,8 +157,6 @@ func reset_stats():
 func _physics_process(delta):
 	pass
 func update_pos():
-	# Velocity*= (1-friction)
-	velocity.imul(fixed_point_factor-friction_fixed)
 	# Set velocity to 0 if its close
 	if abs(velocity.x)<fixed_zero_range:
 		velocity.x=0

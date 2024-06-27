@@ -12,10 +12,10 @@ var fixed_zero =SGFixed.vector2(0,0)
 const fixed_zero_range:int = 32
 var max_input_vel_fixed_squared:int
 
-@export var speed:float
+@export_range(0.5,5) var speed:float
 var speed_fixed:int
 var default_speed:float
-@export var friction:float
+@export_range(0,1) var friction:float
 var friction_fixed:int
 var default_friction:float
 @export var mass:float = 1

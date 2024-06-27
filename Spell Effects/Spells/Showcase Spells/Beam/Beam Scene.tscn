@@ -85,6 +85,7 @@ locations = Array[int]([3, 2, 1, 2])
 effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ntang"), SubResource("Resource_mvq0k"), SubResource("Resource_ff3p0"), SubResource("Resource_sruwj")])
 ping_time = 6
 life_time = 60
+rotate_to_caster = true
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_u01od")

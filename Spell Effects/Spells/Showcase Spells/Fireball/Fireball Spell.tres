@@ -11,7 +11,7 @@ area_scene = ExtResource("6_o0enp")
 
 [sub_resource type="Resource" id="Resource_ayxi2"]
 script = ExtResource("9_t7xp4")
-offset_x = 100
+offset_x = 20
 offset_y = 0
 effect = SubResource("Resource_3hrf7")
 

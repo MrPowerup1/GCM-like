@@ -21,6 +21,7 @@ func _network_process(input: Dictionary) -> void:
 
 
 func spawn_specifics():
+	velocity.facing = fixed_rotation
 	start_moving()
 	
 func start_moving():

@@ -46,7 +46,7 @@ spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([
 
 [sub_resource type="Resource" id="Resource_s3bki"]
 script = ExtResource("9_gvbpd")
-delay_time = 60
+delay_time = 120
 effect = SubResource("Resource_m2ema")
 delayed_cast_instance = ExtResource("6_8q4v2")
 

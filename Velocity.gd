@@ -7,8 +7,9 @@ var velocity:SGFixedVector2 = SGFixedVector2.new()
 var facing:int
 var fixed_zero =SGFixed.vector2(0,0)
 #Currently implemented: Player
-enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET}
+enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,PLAYER_INSTANT}
 @export var movement_style:movement_styles
+@export var change_rotation_with_facing:bool
 @export var body:SGFixedNode2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel:float
@@ -97,6 +98,8 @@ func move_input(direction:SGFixedVector2):
 		player_move_input(direction)
 	if movement_style == movement_styles.TANK:
 		tank_move_input(direction)
+	if movement_style == movement_styles.PLAYER_INSTANT:
+		player_instant_move_input(direction)
 
 func player_move_input(direction:SGFixedVector2):
 	if not direction.is_equal_approx(fixed_zero):
@@ -123,6 +126,15 @@ func tank_move_input(direction:SGFixedVector2):
 		var add_to_vel = SGFixed.vector2(speed_fixed,0).rotated(facing)
 		velocity.iadd(add_to_vel)
 	speed_fixed*=(1-friction)
+
+func player_instant_move_input(direction:SGFixedVector2):
+	if not direction.is_equal_approx(fixed_zero):
+		facing = direction.angle()
+	else:
+		velocity.imul(fixed_point_factor-friction_fixed)
+	if can_move and direction!=null:
+		velocity = direction.mul(speed_fixed/mass_fixed*fixed_point_factor)
+	
 
 func constant_vel(angle:int):
 	friction=0
@@ -175,6 +187,8 @@ func update_pos():
 	if can_move==false:
 		body.fixed_position= SGFixed.vector2(lerp(body.fixed_position_x,anchored_pos.x,0.5),lerp(body.fixed_position_y,anchored_pos.y,0.5))
 		pass
+	if change_rotation_with_facing:
+		body.fixed_rotation = facing
 
 func _save_state() ->Dictionary:
 	return {

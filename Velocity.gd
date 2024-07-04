@@ -2,6 +2,7 @@ extends Node
 class_name Velocity
 
 const fixed_point_factor = 65536
+const diag_factor = 46341
 
 var velocity:SGFixedVector2 = SGFixedVector2.new()
 var facing:int
@@ -13,8 +14,10 @@ enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,PLAYER_INSTANT}
 @export var body:SGFixedNode2D
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel:float
+@export var fixed_diagonal_velocity_difference:int
 const fixed_zero_range:int = 32
 var max_input_vel_fixed_squared:int
+
 @export_category("Player Style Movement")
 @export_range(0,5) var speed:float
 var speed_fixed:int
@@ -34,11 +37,19 @@ var default_turning_speed:float
 @export var acceleration:float
 var acceleration_fixed:int
 var default_acceleration:float
+@export var cut_accel:float
+var cut_accel_fixed:int
+var default_cut_accel:float
+@export var max_speed:float
+var max_speed_fixed:int
+var default_max_speed:float
+@export var friction_force_fixed:int
 
 var anchored_pos:SGFixedVector2
 
 func _ready():
 	velocity.from_float(Vector2.ZERO)
+	#TODO: All of this needs to go, no float multiplication
 	speed_fixed=speed*fixed_point_factor
 	friction_fixed=friction*fixed_point_factor
 	mass_fixed=mass*fixed_point_factor
@@ -49,6 +60,12 @@ func _ready():
 	turning_speed_fixed=turning_speed*fixed_point_factor
 	default_acceleration=acceleration
 	acceleration_fixed=acceleration*fixed_point_factor
+	default_cut_accel=acceleration
+	cut_accel_fixed=cut_accel*fixed_point_factor
+	default_max_speed=max_speed
+	max_speed_fixed=max_speed*fixed_point_factor
+	
+	
 	max_input_vel_fixed_squared=max_input_vel*max_input_vel*fixed_point_factor
 	if body==null:
 		body=get_parent()
@@ -99,7 +116,7 @@ func move_input(direction:SGFixedVector2):
 	if movement_style == movement_styles.TANK:
 		tank_move_input(direction)
 	if movement_style == movement_styles.PLAYER_INSTANT:
-		player_instant_move_input(direction)
+		player_fixed_move_input(direction)
 
 func player_move_input(direction:SGFixedVector2):
 	if not direction.is_equal_approx(fixed_zero):
@@ -134,8 +151,52 @@ func player_instant_move_input(direction:SGFixedVector2):
 		velocity.imul(fixed_point_factor-friction_fixed)
 	if can_move and direction!=null:
 		velocity = direction.mul(speed_fixed/mass_fixed*fixed_point_factor)
-	
 
+func player_fixed_move_input(direction:SGFixedVector2):
+	var is_diagonal = determine_diagonal_velocity()
+	if not direction.is_equal_approx(fixed_zero):
+		facing = direction.angle()
+		var max_speed_to_use = max_speed_fixed
+		if is_diagonal:
+			print("diagonal")
+			max_speed_to_use = SGFixed.mul(max_speed_fixed,diag_factor)
+		if direction.x!=0:
+			if abs(velocity.x + SGFixed.mul(acceleration_fixed,direction.x)) < max_speed_to_use:
+				velocity.x+=SGFixed.mul(acceleration_fixed,direction.x)
+				#If changing direction, apply extra velocity
+				if sign(velocity.x) != sign(direction.x) :
+					print("cut")
+					velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
+			else:
+				velocity.x=sign(velocity.x)*max_speed_to_use
+		if direction.y!=0:
+			if abs(velocity.y + SGFixed.mul(acceleration_fixed,direction.y)) < max_speed_to_use:
+				velocity.y+=SGFixed.mul(acceleration_fixed,direction.y)
+				#If changing direction, apply extra velocity
+				if sign(velocity.y) != sign(direction.y) :
+					print("cut")
+					velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
+			else:
+				velocity.y=sign(velocity.y)*max_speed_to_use
+	if direction.x == 0:
+		#APPLY HORIZONTAL FRICTION
+		if abs(velocity.x) < friction_force_fixed:
+			velocity.x=0
+		else:
+			velocity.x = sign(velocity.x)*abs(abs(velocity.x)-friction_force_fixed)
+	if direction.y == 0:
+		#APPLY VERTICAL FRICTION
+		if abs(velocity.y) < friction_force_fixed:
+			velocity.y=0
+		else:
+			velocity.y = sign(velocity.y)*abs(abs(velocity.y)-friction_force_fixed)
+
+func determine_diagonal_velocity() ->bool:		
+	if abs(abs(velocity.x) - abs(velocity.y)) < fixed_diagonal_velocity_difference:
+		return true
+	else:
+		return false
+	
 func constant_vel(angle:int):
 	friction=0
 	friction_fixed=friction*fixed_point_factor

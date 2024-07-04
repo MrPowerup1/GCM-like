@@ -80,10 +80,14 @@ script = ExtResource("9_hac0t")
 movement_style = 5
 stop_input_at_max_vel = true
 max_input_vel = 4.0
+fixed_diagonal_velocity_difference = 65536
 speed = 4.0
 friction = 0.15
 turning_speed = 0.05
-acceleration = 0.1
+acceleration = 1.0
+cut_accel = 2.0
+max_speed = 5.0
+friction_force_fixed = 65536
 
 [node name="Health" type="Node" parent="."]
 unique_name_in_owner = true

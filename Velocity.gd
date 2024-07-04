@@ -140,7 +140,8 @@ func tank_move_input(direction:SGFixedVector2):
 			speed_fixed=0
 		if speed_fixed > max_input_vel*fixed_point_factor:
 			speed_fixed=max_input_vel*fixed_point_factor
-		var add_to_vel = SGFixed.vector2(speed_fixed,0).rotated(facing)
+		#var add_to_vel = SGFixed.vector2(speed_fixed,0).rotated(facing)
+		var add_to_vel = MathHelper.get_unit_at_angle(facing).mul(speed_fixed)
 		velocity.iadd(add_to_vel)
 	speed_fixed*=(1-friction)
 
@@ -200,7 +201,8 @@ func determine_diagonal_velocity() ->bool:
 func constant_vel(angle:int):
 	friction=0
 	friction_fixed=friction*fixed_point_factor
-	velocity = SGFixed.vector2(fixed_point_factor,0).rotated(angle).mul(speed_fixed)
+	#velocity = SGFixed.vector2(fixed_point_factor,0).rotated(angle).mul(speed_fixed)
+	velocity = MathHelper.get_unit_at_angle(angle).mul(speed_fixed)
 
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor

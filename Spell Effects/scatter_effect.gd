@@ -37,12 +37,13 @@ func positions_in_arc(root:SGFixedVector2,angle:int) ->Array[SGFixedVector2]:
 	var angle_between = deg_to_rad((max_angle-min_angle)/count*fixed_factor)
 	for i in range(count):
 		var rot_angle = (angle+fixed_factor*deg_to_rad(min_angle)+i*angle_between)
-		var ray = SGFixed.vector2(int(fixed_factor*radius),0).rotated(rot_angle)
-		print("Angle rotated is ",rot_angle)
-		print("Change is ",ray.to_float())
+		var ray = MathHelper.get_unit_at_angle(rot_angle).mul(radius*fixed_factor)
+		#var ray = SGFixed.vector2(int(fixed_factor*radius),0).rotated(rot_angle)d
+		#print("Angle rotated is ",rot_angle)
+		#print("Change is ",ray.to_float())
 		var to_append = root.add(ray)
-		print("Root is ",root.to_float())
-		print("New arc pos is ",to_append.to_float())
+		#print("Root is ",root.to_float())
+		#print("New arc pos is ",to_append.to_float())
 		positions.append(to_append)
 	return positions
 

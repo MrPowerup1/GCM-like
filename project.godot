@@ -21,6 +21,7 @@ GameManager="*res://GameManager.gd"
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
 SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
 SyncReplay="*res://addons/godot-rollback-netcode/SyncReplay.gd"
+MathHelper="*res://Math_Helper.gd"
 
 [display]
 

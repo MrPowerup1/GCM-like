@@ -98,7 +98,6 @@ one_shot = true
 [node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
 script = ExtResource("4_biqqo")
 body = NodePath("..")
-speed = 2.0
 
 [node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

@@ -122,7 +122,8 @@ script = ExtResource("11_jj1cv")
 movement_style = 2
 change_rotation_with_facing = true
 body = NodePath("..")
-turning_speed = 0.001
+mass_fixed = 65536
+turning_speed_fixed = 655
 
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

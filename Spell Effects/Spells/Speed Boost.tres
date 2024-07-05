@@ -1,8 +1,7 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=9 format=3 uid="uid://c7rhfh8ge5c2x"]
+[gd_resource type="Resource" script_class="Spell" load_steps=8 format=3 uid="uid://c7rhfh8ge5c2x"]
 
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_7d5ha"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="1_7ltmw"]
-[ext_resource type="Texture2D" uid="uid://uxm1r401t4dm" path="res://Art/Melee.png" id="1_mp4gc"]
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_vecf2"]
 [ext_resource type="Resource" uid="uid://wuutqs302j4" path="res://Spell Effects/Status Effects/DoubleSpeed5s.tres" id="2_3lf67"]
 
@@ -28,10 +27,3 @@ held_ping_time = 100000.0
 cooldown_on_activate = false
 cooldown_on_release = false
 cooldown_time = 1000.0
-name = "Speed Boost"
-card_image = ExtResource("1_mp4gc")
-description = "Gain a boost of speed for a few secons"
-requirements = Array[Resource("res://Elements/Element.gd")]([])
-category = 0
-type = 0
-randomizer = false

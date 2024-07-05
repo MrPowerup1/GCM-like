@@ -31,9 +31,6 @@ script = ExtResource("2_pqj4k")
 unique_name_in_owner = true
 script = ExtResource("2_kvjex")
 body = NodePath("..")
-max_input_vel = 5.0
-speed = 2.0
-friction = 0.5
 
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

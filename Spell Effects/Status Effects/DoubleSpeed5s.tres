@@ -6,23 +6,25 @@
 
 [sub_resource type="Resource" id="Resource_g10aa"]
 script = ExtResource("1_hgdpk")
-reset_speed = false
-reset_friction = true
-set_speed = 200
-set_friction = 0
+set_speed = false
+set_friction = false
+speed_factor = 0
+friction_factor = 0
 
 [sub_resource type="Resource" id="Resource_yfjfd"]
 script = ExtResource("2_jmqw0")
 
 [sub_resource type="Resource" id="Resource_vn026"]
 script = ExtResource("1_hgdpk")
-reset_speed = true
-reset_friction = true
-set_speed = 0
-set_friction = 0
+set_speed = false
+set_friction = false
+speed_factor = 0
+friction_factor = 0
 
 [resource]
 script = ExtResource("3_qgfnk")
+timings = Array[int]([])
+effects = Array[ExtResource("2_jmqw0")]([])
 on_activate = SubResource("Resource_g10aa")
 on_held = SubResource("Resource_yfjfd")
 on_release = SubResource("Resource_vn026")

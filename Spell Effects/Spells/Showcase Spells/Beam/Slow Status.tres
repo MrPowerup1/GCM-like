@@ -7,15 +7,15 @@
 script = ExtResource("1_qstaw")
 set_speed = true
 set_friction = false
-speed_factor = 0.7
-friction_factor = 0.0
+speed_factor = 32768
+friction_factor = 0
 
 [sub_resource type="Resource" id="Resource_h2f1a"]
 script = ExtResource("1_qstaw")
 set_speed = true
 set_friction = false
-speed_factor = 1.0
-friction_factor = 0.0
+speed_factor = 65536
+friction_factor = 0
 
 [resource]
 script = ExtResource("1_fm4d1")

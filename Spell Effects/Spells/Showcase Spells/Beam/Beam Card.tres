@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://c22fntv8t1gh"]
+
+[ext_resource type="Resource" uid="uid://dehdpr3friiuo" path="res://Elements/Fire.tres" id="1_248cn"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="1_rix30"]
+[ext_resource type="Texture2D" uid="uid://cal31supdsnww" path="res://Art/Right_Arrow_Gold.png" id="2_rcafs"]
+[ext_resource type="Resource" uid="uid://ksudpbtmc2pk" path="res://Spell Effects/Spells/Showcase Spells/Beam/Beam Spell.tres" id="4_2qqj4"]
+
+[resource]
+script = ExtResource("1_rix30")
+spell = ExtResource("4_2qqj4")
+element = ExtResource("1_248cn")
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0
+randomizer = false
+name = "Beam"
+image = ExtResource("2_rcafs")
+description = "Shoot a beam"
+context = 0

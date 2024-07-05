@@ -1,15 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnkvt5plhp8al"]
+[gd_scene load_steps=6 format=3 uid="uid://bnkvt5plhp8al"]
 
-[ext_resource type="Script" path="res://Instanced Scenes/base_area.gd" id="1_ht4gn"]
+[ext_resource type="Script" path="res://Instanced Scenes/ControlledArea.gd" id="1_2r3n4"]
 [ext_resource type="Script" path="res://Velocity.gd" id="2_kvjex"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_pqj4k"]
+[ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="2_sr3mq"]
 
-[node name="Base Target" type="SGArea2D"]
-script = ExtResource("1_ht4gn")
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_dcjpr"]
+extents_x = 1078728
+extents_y = 1086915
+
+[node name="Base Target" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync"]]
+script = ExtResource("1_2r3n4")
+velocity = NodePath("Velocity")
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGRectangleShape2D_dcjpr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sr3mq")
 
 [node name="End_Time" type="Node" parent="."]
 unique_name_in_owner = true
@@ -19,10 +27,10 @@ script = ExtResource("2_pqj4k")
 unique_name_in_owner = true
 script = ExtResource("2_pqj4k")
 
-[node name="Velocity" type="Node" parent="."]
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body")]
 unique_name_in_owner = true
 script = ExtResource("2_kvjex")
-speed = 1000.0
+body = NodePath("..")
 
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

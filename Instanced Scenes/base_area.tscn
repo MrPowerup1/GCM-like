@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bp4jn11syhdyx"]
+[gd_scene load_steps=6 format=3 uid="uid://bp4jn11syhdyx"]
 
-[ext_resource type="Script" path="res://Instanced Scenes/base_area.gd" id="1_2evsh"]
+[ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_bs4pg"]
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_wwof1"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_x1yrt"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="4_lecef"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_u01od"]
 extents_x = 1038778
 extents_y = 1101672
 
 [node name="Base Area" type="SGArea2D" groups=["network_sync", "pierceable"]]
-script = ExtResource("1_2evsh")
+script = ExtResource("1_bs4pg")
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_u01od")
@@ -26,6 +27,10 @@ wait_ticks = 60
 unique_name_in_owner = true
 script = ExtResource("2_x1yrt")
 wait_ticks = 60
+
+[node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_lecef")
 
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

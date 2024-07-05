@@ -22,13 +22,14 @@ func initialize(new_status:Status_Type,caster:Player,target:Player,index:int):
 	activate()
 	
 func activate():
+	print("activated")
 	status.activate(original_caster,status_index)
 	if (status.ping_time!=0):
 		$Ping_Time.start()
 		status.held(original_caster,status_index)
 		
-@rpc("any_peer","call_local")
 func release():
+	print("release")
 	status.release(original_caster,status_index)
 	$End_Time.stop()
 	if (status.ping_time!=0):
@@ -42,7 +43,7 @@ func get_held_time():
 
 
 func _on_end_time_timeout():
-	release.rpc()
+	release()
 
 
 func _on_ping_time_timeout():

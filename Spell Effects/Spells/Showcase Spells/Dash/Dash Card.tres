@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=4 format=3 uid="uid://c76y7w4sab3rl"]
+
+[ext_resource type="Texture2D" uid="uid://b5v5ktkedluv5" path="res://Art/Right_Arrow_Grey.png" id="1_7ye8t"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="1_ypac8"]
+[ext_resource type="Resource" uid="uid://bkf81j8t0qrbs" path="res://Spell Effects/Spells/Showcase Spells/Dash/Dash Spell.tres" id="3_ubn67"]
+
+[resource]
+script = ExtResource("1_ypac8")
+spell = ExtResource("3_ubn67")
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0
+randomizer = false
+name = "Dash"
+image = ExtResource("1_7ye8t")
+description = "Get there fast"
+context = 0

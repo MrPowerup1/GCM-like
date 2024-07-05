@@ -1,12 +1,11 @@
-[gd_resource type="Resource" script_class="Deck" load_steps=6 format=3 uid="uid://0dlax8f6qunu"]
+[gd_resource type="Resource" script_class="Deck" load_steps=5 format=3 uid="uid://0dlax8f6qunu"]
 
 [ext_resource type="Resource" uid="uid://dbtsfpa73s3bp" path="res://Skins/SkinCards/Green.tres" id="1_7oqpx"]
 [ext_resource type="Script" path="res://Deck.gd" id="1_qy6am"]
 [ext_resource type="Resource" uid="uid://52yasw3y0q12" path="res://Skins/SkinCards/Orange.tres" id="2_uq2px"]
 [ext_resource type="Resource" uid="uid://dhi773w1iecds" path="res://Skins/SkinCards/Purple.tres" id="3_4e5so"]
-[ext_resource type="Resource" uid="uid://cumu5tpm88y5r" path="res://Skins/SkinCards/Random.tres" id="4_fh2rg"]
 
 [resource]
 script = ExtResource("1_qy6am")
-cards = Array[Resource("res://Card.gd")]([ExtResource("1_7oqpx"), ExtResource("2_uq2px"), ExtResource("3_4e5so"), ExtResource("4_fh2rg")])
-allowed = Array[bool]([true, true, true, true])
+cards = Array[Resource("res://Card.gd")]([ExtResource("1_7oqpx"), ExtResource("2_uq2px"), ExtResource("3_4e5so")])
+allowed = Array[bool]([true, true, true])

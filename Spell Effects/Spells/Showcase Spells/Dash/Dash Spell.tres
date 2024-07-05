@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=13 format=3 uid="uid://bkf81j8t0qrbs"]
+
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="1_hpmlj"]
+[ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="2_lfp5w"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_y5i01"]
+[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="4_ojipr"]
+[ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="5_dvyiu"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="6_yf828"]
+
+[sub_resource type="Resource" id="Resource_k0tn7"]
+script = ExtResource("1_hpmlj")
+set_anchor_to = true
+
+[sub_resource type="Resource" id="Resource_14fv2"]
+script = ExtResource("3_y5i01")
+pulse_to = true
+pulse_from = false
+strength = 40.0
+
+[sub_resource type="Resource" id="Resource_2xcay"]
+script = ExtResource("4_ojipr")
+offset_x = 1
+offset_y = 0
+effect = SubResource("Resource_14fv2")
+
+[sub_resource type="Resource" id="Resource_nxkfm"]
+script = ExtResource("5_dvyiu")
+delay_time = 10
+effect = SubResource("Resource_2xcay")
+delayed_cast_instance = ExtResource("2_lfp5w")
+
+[sub_resource type="Resource" id="Resource_6mcly"]
+script = ExtResource("1_hpmlj")
+set_anchor_to = false
+
+[sub_resource type="Resource" id="Resource_sig1f"]
+script = ExtResource("5_dvyiu")
+delay_time = 20
+effect = SubResource("Resource_6mcly")
+delayed_cast_instance = ExtResource("2_lfp5w")
+
+[resource]
+script = ExtResource("6_yf828")
+timings = Array[int]([0, 0, 0])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_k0tn7"), SubResource("Resource_nxkfm"), SubResource("Resource_sig1f")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = true
+cooldown_on_release = false
+cooldown_time = 60

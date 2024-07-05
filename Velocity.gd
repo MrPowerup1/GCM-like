@@ -15,6 +15,7 @@ enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,PLAYER_INSTANT}
 @export var stop_input_at_max_vel:bool
 @export var max_input_vel:float
 @export var fixed_diagonal_velocity_difference:int
+@export var fixed_angle_diff:int
 const fixed_zero_range:int = 32
 var max_input_vel_fixed_squared:int
 
@@ -31,6 +32,7 @@ var default_mass:float
 var can_move:bool=true
 
 @export_category("Tank Style Movement")
+@export_category("Fixed Point: multiply by 65536")
 @export var turning_speed:float
 var turning_speed_fixed:int
 var default_turning_speed:float
@@ -111,26 +113,26 @@ func pulse_from(direction,strength: float):
 	#print("Post pulse",velocity.to_float())
 
 func move_input(direction:SGFixedVector2):
-	if movement_style == movement_styles.PLAYER:
-		player_move_input(direction)
+	#if movement_style == movement_styles.PLAYER:
+		#player_move_input(direction)
 	if movement_style == movement_styles.TANK:
 		tank_move_input(direction)
 	if movement_style == movement_styles.PLAYER_INSTANT:
 		player_fixed_move_input(direction)
 
-func player_move_input(direction:SGFixedVector2):
-	if not direction.is_equal_approx(fixed_zero):
-		facing = direction.angle()
-	if can_move and direction!=null:
-		var add_to_vel = direction
-		add_to_vel.imul(speed_fixed/mass_fixed*fixed_point_factor)
-		if !stop_input_at_max_vel:
-			velocity.iadd(add_to_vel)
-		elif stop_input_at_max_vel and velocity.length_squared()<max_input_vel_fixed_squared:
-			velocity.iadd(add_to_vel)
-	else:
-		pass
-	velocity.imul(fixed_point_factor-friction_fixed)
+#func player_move_input(direction:SGFixedVector2):
+	#if not direction.is_equal_approx(fixed_zero):
+		#facing = direction.angle()
+	#if can_move and direction!=null:
+		#var add_to_vel = direction
+		#add_to_vel.imul(speed_fixed/mass_fixed*fixed_point_factor)
+		#if !stop_input_at_max_vel:
+			#velocity.iadd(add_to_vel)
+		#elif stop_input_at_max_vel and velocity.length_squared()<max_input_vel_fixed_squared:
+			#velocity.iadd(add_to_vel)
+	#else:
+		#pass
+	#velocity.imul(fixed_point_factor-friction_fixed)
 	
 func tank_move_input(direction:SGFixedVector2):
 	facing += direction.x*turning_speed_fixed/fixed_point_factor
@@ -157,28 +159,63 @@ func player_fixed_move_input(direction:SGFixedVector2):
 	var is_diagonal = determine_diagonal_velocity()
 	if not direction.is_equal_approx(fixed_zero):
 		facing = direction.angle()
-		var max_speed_to_use = max_speed_fixed
-		if is_diagonal:
-			print("diagonal")
-			max_speed_to_use = SGFixed.mul(max_speed_fixed,diag_factor)
-		if direction.x!=0:
-			if abs(velocity.x + SGFixed.mul(acceleration_fixed,direction.x)) < max_speed_to_use:
-				velocity.x+=SGFixed.mul(acceleration_fixed,direction.x)
-				#If changing direction, apply extra velocity
-				if sign(velocity.x) != sign(direction.x) :
-					print("cut")
-					velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
-			else:
-				velocity.x=sign(velocity.x)*max_speed_to_use
-		if direction.y!=0:
-			if abs(velocity.y + SGFixed.mul(acceleration_fixed,direction.y)) < max_speed_to_use:
-				velocity.y+=SGFixed.mul(acceleration_fixed,direction.y)
-				#If changing direction, apply extra velocity
-				if sign(velocity.y) != sign(direction.y) :
-					print("cut")
-					velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
-			else:
-				velocity.y=sign(velocity.y)*max_speed_to_use
+		if can_move:
+			var max_speed_to_use = max_speed_fixed
+			if is_diagonal:
+				print("diagonal")
+				max_speed_to_use = SGFixed.mul(max_speed_fixed,diag_factor)
+			if direction.x!=0:
+				if abs(velocity.x + SGFixed.mul(acceleration_fixed,direction.x)) < max_speed_to_use:
+					velocity.x+=SGFixed.mul(acceleration_fixed,direction.x)
+					#If changing direction, apply extra velocity
+					if sign(velocity.x) != sign(direction.x) :
+						print("cut")
+						velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
+				else:
+					velocity.x=sign(velocity.x)*max_speed_to_use
+			if direction.y!=0:
+				if abs(velocity.y + SGFixed.mul(acceleration_fixed,direction.y)) < max_speed_to_use:
+					velocity.y+=SGFixed.mul(acceleration_fixed,direction.y)
+					#If changing direction, apply extra velocity
+					if sign(velocity.y) != sign(direction.y) :
+						print("cut")
+						velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
+				else:
+					velocity.y=sign(velocity.y)*max_speed_to_use
+	if direction.x == 0:
+		#APPLY HORIZONTAL FRICTION
+		if abs(velocity.x) < friction_force_fixed:
+			velocity.x=0
+		else:
+			velocity.x = sign(velocity.x)*abs(abs(velocity.x)-friction_force_fixed)
+	if direction.y == 0:
+		#APPLY VERTICAL FRICTION
+		if abs(velocity.y) < friction_force_fixed:
+			velocity.y=0
+		else:
+			velocity.y = sign(velocity.y)*abs(abs(velocity.y)-friction_force_fixed)
+
+#Doesn't work as well
+func player_fixed_move_redo(direction:SGFixedVector2):
+	#var is_diagonal = determine_diagonal_velocity()
+	
+	
+	if not direction.is_equal_approx(fixed_zero):
+		facing = direction.angle()
+		if can_move:
+			velocity.iadd(direction.mul(acceleration_fixed))
+			var vel_norm = MathHelper.get_unit_at_angle(velocity.angle())
+			var max_speed_rotated = vel_norm.mul(max_speed_fixed)
+			if abs(velocity.x)> abs(max_speed_rotated.x):
+				velocity.x=max_speed_rotated.x
+			if abs(velocity.y) > abs(max_speed_rotated.y):
+				velocity.y=max_speed_rotated.y
+			if sign(velocity.x) != sign(direction.x) :
+				print("cut")
+				velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
+			if sign(velocity.y) != sign(direction.y) :
+				print("cut")
+				velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
 	if direction.x == 0:
 		#APPLY HORIZONTAL FRICTION
 		if abs(velocity.x) < friction_force_fixed:
@@ -195,6 +232,13 @@ func player_fixed_move_input(direction:SGFixedVector2):
 func determine_diagonal_velocity() ->bool:		
 	if abs(abs(velocity.x) - abs(velocity.y)) < fixed_diagonal_velocity_difference:
 		return true
+	#var vel_angle = velocity.angle()
+	#if vel_angle > MathHelper.a_180:
+		#vel_angle -=MathHelper.a_180
+	#if vel_angle > MathHelper.a_90:
+		#vel_angle -=MathHelper.a_90
+	#if abs(vel_angle-MathHelper.a_45)<fixed_angle_diff:
+		#return true 
 	else:
 		return false
 	

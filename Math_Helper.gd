@@ -31,7 +31,7 @@ var y_vals = [y_0,y_15,y_30,y_45,y_60,y_75,y_90]
 var a_vals = [a_0,a_15,a_30,a_45,a_60,a_75,a_90]
 
 func get_unit_at_angle(angle:int) ->SGFixedVector2:
-	print ("Getting vector of angle ",angle)
+	#print ("Getting vector of angle ",angle)
 	var x_sign = 1
 	var y_sign = 1
 	var flip = false
@@ -42,17 +42,17 @@ func get_unit_at_angle(angle:int) ->SGFixedVector2:
 		x_sign *=-1
 		y_sign *=-1
 		angle -=a_180
-		print ("Over 180, new angle is ",angle)
+		#print ("Over 180, new angle is ",angle)
 		
 	if angle > a_90:
 		#Negate X, Flip X and Y
 		x_sign*=-1
 		flip = !flip
 		angle -=a_90
-		print ("Over 90, new angle is ",angle)
+		#print ("Over 90, new angle is ",angle)
 		
 	var index = find_closest_angle_index(angle)
-	print ("Found closest angle is ",a_vals[index])
+	#print ("Found closest angle is ",a_vals[index])
 	if flip:
 		return SGFixed.vector2(x_sign*y_vals[index],y_sign*x_vals[index])
 	return SGFixed.vector2(x_sign*x_vals[index],y_sign*y_vals[index])

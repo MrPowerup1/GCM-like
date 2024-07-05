@@ -3,7 +3,7 @@ class_name ControlledArea
 
 
 @export var velocity:Velocity
-
+@export var despawn_when_released:bool
 
 
 func _network_preprocess(input: Dictionary) -> void:
@@ -14,8 +14,10 @@ func _network_process(input: Dictionary) -> void:
 	check_overlaps()
 
 func spawn_specifics():
+	velocity.facing = fixed_rotation
 	caster.get_node("PlayerCharacterInput").velocity=velocity
-	caster.spell_released.connect(spell_released)
+	if despawn_when_released:
+		caster.spell_released.connect(spell_released)
 
 func _network_despawn() ->void:
 	caster.input.reset_velocity_reference()	

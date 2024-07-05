@@ -77,10 +77,14 @@ spell_index = 1
 [node name="Velocity" type="Node" parent="." groups=["network_sync"]]
 unique_name_in_owner = true
 script = ExtResource("9_hac0t")
-stop_input_at_max_vel = true
-max_input_vel = 4.0
-speed = 1.2
-friction = 0.15
+fixed_diagonal_velocity_difference = 65536
+fixed_angle_diff = 1000
+friction_fixed = 65536
+mass_fixed = 65536
+acceleration_fixed = 65536
+cut_accel_fixed = 65536
+max_speed_fixed = 262144
+turning_speed_fixed = 6556
 
 [node name="Health" type="Node" parent="."]
 unique_name_in_owner = true

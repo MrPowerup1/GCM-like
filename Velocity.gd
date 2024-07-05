@@ -2,38 +2,61 @@ extends Node
 class_name Velocity
 
 const fixed_point_factor = 65536
+const diag_factor = 46341
 
 var velocity:SGFixedVector2 = SGFixedVector2.new()
 var facing:int
 var fixed_zero =SGFixed.vector2(0,0)
+#Currently implemented: Player
+enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET}
+@export var movement_style:movement_styles
+@export var change_rotation_with_facing:bool
 @export var body:SGFixedNode2D
-@export var stop_input_at_max_vel:bool
-@export var max_input_vel:float
+#@export var stop_input_at_max_vel:bool
+#@export var max_input_vel:float
+@export var fixed_diagonal_velocity_difference:int
+#Unused
+@export var fixed_angle_diff:int
 const fixed_zero_range:int = 32
-var max_input_vel_fixed_squared:int
-
-@export_range(0.5,5) var speed:float
-var speed_fixed:int
-var default_speed:float
-@export_range(0,1) var friction:float
-var friction_fixed:int
-var default_friction:float
-@export var mass:float = 1
-var mass_fixed:int
-var default_mass:float
+#var max_input_vel_fixed_squared:int
 var can_move:bool=true
+
+@export_category("Player Style Movement")
+
+@export var friction_fixed:int
+var default_friction:int
+
+@export var mass_fixed:int
+var default_mass:int
+
+@export var acceleration_fixed:int
+var default_acceleration:int
+
+@export var cut_accel_fixed:int
+var default_cut_accel:int
+
+@export var max_speed_fixed:int
+var default_max_speed:int
+
+@export_category("Tank Style Movement")
+
+var speed_fixed:int
+
+@export var turning_speed_fixed:int
+var default_turning_speed:int
 
 var anchored_pos:SGFixedVector2
 
 func _ready():
 	velocity.from_float(Vector2.ZERO)
-	speed_fixed=speed*fixed_point_factor
-	friction_fixed=friction*fixed_point_factor
-	mass_fixed=mass*fixed_point_factor
-	default_speed=speed
-	default_friction=friction
-	default_mass=mass
-	max_input_vel_fixed_squared=max_input_vel*max_input_vel*fixed_point_factor
+	#TODO: All of this needs to go, no float multiplication
+	default_friction=friction_fixed
+	default_mass=mass_fixed
+	default_turning_speed=turning_speed_fixed
+	default_acceleration=acceleration_fixed
+	default_cut_accel=cut_accel_fixed
+	default_max_speed=max_speed_fixed
+	#max_input_vel_fixed_squared=max_input_vel*max_input_vel*fixed_point_factor
 	if body==null:
 		body=get_parent()
 func pulse_to(direction,strength: float):
@@ -78,40 +101,132 @@ func pulse_from(direction,strength: float):
 	#print("Post pulse",velocity.to_float())
 
 func move_input(direction:SGFixedVector2):
+	#if movement_style == movement_styles.PLAYER:
+		#player_move_input(direction)
+	if movement_style == movement_styles.TANK:
+		tank_move_input(direction)
+	if movement_style == movement_styles.PLAYER:
+		player_fixed_move_input(direction)
+	
+func tank_move_input(direction:SGFixedVector2):
+	facing += direction.x*turning_speed_fixed/fixed_point_factor
+	if can_move:
+		speed_fixed-=direction.y*acceleration_fixed
+		if speed_fixed < 0:
+			speed_fixed=0
+		if speed_fixed > max_speed_fixed:
+			speed_fixed=max_speed_fixed
+		#var add_to_vel = SGFixed.vector2(speed_fixed,0).rotated(facing)
+		var add_to_vel = MathHelper.get_unit_at_angle(facing).mul(speed_fixed)
+		velocity.iadd(add_to_vel)
+	if direction.is_equal_approx(fixed_zero):
+		speed_fixed-=sign(speed_fixed)*friction_fixed
+
+func player_fixed_move_input(direction:SGFixedVector2):
+	var is_diagonal = determine_diagonal_velocity()
 	if not direction.is_equal_approx(fixed_zero):
 		facing = direction.angle()
-	if can_move and direction!=null:
-		var add_to_vel = direction
-		add_to_vel.imul(speed_fixed/mass_fixed*fixed_point_factor)
-		if !stop_input_at_max_vel:
-			velocity.iadd(add_to_vel)
-		elif stop_input_at_max_vel and velocity.length_squared()<max_input_vel_fixed_squared:
-			velocity.iadd(add_to_vel)
-	else:
-		pass
+		if can_move:
+			var max_speed_to_use = max_speed_fixed
+			if is_diagonal:
+				print("diagonal")
+				max_speed_to_use = SGFixed.mul(max_speed_fixed,diag_factor)
+			if direction.x!=0:
+				if abs(velocity.x + SGFixed.mul(acceleration_fixed,direction.x)) < max_speed_to_use:
+					velocity.x+=SGFixed.mul(acceleration_fixed,direction.x)
+					#If changing direction, apply extra velocity
+					if sign(velocity.x) != sign(direction.x) :
+						print("cut")
+						velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
+				else:
+					velocity.x=sign(velocity.x)*max_speed_to_use
+			if direction.y!=0:
+				if abs(velocity.y + SGFixed.mul(acceleration_fixed,direction.y)) < max_speed_to_use:
+					velocity.y+=SGFixed.mul(acceleration_fixed,direction.y)
+					#If changing direction, apply extra velocity
+					if sign(velocity.y) != sign(direction.y) :
+						print("cut")
+						velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
+				else:
+					velocity.y=sign(velocity.y)*max_speed_to_use
+	if direction.x == 0:
+		#APPLY HORIZONTAL FRICTION
+		if abs(velocity.x) < friction_fixed:
+			velocity.x=0
+		else:
+			velocity.x = sign(velocity.x)*abs(abs(velocity.x)-friction_fixed)
+	if direction.y == 0:
+		#APPLY VERTICAL FRICTION
+		if abs(velocity.y) < friction_fixed:
+			velocity.y=0
+		else:
+			velocity.y = sign(velocity.y)*abs(abs(velocity.y)-friction_fixed)
 
+#Doesn't work as well
+func player_fixed_move_redo(direction:SGFixedVector2):
+	#var is_diagonal = determine_diagonal_velocity()
+	
+	
+	if not direction.is_equal_approx(fixed_zero):
+		facing = direction.angle()
+		if can_move:
+			velocity.iadd(direction.mul(acceleration_fixed))
+			var vel_norm = MathHelper.get_unit_at_angle(velocity.angle())
+			var max_speed_rotated = vel_norm.mul(max_speed_fixed)
+			if abs(velocity.x)> abs(max_speed_rotated.x):
+				velocity.x=max_speed_rotated.x
+			if abs(velocity.y) > abs(max_speed_rotated.y):
+				velocity.y=max_speed_rotated.y
+			if sign(velocity.x) != sign(direction.x) :
+				print("cut")
+				velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
+			if sign(velocity.y) != sign(direction.y) :
+				print("cut")
+				velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
+	if direction.x == 0:
+		#APPLY HORIZONTAL FRICTION
+		if abs(velocity.x) < friction_fixed:
+			velocity.x=0
+		else:
+			velocity.x = sign(velocity.x)*abs(abs(velocity.x)-friction_fixed)
+	if direction.y == 0:
+		#APPLY VERTICAL FRICTION
+		if abs(velocity.y) < friction_fixed:
+			velocity.y=0
+		else:
+			velocity.y = sign(velocity.y)*abs(abs(velocity.y)-friction_fixed)
+
+func determine_diagonal_velocity() ->bool:		
+	if abs(abs(velocity.x) - abs(velocity.y)) < fixed_diagonal_velocity_difference:
+		return true
+	#var vel_angle = velocity.angle()
+	#if vel_angle > MathHelper.a_180:
+		#vel_angle -=MathHelper.a_180
+	#if vel_angle > MathHelper.a_90:
+		#vel_angle -=MathHelper.a_90
+	#if abs(vel_angle-MathHelper.a_45)<fixed_angle_diff:
+		#return true 
+	else:
+		return false
+	
 func constant_vel(angle:int):
-	friction=0
-	friction_fixed=friction*fixed_point_factor
-	velocity = SGFixed.vector2(fixed_point_factor,0).rotated(angle).mul(speed_fixed)
+	#velocity = SGFixed.vector2(fixed_point_factor,0).rotated(angle).mul(speed_fixed)
+	velocity = MathHelper.get_unit_at_angle(angle).mul(speed_fixed)
 
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor
 	velocity.from_float(Vector2.ZERO)
 	anchored_pos=body.fixed_position
 
-func set_speed(speed_factor:float=1.00):
-	speed=default_speed*speed_factor
-	speed_fixed=speed*fixed_point_factor
+func set_speed(speed_factor:int=65536):
+	max_speed_fixed = SGFixed.mul(speed_factor,default_max_speed)
 	
 
-func set_friction(friction_factor:float=1.00):
-	friction=default_friction*friction_factor
-	friction_fixed = friction*fixed_point_factor
+func set_friction(friction_factor:int=65536):
+	friction_fixed = SGFixed.mul(friction_factor,default_friction)
 
-func set_mass(new_mass:float=default_mass):
-	mass=new_mass
-	mass_fixed=mass*fixed_point_factor
+func set_mass(mass_factor:int=65536):
+	mass_fixed = SGFixed.mul(mass_factor,default_mass)
 
 func reset_stats():
 	anchor()
@@ -123,8 +238,6 @@ func reset_stats():
 func _physics_process(delta):
 	pass
 func update_pos():
-	# Velocity*= (1-friction)
-	velocity.imul(fixed_point_factor-friction_fixed)
 	# Set velocity to 0 if its close
 	if abs(velocity.x)<fixed_zero_range:
 		velocity.x=0
@@ -143,6 +256,8 @@ func update_pos():
 	if can_move==false:
 		body.fixed_position= SGFixed.vector2(lerp(body.fixed_position_x,anchored_pos.x,0.5),lerp(body.fixed_position_y,anchored_pos.y,0.5))
 		pass
+	if change_rotation_with_facing:
+		body.fixed_rotation = facing
 
 func _save_state() ->Dictionary:
 	return {

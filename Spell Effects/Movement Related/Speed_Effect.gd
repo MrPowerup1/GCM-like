@@ -3,9 +3,9 @@ class_name Speed_Effect
 
 @export var set_speed:bool
 @export var set_friction:bool
-@export_category("Multiply by these numbers (ie 1 is base speed)")
-@export var speed_factor:float
-@export var friction_factor:float
+@export_category("FIXED POINT: 65536 is base speed")
+@export var speed_factor:int
+@export var friction_factor:int
 
 #@export var reset_speed:bool
 #@export var reset_friction:bool

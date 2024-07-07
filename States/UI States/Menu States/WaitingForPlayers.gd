@@ -13,3 +13,7 @@ func _on_client_start():
 
 func _on_client_peer_joined():
 	%NumPlayers.text=str(GameManager.peers.size())
+
+
+func _on_back_2_button_down():
+	Transition.emit(self,"OnlineMatchmaking")

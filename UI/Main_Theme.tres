@@ -1,9 +1,20 @@
-[gd_resource type="Theme" load_steps=18 format=3 uid="uid://bspowubtcgf6b"]
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://bspowubtcgf6b"]
 
 [ext_resource type="FontFile" uid="uid://dxyf6qblynmf5" path="res://minecraft-font/MinecraftRegular-Bmg3.otf" id="1_mqobe"]
 [ext_resource type="Texture2D" uid="uid://bcaqscfm6rmmy" path="res://Art/Borders.png" id="2_87rcu"]
 [ext_resource type="Texture2D" uid="uid://c8yhmloay15ws" path="res://Art/Borders_dark.png" id="3_tnna5"]
 [ext_resource type="Texture2D" uid="uid://caw8icl8kqw4e" path="res://Art/scroll_try.png" id="4_47qgu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h4u5"]
+bg_color = Color(0.393086, 0.393086, 0.393085, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r71x1"]
+bg_color = Color(0.821789, 0.821789, 0.821788, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ejdk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0jfi6"]
+bg_color = Color(0.564962, 0.564962, 0.564961, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvhgh"]
 bg_color = Color(0.262745, 0.266667, 0.247059, 1)
@@ -65,7 +76,14 @@ texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
 [resource]
-Button/font_sizes/font_size = 8
+BackButton/base_type = &"Button"
+BackButton/font_sizes/font_size = 20
+BackButton/styles/disabled = SubResource("StyleBoxFlat_1h4u5")
+BackButton/styles/focus = SubResource("StyleBoxFlat_r71x1")
+BackButton/styles/hover = SubResource("StyleBoxFlat_r71x1")
+BackButton/styles/normal = SubResource("StyleBoxFlat_6ejdk")
+BackButton/styles/pressed = SubResource("StyleBoxFlat_0jfi6")
+Button/font_sizes/font_size = 30
 Button/fonts/font = ExtResource("1_mqobe")
 Button/styles/disabled = SubResource("StyleBoxFlat_kvhgh")
 Button/styles/focus = SubResource("StyleBoxFlat_w3jra")

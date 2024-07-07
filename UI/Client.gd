@@ -25,7 +25,7 @@ signal start
 signal wait_for_peers
 signal peer_joined
 signal new_lobby_id(new_id:String)
-
+signal loading_lobby(state:bool)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -66,13 +66,16 @@ func _process(delta):
 			if data.message == Message.userConnected:
 				#GameManager.Players[data.id] = data.player
 				createPeer(data.id)
-				
-				
+			if data.message == Message.userDisconnected:	
+				#TODO: implement quitting
+				pass
+			
 			if data.message == Message.lobby:
 				GameManager.peers = JSON.parse_string(data.players)
 				hostId = data.host
 				lobbyValue = data.lobbyValue
-				wait_for_peers.emit()
+				#wait_for_peers.emit()
+				loading_lobby.emit(false)
 				new_lobby_id.emit(lobbyValue)
 				
 			if data.message == Message.candidate:
@@ -168,12 +171,8 @@ func connectToServer(ip):
 	peer.create_client("ws://127.0.0.1:8915")
 	print("started client")
 
-func _on_start_client_button_down():
-	connectToServer("")
-	pass # Replace with function body.
 
-
-func _on_button_button_down():
+func _on_start_round_button_down():
 	StartGame.rpc()
 	pass # Replace with function body.
 
@@ -187,6 +186,12 @@ func StartGame():
 	start.emit()
 
 func _on_join_lobby_button_down():
+	join_lobby()
+	
+func join_lobby():
+	loading_lobby.emit(true)
+	connectToServer("")
+	await get_tree().create_timer(0.5).timeout
 	var message ={
 		"id" : id,
 		"message" : Message.lobby,
@@ -198,6 +203,4 @@ func _on_join_lobby_button_down():
 	if %IP.text == "":
 		GameManager.is_host=true
 	pass # Replace with function body.
-	
-
 

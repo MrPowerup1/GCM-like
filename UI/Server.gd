@@ -127,7 +127,8 @@ func startServer():
 
 func _on_start_server_button_down():
 	startServer()
-	pass # Replace with function body.
+	await get_tree().create_timer(0.1).timeout
+	%Client.join_lobby()
 	
 
 func _on_button_button_down():

@@ -47,7 +47,10 @@ func _process(delta):
 				sendToPlayer(data.peer, data)
 				
 			if data.message == Message.removeLobby:
+				print("Remove lobby")
 				if lobbies.has(data.lobbyID):
+					for peer in lobbies[data.lobbyID].Players:
+						peer_disconnected(data.id)
 					lobbies.erase(data.lobbyID)
 	pass
 
@@ -61,8 +64,13 @@ func peer_connected(id):
 	pass
 	
 func peer_disconnected(id):
+	print("Peer disconnected from server with id ",id)
 	users.erase(id)
-	pass
+	var disconnected = {
+		"id" : id,
+		"message" : Message.userDisconnected
+	}
+	peer.get_peer(id).put_packet(JSON.stringify(disconnected).to_utf8_buffer())
 
 
 func JoinLobby(user):

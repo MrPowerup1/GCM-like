@@ -19,3 +19,7 @@ func exit():
 func physics_process(delta:float):
 	if GameManager.alive_players.size() == 1:
 		Transition.emit(self,"EndScreen")
+
+func _on_client_peer_disconnect(id):
+	%"User ID".text = str(id)
+	Transition.emit(self,"UserDisconnect")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://gml8gorru1ib"]
+[gd_scene load_steps=27 format=3 uid="uid://gml8gorru1ib"]
 
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Player Join.gd" id="5_p0knl"]
 [ext_resource type="Script" path="res://UI/FailedToLoad.gd" id="6_40bju"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/PlayerSelect.gd" id="6_wkgiu"]
+[ext_resource type="Script" path="res://UI/UserDisconnect.gd" id="7_5xc32"]
 [ext_resource type="Script" path="res://UI/Client.gd" id="7_mwm4a"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/RoundStarting.gd" id="7_ooc61"]
 [ext_resource type="Script" path="res://UI/Server.gd" id="8_ju531"]
@@ -52,6 +53,9 @@ one_shot = true
 
 [node name="FailedToLoad" type="Node" parent="StateManager"]
 script = ExtResource("6_40bju")
+
+[node name="UserDisconnect" type="Node" parent="StateManager"]
+script = ExtResource("7_5xc32")
 
 [node name="WaitingForPlayers" type="Node" parent="StateManager"]
 script = ExtResource("5_aqwv2")
@@ -365,6 +369,58 @@ theme_type_variation = &"BackButton"
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
+[node name="UserDisconnect" type="MarginContainer" parent="SelectionUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="SelectionUI/UserDisconnect"]
+layout_mode = 2
+theme_type_variation = &"Panel2"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SelectionUI/UserDisconnect/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Failed" type="Label" parent="SelectionUI/UserDisconnect/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "User Disconnected
+"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/UserDisconnect/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="ID" type="Label" parent="SelectionUI/UserDisconnect/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 30
+text = "ID: 
+"
+vertical_alignment = 1
+
+[node name="User ID" type="Label" parent="SelectionUI/UserDisconnect/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 5.0
+theme_override_font_sizes/font_size = 30
+text = "TEST1234
+"
+vertical_alignment = 1
+
+[node name="Back3" type="Button" parent="SelectionUI/UserDisconnect/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
 [node name="EndGamePanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -425,6 +481,9 @@ text = "End
 [connection signal="loading_lobby" from="Client" to="StateManager/OnlineMatchmaking" method="_on_client_loading_lobby"]
 [connection signal="loading_lobby" from="Client" to="StateManager/Loading" method="_on_client_loading_lobby"]
 [connection signal="new_lobby_id" from="Client" to="." method="update_lobby_id"]
+[connection signal="peer_disconnect" from="Client" to="StateManager/PlayerSelect" method="_on_client_peer_disconnect"]
+[connection signal="peer_disconnect" from="Client" to="StateManager/RoundStarting" method="_on_client_peer_disconnect"]
+[connection signal="peer_disconnect" from="Client" to="StateManager/RoundInProgress" method="_on_client_peer_disconnect"]
 [connection signal="peer_joined" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_peer_joined"]
 [connection signal="start" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_start"]
 [connection signal="wait_for_peers" from="Client" to="StateManager/OnlineMatchmaking" method="_on_client_wait_for_peers"]
@@ -444,5 +503,6 @@ text = "End
 [connection signal="start_round" from="SelectionUI/Player Select Menu/StartGamePanel" to="StateManager/RoundStarting" method="_on_start_game_panel_start_round"]
 [connection signal="button_down" from="SelectionUI/Player Select Menu/Back2" to="StateManager/PlayerSelect" method="_on_back_2_button_down"]
 [connection signal="button_down" from="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer/Back3" to="StateManager/FailedToLoad" method="_on_back_3_button_down"]
+[connection signal="button_down" from="SelectionUI/UserDisconnect/PanelContainer/VBoxContainer/Back3" to="StateManager/UserDisconnect" method="_on_back_3_button_down"]
 [connection signal="button_down" from="EndGamePanel/MarginContainer/VBoxContainer/HBoxContainer/Restart" to="StateManager/EndScreen" method="_on_restart_button_down"]
 [connection signal="button_down" from="EndGamePanel/MarginContainer/VBoxContainer/HBoxContainer/End" to="StateManager/EndScreen" method="_on_end_button_down"]

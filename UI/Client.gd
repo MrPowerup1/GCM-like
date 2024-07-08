@@ -11,7 +11,7 @@ enum Message{
 	answer,
 	checkIn,
 	serverLobbyInfo,
-	removeLobby 
+	removeLobby
 }
 
 var peer = WebSocketMultiplayerPeer.new()
@@ -27,6 +27,7 @@ signal peer_joined
 signal new_lobby_id(new_id:String)
 signal loading_lobby(state:bool)
 signal failed_to_load_lobby(lobby_id:String)
+signal peer_disconnect(id:String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -47,6 +48,7 @@ func RTCPeerConnected(id):
 	
 func RTCPeerDisconnected(id):
 	print("rtc peer disconnected " + str(id))
+	peer_disconnect.emit(id)
 	SyncManager.remove_peer(id)
 
 
@@ -61,15 +63,14 @@ func _process(delta):
 			
 			if data.message == Message.id:
 				id = data.id
-				
 				connected(id)
 				
 			if data.message == Message.userConnected:
 				#GameManager.Players[data.id] = data.player
+				print("User connected")
 				createPeer(data.id)
 			
 			if data.message == Message.userDisconnected:	
-				#TODO: implement quitting
 				pass
 			
 			if data.message == Message.lobby:
@@ -101,6 +102,7 @@ func _process(delta):
 	pass
 
 func connected(id):
+	print("New ID, webrtc")
 	rtcPeer.create_mesh(id)
 	multiplayer.multiplayer_peer = rtcPeer
 
@@ -116,7 +118,6 @@ func createPeer(id):
 		peer.session_description_created.connect(self.offerCreated.bind(id))
 		peer.ice_candidate_created.connect(self.iceCandidateCreated.bind(id))
 		rtcPeer.add_peer(peer, id)
-		
 		if !hostId == self.id:
 			peer.create_offer()
 		
@@ -207,5 +208,22 @@ func join_lobby():
 	#TODO: Consider... What if failed to create lobby?
 	if %IP.text == "":
 		GameManager.is_host=true
-	pass # Replace with function body.
+	pass # Replace with function body.	
 
+func leave_lobby():
+	
+	#var message ={
+		#"id" : id,
+		#"message" : Message.removeLobby,
+		#"lobbyValue" : lobbyValue
+	#}
+	#peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	#await get_tree().create_timer(0.5).timeout
+	print("Disconnected peer with id: ",id)
+	#multiplayer.disconnect_peer(id)
+	var peers = rtcPeer.get_peers()
+	for peer in peers:
+		rtcPeer.remove_peer(peer)
+	
+	
+	

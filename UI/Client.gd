@@ -26,6 +26,7 @@ signal wait_for_peers
 signal peer_joined
 signal new_lobby_id(new_id:String)
 signal loading_lobby(state:bool)
+signal failed_to_load_lobby(lobby_id:String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -66,17 +67,21 @@ func _process(delta):
 			if data.message == Message.userConnected:
 				#GameManager.Players[data.id] = data.player
 				createPeer(data.id)
+			
 			if data.message == Message.userDisconnected:	
 				#TODO: implement quitting
 				pass
 			
 			if data.message == Message.lobby:
-				GameManager.peers = JSON.parse_string(data.players)
-				hostId = data.host
-				lobbyValue = data.lobbyValue
-				#wait_for_peers.emit()
-				loading_lobby.emit(false)
-				new_lobby_id.emit(lobbyValue)
+				if data.isValid:
+					GameManager.peers = JSON.parse_string(data.players)
+					hostId = data.host
+					lobbyValue = data.lobbyValue
+					#wait_for_peers.emit()
+					loading_lobby.emit(false)
+					new_lobby_id.emit(lobbyValue)
+				else:
+					failed_to_load_lobby.emit(data.lobbyValue)
 				
 			if data.message == Message.candidate:
 				if rtcPeer.has_peer(data.orgPeer):

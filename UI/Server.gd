@@ -72,31 +72,37 @@ func JoinLobby(user):
 		lobbies[user.lobbyValue] = Lobby.new(user.id)
 		#print(user.lobbyValue)
 	if !lobbies.has(user.lobbyValue):
+		var failed_to_join_lobby_message = {
+			"message" : Message.lobby,
+			"isValid":false,
+			"id" : user.id,
+			"lobbyValue" : user.lobbyValue
+		}
+		sendToPlayer(user.id,failed_to_join_lobby_message)
 		return
 	lobbies[user.lobbyValue].AddPlayer(user.id, user.name)
 	for p in lobbies[user.lobbyValue].Players:
 		
-		var data = {
+		var new_player_data = {
 			"message" : Message.userConnected,
 			"id" : user.id
 		}
-		sendToPlayer(p, data)
+		sendToPlayer(p, new_player_data)
 		
-		var data2 = {
+		var other_player_data = {
 			"message" : Message.userConnected,
 			"id" : p
 		}
-		sendToPlayer(user.id, data2)
+		sendToPlayer(user.id, other_player_data)
 		
 		var lobbyInfo = {
 			"message" : Message.lobby,
+			"isValid": true,
 			"players" : JSON.stringify(lobbies[user.lobbyValue].Players),
 			"host" : lobbies[user.lobbyValue].HostID,
 			"lobbyValue" : user.lobbyValue
 		}
 		sendToPlayer(p, lobbyInfo)
-		
-		
 	
 	var data = {
 		"message" : Message.userConnected,

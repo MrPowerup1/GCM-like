@@ -18,4 +18,4 @@ func _on_player_select_screen_players_ready():
 
 #TODO: Only local disconnect for now
 func _on_back_2_button_down():
-	Transition.emit(self,"OnlineMatchmaking")
+	Transition.emit(self,"LocalOrOnline")

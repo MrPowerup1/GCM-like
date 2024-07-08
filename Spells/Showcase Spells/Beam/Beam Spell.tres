@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=20 format=3 uid="uid://ksudpbtmc2pk"]
+
+[ext_resource type="PackedScene" uid="uid://cmr36cxa7lt8n" path="res://Spells/Showcase Spells/Beam/Beam Scene.tscn" id="1_80oiu"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_fki4b"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="2_xgf05"]
+[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="3_cct3m"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="4_kjybn"]
+[ext_resource type="Script" path="res://Spell Effects/Release_Effect.gd" id="5_452j6"]
+[ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="6_8q4v2"]
+[ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="7_cypjf"]
+[ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="8_ya72i"]
+[ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="9_gvbpd"]
+
+[sub_resource type="Resource" id="Resource_ngex5"]
+script = ExtResource("2_xgf05")
+area_scene = ExtResource("1_80oiu")
+
+[sub_resource type="Resource" id="Resource_eakul"]
+script = ExtResource("3_cct3m")
+offset_x = 5
+offset_y = 0
+effect = SubResource("Resource_ngex5")
+
+[sub_resource type="Resource" id="Resource_0y6vu"]
+script = ExtResource("4_kjybn")
+set_anchor_to = true
+
+[sub_resource type="Resource" id="Resource_5x8e8"]
+script = ExtResource("4_kjybn")
+set_anchor_to = false
+
+[sub_resource type="Resource" id="Resource_j8uej"]
+script = ExtResource("5_452j6")
+release_state = false
+
+[sub_resource type="Resource" id="Resource_848x2"]
+script = ExtResource("5_452j6")
+release_state = true
+
+[sub_resource type="Resource" id="Resource_yrn5i"]
+script = ExtResource("8_ya72i")
+
+[sub_resource type="Resource" id="Resource_m2ema"]
+script = ExtResource("7_cypjf")
+spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_848x2"), SubResource("Resource_yrn5i")])
+
+[sub_resource type="Resource" id="Resource_s3bki"]
+script = ExtResource("9_gvbpd")
+delay_time = 120
+effect = SubResource("Resource_m2ema")
+delayed_cast_instance = ExtResource("6_8q4v2")
+
+[resource]
+script = ExtResource("1_fki4b")
+timings = Array[int]([0, 0, 2, 0, 0])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_eakul"), SubResource("Resource_0y6vu"), SubResource("Resource_5x8e8"), SubResource("Resource_j8uej"), SubResource("Resource_s3bki")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = false
+cooldown_on_release = true
+cooldown_time = 30

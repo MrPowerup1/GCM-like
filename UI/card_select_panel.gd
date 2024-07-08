@@ -97,8 +97,8 @@ func transition_display_mode(new_mode:display_mode):
 		%RightButton.visible=true
 		%RightCard.visible=true
 		%CenterCard.set_display_style(CardDisplay.DisplayStyle.ZOOMED)
-		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
+		%LeftCard.set_display_style(CardDisplay.DisplayStyle.TINY)
+		%RightCard.set_display_style(CardDisplay.DisplayStyle.TINY)
 	current_mode=new_mode
 
 

@@ -2,7 +2,7 @@ extends PanelContainer
 class_name CardDisplay
 
 @export var card:Card
-enum DisplayStyle {ZOOMED,ICON,STANDARD}
+enum DisplayStyle {ZOOMED,ICON,STANDARD,TINY}
 @export var current_style:DisplayStyle
 #var image_ref:TextureRect
 
@@ -44,6 +44,10 @@ func set_display_style(new_style:DisplayStyle):
 		%Image.visible=true
 	if new_style==DisplayStyle.STANDARD:
 		%CardName.visible=true
+		%Description.visible=false
+		%Image.visible=true
+	if new_style==DisplayStyle.TINY:
+		%CardName.visible=false
 		%Description.visible=false
 		%Image.visible=true
 	current_style=new_style

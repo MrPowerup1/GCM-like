@@ -279,6 +279,7 @@ layout_mode = 2
 
 [node name="PlayerSelectScreen" type="GridContainer" parent="SelectionUI/Player Select Menu"]
 unique_name_in_owner = true
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=4 format=3 uid="uid://diuoq0f2mqxy3"]
+
+[ext_resource type="Texture2D" uid="uid://bjpsx6riw2i6n" path="res://Spells/Showcase Spells/Melee/Melee Icon.png" id="1_s78dd"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="2_11yhq"]
+[ext_resource type="Resource" uid="uid://d28tjd0rf37cu" path="res://Spells/Showcase Spells/Melee/Melee Spell.tres" id="3_t4udh"]
+
+[resource]
+script = ExtResource("2_11yhq")
+spell = ExtResource("3_t4udh")
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0
+randomizer = false
+name = "Melee"
+image = ExtResource("1_s78dd")
+description = "Hit em with a right hook"
+context = 0

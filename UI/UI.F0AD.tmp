@@ -42,9 +42,8 @@ script = ExtResource("3_46e2s")
 [node name="OnlineMatchmaking" type="Node" parent="StateManager"]
 script = ExtResource("4_2rc4e")
 
-[node name="Loading" type="Node" parent="StateManager" node_paths=PackedStringArray("timer")]
+[node name="Loading" type="Node" parent="StateManager"]
 script = ExtResource("5_lvl80")
-timer = NodePath("MaxLoadTime")
 
 [node name="MaxLoadTime" type="Timer" parent="StateManager/Loading"]
 wait_time = 2.0

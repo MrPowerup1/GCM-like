@@ -1,6 +1,8 @@
 extends State
 class_name WaitingForPlayers
 
+
+
 func enter():
 	%"Waiting For Connect".visible=true
 	

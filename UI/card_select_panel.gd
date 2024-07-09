@@ -31,10 +31,12 @@ signal next()
 
 @rpc("any_peer","call_local")
 func left():
-	new_cards(cards.next_cards(left_card))
+	if current_mode != display_mode.ZOOMED:
+		new_cards(cards.next_cards(left_card))
 @rpc("any_peer","call_local")
 func right():
-	new_cards(cards.next_cards(right_card))
+	if current_mode != display_mode.ZOOMED:
+		new_cards(cards.next_cards(right_card))
 @rpc("any_peer","call_local")
 func up():
 	pass
@@ -45,15 +47,20 @@ func down():
 func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
-	if cards.select(center_card):
+	if current_mode == display_mode.ZOOMED and cards.select(center_card):
 		center_card.select(player_index)
 		new_cards(cards.next_cards(center_card))
 		next.emit()
+	if current_mode == display_mode.SELECTING:
+		transition_display_mode(display_mode.ZOOMED)
 	else:
 		pass
 @rpc("any_peer","call_local")
 func back():
-	exit.emit()
+	if current_mode != display_mode.ZOOMED:
+		exit.emit()
+	else:
+		transition_display_mode(display_mode.SELECTING)
 
 @rpc("any_peer","call_local")
 func unselect():
@@ -128,4 +135,8 @@ func _on_select_button_button_down():
 
 
 func _on_center_card_new_name(name):
-	%Name.text = name
+	if name == "":
+		%NameBox.visible = false
+	else:
+		%NameBox.visible = true
+		%Name.text = name

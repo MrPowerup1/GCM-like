@@ -28,7 +28,7 @@ func set_cardname(new_name:String):
 	newName.emit(new_name)
 
 func set_description(description:String):
-	%ShortDescription.text=description
+	%Description.text=description
 
 func set_image(image:Texture2D):
 	%Image.texture=image	
@@ -41,23 +41,28 @@ func set_shader_replacement_color(new_color:Color):
 
 func set_display_style(new_style:DisplayStyle):
 	if new_style==DisplayStyle.ICON:
-		%CardName.visible=false
-		%ShortDescription.visible=false
+		%CardName.visible=true
+		%DescriptionBox.visible=false
 		%Image.visible=true
 		%Image.custom_minimum_size = Vector2.ONE*zoom_pixels
+		set_theme_type("")
 	if new_style==DisplayStyle.ZOOMED:
 		%CardName.visible=true
-		%ShortDescription.visible=true
-		%Image.visible=true
-		%Image.custom_minimum_size = Vector2.ONE*zoom_pixels
-	if new_style==DisplayStyle.STANDARD:
-		%CardName.visible=false
-		%ShortDescription.visible=false
+		%DescriptionBox.visible=true
 		%Image.visible=true
 		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
+		newName.emit("")
+		set_theme_type("SpellPanel")
+	if new_style==DisplayStyle.STANDARD:
+		%CardName.visible=false
+		%DescriptionBox.visible=false
+		%Image.visible=true
+		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
+		set_theme_type("")
 	if new_style==DisplayStyle.TINY:
 		%CardName.visible=false
-		%ShortDescription.visible=false
+		%DescriptionBox.visible=false
 		%Image.visible=true
 		%Image.custom_minimum_size = Vector2.ONE*tiny_pixels
+		set_theme_type("")
 	current_style=new_style

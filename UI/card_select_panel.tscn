@@ -37,14 +37,32 @@ libraries = {
 "": SubResource("AnimationLibrary_j2eua")
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Name" type="Label" parent="VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "Wizard Man
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="LeftButton" type="TextureButton" parent="HBoxContainer2"]
+[node name="LeftButton" type="TextureButton" parent="VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -55,29 +73,19 @@ texture_hover = ExtResource("3_l8cuu")
 texture_disabled = ExtResource("2_t5tpp")
 texture_focused = ExtResource("3_l8cuu")
 
-[node name="LeftCard" parent="HBoxContainer2" instance=ExtResource("4_rjlbt")]
+[node name="LeftCard" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("4_rjlbt")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
-layout_mode = 2
-
-[node name="CenterCard" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("4_rjlbt")]
+[node name="CenterCard" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("4_rjlbt")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SelectButton" type="Button" parent="HBoxContainer2/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "BLAGOHAOEHGOE
-"
-
-[node name="RightCard" parent="HBoxContainer2" instance=ExtResource("4_rjlbt")]
+[node name="RightCard" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("4_rjlbt")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RightButton" type="TextureButton" parent="HBoxContainer2"]
+[node name="RightButton" type="TextureButton" parent="VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -88,6 +96,17 @@ texture_hover = ExtResource("6_yho8c")
 texture_disabled = ExtResource("5_utu6a")
 texture_focused = ExtResource("6_yho8c")
 
-[connection signal="button_down" from="HBoxContainer2/LeftButton" to="." method="_on_left_button_button_down"]
-[connection signal="button_down" from="HBoxContainer2/VBoxContainer/SelectButton" to="." method="_on_select_button_button_down"]
-[connection signal="button_down" from="HBoxContainer2/RightButton" to="." method="_on_right_button_button_down"]
+[node name="SelectButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "Select
+"
+
+[connection signal="button_down" from="VBoxContainer/HBoxContainer2/LeftButton" to="." method="_on_left_button_button_down"]
+[connection signal="newName" from="VBoxContainer/HBoxContainer2/CenterCard" to="." method="_on_center_card_new_name"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer2/RightButton" to="." method="_on_right_button_button_down"]
+[connection signal="button_down" from="VBoxContainer/SelectButton" to="." method="_on_select_button_button_down"]

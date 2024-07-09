@@ -125,3 +125,7 @@ func _on_right_button_button_down():
 func _on_select_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
 		select()
+
+
+func _on_center_card_new_name(name):
+	%Name.text = name

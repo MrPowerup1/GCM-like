@@ -117,7 +117,7 @@ libraries = {
 }
 script = ExtResource("10_mu5hr")
 
-[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body")]
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
 script = ExtResource("11_23dro")
 movement_style = 2
 change_rotation_with_facing = true

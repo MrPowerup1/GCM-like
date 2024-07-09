@@ -93,7 +93,7 @@ libraries = {
 }
 script = ExtResource("7_0ygld")
 
-[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body")]
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
 script = ExtResource("8_v7mj2")
 body = NodePath("..")
 fixed_diagonal_velocity_difference = 1000

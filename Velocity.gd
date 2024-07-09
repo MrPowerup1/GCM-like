@@ -108,6 +108,7 @@ func move_input(direction:SGFixedVector2):
 	if movement_style == movement_styles.PLAYER:
 		player_fixed_move_input(direction)
 	
+	
 func tank_move_input(direction:SGFixedVector2):
 	facing += direction.x*turning_speed_fixed/fixed_point_factor
 	if can_move:

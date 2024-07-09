@@ -7,7 +7,7 @@ class_name CardSelectPanel
 @export var right_card:Card
 @export var center_display:CardDisplay
 @export var player_index:int
-enum display_mode {SELECTED,SELECTING}
+enum display_mode {SELECTED,SELECTING,ZOOMED}
 var current_mode:display_mode
 
 
@@ -96,9 +96,19 @@ func transition_display_mode(new_mode:display_mode):
 		%SelectButton.visible=true
 		%RightButton.visible=true
 		%RightCard.visible=true
-		%CenterCard.set_display_style(CardDisplay.DisplayStyle.ZOOMED)
+		%CenterCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 		%LeftCard.set_display_style(CardDisplay.DisplayStyle.TINY)
 		%RightCard.set_display_style(CardDisplay.DisplayStyle.TINY)
+	if new_mode==display_mode.ZOOMED:
+		visible=true
+		%LeftButton.visible=false
+		%LeftCard.visible=false
+		%SelectButton.visible=true
+		%RightButton.visible=false
+		%RightCard.visible=false
+		%CenterCard.set_display_style(CardDisplay.DisplayStyle.ZOOMED)
+		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
+		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 	current_mode=new_mode
 
 

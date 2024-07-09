@@ -22,7 +22,7 @@ func set_cardname(new_name:String):
 	%CardName.text=new_name
 
 func set_description(description:String):
-	%Description.text=description
+	%ShortDescription.text=description
 
 func set_image(image:Texture2D):
 	%Image.texture=image	
@@ -36,18 +36,18 @@ func set_shader_replacement_color(new_color:Color):
 func set_display_style(new_style:DisplayStyle):
 	if new_style==DisplayStyle.ICON:
 		%CardName.visible=false
-		%Description.visible=false
+		%ShortDescription.visible=false
 		%Image.visible=true
 	if new_style==DisplayStyle.ZOOMED:
 		%CardName.visible=true
-		%Description.visible=true
+		%ShortDescription.visible=true
 		%Image.visible=true
 	if new_style==DisplayStyle.STANDARD:
 		%CardName.visible=true
-		%Description.visible=false
+		%ShortDescription.visible=false
 		%Image.visible=true
 	if new_style==DisplayStyle.TINY:
 		%CardName.visible=false
-		%Description.visible=false
+		%ShortDescription.visible=false
 		%Image.visible=true
 	current_style=new_style

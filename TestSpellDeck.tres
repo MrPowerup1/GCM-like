@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="Deck" load_steps=8 format=3 uid="uid://6lfphqkx7jyp"]
 
 [ext_resource type="Script" path="res://Deck.gd" id="1_0h7c1"]
-[ext_resource type="Resource" uid="uid://c461ig8ssjsjw" path="res://Spell Effects/Spells/Showcase Spells/Wall/Wall Card.tres" id="1_2ri0e"]
-[ext_resource type="Resource" uid="uid://c22fntv8t1gh" path="res://Spell Effects/Spells/Showcase Spells/Beam/Beam Card.tres" id="1_75r8a"]
-[ext_resource type="Resource" uid="uid://c76y7w4sab3rl" path="res://Spell Effects/Spells/Showcase Spells/Dash/Dash Card.tres" id="1_eaac2"]
-[ext_resource type="Resource" uid="uid://diuoq0f2mqxy3" path="res://Spell Effects/Spells/Showcase Spells/Melee/Melee Card.tres" id="2_wuxpe"]
-[ext_resource type="Resource" uid="uid://bsfmuftaj0fg" path="res://Spell Effects/Spells/Showcase Spells/Fireball/Fireball Card.tres" id="4_a47es"]
-[ext_resource type="Resource" uid="uid://c13vk6hnkkis1" path="res://Spell Effects/Spells/Showcase Spells/Lightning/Lightning Card.tres" id="6_nkd82"]
+[ext_resource type="Resource" uid="uid://c461ig8ssjsjw" path="res://Spells/Showcase Spells/Wall/Wall Card.tres" id="1_2ri0e"]
+[ext_resource type="Resource" uid="uid://c22fntv8t1gh" path="res://Spells/Showcase Spells/Beam/Beam Card.tres" id="1_75r8a"]
+[ext_resource type="Resource" uid="uid://c76y7w4sab3rl" path="res://Spells/Showcase Spells/Dash/Dash Card.tres" id="1_eaac2"]
+[ext_resource type="Resource" uid="uid://diuoq0f2mqxy3" path="res://Spells/Showcase Spells/Melee/Melee Card.tres" id="2_wuxpe"]
+[ext_resource type="Resource" uid="uid://bsfmuftaj0fg" path="res://Spells/Showcase Spells/Fireball/Fireball Card.tres" id="4_a47es"]
+[ext_resource type="Resource" uid="uid://c13vk6hnkkis1" path="res://Spells/Showcase Spells/Lightning/Lightning Card.tres" id="6_nkd82"]
 
 [resource]
 script = ExtResource("1_0h7c1")

@@ -1,0 +1,107 @@
+[gd_scene load_steps=15 format=3 uid="uid://bh4weje2v8gsg"]
+
+[ext_resource type="Script" path="res://Instanced Scenes/ControlledArea.gd" id="1_ivya3"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="2_8mlan"]
+[ext_resource type="PackedScene" uid="uid://4h6ifn0uoy5s" path="res://Spells/Showcase Spells/Lightning/Lightning Strike.tscn" id="3_eadff"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_r1vhp"]
+[ext_resource type="Texture2D" uid="uid://creajrs77p8xh" path="res://Spells/Showcase Spells/Lightning/Lightning-Target.png" id="5_vu8sn"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="6_2vw7h"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="7_0ygld"]
+[ext_resource type="Script" path="res://Velocity.gd" id="8_v7mj2"]
+
+[sub_resource type="Resource" id="Resource_mgwhp"]
+script = ExtResource("2_8mlan")
+animation_name = "crackle"
+
+[sub_resource type="Resource" id="Resource_h6ac2"]
+script = ExtResource("4_r1vhp")
+area_scene = ExtResource("3_eadff")
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_u01od"]
+extents_x = 262144
+extents_y = 262144
+
+[sub_resource type="Animation" id="Animation_0ibeq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_3fuw4"]
+resource_name = "crackle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6e70g"]
+_data = {
+"RESET": SubResource("Animation_0ibeq"),
+"crackle": SubResource("Animation_3fuw4")
+}
+
+[node name="Lightning Area" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync", "pierceable"]]
+script = ExtResource("1_ivya3")
+velocity = NodePath("Velocity")
+despawn_when_released = true
+timings = Array[int]([4, 2])
+locations = Array[int]([3, 3])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_mgwhp"), SubResource("Resource_h6ac2")])
+life_time = 1000
+
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGRectangleShape2D_u01od")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -5)
+texture = ExtResource("5_vu8sn")
+hframes = 4
+
+[node name="End_Time" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_2vw7h")
+wait_ticks = 60
+
+[node name="Ping_Time" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_2vw7h")
+wait_ticks = 60
+
+[node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_6e70g")
+}
+script = ExtResource("7_0ygld")
+
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("8_v7mj2")
+body = NodePath("..")
+fixed_diagonal_velocity_difference = 1000
+friction_fixed = 32768
+mass_fixed = 65536
+acceleration_fixed = 32768
+max_speed_fixed = 262144
+turning_speed_fixed = 655
+
+[connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
+[connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

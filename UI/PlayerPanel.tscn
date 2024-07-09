@@ -15,18 +15,17 @@
 [ext_resource type="Script" path="res://States/UI States/Player Panel States/Ready.gd" id="13_a4768"]
 
 [node name="PlayerPanel" type="PanelContainer"]
-size_flags_horizontal = 3
-size_flags_vertical = 3
+custom_minimum_size = Vector2(160, 300)
 theme_type_variation = &"Panel2"
 script = ExtResource("1_3lsti")
 card_scene = ExtResource("2_s85jy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
 
 [node name="Unselected" type="VBoxContainer" parent="MarginContainer"]
 unique_name_in_owner = true
@@ -37,7 +36,7 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Selected" type="HBoxContainer" parent="MarginContainer/Unselected"]
+[node name="Selected" type="VBoxContainer" parent="MarginContainer/Unselected"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3

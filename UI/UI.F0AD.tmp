@@ -1,0 +1,447 @@
+[gd_scene load_steps=26 format=3 uid="uid://gml8gorru1ib"]
+
+[ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
+[ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
+[ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="2_kslxp"]
+[ext_resource type="Script" path="res://States/StateManager.gd" id="2_p5w6j"]
+[ext_resource type="Script" path="res://States/UI States/Menu States/LocalOrOnline.gd" id="3_46e2s"]
+[ext_resource type="PackedScene" uid="uid://vaog6h0dcfy2" path="res://UI/PlayerPanel.tscn" id="3_e8kt2"]
+[ext_resource type="Script" path="res://States/UI States/Menu States/OnlineMatchmaking.gd" id="4_2rc4e"]
+[ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="4_6v6gd"]
+[ext_resource type="Resource" uid="uid://108qxs1oy0ow" path="res://Inputs/keyboard_right.tres" id="5_a5xvl"]
+[ext_resource type="Script" path="res://States/UI States/Menu States/WaitingForPlayers.gd" id="5_aqwv2"]
+[ext_resource type="Script" path="res://UI/Loading.gd" id="5_lvl80"]
+[ext_resource type="Script" path="res://Player Join.gd" id="5_p0knl"]
+[ext_resource type="Script" path="res://UI/FailedToLoad.gd" id="6_40bju"]
+[ext_resource type="Script" path="res://States/UI States/Menu States/PlayerSelect.gd" id="6_wkgiu"]
+[ext_resource type="Script" path="res://UI/Client.gd" id="7_mwm4a"]
+[ext_resource type="Script" path="res://States/UI States/Menu States/RoundStarting.gd" id="7_ooc61"]
+[ext_resource type="Script" path="res://UI/Server.gd" id="8_ju531"]
+[ext_resource type="Script" path="res://States/UI States/Menu States/RoundInProgress.gd" id="8_k35gp"]
+[ext_resource type="Script" path="res://States/UI States/Menu States/EndScreen.gd" id="9_in05g"]
+[ext_resource type="Script" path="res://UI/EndGamePanel.gd" id="10_04730"]
+[ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="10_ff2bt"]
+[ext_resource type="Shader" path="res://UI/Recolor_Shader.gdshader" id="11_e7ygd"]
+[ext_resource type="PackedScene" uid="uid://dgp1hxihvq8kt" path="res://Player/ui_player.tscn" id="12_cxwyj"]
+[ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="13_qr0bh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_utxx5"]
+shader = ExtResource("11_e7ygd")
+shader_parameter/new_color = null
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_pyrsy")
+
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_p5w6j")
+starting_state = NodePath("LocalOrOnline")
+
+[node name="LocalOrOnline" type="Node" parent="StateManager"]
+script = ExtResource("3_46e2s")
+
+[node name="OnlineMatchmaking" type="Node" parent="StateManager"]
+script = ExtResource("4_2rc4e")
+
+[node name="Loading" type="Node" parent="StateManager"]
+script = ExtResource("5_lvl80")
+
+[node name="MaxLoadTime" type="Timer" parent="StateManager/Loading"]
+wait_time = 2.0
+one_shot = true
+
+[node name="FailedToLoad" type="Node" parent="StateManager"]
+script = ExtResource("6_40bju")
+
+[node name="WaitingForPlayers" type="Node" parent="StateManager"]
+script = ExtResource("5_aqwv2")
+
+[node name="PlayerSelect" type="Node" parent="StateManager"]
+script = ExtResource("6_wkgiu")
+
+[node name="RoundStarting" type="Node" parent="StateManager"]
+script = ExtResource("7_ooc61")
+
+[node name="RoundInProgress" type="Node" parent="StateManager"]
+script = ExtResource("8_k35gp")
+
+[node name="EndScreen" type="Node" parent="StateManager"]
+script = ExtResource("9_in05g")
+
+[node name="PlayerJoin" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_p0knl")
+player_ui_scene = ExtResource("12_cxwyj")
+base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])
+null_input = ExtResource("13_qr0bh")
+keyboard_input_1 = ExtResource("4_6v6gd")
+keyboard_input_2 = ExtResource("5_a5xvl")
+
+[node name="Client" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_mwm4a")
+
+[node name="Server" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_ju531")
+
+[node name="SelectionUI" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OuterMargin" type="MarginContainer" parent="SelectionUI"]
+layout_mode = 2
+
+[node name="LocalOrOnline" type="VBoxContainer" parent="SelectionUI/OuterMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SelectionUI/OuterMargin/LocalOrOnline"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Select Game Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Local" type="Button" parent="SelectionUI/OuterMargin/LocalOrOnline"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Local"
+
+[node name="Online" type="Button" parent="SelectionUI/OuterMargin/LocalOrOnline"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Online
+"
+
+[node name="Matchmaking Menu" type="VBoxContainer" parent="SelectionUI/OuterMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="SelectionUI/OuterMargin/Matchmaking Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Server" type="Button" parent="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Start Lobby
+"
+
+[node name="MarginContainer" type="MarginContainer" parent="SelectionUI/OuterMargin/Matchmaking Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Lobby" type="Label" parent="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Lobby:
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IP" type="LineEdit" parent="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="Join" type="Button" parent="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Join Lobby
+"
+
+[node name="Back" type="Button" parent="SelectionUI/OuterMargin/Matchmaking Menu"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Waiting For Connect" type="VBoxContainer" parent="SelectionUI/OuterMargin"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Waiting for Players" type="Label" parent="SelectionUI/OuterMargin/Waiting For Connect"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Waiting for Players
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SelectionUI/OuterMargin/Waiting For Connect"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Lobby" type="Label" parent="SelectionUI/OuterMargin/Waiting For Connect/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Current Lobby: 
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LobbyID" type="Label" parent="SelectionUI/OuterMargin/Waiting For Connect/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/OuterMargin/Waiting For Connect"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Players" type="Label" parent="SelectionUI/OuterMargin/Waiting For Connect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Clients Joined: 
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NumPlayers" type="Label" parent="SelectionUI/OuterMargin/Waiting For Connect/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartRound" type="Button" parent="SelectionUI/OuterMargin/Waiting For Connect"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Start Game
+
+"
+
+[node name="Back2" type="Button" parent="SelectionUI/OuterMargin/Waiting For Connect"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Player Select Menu" type="VBoxContainer" parent="SelectionUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="PlayerSelectScreen" type="GridContainer" parent="SelectionUI/Player Select Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+script = ExtResource("1_l22ls")
+player_panel = ExtResource("3_e8kt2")
+
+[node name="PlayerPanel1" parent="SelectionUI/Player Select Menu/PlayerSelectScreen" instance=ExtResource("3_e8kt2")]
+layout_mode = 2
+
+[node name="StartGamePanel" parent="SelectionUI/Player Select Menu" instance=ExtResource("2_kslxp")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Back2" type="Button" parent="SelectionUI/Player Select Menu"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Loading" type="MarginContainer" parent="SelectionUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="SelectionUI/Loading"]
+layout_mode = 2
+theme_type_variation = &"Panel2"
+
+[node name="Label" type="Label" parent="SelectionUI/Loading/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Loading..."
+
+[node name="FailedToLoad" type="MarginContainer" parent="SelectionUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="SelectionUI/FailedToLoad"]
+layout_mode = 2
+theme_type_variation = &"Panel2"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SelectionUI/FailedToLoad/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Failed" type="Label" parent="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Failed to load Lobby:
+"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="ID" type="Label" parent="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 30
+text = "ID: 
+"
+vertical_alignment = 1
+
+[node name="Lobby ID" type="Label" parent="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 5.0
+theme_override_font_sizes/font_size = 30
+text = "TEST1234
+"
+vertical_alignment = 1
+
+[node name="Back3" type="Button" parent="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="EndGamePanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("10_04730")
+
+[node name="MarginContainer" type="MarginContainer" parent="EndGamePanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndGamePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="WInner" type="Label" parent="EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 30
+text = "WINNER!!!"
+horizontal_alignment = 1
+
+[node name="Skin" type="TextureRect" parent="EndGamePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_utxx5")
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("10_ff2bt")
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Restart" type="Button" parent="EndGamePanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Play Again
+"
+
+[node name="End" type="Button" parent="EndGamePanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "End
+
+"
+
+[connection signal="timeout" from="StateManager/Loading/MaxLoadTime" to="StateManager/Loading" method="_on_max_load_time_timeout"]
+[connection signal="start_round" from="StateManager/RoundStarting" to="PlayerJoin" method="_on_round_starting_start_round"]
+[connection signal="end_round" from="StateManager/EndScreen" to="PlayerJoin" method="_on_end_screen_end_round"]
+[connection signal="player_joined" from="PlayerJoin" to="." method="_on_player_join_player_joined"]
+[connection signal="failed_to_load_lobby" from="Client" to="StateManager/Loading" method="_on_client_failed_to_load_lobby"]
+[connection signal="loading_lobby" from="Client" to="StateManager/OnlineMatchmaking" method="_on_client_loading_lobby"]
+[connection signal="loading_lobby" from="Client" to="StateManager/Loading" method="_on_client_loading_lobby"]
+[connection signal="new_lobby_id" from="Client" to="." method="update_lobby_id"]
+[connection signal="peer_joined" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_peer_joined"]
+[connection signal="start" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_start"]
+[connection signal="wait_for_peers" from="Client" to="StateManager/OnlineMatchmaking" method="_on_client_wait_for_peers"]
+[connection signal="button_down" from="SelectionUI/OuterMargin/LocalOrOnline/Local" to="StateManager/LocalOrOnline" method="_on_local_button_down"]
+[connection signal="button_down" from="SelectionUI/OuterMargin/LocalOrOnline/Online" to="StateManager/LocalOrOnline" method="_on_online_button_down"]
+[connection signal="button_down" from="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer2/Server" to="Server" method="_on_start_server_button_down"]
+[connection signal="button_down" from="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer/VBoxContainer/Join" to="Client" method="_on_join_lobby_button_down"]
+[connection signal="button_down" from="SelectionUI/OuterMargin/Matchmaking Menu/Back" to="StateManager/OnlineMatchmaking" method="_on_back_button_down"]
+[connection signal="button_down" from="SelectionUI/OuterMargin/Waiting For Connect/StartRound" to="Client" method="_on_start_round_button_down"]
+[connection signal="button_down" from="SelectionUI/OuterMargin/Waiting For Connect/Back2" to="StateManager/WaitingForPlayers" method="_on_back_2_button_down"]
+[connection signal="player_quit" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="PlayerJoin" method="delete_player"]
+[connection signal="players_ready" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="StateManager/PlayerSelect" method="_on_player_select_screen_players_ready"]
+[connection signal="players_unready" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="StateManager/RoundStarting" method="_on_player_select_screen_players_unready"]
+[connection signal="player_quit" from="SelectionUI/Player Select Menu/PlayerSelectScreen/PlayerPanel1" to="SelectionUI/Player Select Menu/PlayerSelectScreen" method="_on_player_quit"]
+[connection signal="player_ready" from="SelectionUI/Player Select Menu/PlayerSelectScreen/PlayerPanel1" to="SelectionUI/Player Select Menu/PlayerSelectScreen" method="_on_player_ready"]
+[connection signal="player_unready" from="SelectionUI/Player Select Menu/PlayerSelectScreen/PlayerPanel1" to="SelectionUI/Player Select Menu/PlayerSelectScreen" method="_on_player_unready"]
+[connection signal="start_round" from="SelectionUI/Player Select Menu/StartGamePanel" to="StateManager/RoundStarting" method="_on_start_game_panel_start_round"]
+[connection signal="button_down" from="SelectionUI/Player Select Menu/Back2" to="StateManager/PlayerSelect" method="_on_back_2_button_down"]
+[connection signal="button_down" from="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer/Back3" to="StateManager/FailedToLoad" method="_on_back_3_button_down"]
+[connection signal="button_down" from="EndGamePanel/MarginContainer/VBoxContainer/HBoxContainer/Restart" to="StateManager/EndScreen" method="_on_restart_button_down"]
+[connection signal="button_down" from="EndGamePanel/MarginContainer/VBoxContainer/HBoxContainer/End" to="StateManager/EndScreen" method="_on_end_button_down"]

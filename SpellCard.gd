@@ -21,4 +21,4 @@ func display(card:CardDisplay):
 	card.set_description(description)
 	card.set_image(image)
 	#Sets panel to default type
-	card.set_theme_type("SpellPanel")
+	#card.set_theme_type("SpellPanel")

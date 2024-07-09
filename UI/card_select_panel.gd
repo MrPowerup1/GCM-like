@@ -7,7 +7,7 @@ class_name CardSelectPanel
 @export var right_card:Card
 @export var center_display:CardDisplay
 @export var player_index:int
-enum display_mode {SELECTED,SELECTING}
+enum display_mode {SELECTED,SELECTING,ZOOMED}
 var current_mode:display_mode
 
 
@@ -31,10 +31,12 @@ signal next()
 
 @rpc("any_peer","call_local")
 func left():
-	new_cards(cards.next_cards(left_card))
+	if current_mode != display_mode.ZOOMED:
+		new_cards(cards.next_cards(left_card))
 @rpc("any_peer","call_local")
 func right():
-	new_cards(cards.next_cards(right_card))
+	if current_mode != display_mode.ZOOMED:
+		new_cards(cards.next_cards(right_card))
 @rpc("any_peer","call_local")
 func up():
 	pass
@@ -45,15 +47,20 @@ func down():
 func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
-	if cards.select(center_card):
+	if current_mode == display_mode.ZOOMED and cards.select(center_card):
 		center_card.select(player_index)
 		new_cards(cards.next_cards(center_card))
 		next.emit()
+	if current_mode == display_mode.SELECTING:
+		transition_display_mode(display_mode.ZOOMED)
 	else:
 		pass
 @rpc("any_peer","call_local")
 func back():
-	exit.emit()
+	if current_mode != display_mode.ZOOMED:
+		exit.emit()
+	else:
+		transition_display_mode(display_mode.SELECTING)
 
 @rpc("any_peer","call_local")
 func unselect():
@@ -96,6 +103,16 @@ func transition_display_mode(new_mode:display_mode):
 		%SelectButton.visible=true
 		%RightButton.visible=true
 		%RightCard.visible=true
+		%CenterCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
+		%LeftCard.set_display_style(CardDisplay.DisplayStyle.TINY)
+		%RightCard.set_display_style(CardDisplay.DisplayStyle.TINY)
+	if new_mode==display_mode.ZOOMED:
+		visible=true
+		%LeftButton.visible=false
+		%LeftCard.visible=false
+		%SelectButton.visible=true
+		%RightButton.visible=false
+		%RightCard.visible=false
 		%CenterCard.set_display_style(CardDisplay.DisplayStyle.ZOOMED)
 		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
 		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
@@ -115,3 +132,11 @@ func _on_right_button_button_down():
 func _on_select_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
 		select()
+
+
+func _on_center_card_new_name(name):
+	if name == "":
+		%NameBox.visible = false
+	else:
+		%NameBox.visible = true
+		%Name.text = name

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=4 format=3 uid="uid://bsfmuftaj0fg"]
+
+[ext_resource type="Texture2D" uid="uid://dhyhfdxj3x10v" path="res://Spells/Showcase Spells/Fireball/Fireball Icon.png" id="1_t3yv2"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="2_nl4hk"]
+[ext_resource type="Resource" uid="uid://c76htlukbfj68" path="res://Spells/Showcase Spells/Fireball/Fireball Spell.tres" id="3_5ij86"]
+
+[resource]
+script = ExtResource("2_nl4hk")
+spell = ExtResource("3_5ij86")
+requirements = Array[Resource("res://Elements/Element.gd")]([])
+category = 0
+type = 0
+randomizer = false
+name = "Fireball"
+image = ExtResource("1_t3yv2")
+description = "Shoot a ball of fire"
+context = 0

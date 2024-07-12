@@ -133,9 +133,7 @@ func _on_health_dead():
 	%DespawnDelay.start()
 
 func start_round():
-	new_auth(peer_id)
 	enable()
-	reset()
 	GameManager.alive_players.append(self)
 	
 func stop_round():
@@ -179,8 +177,9 @@ func _network_spawn(data: Dictionary) -> void:
 		var new_spell = spell_deck.get_card(spell_index).spell
 		equip_spell(new_spell,index)
 		index+=1
-	GameManager.alive_players.append(self)
+	#GameManager.alive_players.append(self)
 	sync_to_physics_engine()
+	anchor(true)
 
 
 func _on_despawn_delay_timeout():

@@ -97,4 +97,10 @@ func start_match():
 		player_data['spawn_position_y']=positions[i].y
 		#print("Spawning player with data ",player_data)
 		var new_player = SyncManager.spawn('Player',%Players,player_scene,player_data)
-		
+	%AudioStreamPlayer.play(50)
+	%StartTimer.start()
+	$UI.start()
+
+
+func _on_start_timer_timeout():
+	%Players.start_players()

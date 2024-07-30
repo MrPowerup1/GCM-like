@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=18 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_umfx1"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
 [ext_resource type="Script" path="res://Health.gd" id="9_hrbbv"]
 [ext_resource type="PackedScene" uid="uid://knpxehglpha1" path="res://UI/player_status.tscn" id="10_3tqh8"]
+[ext_resource type="AudioStream" uid="uid://cp1l0fyhms636" path="res://Sound/Hurt_sound.wav" id="10_f1ste"]
 [ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
 [ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="11_yip05"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="13_aymwb"]
@@ -91,6 +92,7 @@ unique_name_in_owner = true
 script = ExtResource("9_hrbbv")
 max_health = 1000
 current_health = 1000
+hurt_sound = ExtResource("10_f1ste")
 
 [node name="Player Status" parent="." instance=ExtResource("10_3tqh8")]
 unique_name_in_owner = true

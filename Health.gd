@@ -5,6 +5,7 @@ class_name Health
 @export var current_health:int
 @export var temp_health:int
 @export var overheal_drain_rate:int
+@export var hurt_sound:AudioStreamWAV
 
 signal hurt
 signal dead
@@ -20,6 +21,7 @@ func take_damage(damage:int):
 	hurt.emit()
 	health_changed.emit(current_health)
 	check_death()
+	SyncManager.play_sound("hurt",hurt_sound)
 
 func heal(damage:int):
 	current_health= min(current_health+damage,max_health)

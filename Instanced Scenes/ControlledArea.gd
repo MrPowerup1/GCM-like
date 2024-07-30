@@ -17,6 +17,7 @@ func spawn_specifics():
 	velocity.facing = fixed_rotation
 	caster.get_node("PlayerCharacterInput").velocity=velocity
 	if despawn_when_released:
+		#TODO:Fix it so this doesn't use signals
 		caster.spell_released.connect(spell_released)
 
 func _network_despawn() ->void:

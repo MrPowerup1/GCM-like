@@ -211,8 +211,9 @@ func determine_diagonal_velocity() ->bool:
 		return false
 	
 func constant_vel(angle:int):
-	#velocity = SGFixed.vector2(fixed_point_factor,0).rotated(angle).mul(speed_fixed)
-	velocity = MathHelper.get_unit_at_angle(angle).mul(speed_fixed)
+	velocity = SGFixed.vector2(fixed_point_factor,0).rotated(angle).mul(max_speed_fixed)
+	print("Projectile start vel is ",velocity.to_float())
+	#velocity = MathHelper.get_unit_at_angle(angle).mul(speed_fixed)
 
 func anchor(set_anchor:bool=false):
 	can_move=!set_anchor

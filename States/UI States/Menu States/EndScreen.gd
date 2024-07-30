@@ -15,8 +15,10 @@ func exit():
 
 func _on_restart_button_down():
 	Transition.emit(self,"PlayerSelect")
+	%SelectNoise.play()
 
 
 func _on_end_button_down():
 	Transition.emit(self,"LocalOrOnline")
+	%BackNoise.play()
 	

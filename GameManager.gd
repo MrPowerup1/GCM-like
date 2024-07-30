@@ -20,6 +20,8 @@ var universal_spell_deck:Deck = load("res://TestSpellDeck.tres")
 var universal_level_deck:Deck = load("res://TestLevelDeck.tres")
 var temporary_level:PackedScene = load("res://Basic_Level.tscn")
 
+var select_sound:AudioStreamWAV
+
 var base_input = preload("res://Inputs/Base Input.tres").to_dict()
 
 var default_player_dict = {
@@ -115,3 +117,4 @@ func get_players_on_peer(peer_id:int)->Array[int]:
 		if player['peer_id']==peer_id:
 			to_return.append(players.find_key(player))
 	return to_return
+	

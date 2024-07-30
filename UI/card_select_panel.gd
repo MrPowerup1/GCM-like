@@ -33,10 +33,12 @@ signal next()
 func left():
 	if current_mode != display_mode.ZOOMED:
 		new_cards(cards.next_cards(left_card))
+		%MenuMove.play()
 @rpc("any_peer","call_local")
 func right():
 	if current_mode != display_mode.ZOOMED:
 		new_cards(cards.next_cards(right_card))
+		%MenuMove.play()
 @rpc("any_peer","call_local")
 func up():
 	pass
@@ -47,20 +49,25 @@ func down():
 func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
+		%SelectNoise.play()
 	if current_mode == display_mode.ZOOMED and cards.select(center_card):
 		center_card.select(player_index)
 		new_cards(cards.next_cards(center_card))
 		next.emit()
+		%SelectNoise.play()
 	if current_mode == display_mode.SELECTING:
 		transition_display_mode(display_mode.ZOOMED)
+		%SelectNoise.play()
 	else:
 		pass
 @rpc("any_peer","call_local")
 func back():
 	if current_mode != display_mode.ZOOMED:
 		exit.emit()
+		%BackNoise.play()
 	else:
 		transition_display_mode(display_mode.SELECTING)
+		%BackNoise.play()
 
 @rpc("any_peer","call_local")
 func unselect():

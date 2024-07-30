@@ -1,9 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://gml8gorru1ib"]
+[gd_scene load_steps=32 format=3 uid="uid://gml8gorru1ib"]
 
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
 [ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="2_kslxp"]
+[ext_resource type="AudioStream" uid="uid://dtfbox5faho26" path="res://Sound/Blip_Select12.wav" id="2_mp3t5"]
 [ext_resource type="Script" path="res://States/StateManager.gd" id="2_p5w6j"]
+[ext_resource type="AudioStream" uid="uid://8mwgp0lg27td" path="res://Sound/Blip_Back.wav" id="3_0ccb4"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/LocalOrOnline.gd" id="3_46e2s"]
 [ext_resource type="PackedScene" uid="uid://vaog6h0dcfy2" path="res://UI/PlayerPanel.tscn" id="3_e8kt2"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/OnlineMatchmaking.gd" id="4_2rc4e"]
@@ -143,6 +145,14 @@ shader_parameter/new_color = null
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_pyrsy")
+
+[node name="SelectNoise" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_mp3t5")
+
+[node name="BackNoise" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_0ccb4")
 
 [node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_p5w6j")

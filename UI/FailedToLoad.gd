@@ -10,3 +10,4 @@ func exit():
 
 func _on_back_3_button_down():
 	Transition.emit(self,"OnlineMatchmaking")
+	%BackNoise.play()

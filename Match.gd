@@ -70,6 +70,7 @@ func _on_SyncManager_sync_started():
 
 func _on_SyncManager_sync_stopped():
 	SyncManager.stop_logging()
+	end_match()
 
 func _on_SyncManager_sync_lost():
 	print("Lost Sync")
@@ -101,6 +102,8 @@ func start_match():
 	%StartTimer.start()
 	$UI.start()
 
+func end_match():
+	%AudioStreamPlayer.stop()
 
 func _on_start_timer_timeout():
 	%Players.start_players()

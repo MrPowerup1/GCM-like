@@ -41,7 +41,7 @@ func swap_spell(new_spell:Spell):
 		if (spell.cooldown_time>0):
 			$Cooldown_Timer.wait_ticks=spell.cooldown_time
 		if (spell.held_ping_time>0 and !spell.ping_asap):
-			$Held_Timer.wait_time=spell.held_ping_time
+			$Held_Timer.wait_ticks=spell.held_ping_time
 		if !spell.cooldown_on_activate and !spell.cooldown_on_release:
 			printerr("Spell at slot ",spell_index," has no cooldown activation")
 

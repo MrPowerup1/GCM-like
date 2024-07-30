@@ -18,7 +18,6 @@ signal player_unready()
 signal player_joined()
 
 func player_join(player:PlayerUIInput,player_index:int):
-	#print ('A player joined ',player)
 	current_player=player
 	current_player_index=player_index
 	%Label.text=str(player_index)

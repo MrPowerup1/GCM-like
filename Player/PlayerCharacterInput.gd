@@ -33,7 +33,6 @@ func _get_local_input() -> Dictionary:
 		input['spell_2_pressed']=true
 	if (Input.is_action_just_released(input_keys.conversion["Spell2"])):
 		input['spell_2_released']=true
-	#print(input_vector.x, " (input) compared to (zero) ",fixed_zero_vector.x, " Equal? ",input_vector.is_equal_approx(fixed_zero_vector))
 	if not input_vector.is_equal_approx(fixed_zero_vector):
 		input['input_vector']=input_vector	
 	return input

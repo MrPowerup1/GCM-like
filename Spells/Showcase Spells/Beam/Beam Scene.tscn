@@ -100,7 +100,7 @@ timings = Array[int]([4, 0, 3, 3, 3])
 locations = Array[int]([3, 2, 2, 2, 2])
 effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_mgwhp"), SubResource("Resource_hc7sv"), SubResource("Resource_as1kx"), SubResource("Resource_jwv5p"), SubResource("Resource_ygfq3")])
 ping_time = 6
-life_time = 120
+life_time = 65
 rotate_to_caster = true
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]

@@ -7,4 +7,3 @@ class_name Status_Effect
 func trigger(target,caster:Player,index:int):
 	if target is Player:
 		target.add_status_effect(status,target)
-		print("Adding status")

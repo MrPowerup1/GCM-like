@@ -130,14 +130,13 @@ func player_fixed_move_input(direction:SGFixedVector2):
 		if can_move:
 			var max_speed_to_use = max_speed_fixed
 			if is_diagonal:
-				print("diagonal")
+
 				max_speed_to_use = SGFixed.mul(max_speed_fixed,diag_factor)
 			if direction.x!=0:
 				if abs(velocity.x + SGFixed.mul(acceleration_fixed,direction.x)) < max_speed_to_use:
 					velocity.x+=SGFixed.mul(acceleration_fixed,direction.x)
 					#If changing direction, apply extra velocity
 					if sign(velocity.x) != sign(direction.x) :
-						print("cut")
 						velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
 				else:
 					velocity.x=sign(velocity.x)*max_speed_to_use
@@ -146,7 +145,6 @@ func player_fixed_move_input(direction:SGFixedVector2):
 					velocity.y+=SGFixed.mul(acceleration_fixed,direction.y)
 					#If changing direction, apply extra velocity
 					if sign(velocity.y) != sign(direction.y) :
-						print("cut")
 						velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
 				else:
 					velocity.y=sign(velocity.y)*max_speed_to_use
@@ -179,10 +177,8 @@ func player_fixed_move_redo(direction:SGFixedVector2):
 			if abs(velocity.y) > abs(max_speed_rotated.y):
 				velocity.y=max_speed_rotated.y
 			if sign(velocity.x) != sign(direction.x) :
-				print("cut")
 				velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
 			if sign(velocity.y) != sign(direction.y) :
-				print("cut")
 				velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
 	if direction.x == 0:
 		#APPLY HORIZONTAL FRICTION
@@ -212,7 +208,6 @@ func determine_diagonal_velocity() ->bool:
 	
 func constant_vel(angle:int):
 	velocity = SGFixed.vector2(fixed_point_factor,0).rotated(angle).mul(max_speed_fixed)
-	print("Projectile start vel is ",velocity.to_float())
 	#velocity = MathHelper.get_unit_at_angle(angle).mul(speed_fixed)
 
 func anchor(set_anchor:bool=false):

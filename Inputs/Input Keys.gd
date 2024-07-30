@@ -7,7 +7,9 @@ class_name Input_Keys
 	"Up":"Up",
 	"Down":"Down",
 	"Spell1":"Spell1",
-	"Spell2":"Spell2"
+	"Spell2":"Spell2",
+	#"Melee":"Melee",
+	#"Dash":"Dash"
 	}
 	
 enum device_type {KEYBOARD,JOYSTICK}

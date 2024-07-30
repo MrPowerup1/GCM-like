@@ -159,6 +159,9 @@ func pre_despawn()->void:
 	#for spell in %"Spell Manager".get_children():
 		#SyncManager.despawn(spell)
 	#%"Spell Manager".slots.clear()
+	for child in get_children():
+		if child is DelayedCastInstance:
+			SyncManager.despawn(child)
 
 func _network_spawn(data: Dictionary) -> void:
 	fixed_position_x=data['spawn_position_x']

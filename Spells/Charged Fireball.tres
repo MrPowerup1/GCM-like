@@ -1,26 +1,15 @@
-[gd_resource type="Resource" script_class="Spell_Type" load_steps=50 format=3]
+[gd_resource type="Resource" script_class="Spell" load_steps=34 format=3 uid="uid://bbbeoplbb7qqo"]
 
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="1_egnem"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_xpwhu"]
-[ext_resource type="Resource" uid="uid://dehdpr3friiuo" path="res://Elements/Fire.tres" id="2_n7ekn"]
 [ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="3_g6ye7"]
-[ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="4_6utue"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="4_s2akd"]
-[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="5_3sd8s"]
 [ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="5_4fkn2"]
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="5_bgoth"]
 [ext_resource type="Script" path="res://Spell Effects/Release_Effect.gd" id="5_d5ojr"]
-[ext_resource type="Texture2D" uid="uid://bsxmebxmmfhhg" path="res://Art/fireball.png" id="6_xn24u"]
 [ext_resource type="Script" path="res://Spell Effects/projectile_effect.gd" id="7_57q0m"]
-[ext_resource type="Texture2D" uid="uid://cjj4cy2rjoitr" path="res://Art/2.png" id="7_gxobq"]
 [ext_resource type="Script" path="res://Spell Effects/Threshold_Effect.gd" id="8_1474b"]
-[ext_resource type="Texture2D" uid="uid://dpawcli1di67r" path="res://Art/3.png" id="8_ctb4n"]
-[ext_resource type="Texture2D" uid="uid://c2mavkp8i65r3" path="res://Art/wizard.png" id="11_eoci3"]
 [ext_resource type="PackedScene" uid="uid://6bd4ui3bfds0" path="res://Instanced Scenes/base_projectile.tscn" id="15_1wao0"]
-[ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="15_a05ec"]
-[ext_resource type="Texture2D" uid="uid://b307yabw7xufi" path="res://Art/sword.png" id="15_j44a5"]
-[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="16_sa6p5"]
-[ext_resource type="Script" path="res://Spell Effects/Testing Related/Print Effect.gd" id="16_tggvi"]
 [ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="17_ep7w0"]
 
 [sub_resource type="Resource" id="Resource_vk58f"]
@@ -33,11 +22,11 @@ spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([
 
 [sub_resource type="Resource" id="Resource_af5ls"]
 script = ExtResource("4_s2akd")
-new_player_sprite = ExtResource("5_3sd8s")
+animation_name = ""
 
 [sub_resource type="Resource" id="Resource_17r1h"]
 script = ExtResource("4_s2akd")
-new_player_sprite = ExtResource("7_gxobq")
+animation_name = ""
 
 [sub_resource type="Resource" id="Resource_acis0"]
 script = ExtResource("1_egnem")
@@ -45,7 +34,7 @@ set_anchor_to = true
 
 [sub_resource type="Resource" id="Resource_2rol2"]
 script = ExtResource("4_s2akd")
-new_player_sprite = ExtResource("8_ctb4n")
+animation_name = ""
 
 [sub_resource type="Resource" id="Resource_tuo8r"]
 script = ExtResource("5_4fkn2")
@@ -69,83 +58,61 @@ set_anchor_to = false
 
 [sub_resource type="Resource" id="Resource_6qfsu"]
 script = ExtResource("4_s2akd")
-new_player_sprite = ExtResource("11_eoci3")
+animation_name = ""
 
 [sub_resource type="Resource" id="Resource_bsxc8"]
 script = ExtResource("5_d5ojr")
 release_state = true
 
-[sub_resource type="Resource" id="Resource_a2ogt"]
-script = ExtResource("4_6utue")
-damage_value = 50
-
-[sub_resource type="Resource" id="Resource_7ucnq"]
-script = ExtResource("16_tggvi")
-message = "Enter"
-
-[sub_resource type="Resource" id="Resource_hbfi2"]
-script = ExtResource("16_tggvi")
-message = "Exit"
-
-[sub_resource type="Resource" id="Resource_f31ow"]
-script = ExtResource("16_tggvi")
-message = "Ping"
-
-[sub_resource type="Resource" id="Resource_1wetx"]
-script = ExtResource("16_sa6p5")
-image = ExtResource("15_j44a5")
-on_enter = SubResource("Resource_7ucnq")
-on_exit = SubResource("Resource_hbfi2")
-on_ping = SubResource("Resource_f31ow")
-call_exit_on_timeout = false
-area_scene = ExtResource("15_a05ec")
-life_time = 3000
-ping_time = 100
-
 [sub_resource type="Resource" id="Resource_enhto"]
 script = ExtResource("7_57q0m")
-projectile_scene = ExtResource("15_1wao0")
-projectile_sprite = ExtResource("6_xn24u")
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
+ping_time = 0
+life_time = 0
 speed = 1000
 piercing = false
-size = Vector2(1, 1)
-lifetime = 300
-on_hit_effect = SubResource("Resource_a2ogt")
-on_timeout_self = SubResource("Resource_1wetx")
+projectile_scene = ExtResource("15_1wao0")
 
 [sub_resource type="Resource" id="Resource_d1cc3"]
 script = ExtResource("17_ep7w0")
-offset = Vector2(50, 50)
+offset_x = 0
+offset_y = 0
 effect = SubResource("Resource_enhto")
 
 [sub_resource type="Resource" id="Resource_kqj6g"]
 script = ExtResource("7_57q0m")
-projectile_scene = ExtResource("15_1wao0")
-projectile_sprite = ExtResource("6_xn24u")
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
+ping_time = 0
+life_time = 0
 speed = 600
 piercing = false
-size = Vector2(2, 2)
-lifetime = 500
-on_hit_effect = SubResource("Resource_a2ogt")
+projectile_scene = ExtResource("15_1wao0")
 
 [sub_resource type="Resource" id="Resource_i4um7"]
 script = ExtResource("17_ep7w0")
-offset = Vector2(100, 0)
+offset_x = 0
+offset_y = 0
 effect = SubResource("Resource_kqj6g")
 
 [sub_resource type="Resource" id="Resource_xyrfb"]
 script = ExtResource("7_57q0m")
-projectile_scene = ExtResource("15_1wao0")
-projectile_sprite = ExtResource("6_xn24u")
+timings = Array[int]([])
+locations = Array[int]([])
+effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([])
+ping_time = 0
+life_time = 0
 speed = 1000
 piercing = true
-size = Vector2(3, 3)
-lifetime = 1000
-on_hit_effect = SubResource("Resource_a2ogt")
+projectile_scene = ExtResource("15_1wao0")
 
 [sub_resource type="Resource" id="Resource_fnd77"]
 script = ExtResource("17_ep7w0")
-offset = Vector2(200, -50)
+offset_x = 0
+offset_y = 0
 effect = SubResource("Resource_xyrfb")
 
 [sub_resource type="Resource" id="Resource_rqvhn"]
@@ -173,10 +140,3 @@ held_ping_time = 100.0
 cooldown_on_activate = false
 cooldown_on_release = false
 cooldown_time = 500.0
-name = "Big Fireball"
-card_image = ExtResource("6_xn24u")
-description = "Big Fireball"
-element = ExtResource("2_n7ekn")
-requirements = Array[Resource("res://Elements/Element.gd")]([ExtResource("2_n7ekn")])
-category = 1
-type = 2

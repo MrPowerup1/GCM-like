@@ -42,6 +42,7 @@ func _network_spawn(data: Dictionary) -> void:
 	caster = get_node(data['caster_path'])
 	if rotate_to_caster:
 		fixed_rotation = caster.get_facing()
+	spell_index=data['spell_index']
 	#if data.has('effects_paths'):
 		#effects.clear()
 		#for path in data['effects_paths']:

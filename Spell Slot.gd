@@ -8,6 +8,7 @@ var can_activate:bool = true
 var currently_held:bool = false
 var is_empty=true
 var held_pings:int
+var times_cast:int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -47,6 +48,7 @@ func swap_spell(new_spell:Spell):
 
 func activate():
 	if (spell!=null and can_activate):
+		times_cast+=1
 		can_activate=false
 		spell.activate(caster,spell_index)
 		if !spell.ping_asap and spell.held_ping_time>0:
@@ -76,6 +78,9 @@ func _on_cooldown_timer_timeout():
 func get_held_time():
 	#TODO: Is there an issue here with rollback?
 	return held_pings
+
+func get_cast_iteration():	
+	return times_cast
 	
 	
 func _save_state() ->Dictionary:

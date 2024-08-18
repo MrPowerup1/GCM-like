@@ -25,7 +25,9 @@ func _network_despawn() ->void:
 	caster.get_node("PlayerCharacterInput").reset_velocity_reference()
 
 func spell_released(index:int):
+	print("Spell index released ",index)
 	if index==spell_index:
+		print("MATCH, releasing now")
 		release()
 
 func _on_end_time_timeout():

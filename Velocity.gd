@@ -8,7 +8,7 @@ var velocity:SGFixedVector2 = SGFixedVector2.new()
 var facing:int
 var fixed_zero =SGFixed.vector2(0,0)
 #Currently implemented: Player
-enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET}
+enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,STEP}
 @export var movement_style:movement_styles
 @export var change_rotation_with_facing:bool
 @export var body:SGFixedNode2D
@@ -107,7 +107,8 @@ func move_input(direction:SGFixedVector2):
 		tank_move_input(direction)
 	if movement_style == movement_styles.PLAYER:
 		player_fixed_move_input(direction)
-	
+	if movement_style == movement_styles.STEP:
+		step_move(direction)
 	
 func tank_move_input(direction:SGFixedVector2):
 	facing += direction.x*turning_speed_fixed/fixed_point_factor
@@ -160,7 +161,9 @@ func player_fixed_move_input(direction:SGFixedVector2):
 			velocity.y=0
 		else:
 			velocity.y = sign(velocity.y)*abs(abs(velocity.y)-friction_fixed)
-
+func step_move(direction:SGFixedVector2):
+	velocity.x=direction.x*max_speed_fixed/fixed_point_factor
+	velocity.y=direction.y*max_speed_fixed/fixed_point_factor
 #Doesn't work as well
 func player_fixed_move_redo(direction:SGFixedVector2):
 	#var is_diagonal = determine_diagonal_velocity()

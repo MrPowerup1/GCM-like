@@ -93,14 +93,15 @@ libraries = {
 }
 script = ExtResource("7_0ygld")
 
-[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync", "target"]]
 script = ExtResource("8_v7mj2")
+movement_style = 5
 body = NodePath("..")
 fixed_diagonal_velocity_difference = 1000
 friction_fixed = 32768
 mass_fixed = 65536
 acceleration_fixed = 32768
-max_speed_fixed = 262144
+max_speed_fixed = 196608
 turning_speed_fixed = 655
 
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]

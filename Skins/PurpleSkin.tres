@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="CharacterSkin" load_steps=3 format=3 uid="uid://c5cpvyyex5jiv"]
 
 [ext_resource type="Script" path="res://Skins/CharacterSkin.gd" id="1_327pu"]
-[ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_1kuly"]
+[ext_resource type="Texture2D" uid="uid://7dburm7ilnno" path="res://Player/wizard2.0-Sheet.png" id="2_40xsg"]
 
 [resource]
 script = ExtResource("1_327pu")
-texture = ExtResource("2_1kuly")
+texture = ExtResource("2_40xsg")
 color = Color(0.615686, 0.164706, 0.376471, 1)
 name = "Purple Wizard"
 randomizer = false

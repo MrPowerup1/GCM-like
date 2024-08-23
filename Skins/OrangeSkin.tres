@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="CharacterSkin" load_steps=3 format=3 uid="uid://k61aax4me1eq"]
 
 [ext_resource type="Script" path="res://Skins/CharacterSkin.gd" id="1_327pu"]
-[ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_we0kx"]
+[ext_resource type="Texture2D" uid="uid://7dburm7ilnno" path="res://Player/wizard2.0-Sheet.png" id="2_osep4"]
 
 [resource]
 script = ExtResource("1_327pu")
-texture = ExtResource("2_we0kx")
+texture = ExtResource("2_osep4")
 color = Color(0.909804, 0.454902, 0.4, 1)
 name = "Orange Wizard"
 randomizer = false

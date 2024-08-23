@@ -10,6 +10,8 @@ var fixed_zero =SGFixed.vector2(0,0)
 #Currently implemented: Player
 enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,STEP}
 @export var movement_style:movement_styles
+@export var animate:bool
+@export var animation_player:AnimationPlayer
 @export var change_rotation_with_facing:bool
 @export var body:SGFixedNode2D
 #@export var stop_input_at_max_vel:bool
@@ -107,8 +109,20 @@ func move_input(direction:SGFixedVector2):
 		tank_move_input(direction)
 	if movement_style == movement_styles.PLAYER:
 		player_fixed_move_input(direction)
+		animate_player_movement(direction)
 	if movement_style == movement_styles.STEP:
 		step_move(direction)
+
+func animate_player_movement(direction:SGFixedVector2):
+	if direction.x==0 and direction.y == 0:
+		animation_player.play("RESET")
+	if direction.x>=0:
+		%Sprite2D.flip_h = false
+		animation_player.play("Walk")
+	if direction.x<=0 and direction.y == 0:
+		animation_player.play("Walk")
+		%Sprite2D.flip_h = true
+	
 	
 func tank_move_input(direction:SGFixedVector2):
 	facing += direction.x*turning_speed_fixed/fixed_point_factor

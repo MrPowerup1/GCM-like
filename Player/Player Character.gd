@@ -185,6 +185,7 @@ func _network_spawn(data: Dictionary) -> void:
 	#GameManager.alive_players.append(self)
 	sync_to_physics_engine()
 	anchor(true)
+	%NetworkAnimationPlayer.play("Walk")
 
 
 func _on_despawn_delay_timeout():

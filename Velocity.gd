@@ -109,7 +109,8 @@ func move_input(direction:SGFixedVector2):
 		tank_move_input(direction)
 	if movement_style == movement_styles.PLAYER:
 		player_fixed_move_input(direction)
-		animate_player_movement(direction)
+		if animate == true:
+			animate_player_movement(direction)
 	if movement_style == movement_styles.STEP:
 		step_move(direction)
 

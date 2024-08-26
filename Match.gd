@@ -70,6 +70,7 @@ func _on_SyncManager_sync_started():
 
 func _on_SyncManager_sync_stopped():
 	SyncManager.stop_logging()
+	end_match()
 
 func _on_SyncManager_sync_lost():
 	print("Lost Sync")
@@ -97,4 +98,12 @@ func start_match():
 		player_data['spawn_position_y']=positions[i].y
 		#print("Spawning player with data ",player_data)
 		var new_player = SyncManager.spawn('Player',%Players,player_scene,player_data)
-		
+	%AudioStreamPlayer.play(50)
+	%StartTimer.start()
+	$UI.start()
+
+func end_match():
+	%AudioStreamPlayer.stop()
+
+func _on_start_timer_timeout():
+	%Players.start_players()

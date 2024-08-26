@@ -19,6 +19,7 @@ func _on_start_game_panel_start_round():
 
 func _on_player_select_screen_players_unready():
 	Transition.emit(self,"PlayerSelect")
+	%BackNoise.play()
 
 
 func _on_client_peer_disconnect(id):

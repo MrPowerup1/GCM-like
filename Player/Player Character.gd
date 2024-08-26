@@ -58,6 +58,9 @@ func get_held_time(spell_index:int):
 	else:
 		return %"Status Manager".get_held_time(spell_index)
 
+func get_cast_iteration(spell_index:int):
+	%"Spell Manager".get_cast_iteration(spell_index)
+
 func set_sprite(new_sprite:Texture2D):
 	%Sprite2D.texture=new_sprite
 	
@@ -128,15 +131,12 @@ func reset():
 		unequip_spell(i)
 
 func _on_health_dead():
-	print("dead")
 	pre_despawn()
 	%DespawnDelay.start()
 
 func start_round():
-	new_auth(peer_id)
 	enable()
-	reset()
-	GameManager.alive_players.append(self)
+	GameManager.alive_players[player_index]=self
 	
 func stop_round():
 	disable()
@@ -151,16 +151,19 @@ func stop_round():
 			#"selected_level":-1
 		#}
 func _network_despawn() ->void:
-	GameManager.alive_players.erase(self)
+	GameManager.alive_players.erase(player_index)
+	print(GameManager.alive_players.size())
 	assert(%"Status Manager".get_child_count()==0,"Child")
 
 func pre_despawn()->void:
-	#print("Despawning player")
 	for status in %"Status Manager".get_children():
 		SyncManager.despawn(status)
 	#for spell in %"Spell Manager".get_children():
 		#SyncManager.despawn(spell)
 	#%"Spell Manager".slots.clear()
+	for child in get_children():
+		if child is DelayedCastInstance:
+			SyncManager.despawn(child)
 
 func _network_spawn(data: Dictionary) -> void:
 	fixed_position_x=data['spawn_position_x']
@@ -179,8 +182,10 @@ func _network_spawn(data: Dictionary) -> void:
 		var new_spell = spell_deck.get_card(spell_index).spell
 		equip_spell(new_spell,index)
 		index+=1
-	GameManager.alive_players.append(self)
+	#GameManager.alive_players.append(self)
 	sync_to_physics_engine()
+	anchor(true)
+	%NetworkAnimationPlayer.play("Walk")
 
 
 func _on_despawn_delay_timeout():

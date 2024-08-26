@@ -73,6 +73,7 @@ _data = {
 
 [node name="Fireball" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync", "pierceable"]]
 script = ExtResource("1_wc0me")
+piercing = true
 velocity = NodePath("Velocity")
 timings = Array[int]([0, 2, 4, 0])
 locations = Array[int]([2, 3, 3, 2])
@@ -97,7 +98,11 @@ one_shot = true
 
 [node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
 script = ExtResource("4_biqqo")
+movement_style = 1
+change_rotation_with_facing = true
 body = NodePath("..")
+mass_fixed = 65536
+max_speed_fixed = 655360
 
 [node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

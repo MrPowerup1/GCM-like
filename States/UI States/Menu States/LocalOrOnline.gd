@@ -16,8 +16,10 @@ func _on_local_button_down():
 	Transition.emit(self,"PlayerSelect")
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	GameManager.is_host=true
+	%SelectNoise.play()
 
 
 func _on_online_button_down():
 	Transition.emit(self,"OnlineMatchmaking")
 	SyncManager.reset_network_adaptor()
+	%SelectNoise.play()

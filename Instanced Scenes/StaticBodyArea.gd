@@ -25,7 +25,6 @@ func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	return data
 
 func _network_spawn(data: Dictionary) -> void:
-	#print("Spawning")
 	
 	fixed_position_x=data['position'].x
 	fixed_position_y=data['position'].y

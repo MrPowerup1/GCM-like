@@ -13,9 +13,11 @@ func _on_client_wait_for_peers():
 	Transition.emit(self,"WaitingForPlayers")
 
 func _on_client_loading_lobby(state):
+	%SelectNoise.play()
 	if state==true:
 		Transition.emit(self,"Loading")
 
 
 func _on_back_button_down():
+	%BackNoise.play()
 	Transition.emit(self,"LocalOrOnline")

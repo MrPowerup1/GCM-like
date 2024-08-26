@@ -64,6 +64,7 @@ func next_position() -> Vector2:
 	return spawn_vectors[player_count%spawn_vectors.size()]
 
 func add_player(local_id:int, input:Input_Keys):
+	%SelectNoise.play()
 	var player_index = GameManager.add_player(multiplayer.get_unique_id(),input)
 	var new_player = player_ui_scene.instantiate()
 	add_child(new_player)
@@ -74,6 +75,7 @@ func add_player(local_id:int, input:Input_Keys):
 
 @rpc("call_remote","any_peer")
 func add_remote_player(local_id:int):
+	%SelectNoise.play()
 	var player_index = GameManager.add_player(multiplayer.get_remote_sender_id(),null_input)
 	var new_player = player_ui_scene.instantiate()
 	add_child(new_player)
@@ -83,6 +85,7 @@ func add_remote_player(local_id:int):
 	player_count+=1
 	
 func delete_player(player:PlayerUIInput):
+	%BackNoise.play()
 	print ("System ", multiplayer.get_unique_id()," Trying to remove player")
 	if player!=null:
 		var to_del_input = player.input_keys

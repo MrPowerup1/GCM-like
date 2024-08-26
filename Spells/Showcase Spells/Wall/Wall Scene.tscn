@@ -52,6 +52,7 @@ _data = {
 }
 
 [node name="Wall" type="SGStaticBody2D" groups=["network_sync", "pierceable"]]
+collision_layer = 2
 script = ExtResource("1_yyyn0")
 timings = Array[int]([4])
 locations = Array[int]([3])

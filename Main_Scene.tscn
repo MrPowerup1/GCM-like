@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://fhwmhipqb0rd"]
+[gd_scene load_steps=8 format=3 uid="uid://fhwmhipqb0rd"]
 
 [ext_resource type="Script" path="res://Match.gd" id="1_34fhp"]
 [ext_resource type="PackedScene" uid="uid://gml8gorru1ib" path="res://UI/UI.tscn" id="1_usjvf"]
 [ext_resource type="PackedScene" uid="uid://blo8vwrgo5te8" path="res://Player/player_character.tscn" id="2_brp2j"]
 [ext_resource type="PackedScene" uid="uid://bfi3h4c85n05t" path="res://Basic_Level.tscn" id="2_phpxu"]
+[ext_resource type="Script" path="res://Player Manager.gd" id="5_krq7q"]
+[ext_resource type="AudioStream" uid="uid://b8hxwqbmg0y70" path="res://Sound/Test Music V2 (90% slow).wav" id="5_pyaxe"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="6_2ko18"]
 
 [node name="Match" type="Node2D"]
 position = Vector2(0, -1)
@@ -16,3 +19,16 @@ player_scene = ExtResource("2_brp2j")
 
 [node name="Players" type="Node" parent="."]
 unique_name_in_owner = true
+script = ExtResource("5_krq7q")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_pyaxe")
+
+[node name="StartTimer" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_2ko18")
+one_shot = true
+wait_ticks = 100
+
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

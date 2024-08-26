@@ -1,15 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=22 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
-[ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="2_umfx1"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="2_yhupi"]
+[ext_resource type="Texture2D" uid="uid://7dburm7ilnno" path="res://Player/wizard2.0-Sheet.png" id="3_5eodr"]
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
 [ext_resource type="Script" path="res://Status Manager.gd" id="3_mdj26"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="3_vaspw"]
 [ext_resource type="PackedScene" uid="uid://dgvt58ltbeh6w" path="res://Instanced Scenes/status_effect_instance.tscn" id="4_4c1wp"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
 [ext_resource type="Script" path="res://Health.gd" id="9_hrbbv"]
 [ext_resource type="PackedScene" uid="uid://knpxehglpha1" path="res://UI/player_status.tscn" id="10_3tqh8"]
+[ext_resource type="AudioStream" uid="uid://cp1l0fyhms636" path="res://Sound/Hurt_sound.wav" id="10_f1ste"]
 [ext_resource type="PackedScene" uid="uid://dgespc20acr8o" path="res://Player/player_character_input.tscn" id="10_twgyi"]
 [ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="11_yip05"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="13_aymwb"]
@@ -17,6 +19,44 @@
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_4pwhl"]
 extents_x = 513799
 extents_y = 778747
+
+[sub_resource type="Animation" id="Animation_ouvq7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wj64s"]
+resource_name = "Walk"
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_brjgp"]
+_data = {
+"RESET": SubResource("Animation_ouvq7"),
+"Walk": SubResource("Animation_wj64s")
+}
 
 [sub_resource type="Shader" id="Shader_obj0k"]
 code = "shader_type canvas_item;
@@ -50,12 +90,21 @@ skin_deck = ExtResource("2_yhupi")
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_4pwhl")
 
+[node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_brjgp")
+}
+script = ExtResource("3_vaspw")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
 texture_repeat = 1
 material = SubResource("ShaderMaterial_lbhbm")
-texture = ExtResource("2_umfx1")
+texture = ExtResource("3_5eodr")
+hframes = 12
 
 [node name="Status Manager" type="Node" parent="."]
 unique_name_in_owner = true
@@ -74,9 +123,11 @@ caster = NodePath("../..")
 caster = NodePath("../..")
 spell_index = 1
 
-[node name="Velocity" type="Node" parent="." groups=["network_sync"]]
+[node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("animation_player") groups=["network_sync"]]
 unique_name_in_owner = true
 script = ExtResource("9_hac0t")
+animate = true
+animation_player = NodePath("../NetworkAnimationPlayer")
 fixed_diagonal_velocity_difference = 65536
 fixed_angle_diff = 1000
 friction_fixed = 65536
@@ -91,6 +142,7 @@ unique_name_in_owner = true
 script = ExtResource("9_hrbbv")
 max_health = 1000
 current_health = 1000
+hurt_sound = ExtResource("10_f1ste")
 
 [node name="Player Status" parent="." instance=ExtResource("10_3tqh8")]
 unique_name_in_owner = true

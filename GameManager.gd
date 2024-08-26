@@ -10,7 +10,7 @@ var local_players = {}
 #TODO: Delete? This doesn't do much right now, just holds player unique ids (It's never checked or used during the game)
 var peers = {}
 
-var alive_players:Array[Player] =[]
+var alive_players = {}
 
 #Sync the skin deck selection for all players
 var universal_skin_deck:Deck = load("res://TestSkinDeck.tres")
@@ -19,6 +19,8 @@ var universal_spell_deck:Deck = load("res://TestSpellDeck.tres")
 
 var universal_level_deck:Deck = load("res://TestLevelDeck.tres")
 var temporary_level:PackedScene = load("res://Basic_Level.tscn")
+
+var select_sound:AudioStreamWAV
 
 var base_input = preload("res://Inputs/Base Input.tres").to_dict()
 
@@ -73,7 +75,7 @@ class PlayerData:
 			selected_spells=selected_spells,
 		}
 
-func add_player(peer_id:int,input:Input_Keys):
+func add_player(peer_id:int,input:Input_Keys)->int:
 	var player_index = get_player_id()
 	players[player_index] = default_player_dict.duplicate(true)
 	players[player_index]['peer_id']=peer_id
@@ -94,10 +96,12 @@ func load_player(player_data:Dictionary):
 		 
 
 func remove_player(player_index:int) -> bool:
+	
 	if players.has(player_index):
 		players.erase(player_index)
 		if local_players.has(player_index):
 			local_players.erase(player_index)
+		print("Removed player. player count is ",players.size())
 		return true
 	return false
 
@@ -115,3 +119,4 @@ func get_players_on_peer(peer_id:int)->Array[int]:
 		if player['peer_id']==peer_id:
 			to_return.append(players.find_key(player))
 	return to_return
+	

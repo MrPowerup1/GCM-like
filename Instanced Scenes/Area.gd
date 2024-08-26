@@ -36,13 +36,13 @@ func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	return data
 
 func _network_spawn(data: Dictionary) -> void:
-	#print("Spawning")
 	
 	fixed_position_x=data['position'].x
 	fixed_position_y=data['position'].y
 	caster = get_node(data['caster_path'])
 	if rotate_to_caster:
 		fixed_rotation = caster.get_facing()
+	spell_index=data['spell_index']
 	#if data.has('effects_paths'):
 		#effects.clear()
 		#for path in data['effects_paths']:

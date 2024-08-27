@@ -18,6 +18,7 @@ func exit():
 
 
 func _on_skin_select_exit():
+	$"../..".delete_player()
 	Transition.emit(self,"AwaitingPlayer")
 
 

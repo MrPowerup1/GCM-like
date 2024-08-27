@@ -8,7 +8,6 @@ var device_keys={Input_Keys.device_type.KEYBOARD:"kb",Input_Keys.device_type.JOY
 @export var null_input:Input_Keys
 @export var keyboard_input_1:Input_Keys
 @export var keyboard_input_2:Input_Keys
-@export var spawn_vectors:Array[Vector2]=[Vector2(100,100),Vector2(200,100),Vector2(100,200),Vector2(200,200)]
 var player_count:int =0
 
 var searching:bool=false
@@ -59,10 +58,6 @@ func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 	new_keys.device=type
 	return new_keys
 
-#TODO MAKE THIS REAl
-func next_position() -> Vector2:
-	return spawn_vectors[player_count%spawn_vectors.size()]
-
 func add_player(local_id:int, input:Input_Keys):
 	%SelectNoise.play()
 	var player_index = GameManager.add_player(multiplayer.get_unique_id(),input)
@@ -73,7 +68,7 @@ func add_player(local_id:int, input:Input_Keys):
 	player_joined.emit(new_player,player_index)
 	player_count+=1
 
-@rpc("call_remote","any_peer")
+@rpc("call_local","any_peer")
 func add_remote_player(local_id:int):
 	%SelectNoise.play()
 	var player_index = GameManager.add_player(multiplayer.get_remote_sender_id(),null_input)

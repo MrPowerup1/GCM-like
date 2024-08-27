@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://gml8gorru1ib"]
+[gd_scene load_steps=27 format=3 uid="uid://gml8gorru1ib"]
 
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
@@ -9,11 +9,8 @@
 [ext_resource type="Script" path="res://States/UI States/Menu States/LocalOrOnline.gd" id="3_46e2s"]
 [ext_resource type="PackedScene" uid="uid://vaog6h0dcfy2" path="res://UI/PlayerPanel.tscn" id="3_e8kt2"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/OnlineMatchmaking.gd" id="4_2rc4e"]
-[ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="4_6v6gd"]
-[ext_resource type="Resource" uid="uid://108qxs1oy0ow" path="res://Inputs/keyboard_right.tres" id="5_a5xvl"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/WaitingForPlayers.gd" id="5_aqwv2"]
 [ext_resource type="Script" path="res://UI/Loading.gd" id="5_lvl80"]
-[ext_resource type="Script" path="res://Player Join.gd" id="5_p0knl"]
 [ext_resource type="Script" path="res://UI/FailedToLoad.gd" id="6_40bju"]
 [ext_resource type="Script" path="res://States/UI States/Menu States/PlayerSelect.gd" id="6_wkgiu"]
 [ext_resource type="Script" path="res://UI/UserDisconnect.gd" id="7_5xc32"]
@@ -25,8 +22,6 @@
 [ext_resource type="Script" path="res://UI/EndGamePanel.gd" id="10_04730"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="10_ff2bt"]
 [ext_resource type="Shader" path="res://UI/Recolor_Shader.gdshader" id="11_e7ygd"]
-[ext_resource type="PackedScene" uid="uid://dgp1hxihvq8kt" path="res://Player/ui_player.tscn" id="12_cxwyj"]
-[ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="13_qr0bh"]
 
 [sub_resource type="Animation" id="Animation_304lq"]
 length = 0.001
@@ -192,15 +187,6 @@ script = ExtResource("8_k35gp")
 
 [node name="EndScreen" type="Node" parent="StateManager"]
 script = ExtResource("9_in05g")
-
-[node name="PlayerJoin" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("5_p0knl")
-player_ui_scene = ExtResource("12_cxwyj")
-base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])
-null_input = ExtResource("13_qr0bh")
-keyboard_input_1 = ExtResource("4_6v6gd")
-keyboard_input_2 = ExtResource("5_a5xvl")
 
 [node name="Client" type="Node" parent="."]
 unique_name_in_owner = true
@@ -408,9 +394,6 @@ size_flags_vertical = 3
 columns = 4
 script = ExtResource("1_l22ls")
 player_panel = ExtResource("3_e8kt2")
-
-[node name="PlayerPanel1" parent="SelectionUI/Player Select Menu/PlayerSelectScreen" instance=ExtResource("3_e8kt2")]
-layout_mode = 2
 
 [node name="StartGamePanel" parent="SelectionUI/Player Select Menu" instance=ExtResource("2_kslxp")]
 unique_name_in_owner = true
@@ -633,9 +616,6 @@ text = "End
 "
 
 [connection signal="timeout" from="StateManager/Loading/MaxLoadTime" to="StateManager/Loading" method="_on_max_load_time_timeout"]
-[connection signal="start_round" from="StateManager/RoundStarting" to="PlayerJoin" method="_on_round_starting_start_round"]
-[connection signal="end_round" from="StateManager/EndScreen" to="PlayerJoin" method="_on_end_screen_end_round"]
-[connection signal="player_joined" from="PlayerJoin" to="." method="_on_player_join_player_joined"]
 [connection signal="failed_to_load_lobby" from="Client" to="StateManager/Loading" method="_on_client_failed_to_load_lobby"]
 [connection signal="loading_lobby" from="Client" to="StateManager/OnlineMatchmaking" method="_on_client_loading_lobby"]
 [connection signal="loading_lobby" from="Client" to="StateManager/Loading" method="_on_client_loading_lobby"]
@@ -653,12 +633,8 @@ text = "End
 [connection signal="button_down" from="SelectionUI/OuterMargin/Matchmaking Menu/Back" to="StateManager/OnlineMatchmaking" method="_on_back_button_down"]
 [connection signal="button_down" from="SelectionUI/OuterMargin/Waiting For Connect/StartRound" to="Client" method="_on_start_round_button_down"]
 [connection signal="button_down" from="SelectionUI/OuterMargin/Waiting For Connect/Back2" to="StateManager/WaitingForPlayers" method="_on_back_2_button_down"]
-[connection signal="player_quit" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="PlayerJoin" method="delete_player"]
 [connection signal="players_ready" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="StateManager/PlayerSelect" method="_on_player_select_screen_players_ready"]
 [connection signal="players_unready" from="SelectionUI/Player Select Menu/PlayerSelectScreen" to="StateManager/RoundStarting" method="_on_player_select_screen_players_unready"]
-[connection signal="player_quit" from="SelectionUI/Player Select Menu/PlayerSelectScreen/PlayerPanel1" to="SelectionUI/Player Select Menu/PlayerSelectScreen" method="_on_player_quit"]
-[connection signal="player_ready" from="SelectionUI/Player Select Menu/PlayerSelectScreen/PlayerPanel1" to="SelectionUI/Player Select Menu/PlayerSelectScreen" method="_on_player_ready"]
-[connection signal="player_unready" from="SelectionUI/Player Select Menu/PlayerSelectScreen/PlayerPanel1" to="SelectionUI/Player Select Menu/PlayerSelectScreen" method="_on_player_unready"]
 [connection signal="start_round" from="SelectionUI/Player Select Menu/StartGamePanel" to="StateManager/RoundStarting" method="_on_start_game_panel_start_round"]
 [connection signal="button_down" from="SelectionUI/Player Select Menu/Back2" to="StateManager/PlayerSelect" method="_on_back_2_button_down"]
 [connection signal="button_down" from="SelectionUI/FailedToLoad/PanelContainer/VBoxContainer/Back3" to="StateManager/FailedToLoad" method="_on_back_3_button_down"]

@@ -56,3 +56,5 @@ size_flags_horizontal = 3
 texture = ExtResource("3_ecn24")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="Node" type="Node" parent="."]

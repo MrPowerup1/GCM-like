@@ -13,19 +13,16 @@ signal players_unready()
 signal player_quit(player:PlayerUIInput)
 
 func _ready():
-	most_recent_panel=get_child(0)
+	new_panel()
 
-#@rpc("any_peer","call_local") 
-
-func player_join(player:PlayerUIInput,player_index:int):
+func _on_player_joined():
 	if !starting and current_players < max_players:
-		most_recent_panel.player_join(player,player_index)
 		current_players+=1
 		if (current_players < max_players):
 			new_panel()
+			print(current_players)
 		else:
 			pass
-			#players_ready.emit()
 		
 	else:
 		print ("Too many players")	
@@ -46,7 +43,7 @@ func _on_player_ready():
 			if panel is PlayerPanel and !((panel as PlayerPanel).now_ready):# or (panel as PlayerPanel).current_style==PlayerPanel.style.AWAIT_PLAYER):
 				return
 		for panel in get_children():
-			if panel is PlayerPanel and (panel as PlayerPanel).current_player == null:
+			if panel is PlayerPanel and !(panel as PlayerPanel).attached_player:
 				panel.queue_free()
 		players_ready.emit()
 		starting=true
@@ -65,9 +62,14 @@ func new_panel():
 		most_recent_panel.player_ready.connect(_on_player_ready)
 		most_recent_panel.player_quit.connect(_on_player_quit)
 		most_recent_panel.player_unready.connect(_on_player_unready)
+		most_recent_panel.player_joined.connect(_on_player_joined)
 
-func reset_panels():
-	for child in get_children():
-		if child is PlayerPanel and child.now_ready:
-			#print("resetting")
-			(child as PlayerPanel).reset()
+#func reset_panels():
+	#for child in get_children():
+		#if child is PlayerPanel and child.now_ready:
+			##print("resetting")
+			#(child as PlayerPanel).reset()
+
+
+func _on_player_panel_1_player_joined():
+	pass # Replace with function body.

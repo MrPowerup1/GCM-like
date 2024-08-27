@@ -111,6 +111,10 @@ func add_player(input:Input_Keys):
 	if input.device==Input_Keys.device_type.JOYSTICK:
 		%ControlType.texture=joystick
 	%ControlType.visible=true
+	%Label.text=str(player_index)
+	%SkinSelect.player_index=player_index
+	%SpellSelect1.player_index=player_index
+	%SpellSelect2.player_index=player_index
 
 @rpc("call_remote","any_peer")
 func add_remote_player():
@@ -121,6 +125,10 @@ func add_remote_player():
 	player_joined.emit()
 	%ControlType.texture=remote
 	%ControlType.visible=true
+	%Label.text=str(player_index)
+	%SkinSelect.player_index=player_index
+	%SpellSelect1.player_index=player_index
+	%SpellSelect2.player_index=player_index
 	
 func delete_player():
 	print ("System ", multiplayer.get_unique_id()," Trying to remove player")

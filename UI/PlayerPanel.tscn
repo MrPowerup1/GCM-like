@@ -42,16 +42,20 @@ unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="ControlType" type="TextureRect" parent="MarginContainer/Unselected"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Unselected"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/Unselected/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ControlType" type="TextureRect" parent="MarginContainer/Unselected/HBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 texture = ExtResource("3_3tkxd")
 stretch_mode = 4
-
-[node name="Label" type="Label" parent="MarginContainer/Unselected"]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="Selected" type="VBoxContainer" parent="MarginContainer/Unselected"]
 unique_name_in_owner = true

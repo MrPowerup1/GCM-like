@@ -159,6 +159,7 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayerCharacterInput" parent="." node_paths=PackedStringArray("velocity") instance=ExtResource("10_twgyi")]
 unique_name_in_owner = true

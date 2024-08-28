@@ -1,8 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=24 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="2_yhupi"]
-[ext_resource type="Texture2D" uid="uid://7dburm7ilnno" path="res://Player/wizard2.0-Sheet.png" id="3_5eodr"]
+[ext_resource type="Texture2D" uid="uid://cr8g3kcq2fj8" path="res://Player/wizard2.0-Sheet.png" id="3_5eodr"]
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
 [ext_resource type="Script" path="res://Status Manager.gd" id="3_mdj26"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="3_vaspw"]
@@ -20,6 +20,38 @@
 extents_x = 513799
 extents_y = 778747
 
+[sub_resource type="Animation" id="Animation_fdsuh"]
+resource_name = "Cast1"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_jodjb"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+
 [sub_resource type="Animation" id="Animation_ouvq7"]
 length = 0.001
 tracks/0/type = "value"
@@ -32,7 +64,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [8]
 }
 
 [sub_resource type="Animation" id="Animation_wj64s"]
@@ -54,6 +86,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_brjgp"]
 _data = {
+"Cast1": SubResource("Animation_fdsuh"),
+"Idle": SubResource("Animation_jodjb"),
 "RESET": SubResource("Animation_ouvq7"),
 "Walk": SubResource("Animation_wj64s")
 }
@@ -104,7 +138,8 @@ texture_filter = 1
 texture_repeat = 1
 material = SubResource("ShaderMaterial_lbhbm")
 texture = ExtResource("3_5eodr")
-hframes = 12
+hframes = 16
+frame = 8
 
 [node name="Status Manager" type="Node" parent="."]
 unique_name_in_owner = true
@@ -134,7 +169,7 @@ friction_fixed = 65536
 mass_fixed = 65536
 acceleration_fixed = 65536
 cut_accel_fixed = 65536
-max_speed_fixed = 262144
+max_speed_fixed = 131072
 turning_speed_fixed = 6556
 
 [node name="Health" type="Node" parent="."]

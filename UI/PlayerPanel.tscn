@@ -64,7 +64,6 @@ size_flags_vertical = 3
 
 [node name="SkinSelect" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 cards = ExtResource("3_0638b")
 
@@ -137,6 +136,9 @@ script = ExtResource("12_o16sc")
 
 [node name="Ready" type="Node" parent="StateManager"]
 script = ExtResource("13_a4768")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
 
 [connection signal="exit" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_exit"]
 [connection signal="next" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_next"]

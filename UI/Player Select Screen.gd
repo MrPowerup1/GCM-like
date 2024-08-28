@@ -28,15 +28,15 @@ func _on_player_joined():
 		print ("Too many players")	
 
 
-func _on_player_quit(player:PlayerUIInput):
+func _on_player_quit():
 	current_players-=1
 	#print("Player Quit")
-	player_quit.emit(player)
 	#Timer because there seemed to be a race condition on signal emissions
 	await get_tree().create_timer(0.1).timeout
 	_on_player_ready()
 
 func _on_player_ready():
+	print(current_players)
 	if current_players >= min_players:
 		print("a player is ready")
 		for panel in get_children():

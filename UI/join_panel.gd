@@ -29,6 +29,7 @@ func down():
 @rpc("any_peer","call_local")
 func select():
 	next.emit()
+	accepting_input=false
 @rpc("any_peer","call_local")
 func back():
 	pass
@@ -36,8 +37,8 @@ func back():
 
 func new_player(input:Input_Keys):
 	player_joined.emit(input)
-	next.emit()
-	accepting_input=false
+	select.rpc()
+	
 
 func _unhandled_input(event):
 	if accepting_input:

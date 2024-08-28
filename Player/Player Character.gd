@@ -40,17 +40,20 @@ func activate(index:int):
 	if can_cast[index]:
 		%"Spell Manager".activate.rpc(index)
 		spell_activated.emit(index)
+		%NetworkAnimationPlayer.play("Cast1")
 
 func release(index:int):
 	if can_release[index]:
 		%"Spell Manager".release.rpc(index)
 		spell_released.emit(index)
+		#%NetworkAnimationPlayer.play("Idle")
 	
 func add_status_effect(status:Status_Type,caster:Player):
 	%"Status Manager".new_status(status,caster)
 	
 func anchor (set_anchor:bool=true):
 	%Velocity.anchor(set_anchor)
+	#%NetworkAnimationPlayer.play("Idle")
 
 func get_held_time(spell_index:int):
 	if spell_index < num_spells:

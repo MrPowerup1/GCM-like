@@ -115,6 +115,10 @@ func add_player(input:Input_Keys):
 	%SkinSelect.player_index=player_index
 	%SpellSelect1.player_index=player_index
 	%SpellSelect2.player_index=player_index
+	%SkinSelect.cards=GameManager.universal_skin_deck
+	var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
+	%SpellSelect1.cards=spell_deck
+	%SpellSelect2.cards=spell_deck
 
 @rpc("call_remote","any_peer")
 func add_remote_player():
@@ -129,6 +133,10 @@ func add_remote_player():
 	%SkinSelect.player_index=player_index
 	%SpellSelect1.player_index=player_index
 	%SpellSelect2.player_index=player_index
+	%SkinSelect.cards=GameManager.universal_skin_deck
+	var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
+	%SpellSelect1.cards=spell_deck
+	%SpellSelect2.cards=spell_deck
 	
 func delete_player():
 	print ("System ", multiplayer.get_unique_id()," Trying to remove player")

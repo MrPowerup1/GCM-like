@@ -2,19 +2,17 @@ extends PanelContainer
 class_name PlayerPanel
 
 
-enum style {AWAIT_PLAYER,SKIN_SELECT,SPELL_SELECT1,SPELL_SELECT2,PLAYER_READY}
-var current_style:style = style.AWAIT_PLAYER
+#enum style {AWAIT_PLAYER,SKIN_SELECT,SPELL_SELECT1,SPELL_SELECT2,PLAYER_READY}
+#var current_style:style = style.AWAIT_PLAYER
 var attached_player:bool = false
 var now_ready:bool = false
-var active_panel:Control
+#var active_panel:Control
 var reading_inputs:bool = true
 var cooldown_ready:bool = true
 var card_select_list:Array
-var null_input:Input_Keys = load("res://Inputs/Null Input.tres")
+
 @export var card_scene:PackedScene
-@export var keyboard:Texture2D
-@export var joystick:Texture2D
-@export var remote:Texture2D
+
 
 signal player_quit(player:PlayerUIInput)
 signal player_ready()
@@ -55,26 +53,26 @@ signal player_joined()
 
 
 func directional_input(direction:Vector2):
-	if cooldown_ready and reading_inputs and active_panel != null:
+	if cooldown_ready and reading_inputs:
 		cooldown_ready=false
 		%InputCooldown.start()
 		if direction.x >0:
-			active_panel.right.rpc()
+			%Displays.active_panel.right.rpc()
 		if direction.x < 0:
-			active_panel.left.rpc()
+			%Displays.active_panel.left.rpc()
 		if direction.y < 0:
-			active_panel.up.rpc()
+			%Displays.active_panel.up.rpc()
 		if direction.y > 0:
-			active_panel.down.rpc()	
+			%Displays.active_panel.down.rpc()	
 
 func button_input(button_index:int):
-	if cooldown_ready and reading_inputs and active_panel != null:
+	if cooldown_ready and reading_inputs:
 		cooldown_ready=false
 		%InputCooldown.start()
 		if button_index == 0:
-			active_panel.select.rpc()
+			%Displays.active_panel.select.rpc()
 		if button_index == 1:
-			active_panel.back.rpc()
+			%Displays.active_panel.back.rpc()
 
 
 func select(panel:CardSelectPanel):
@@ -98,45 +96,43 @@ func _on_input_cooldown_timeout():
 
 
 
-func add_player(input:Input_Keys):
+func add_player():#input:Input_Keys):
 	attached_player=true
-	var player_index = GameManager.add_player(multiplayer.get_unique_id(),input)
-	%PlayerUIInput.input_keys = input
-	%PlayerUIInput.player_index = player_index
+	#var player_index = GameManager.add_player(multiplayer.get_unique_id(),input)
+	#%PlayerUIInput.input_keys = input
+	#%PlayerUIInput.player_index = player_index
 	%PlayerUIInput.button_activate.connect(button_input)
 	%PlayerUIInput.direction_pressed.connect(directional_input)
 	player_joined.emit()
-	if input.device==Input_Keys.device_type.KEYBOARD:
-		%ControlType.texture=keyboard
-	if input.device==Input_Keys.device_type.JOYSTICK:
-		%ControlType.texture=joystick
-	%ControlType.visible=true
-	%Label.text=str(player_index)
-	%SkinSelect.player_index=player_index
-	%SpellSelect1.player_index=player_index
-	%SpellSelect2.player_index=player_index
-	%SkinSelect.cards=GameManager.universal_skin_deck
-	var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
-	%SpellSelect1.cards=spell_deck
-	%SpellSelect2.cards=spell_deck
-
-@rpc("call_remote","any_peer")
-func add_remote_player():
-	attached_player=true
-	var player_index = GameManager.add_player(multiplayer.get_remote_sender_id(),null_input)
-	%PlayerUIInput.input_keys = null_input
-	%PlayerUIInput.player_index = player_index
-	player_joined.emit()
-	%ControlType.texture=remote
-	%ControlType.visible=true
-	%Label.text=str(player_index)
-	%SkinSelect.player_index=player_index
-	%SpellSelect1.player_index=player_index
-	%SpellSelect2.player_index=player_index
-	%SkinSelect.cards=GameManager.universal_skin_deck
-	var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
-	%SpellSelect1.cards=spell_deck
-	%SpellSelect2.cards=spell_deck
+	#if input.device==Input_Keys.device_type.KEYBOARD:
+		#%ControlType.texture=keyboard
+	#if input.device==Input_Keys.device_type.JOYSTICK:
+		#%ControlType.texture=joystick
+	#%ControlType.visible=true
+	#%Label.text=str(player_index)
+	%Displays.player_joined(%PlayerUIInput.player_index)
+	#%SkinSelect.cards=GameManager.universal_skin_deck
+	#var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
+	#%SpellSelect1.cards=spell_deck
+	#%SpellSelect2.cards=spell_deck
+#
+#@rpc("call_remote","any_peer")
+#func add_remote_player():
+	#attached_player=true
+	#var player_index = GameManager.add_player(multiplayer.get_remote_sender_id(),null_input)
+	##%PlayerUIInput.input_keys = null_input
+	##%PlayerUIInput.player_index = player_index
+	#player_joined.emit()
+	#%ControlType.texture=remote
+	##%ControlType.visible=true
+	##%Label.text=str(player_index)
+	##%SkinSelect.player_index=player_index
+	##%SpellSelect1.player_index=player_index
+	##%SpellSelect2.player_index=player_index
+	##%SkinSelect.cards=GameManager.universal_skin_deck
+	##var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
+	##%SpellSelect1.cards=spell_deck
+	##%SpellSelect2.cards=spell_deck
 	
 func delete_player():
 	print ("System ", multiplayer.get_unique_id()," Trying to remove player")
@@ -146,8 +142,22 @@ func delete_player():
 	else:
 		print ("Couldn't find player at index ",%PlayerUIInput.player_index)
 	player_quit.emit()
+	attached_player=false
 	queue_free()
 
-func _on_await_player_player_joined(input:Input_Keys):
-	add_player(input)
-	add_remote_player.rpc()
+func _on_await_player_player_joined():
+	add_player()
+
+
+func _on_await_player_player_quit():
+	delete_player()
+
+
+func _on_player_ready_player_ready():
+	now_ready=true
+	player_ready.emit()
+
+
+func _on_player_ready_player_unready():
+	now_ready=false
+	player_unready.emit()

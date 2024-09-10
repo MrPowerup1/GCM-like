@@ -155,13 +155,22 @@ starting_state = NodePath("LocalOrOnline")
 
 [node name="LocalOrOnline" type="Node" parent="StateManager"]
 script = ExtResource("3_46e2s")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="OnlineMatchmaking" type="Node" parent="StateManager"]
 script = ExtResource("4_2rc4e")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="Loading" type="Node" parent="StateManager" node_paths=PackedStringArray("timer")]
 script = ExtResource("5_lvl80")
 timer = NodePath("MaxLoadTime")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="MaxLoadTime" type="Timer" parent="StateManager/Loading"]
 wait_time = 2.0
@@ -169,24 +178,44 @@ one_shot = true
 
 [node name="FailedToLoad" type="Node" parent="StateManager"]
 script = ExtResource("6_40bju")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="UserDisconnect" type="Node" parent="StateManager"]
 script = ExtResource("7_5xc32")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="WaitingForPlayers" type="Node" parent="StateManager"]
 script = ExtResource("5_aqwv2")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="PlayerSelect" type="Node" parent="StateManager"]
 script = ExtResource("6_wkgiu")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="RoundStarting" type="Node" parent="StateManager"]
 script = ExtResource("7_ooc61")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="RoundInProgress" type="Node" parent="StateManager"]
 script = ExtResource("8_k35gp")
+do_process = false
+do_network_process = false
 
 [node name="EndScreen" type="Node" parent="StateManager"]
 script = ExtResource("9_in05g")
+do_process = false
+do_physics_process = false
+do_network_process = false
 
 [node name="Client" type="Node" parent="."]
 unique_name_in_owner = true

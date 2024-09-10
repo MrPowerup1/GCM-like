@@ -33,21 +33,31 @@ func _on_player_quit():
 	#print("Player Quit")
 	#Timer because there seemed to be a race condition on signal emissions
 	await get_tree().create_timer(0.1).timeout
-	_on_player_ready()
+	check_all_ready()
 
 func _on_player_ready():
-	print(current_players)
+	check_all_ready()
+
+func check_all_ready():
+	print("Checking ready")
 	if current_players >= min_players:
-		print("a player is ready")
+		print("enough players")
+		#print("a player is ready")
 		for panel in get_children():
-			if panel is PlayerPanel and !((panel as PlayerPanel).now_ready):# or (panel as PlayerPanel).current_style==PlayerPanel.style.AWAIT_PLAYER):
-				return
-		for panel in get_children():
-			if panel is PlayerPanel and !(panel as PlayerPanel).attached_player:
-				panel.queue_free()
+			if panel is PlayerPanel: 
+				if ((panel as PlayerPanel).now_ready):
+					pass
+				elif !(panel as PlayerPanel).attached_player:
+					print("player removed")
+					panel.queue_free()
+				else:
+					print("not all players ready")
+					return
+		print("All Players READY!!!!")
 		players_ready.emit()
 		starting=true
-
+	else:
+		print("not_enough players")
 func _on_player_unready():
 	if starting and current_players < max_players:
 		new_panel()

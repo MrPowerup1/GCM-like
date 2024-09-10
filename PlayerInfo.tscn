@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0ya1pk5ik0ea"]
+
+[ext_resource type="Texture2D" uid="uid://tix6kusiwno1" path="res://Inputs/signal3.png" id="1_3jhs6"]
+[ext_resource type="Script" path="res://PlayerInfo.gd" id="1_iaw8y"]
+[ext_resource type="Texture2D" uid="uid://b3maf2r474n4c" path="res://Inputs/keyboard_arrows.png" id="2_5s2sr"]
+[ext_resource type="Texture2D" uid="uid://b37xc8chubxkx" path="res://Inputs/controller_xboxone.png" id="3_3gmuc"]
+
+[node name="PlayerInfo" type="HBoxContainer" node_paths=PackedStringArray("player_index_label", "player_control_texture")]
+alignment = 1
+script = ExtResource("1_iaw8y")
+keyboard = ExtResource("2_5s2sr")
+joystick = ExtResource("3_3gmuc")
+remote = ExtResource("1_3jhs6")
+player_index_label = NodePath("Label")
+player_control_texture = NodePath("ControlType")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ControlType" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("1_3jhs6")
+stretch_mode = 4

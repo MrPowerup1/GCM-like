@@ -50,6 +50,10 @@ func release(index:int):
 	
 func add_status_effect(status:Status_Type,caster:Player):
 	%"Status Manager".new_status(status,caster)
+	#%"Player Status".new_status(status)
+	
+func new_status_visual(visual:StatusIcon):
+	%"Player Status".new_status(visual)
 	
 func anchor (set_anchor:bool=true):
 	%Velocity.anchor(set_anchor)

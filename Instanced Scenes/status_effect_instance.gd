@@ -6,20 +6,21 @@ var original_caster:Player
 var affected_player:Player
 var time_start:int
 var status_index:int
+var visual:StatusIcon
 #var held_time:float
 
 # Called when the node enters the scene tree for the first time.
-func initialize(new_status:Status_Type,caster:Player,target:Player,index:int):
-	status=new_status
-	original_caster=caster
-	affected_player= target
-	time_start=Time.get_ticks_msec()
-	status_index=index
-	$End_Time.wait_ticks=status.total_effect_time
-	if (status.ping_time!=0):
-		$Ping_Time.wait_time=status.ping_time
-	$End_Time.start()
-	activate()
+#func initialize(new_status:Status_Type,caster:Player,target:Player,index:int):
+	#status=new_status
+	#original_caster=caster
+	#affected_player= target
+	#time_start=Time.get_ticks_msec()
+	#status_index=index
+	#$End_Time.wait_ticks=status.total_effect_time
+	#if (status.ping_time!=0):
+		#$Ping_Time.wait_time=status.ping_time
+	#$End_Time.start()
+	#activate()
 	
 func activate():
 	status.activate(original_caster,status_index)
@@ -43,9 +44,14 @@ func get_held_time():
 func _on_end_time_timeout():
 	release()
 
+func _on_percent_time_timeout():
+	if visual!=null and status.display_visual:
+		visual._on_percent_timer_timeout()
 
 func _on_ping_time_timeout():
 	status.held(original_caster,status_index)
+	if visual!=null  and status.display_visual:
+		visual._on_ping_timer_timeout()
 
 func lower_index():
 	status_index-=1
@@ -63,10 +69,16 @@ func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	data.erase('caster')
 	data['effected_player_path'] = data['effected_player'].get_path()
 	data.erase('effected_player')
+	
 	return data
 
 
-
+func _network_despawn():
+	if status.display_visual:
+		$Percent_Time.stop()
+		$End_Time.stop()
+		$Ping_Time.stop()
+		visual.queue_free()
 
 func _network_spawn(data: Dictionary) -> void:
 	original_caster = get_node(data['caster_path'])
@@ -82,7 +94,14 @@ func _network_spawn(data: Dictionary) -> void:
 	affected_player=get_node(data['effected_player_path'])
 	status_index=data['index']
 	$End_Time.wait_ticks=status.total_effect_time
+	$Percent_Time.wait_ticks=status.total_effect_time/10
 	if (status.ping_time!=0):
 		$Ping_Time.wait_time=status.ping_time
 	$End_Time.start()
+	$Percent_Time.start()
+	if status.display_visual:
+		visual=status.status_visual.instantiate()
+		affected_player.new_status_visual(visual)
 	activate()
+
+

@@ -30,6 +30,11 @@ var x_vals = [x_0,x_15,x_30,x_45,x_60,x_75,x_90]
 var y_vals = [y_0,y_15,y_30,y_45,y_60,y_75,y_90]
 var a_vals = [a_0,a_15,a_30,a_45,a_60,a_75,a_90]
 
+var ticks_per_sec =ProjectSettings.get_setting("physics/common/physics_ticks_per_second")
+
+#func _ready():
+	#ticks_per_sec=
+
 func get_unit_at_angle(angle:int) ->SGFixedVector2:
 	#print ("Getting vector of angle ",angle)
 	var x_sign = 1
@@ -69,3 +74,9 @@ func find_closest_angle_index(angle:int) ->int:
 				return i-1
 	printerr ("Angle too large")
 	return -1
+
+func ticks_to_sec(ticks:int) -> float:
+	return float(ticks)/ticks_per_sec
+
+func secs_to_tick(secs:float)-> int:
+	return int(secs*ticks_per_sec)

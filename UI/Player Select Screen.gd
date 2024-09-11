@@ -36,6 +36,7 @@ func _on_player_quit():
 	check_all_ready()
 
 func _on_player_ready():
+	await get_tree().create_timer(0.1).timeout
 	check_all_ready()
 
 func check_all_ready():

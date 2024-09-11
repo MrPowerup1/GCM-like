@@ -6,6 +6,9 @@
 [node name="Status Effect Instance" type="Node"]
 script = ExtResource("1_h7x1q")
 
+[node name="Percent_Time" type="Node" parent="."]
+script = ExtResource("2_jr7we")
+
 [node name="End_Time" type="Node" parent="."]
 script = ExtResource("2_jr7we")
 one_shot = true
@@ -13,5 +16,6 @@ one_shot = true
 [node name="Ping_Time" type="Node" parent="."]
 script = ExtResource("2_jr7we")
 
+[connection signal="timeout" from="Percent_Time" to="." method="_on_percent_time_timeout"]
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

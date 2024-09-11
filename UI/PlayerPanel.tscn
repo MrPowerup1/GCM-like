@@ -56,7 +56,6 @@ player = NodePath("../../../../PlayerUIInput")
 
 [node name="SkinSelect" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("2_kbems")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 current_deck_type = 2
 cards = ExtResource("3_0638b")
@@ -64,7 +63,6 @@ display_location = NodePath("../../Permanent Selections")
 
 [node name="SpellSelect1" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("2_kbems")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 current_deck_type = 1
 cards = ExtResource("4_0wvmp")
@@ -72,7 +70,6 @@ display_location = NodePath("../../Temporary Selections")
 
 [node name="SpellSelect2" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("2_kbems")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 current_deck_type = 1
 cards = ExtResource("4_0wvmp")

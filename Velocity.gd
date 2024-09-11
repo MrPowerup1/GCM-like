@@ -8,7 +8,7 @@ var velocity:SGFixedVector2 = SGFixedVector2.new()
 var facing:int
 var fixed_zero =SGFixed.vector2(0,0)
 #Currently implemented: Player
-enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,STEP}
+enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,STEP,PATH}
 @export var movement_style:movement_styles
 @export var animate:bool
 @export var animation_player:AnimationPlayer

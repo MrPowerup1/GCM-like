@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=22 format=3 uid="uid://bspowubtcgf6b"]
+[gd_resource type="Theme" load_steps=23 format=3 uid="uid://bspowubtcgf6b"]
 
 [ext_resource type="FontFile" uid="uid://dxyf6qblynmf5" path="res://minecraft-font/MinecraftRegular-Bmg3.otf" id="1_mqobe"]
 [ext_resource type="Texture2D" uid="uid://bcaqscfm6rmmy" path="res://Art/Borders.png" id="2_87rcu"]
@@ -70,6 +70,9 @@ texture_margin_top = 2.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2n5c4"]
+bg_color = Color(0.6, 0.6, 0.6, 0.6)
+
 [resource]
 BackButton/base_type = &"Button"
 BackButton/font_sizes/font_size = 20
@@ -108,3 +111,5 @@ Panel2/styles/panel = SubResource("StyleBoxTexture_g8via")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_mk42h")
 SpellPanel/base_type = &"PanelContainer"
 SpellPanel/styles/panel = SubResource("StyleBoxTexture_x6nm1")
+StatusBar/base_type = &"ProgressBar"
+StatusBar/styles/fill = SubResource("StyleBoxFlat_2n5c4")

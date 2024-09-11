@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bii3s3vwoui3b"
-path="res://.godot/imported/wizard2.0-Sheet.png-a5e0279dd8fd2f96e8ec336fb9c90810.ctex"
+uid="uid://bus77gjnm5x8l"
+path="res://.godot/imported/Status Icons.png-36f53be26879086a941bd19fcccd31cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/wizard2.0-Sheet.png"
-dest_files=["res://.godot/imported/wizard2.0-Sheet.png-a5e0279dd8fd2f96e8ec336fb9c90810.ctex"]
+source_file="res://Art/Status Icons.png"
+dest_files=["res://.godot/imported/Status Icons.png-36f53be26879086a941bd19fcccd31cc.ctex"]
 
 [params]
 

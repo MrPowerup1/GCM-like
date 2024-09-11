@@ -13,7 +13,8 @@ enum effect_time {on_activate,on_held,on_release}
 #the held function will be called repeatedly while still held, based on timer
 @export var ping_time:int
 @export var total_effect_time:int
-
+@export var display_visual:bool
+@export var status_visual:PackedScene
 
 func activate(caster:Player,spell_index:int):
 	if(on_activate!=null):

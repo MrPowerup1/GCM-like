@@ -49,11 +49,8 @@ func release(index:int):
 		#%NetworkAnimationPlayer.play("Idle")
 	
 func add_status_effect(status:Status_Type,caster:Player):
-	%"Status Manager".new_status(status,caster)
-	#%"Player Status".new_status(status)
+	%"Player Status".new_status(status,caster)
 	
-func new_status_visual(visual:StatusIcon):
-	%"Player Status".new_status(visual)
 	
 func anchor (set_anchor:bool=true):
 	%Velocity.anchor(set_anchor)
@@ -63,7 +60,7 @@ func get_held_time(spell_index:int):
 	if spell_index < num_spells:
 		return %"Spell Manager".get_held_time(spell_index)
 	else:
-		return %"Status Manager".get_held_time(spell_index)
+		return %"Player Status".get_held_time(spell_index)
 
 func get_cast_iteration(spell_index:int):
 	%"Spell Manager".get_cast_iteration(spell_index)
@@ -75,7 +72,7 @@ func set_release_permission(index:int, state:bool):
 	can_release[index]=state
 
 func clear_status(index:int):
-	%"Status Manager".clear_status(index-num_spells)
+	%"Player Status".clear_status(index)
 
 func enable():
 	visible=true
@@ -160,14 +157,10 @@ func stop_round():
 func _network_despawn() ->void:
 	GameManager.alive_players.erase(player_index)
 	print(GameManager.alive_players.size())
-	assert(%"Status Manager".get_child_count()==0,"Child")
+	#assert(%"Player Status".get_child_count()==0,"Child")
 
 func pre_despawn()->void:
-	for status in %"Status Manager".get_children():
-		SyncManager.despawn(status)
-	#for spell in %"Spell Manager".get_children():
-		#SyncManager.despawn(spell)
-	#%"Spell Manager".slots.clear()
+	%"Player Status".clear_status()
 	for child in get_children():
 		if child is DelayedCastInstance:
 			SyncManager.despawn(child)

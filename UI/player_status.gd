@@ -20,9 +20,16 @@ func init_health(_health):
 	%DamageBar.value=health
 	%DamageBar.max_value=health
 
-func new_status(status:StatusIcon):
-	%StatusDisplay.add_child(status)
-	print("A new status has touched the beacon")
+func new_status(status:Status_Type,caster:Player):
+	%StatusManager.new_status(status,caster)
+	#print("A new status has touched the beacon")
+
+func get_held_time(index:int):
+	return %StatusManager.get_held_time(index)
+
+func clear_status(index:int = -1):
+	%StatusManager.clear_status(index)
+
 
 func _on_damage_delay_timeout():
 	%DamageBar.value = health

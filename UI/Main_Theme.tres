@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=23 format=3 uid="uid://bspowubtcgf6b"]
+[gd_resource type="Theme" load_steps=25 format=3 uid="uid://bspowubtcgf6b"]
 
 [ext_resource type="FontFile" uid="uid://dxyf6qblynmf5" path="res://minecraft-font/MinecraftRegular-Bmg3.otf" id="1_mqobe"]
 [ext_resource type="Texture2D" uid="uid://bcaqscfm6rmmy" path="res://Art/Borders.png" id="2_87rcu"]
 [ext_resource type="Texture2D" uid="uid://c8yhmloay15ws" path="res://Art/Borders_dark.png" id="3_tnna5"]
+[ext_resource type="Texture2D" uid="uid://cq1hyfyjhj5hv" path="res://Art/simple_outline.png" id="4_3dfce"]
 [ext_resource type="Texture2D" uid="uid://caw8icl8kqw4e" path="res://Art/scroll_try.png" id="4_47qgu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h4u5"]
@@ -63,6 +64,14 @@ texture_margin_top = 4.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mqj0m"]
+texture = ExtResource("4_3dfce")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+draw_center = false
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x6nm1"]
 texture = ExtResource("4_47qgu")
 texture_margin_left = 8.0
@@ -109,6 +118,8 @@ MarginContainer/constants/margin_top = 32
 Panel2/base_type = &"PanelContainer"
 Panel2/styles/panel = SubResource("StyleBoxTexture_g8via")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_mk42h")
+SimplePanelContainer/base_type = &"PanelContainer"
+SimplePanelContainer/styles/panel = SubResource("StyleBoxTexture_mqj0m")
 SpellPanel/base_type = &"PanelContainer"
 SpellPanel/styles/panel = SubResource("StyleBoxTexture_x6nm1")
 StatusBar/base_type = &"ProgressBar"

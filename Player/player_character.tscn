@@ -1,12 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=22 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="2_yhupi"]
 [ext_resource type="Texture2D" uid="uid://bii3s3vwoui3b" path="res://Player/wizard2.0-Sheet.png" id="3_5eodr"]
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
-[ext_resource type="Script" path="res://Status Manager.gd" id="3_mdj26"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="3_vaspw"]
-[ext_resource type="PackedScene" uid="uid://dgvt58ltbeh6w" path="res://Instanced Scenes/status_effect_instance.tscn" id="4_4c1wp"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
 [ext_resource type="Script" path="res://Health.gd" id="9_hrbbv"]
@@ -141,11 +139,6 @@ texture = ExtResource("3_5eodr")
 hframes = 16
 frame = 8
 
-[node name="Status Manager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("3_mdj26")
-status_instance_scene = ExtResource("4_4c1wp")
-
 [node name="Spell Manager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
@@ -186,10 +179,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -33.0
-offset_right = 34.0
-offset_bottom = -17.0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4

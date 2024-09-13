@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://knpxehglpha1"]
+[gd_scene load_steps=4 format=3 uid="uid://knpxehglpha1"]
 
 [ext_resource type="Script" path="res://UI/player_status.gd" id="1_kqv04"]
+[ext_resource type="Script" path="res://Status Manager.gd" id="2_cgwpo"]
+[ext_resource type="PackedScene" uid="uid://7vljt807aqsj" path="res://status_icon.tscn" id="3_ynj70"]
 
 [node name="Player Status" type="PanelContainer"]
 texture_filter = 1
@@ -16,6 +18,8 @@ layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"SimplePanelContainer"
 
 [node name="HealthDisplay" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
 layout_mode = 2
@@ -50,9 +54,12 @@ theme_type_variation = &"HealthBar"
 value = 60.0
 show_percentage = false
 
-[node name="StatusDisplay" type="GridContainer" parent="VBoxContainer"]
+[node name="StatusManager" type="GridContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 8)
 layout_mode = 2
-columns = 5
+columns = 4
+script = ExtResource("2_cgwpo")
+status_instance_scene = ExtResource("3_ynj70")
 
 [connection signal="timeout" from="VBoxContainer/PanelContainer/HealthDisplay/DamageDelay" to="." method="_on_damage_delay_timeout"]

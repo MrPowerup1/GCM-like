@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://UI/player_status.gd" id="1_kqv04"]
 [ext_resource type="Script" path="res://Status Manager.gd" id="2_cgwpo"]
-[ext_resource type="PackedScene" uid="uid://7vljt807aqsj" path="res://status_icon.tscn" id="3_ynj70"]
+[ext_resource type="PackedScene" uid="uid://7vljt807aqsj" path="res://Instanced Scenes/status_effect_instance.tscn" id="3_ynj70"]
 
 [node name="Player Status" type="PanelContainer"]
 texture_filter = 1

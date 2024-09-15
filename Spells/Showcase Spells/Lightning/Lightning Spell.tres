@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=15 format=3 uid="uid://b5c7fqhh26351"]
+[gd_resource type="Resource" script_class="Spell" load_steps=16 format=3 uid="uid://b5c7fqhh26351"]
 
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_3y4ul"]
 [ext_resource type="PackedScene" uid="uid://bh4weje2v8gsg" path="res://Spells/Showcase Spells/Lightning/Lightning Target.tscn" id="1_ssjsa"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="2_4ydna"]
 [ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="3_ipau1"]
@@ -39,7 +40,7 @@ delayed_cast_instance = ExtResource("5_dpvco")
 [resource]
 script = ExtResource("8_jcmvn")
 timings = Array[int]([0, 0, 2, 2])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ui2my"), SubResource("Resource_vxdoe"), SubResource("Resource_86lbr"), SubResource("Resource_4r38f")])
+effects = Array[ExtResource("1_3y4ul")]([SubResource("Resource_ui2my"), SubResource("Resource_vxdoe"), SubResource("Resource_86lbr"), SubResource("Resource_4r38f")])
 ping_asap = false
 held_ping_time = 0
 cooldown_on_activate = false

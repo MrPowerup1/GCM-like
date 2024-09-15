@@ -27,7 +27,7 @@ func clear_status(index:int=-1):
 			if (i==index):
 				SyncManager.despawn(get_child(i))
 			elif (i>index):
-				get_child(i).lower_index()
+				get_child(i).status_index=i
 	else:
 		for i in range(get_child_count()):
 			SyncManager.despawn(get_child(i))

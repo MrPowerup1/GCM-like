@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Status_Type" load_steps=6 format=3 uid="uid://bmkf8oop3u1a"]
+[gd_resource type="Resource" script_class="Status_Type" load_steps=7 format=3 uid="uid://bmkf8oop3u1a"]
 
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_8vexc"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="1_ry2v1"]
 [ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="2_6utit"]
 [ext_resource type="Texture2D" uid="uid://bx1fpsdg4yf6x" path="res://Spells/Showcase Spells/Lightning/Lightning-Icon.png" id="2_ukqtb"]
@@ -21,7 +22,7 @@ friction_factor = 0
 [resource]
 script = ExtResource("2_6utit")
 timings = Array[int]([0, 2])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
+effects = Array[ExtResource("1_8vexc")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
 ping_time = 0
 total_effect_time = 60
 status_visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=23 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="2_yhupi"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="3_vaspw"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="6_cu1kr"]
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
 [ext_resource type="Script" path="res://Health.gd" id="9_hrbbv"]
 [ext_resource type="PackedScene" uid="uid://knpxehglpha1" path="res://UI/player_status.tscn" id="10_3tqh8"]
@@ -36,7 +37,9 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_jodjb"]
 resource_name = "Idle"
+length = 2.0
 loop_mode = 1
+step = 1.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -44,7 +47,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [8, 9]
@@ -142,7 +145,7 @@ frame = 8
 [node name="Spell Manager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
-known_spells = Array[Resource("res://Spell Effects/Spell.gd")]([null, null])
+known_spells = Array[ExtResource("6_cu1kr")]([null, null])
 
 [node name="Spell Slot" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
 caster = NodePath("../..")

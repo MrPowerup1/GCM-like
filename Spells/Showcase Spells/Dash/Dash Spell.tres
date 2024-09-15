@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=13 format=3 uid="uid://bkf81j8t0qrbs"]
+[gd_resource type="Resource" script_class="Spell" load_steps=14 format=3 uid="uid://bkf81j8t0qrbs"]
 
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_fummo"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="1_hpmlj"]
 [ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="2_lfp5w"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_y5i01"]
@@ -42,7 +43,7 @@ delayed_cast_instance = ExtResource("2_lfp5w")
 [resource]
 script = ExtResource("6_yf828")
 timings = Array[int]([0, 0, 0])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_k0tn7"), SubResource("Resource_nxkfm"), SubResource("Resource_sig1f")])
+effects = Array[ExtResource("1_fummo")]([SubResource("Resource_k0tn7"), SubResource("Resource_nxkfm"), SubResource("Resource_sig1f")])
 ping_asap = false
 held_ping_time = 0
 cooldown_on_activate = true

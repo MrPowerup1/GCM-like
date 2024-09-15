@@ -58,6 +58,7 @@ func new_player_keys(input:Input_Keys):
 	add_player.rpc()
 	select.rpc()
 	display()
+	#await get_tree().create_timer(0.1)
 	player_joined.emit()
 
 @rpc("call_local","any_peer")	

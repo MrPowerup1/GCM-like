@@ -95,7 +95,7 @@ func _on_input_cooldown_timeout():
 	cooldown_ready=true
 
 
-
+@rpc("call_local","any_peer")
 func add_player():#input:Input_Keys):
 	attached_player=true
 	#var player_index = GameManager.add_player(multiplayer.get_unique_id(),input)
@@ -146,7 +146,7 @@ func delete_player():
 	queue_free()
 
 func _on_await_player_player_joined():
-	add_player()
+	add_player.rpc()
 
 
 func _on_await_player_player_quit():

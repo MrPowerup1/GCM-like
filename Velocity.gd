@@ -115,7 +115,7 @@ func move_input(direction:SGFixedVector2):
 		step_move(direction)
 
 func animate_player_movement(direction:SGFixedVector2):
-	if animation_player.current_animation=="Walk" and direction.x==0 and direction.y == 0:
+	if animation_player.current_animation!="Cast1" and direction.x==0 and direction.y == 0:
 		animation_player.play("Idle")
 	elif direction.x>0:
 		%Sprite2D.flip_h = false

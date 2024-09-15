@@ -37,6 +37,8 @@ func load_new_deck():
 	elif current_deck_type == DeckType.ALL_SPELL:
 		cards=GameManager.universal_spell_deck.duplicate()
 	elif current_deck_type==DeckType.KNOWN_SPELL:
+		print(player_index)
+		print(GameManager.players)
 		cards = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
 
 func refresh():

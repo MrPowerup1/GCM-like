@@ -25,7 +25,7 @@ signal start
 signal wait_for_peers
 signal peer_joined
 signal new_lobby_id(new_id:String)
-signal loading_lobby(state:bool)
+signal loaded_lobby()
 signal failed_to_load_lobby(lobby_id:String)
 signal peer_disconnect(id:String)
 
@@ -79,7 +79,9 @@ func _process(delta):
 					hostId = data.host
 					lobbyValue = data.lobbyValue
 					#wait_for_peers.emit()
-					loading_lobby.emit(false)
+					#loaded_lobby.emit()
+					##REMOVE THIS PRINT
+					#print("Loaded Sucessfully")
 					new_lobby_id.emit(lobbyValue)
 				else:
 					failed_to_load_lobby.emit(data.lobbyValue)
@@ -192,21 +194,21 @@ func StartGame():
 	start.emit()
 
 func _on_join_lobby_button_down():
-	join_lobby()
+	join_lobby("")
 	
-func join_lobby():
-	loading_lobby.emit(true)
+func join_lobby(lobby_id:String):
+	#loading_lobby.emit(true)
 	connectToServer("")
 	await get_tree().create_timer(0.5).timeout
 	var message ={
 		"id" : id,
 		"message" : Message.lobby,
 		"name" : "",
-		"lobbyValue" : %"Matchmaking Menu".get_ip()
+		"lobbyValue" : lobby_id
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	#TODO: Consider... What if failed to create lobby?
-	if %"Matchmaking Menu".get_ip() == "":
+	if lobby_id == "":
 		GameManager.is_host=true
 	pass # Replace with function body.	
 

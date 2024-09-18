@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Grand Class Melee but Wizards"
-run/main_scene="res://Main_Scene.tscn"
+run/main_scene="res://local_or_online.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,9 @@ SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
 SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
 SyncReplay="*res://addons/godot-rollback-netcode/SyncReplay.gd"
 MathHelper="*res://Math_Helper.gd"
+Client="*res://client.tscn"
+Server="*res://server.tscn"
+SoundFX="*res://ui_sound_fx_manager.tscn"
 
 [display]
 

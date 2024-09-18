@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cr8xyc1mvkjmf"]
+[gd_scene load_steps=4 format=3 uid="uid://cr8xyc1mvkjmf"]
 
 [ext_resource type="Script" path="res://local_or_online.gd" id="1_6b2p4"]
+[ext_resource type="PackedScene" uid="uid://ch87pslocldsu" path="res://player_select_menu.tscn" id="2_2ysfy"]
+[ext_resource type="PackedScene" uid="uid://criis4an0x8if" path="res://matchmaking_menu.tscn" id="3_3m6pb"]
 
 [node name="LocalOrOnline" type="CanvasLayer"]
 script = ExtResource("1_6b2p4")
+local_scene = ExtResource("2_2ysfy")
+online_scene = ExtResource("3_3m6pb")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15

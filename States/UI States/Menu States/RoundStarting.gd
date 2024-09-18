@@ -19,7 +19,7 @@ func _on_player_select_screen_players_unready():
 
 
 func _on_client_peer_disconnect(id):
-	%"User ID".text = str(id)
+	%UserDisconnect.set_user_id(str(id))
 	Transition.emit(self,"UserDisconnect")
 
 

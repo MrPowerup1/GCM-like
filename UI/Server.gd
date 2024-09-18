@@ -139,11 +139,10 @@ func startServer():
 	peer.create_server(8915)
 	#print("Started Server")
 
-func _on_start_server_button_down():
+func start_then_join(lobby_id:String):
 	startServer()
 	await get_tree().create_timer(0.1).timeout
-	%Client.join_lobby()
-	
+	Client.join_lobby(lobby_id)
 
 func _on_button_button_down():
 	var message = {

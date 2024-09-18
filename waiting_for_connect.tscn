@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3uo54o4oulo5"]
+[gd_scene load_steps=3 format=3 uid="uid://c3uo54o4oulo5"]
 
 [ext_resource type="Script" path="res://waiting_for_connect.gd" id="1_7akkh"]
+[ext_resource type="PackedScene" uid="uid://ch87pslocldsu" path="res://player_select_menu.tscn" id="2_lyu0e"]
 
 [node name="Waiting For Connect" type="CanvasLayer"]
 script = ExtResource("1_7akkh")
+next_scene = ExtResource("2_lyu0e")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15

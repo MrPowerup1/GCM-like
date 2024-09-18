@@ -115,15 +115,15 @@ func move_input(direction:SGFixedVector2):
 		step_move(direction)
 
 func animate_player_movement(direction:SGFixedVector2):
-	if animation_player.current_animation!="Cast1" and direction.x==0 and direction.y == 0:
+	if animation_player.current_animation!="Cast1" and animation_player.current_animation!="Idle" and direction.x==0 and direction.y == 0:
 		animation_player.play("Idle")
-	elif direction.x>0:
+	elif can_move and direction.x>0:
 		%Sprite2D.flip_h = false
 		animation_player.play("Walk")
-	elif direction.x<0:
+	elif can_move and direction.x<0:
 		animation_player.play("Walk")
 		%Sprite2D.flip_h = true
-	elif direction.y != 0:
+	elif can_move and direction.y != 0:
 		animation_player.play("Walk")
 	
 func tank_move_input(direction:SGFixedVector2):

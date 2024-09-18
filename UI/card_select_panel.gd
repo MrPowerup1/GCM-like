@@ -54,12 +54,14 @@ func refresh():
 func left():
 	if can_select_left_right:
 		new_cards(cards.next_cards(left_card))
-		%MenuMove.play()
+		SoundFX.move()
+		#%MenuMove.play()
 @rpc("any_peer","call_local")
 func right():
 	if can_select_left_right:
 		new_cards(cards.next_cards(right_card))
-		%MenuMove.play()
+		SoundFX.move()
+		#%MenuMove.play()
 @rpc("any_peer","call_local")
 func up():
 	pass
@@ -70,14 +72,16 @@ func down():
 func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
-		%SelectNoise.play()
+		SoundFX.select()
+		#%SelectNoise.play()
 	elif cards.select(center_card):
 		next_mode.emit()
-		%SelectNoise.play()
+		SoundFX.select()
+		#%SelectNoise.play()
 @rpc("any_peer","call_local")
 func back():
 	back_mode.emit()
-	%BackNoise.play()
+	SoundFX.back()
 
 func display():
 	displayed_card = to_display.instantiate()

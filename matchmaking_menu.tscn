@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://criis4an0x8if"]
+[gd_scene load_steps=5 format=3 uid="uid://criis4an0x8if"]
 
 [ext_resource type="Script" path="res://matchmaking_menu.gd" id="1_aq0ub"]
+[ext_resource type="PackedScene" uid="uid://b18lkbyalwby" path="res://loading.tscn" id="3_h8d18"]
+[ext_resource type="PackedScene" uid="uid://c3uo54o4oulo5" path="res://waiting_for_connect.tscn" id="3_y67g8"]
+[ext_resource type="PackedScene" uid="uid://c64uvbsdkg86h" path="res://failed_to_load.tscn" id="5_mvvjd"]
 
 [node name="Matchmaking Menu" type="CanvasLayer"]
 script = ExtResource("1_aq0ub")
+next_scene = ExtResource("3_y67g8")
+loading_scene = ExtResource("3_h8d18")
+failed_loading_lobby_scene = ExtResource("5_mvvjd")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15

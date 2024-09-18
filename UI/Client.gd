@@ -202,11 +202,11 @@ func join_lobby():
 		"id" : id,
 		"message" : Message.lobby,
 		"name" : "",
-		"lobbyValue" : %IP.text
+		"lobbyValue" : %"Matchmaking Menu".get_ip()
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	#TODO: Consider... What if failed to create lobby?
-	if %IP.text == "":
+	if %"Matchmaking Menu".get_ip() == "":
 		GameManager.is_host=true
 	pass # Replace with function body.	
 

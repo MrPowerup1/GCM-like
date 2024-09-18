@@ -3,7 +3,7 @@ extends CanvasLayer
 #var player_select_screen:PlayerSelectScreen
 
 func update_lobby_id(new_id:String):
-	%LobbyID.text=new_id
+	%"Waiting For Connect".set_lobby_id(new_id)
 
 
 

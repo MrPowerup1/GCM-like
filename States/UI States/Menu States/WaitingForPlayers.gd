@@ -15,10 +15,10 @@ func _on_client_start():
 
 
 func _on_client_peer_joined():
-	%NumPlayers.text=str(GameManager.peers.size())
+	%"Waiting For Connect".set_num_players(str(GameManager.peers.size()))
 	%SelectNoise.play()
 
 
-func _on_back_2_button_down():
+func _on_back_button_down():
 	Transition.emit(self,"OnlineMatchmaking")
 	%BackNoise.play()

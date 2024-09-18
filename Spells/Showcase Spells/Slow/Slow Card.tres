@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://jg4nfde2186h"]
+
+[ext_resource type="Texture2D" uid="uid://dj2yxkaukvkf5" path="res://Spells/Showcase Spells/Dash/Dash Icon.png" id="1_tq37r"]
+[ext_resource type="Script" path="res://Elements/Element.gd" id="2_jaq62"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="3_7xkep"]
+[ext_resource type="Resource" uid="uid://ca7wsxomf1u4t" path="res://Spells/Showcase Spells/Slow/Slow Move.tres" id="4_rp0pm"]
+
+[resource]
+script = ExtResource("3_7xkep")
+spell = ExtResource("4_rp0pm")
+requirements = Array[ExtResource("2_jaq62")]([])
+category = 0
+type = 0
+randomizer = false
+name = "Slow"
+image = ExtResource("1_tq37r")
+description = "You are slow"
+context = 0

@@ -14,7 +14,7 @@ var displayed_info:Control
 
 var accepting_input:bool =true
 
-signal player_joined()
+signal player_joined(index:int)
 signal player_quit()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
@@ -59,7 +59,7 @@ func new_player_keys(input:Input_Keys):
 	select.rpc()
 	display()
 	#await get_tree().create_timer(0.1)
-	player_joined.emit()
+	player_joined.emit(player_index)
 
 @rpc("call_local","any_peer")	
 func add_player():

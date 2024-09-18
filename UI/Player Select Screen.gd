@@ -15,7 +15,7 @@ signal player_quit(player:PlayerUIInput)
 func _ready():
 	new_panel()
 
-func _on_player_joined():
+func _on_player_joined(index:int):
 	if !starting and current_players < max_players:
 		current_players+=1
 		if (current_players < max_players):

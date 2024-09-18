@@ -27,3 +27,7 @@ func player_joined(player_index:int):
 func new_panel():
 	active_panel = get_child(focus_index)
 	active_panel.focused()
+
+
+func _on_player_panel_player_joined(index: int) -> void:
+	player_joined(index)

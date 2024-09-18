@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://gml8gorru1ib"]
+[gd_scene load_steps=28 format=3 uid="uid://gml8gorru1ib"]
 
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="1_l22ls"]
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_pyrsy"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://UI/EndGamePanel.gd" id="10_04730"]
 [ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="10_ff2bt"]
 [ext_resource type="Shader" path="res://UI/Recolor_Shader.gdshader" id="11_e7ygd"]
+[ext_resource type="PackedScene" uid="uid://cr8xyc1mvkjmf" path="res://local_or_online.tscn" id="17_v288q"]
 
 [sub_resource type="Animation" id="Animation_304lq"]
 length = 0.001
@@ -227,47 +228,21 @@ script = ExtResource("8_ju531")
 
 [node name="SelectionUI" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="OuterMargin" type="MarginContainer" parent="SelectionUI"]
-layout_mode = 2
-
-[node name="LocalOrOnline" type="VBoxContainer" parent="SelectionUI/OuterMargin"]
+[node name="LocalOrOnline" parent="SelectionUI" instance=ExtResource("17_v288q")]
 unique_name_in_owner = true
+
+[node name="OuterMargin" type="MarginContainer" parent="SelectionUI"]
 visible = false
 layout_mode = 2
-
-[node name="Label" type="Label" parent="SelectionUI/OuterMargin/LocalOrOnline"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 30
-text = "Select Game Mode"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Local" type="Button" parent="SelectionUI/OuterMargin/LocalOrOnline"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_font_sizes/font_size = 30
-text = "Local"
-
-[node name="Online" type="Button" parent="SelectionUI/OuterMargin/LocalOrOnline"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_font_sizes/font_size = 30
-text = "Online
-"
 
 [node name="Matchmaking Menu" type="VBoxContainer" parent="SelectionUI/OuterMargin"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="SelectionUI/OuterMargin/Matchmaking Menu"]
@@ -655,8 +630,8 @@ text = "End
 [connection signal="peer_joined" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_peer_joined"]
 [connection signal="start" from="Client" to="StateManager/WaitingForPlayers" method="_on_client_start"]
 [connection signal="wait_for_peers" from="Client" to="StateManager/OnlineMatchmaking" method="_on_client_wait_for_peers"]
-[connection signal="button_down" from="SelectionUI/OuterMargin/LocalOrOnline/Local" to="StateManager/LocalOrOnline" method="_on_local_button_down"]
-[connection signal="button_down" from="SelectionUI/OuterMargin/LocalOrOnline/Online" to="StateManager/LocalOrOnline" method="_on_online_button_down"]
+[connection signal="local" from="SelectionUI/LocalOrOnline" to="StateManager/LocalOrOnline" method="_on_local_button_down"]
+[connection signal="online" from="SelectionUI/LocalOrOnline" to="StateManager/LocalOrOnline" method="_on_online_button_down"]
 [connection signal="button_down" from="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer2/Server" to="Server" method="_on_start_server_button_down"]
 [connection signal="button_down" from="SelectionUI/OuterMargin/Matchmaking Menu/MarginContainer/VBoxContainer/Join" to="Client" method="_on_join_lobby_button_down"]
 [connection signal="button_down" from="SelectionUI/OuterMargin/Matchmaking Menu/Back" to="StateManager/OnlineMatchmaking" method="_on_back_button_down"]

@@ -17,39 +17,7 @@ var card_select_list:Array
 signal player_quit(player:PlayerUIInput)
 signal player_ready()
 signal player_unready()
-signal player_joined()
-
-#func player_join(player:PlayerUIInput,player_index:int):
-	#current_player=player
-	#current_player_index=player_index
-	#%Label.text=str(player_index)
-	#%SkinSelect.player_index=current_player_index
-	#%SpellSelect1.player_index=current_player_index
-	#%SpellSelect2.player_index=current_player_index
-	#
-	##Timer to wait out the initial input to join
-	#%InputCooldown.start()
-	#cooldown_ready=false
-	#if current_player!=null:
-		#current_player.button_activate.connect(button_input)
-		#current_player.direction_pressed.connect(directional_input)
-	#
-	#%SkinSelect.cards=GameManager.universal_skin_deck
-	#var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[current_player_index].get('known_spells'))
-	#%SpellSelect1.cards=spell_deck
-	#%SpellSelect2.cards=spell_deck
-	#player_joined.emit()
-	
-#func quit():
-	#if current_player!=null:
-		#player_quit.emit(current_player)
-		#current_player.queue_free()
-		#current_player=null
-		#queue_free()
-
-#func reset():
-	#if current_player!=null:
-		#$StateManager/Ready.reset()
+signal player_joined(index:int)
 
 
 func directional_input(direction:Vector2):
@@ -96,44 +64,26 @@ func _on_input_cooldown_timeout():
 
 
 @rpc("call_local","any_peer")
-func add_player():#input:Input_Keys):
+func add_player(index:int):#input:Input_Keys):
+	#if the player has already been assigned, just function
+	var remote_id = multiplayer.get_remote_sender_id()
+	var local_id = multiplayer.get_unique_id()
+	if remote_id ==local_id:
+		if %PlayerUIInput.player_index==index:
+			%PlayerUIInput.button_activate.connect(button_input)
+			%PlayerUIInput.direction_pressed.connect(directional_input)
+			
+		elif GameManager.local_players.has(index):
+			%PlayerUIInput.player_index = index
+			%PlayerUIInput.input_keys = GameManager.local_players[index]['input_keys']
+		else:
+			printerr("No known player of index ",index)
+			return
 	attached_player=true
-	#var player_index = GameManager.add_player(multiplayer.get_unique_id(),input)
-	#%PlayerUIInput.input_keys = input
-	#%PlayerUIInput.player_index = player_index
-	%PlayerUIInput.button_activate.connect(button_input)
-	%PlayerUIInput.direction_pressed.connect(directional_input)
-	player_joined.emit()
-	#if input.device==Input_Keys.device_type.KEYBOARD:
-		#%ControlType.texture=keyboard
-	#if input.device==Input_Keys.device_type.JOYSTICK:
-		#%ControlType.texture=joystick
-	#%ControlType.visible=true
-	#%Label.text=str(player_index)
-	%Displays.player_joined(%PlayerUIInput.player_index)
-	#%SkinSelect.cards=GameManager.universal_skin_deck
-	#var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
-	#%SpellSelect1.cards=spell_deck
-	#%SpellSelect2.cards=spell_deck
-#
-#@rpc("call_remote","any_peer")
-#func add_remote_player():
-	#attached_player=true
-	#var player_index = GameManager.add_player(multiplayer.get_remote_sender_id(),null_input)
-	##%PlayerUIInput.input_keys = null_input
-	##%PlayerUIInput.player_index = player_index
-	#player_joined.emit()
-	#%ControlType.texture=remote
-	##%ControlType.visible=true
-	##%Label.text=str(player_index)
-	##%SkinSelect.player_index=player_index
-	##%SpellSelect1.player_index=player_index
-	##%SpellSelect2.player_index=player_index
-	##%SkinSelect.cards=GameManager.universal_skin_deck
-	##var spell_deck = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
-	##%SpellSelect1.cards=spell_deck
-	##%SpellSelect2.cards=spell_deck
-	
+	player_joined.emit(%PlayerUIInput.player_index)
+	#%Displays.player_joined(%PlayerUIInput.player_index)
+
+
 func delete_player():
 	print ("System ", multiplayer.get_unique_id()," Trying to remove player")
 	#var to_del_input = player.input_keys
@@ -145,8 +95,8 @@ func delete_player():
 	attached_player=false
 	queue_free()
 
-func _on_await_player_player_joined():
-	add_player.rpc()
+func _on_await_player_player_joined(index:int):
+	add_player.rpc(index)
 
 
 func _on_await_player_player_quit():

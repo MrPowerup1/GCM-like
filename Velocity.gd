@@ -236,7 +236,8 @@ func anchor(set_anchor:bool=false):
 
 func set_speed(speed_factor:int=65536):
 	max_speed_fixed = SGFixed.mul(speed_factor,default_max_speed)
-	
+	acceleration_fixed =SGFixed.mul(speed_factor,default_acceleration)
+	cut_accel_fixed =SGFixed.mul(speed_factor,default_cut_accel) 
 
 func set_friction(friction_factor:int=65536):
 	friction_fixed = SGFixed.mul(friction_factor,default_friction)

@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr8xyc1mvkjmf"]
+
+[ext_resource type="Script" path="res://local_or_online.gd" id="1_6b2p4"]
+
+[node name="LocalOrOnline" type="CanvasLayer"]
+script = ExtResource("1_6b2p4")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Vbox" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/Vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+text = "Select Game Mode"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Local" type="Button" parent="PanelContainer/MarginContainer/Vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Local"
+
+[node name="Online" type="Button" parent="PanelContainer/MarginContainer/Vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 30
+text = "Online
+"
+
+[connection signal="button_down" from="PanelContainer/MarginContainer/Vbox/Local" to="." method="_on_local_button_down"]
+[connection signal="button_down" from="PanelContainer/MarginContainer/Vbox/Online" to="." method="_on_online_button_down"]

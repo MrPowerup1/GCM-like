@@ -11,7 +11,8 @@ const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNe
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SyncManager.clear_peers()
-
+	GameManager.players.clear()
+	GameManager.alive_players.clear()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -6,12 +6,16 @@ class_name Match
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
 @export var player_scene:PackedScene
+@export var end_screen:PackedScene
+@export var user_disconnect_scene:PackedScene
+
 
 var logging_enabled:bool = true
 
-signal start_round()
+#signal start_round()
 
 func _ready():
+	Client.peer_disconnect.connect(disconnected)
 	SyncManager.sync_started.connect(_on_SyncManager_sync_started)
 	SyncManager.sync_stopped.connect(_on_SyncManager_sync_stopped)
 	SyncManager.sync_lost.connect(_on_SyncManager_sync_lost)
@@ -107,7 +111,20 @@ func start_match():
 	#$UI.start()
 
 func end_match():
+	SyncManager.stop()
 	%AudioStreamPlayer.stop()
 
 func _on_start_timer_timeout():
+	print("Start Players")
 	%Players.start_players()
+
+
+func _on_end_round() -> void:
+	end_match()
+	get_tree().change_scene_to_packed(end_screen)
+
+func disconnected(id:int):
+	end_match()
+	var disconnected_panel = user_disconnect_scene.instantiate()
+	add_child(disconnected_panel)
+	disconnected_panel.set_user_id(str(id))

@@ -140,7 +140,7 @@ func _on_health_dead():
 
 func start_round():
 	enable()
-	GameManager.alive_players[player_index]=self
+	GameManager.alive_players[player_index] = player_index
 	
 func stop_round():
 	disable()
@@ -156,7 +156,6 @@ func stop_round():
 		#}
 func _network_despawn() ->void:
 	GameManager.alive_players.erase(player_index)
-	print(GameManager.alive_players.size())
 	#assert(%"Player Status".get_child_count()==0,"Child")
 
 func pre_despawn()->void:
@@ -182,7 +181,6 @@ func _network_spawn(data: Dictionary) -> void:
 		var new_spell = spell_deck.get_card(spell_index).spell
 		equip_spell(new_spell,index)
 		index+=1
-	#GameManager.alive_players.append(self)
 	sync_to_physics_engine()
 	anchor(true)
 	%NetworkAnimationPlayer.play("Walk")

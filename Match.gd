@@ -47,6 +47,7 @@ func load_players(player_data:Dictionary):
 
 func _on_SyncManager_sync_started():
 	start_match()
+	%"Start Anim".play_start_animation()
 	if logging_enabled and not SyncReplay.active:
 		var dir=DirAccess.open(LOG_FILE_DIRECTORY)
 		if not dir:

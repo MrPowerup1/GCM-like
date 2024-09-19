@@ -1,16 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://ch87pslocldsu"]
+[gd_scene load_steps=7 format=3 uid="uid://j4gp1hi2pg32"]
 
-[ext_resource type="Script" path="res://UI/player_select_menu.gd" id="1_m8veg"]
-[ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="2_fagmk"]
-[ext_resource type="PackedScene" uid="uid://b5imxvvgtef5r" path="res://user_disconnect.tscn" id="2_vlqcs"]
-[ext_resource type="PackedScene" uid="uid://j4gp1hi2pg32" path="res://select_spells.tscn" id="3_4tt6v"]
-[ext_resource type="PackedScene" uid="uid://vaog6h0dcfy2" path="res://UI/PlayerPanel.tscn" id="3_t8xrn"]
-[ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="4_nuwb1"]
+[ext_resource type="Script" path="res://UI/player_select_menu.gd" id="1_p3xmn"]
+[ext_resource type="PackedScene" uid="uid://b5imxvvgtef5r" path="res://user_disconnect.tscn" id="2_srcmt"]
+[ext_resource type="PackedScene" uid="uid://fhwmhipqb0rd" path="res://Main_Scene.tscn" id="3_qbsov"]
+[ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="4_ojg81"]
+[ext_resource type="PackedScene" uid="uid://b0x1ktkwyv13l" path="res://UI/NewSpellPlayerPanel.tscn" id="5_88e8s"]
+[ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="6_w43e6"]
 
-[node name="Player Select Menu" type="CanvasLayer"]
-script = ExtResource("1_m8veg")
-user_disconnect_scene = ExtResource("2_vlqcs")
-next_scene = ExtResource("3_4tt6v")
+[node name="SelectSpells" type="CanvasLayer"]
+script = ExtResource("1_p3xmn")
+user_disconnect_scene = ExtResource("2_srcmt")
+next_scene = ExtResource("3_qbsov")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -25,7 +25,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Join and Select Skin"
+text = "Select your Spells"
 horizontal_alignment = 1
 
 [node name="PlayerSelectScreen" type="GridContainer" parent="PanelContainer/VBoxContainer"]
@@ -35,10 +35,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
-script = ExtResource("2_fagmk")
-player_panel = ExtResource("3_t8xrn")
+script = ExtResource("4_ojg81")
+player_panel = ExtResource("5_88e8s")
+adding_new_players = false
 
-[node name="StartRoundPanel" parent="PanelContainer/VBoxContainer" instance=ExtResource("4_nuwb1")]
+[node name="StartRoundPanel" parent="PanelContainer/VBoxContainer" instance=ExtResource("6_w43e6")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2

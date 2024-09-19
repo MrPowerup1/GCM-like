@@ -14,3 +14,6 @@ func stop_countdown():
 
 func countdown_over():
 	start_round.emit()
+
+func change_next_screen_name(new_name:String):
+	%NextScreen.text = new_name

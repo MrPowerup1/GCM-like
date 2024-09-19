@@ -75,7 +75,10 @@ func add_player(index:int):#input:Input_Keys):
 			
 		elif GameManager.local_players.has(index):
 			%PlayerUIInput.player_index = index
-			%PlayerUIInput.input_keys = GameManager.local_players[index]['input_keys']
+			#print(GameManager.local_players[index]['input_keys'])
+			%PlayerUIInput.input_keys = Input_Keys.from_dict(GameManager.local_players[index]['input_keys'])
+			%PlayerUIInput.button_activate.connect(button_input)
+			%PlayerUIInput.direction_pressed.connect(directional_input)
 		else:
 			printerr("No known player of index ",index)
 			return

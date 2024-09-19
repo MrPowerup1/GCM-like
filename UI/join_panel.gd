@@ -69,6 +69,7 @@ func add_player():
 		player_index = GameManager.add_player(local_id,player.input_keys)
 	else:
 		player_index =GameManager.add_player(remote_id,null_input)
+	player.player_assigned = true
 	player.player_index=player_index
 
 
@@ -100,4 +101,6 @@ func _duplicate_input(id:int,type:Input_Keys.device_type) -> Input_Keys:
 	return new_keys
 
 func focused():
-	player_quit.emit()
+	if player.player_assigned:
+		print("quitting")
+		player_quit.emit()

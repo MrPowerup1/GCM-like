@@ -1,7 +1,8 @@
 extends Node
 class_name PlayerUIInput
 
-var player_index:int
+var player_assigned:bool = false
+var player_index:int = -1
 @export var input_keys:Input_Keys
 #enum device_type {LOCAL,REMOTE}
 #@export var device:device_type

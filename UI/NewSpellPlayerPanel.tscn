@@ -1,13 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://b0x1ktkwyv13l"]
+[gd_scene load_steps=9 format=3 uid="uid://b0x1ktkwyv13l"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_fatju"]
 [ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="2_uq032"]
 [ext_resource type="Script" path="res://UI/Displays.gd" id="3_eh28s"]
-[ext_resource type="PackedScene" uid="uid://dlv10j3yla0vr" path="res://UI/join_panel.tscn" id="4_ilkkj"]
-[ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="5_exntj"]
-[ext_resource type="Resource" uid="uid://108qxs1oy0ow" path="res://Inputs/keyboard_right.tres" id="6_ylfpq"]
 [ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="7_gyjsw"]
-[ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="8_4yfxe"]
 [ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="9_8a4a6"]
 [ext_resource type="Script" path="res://UI/PlayerReady.gd" id="10_7ck0y"]
 [ext_resource type="Script" path="res://Player/PlayerUIInput.gd" id="11_p0xvb"]
@@ -43,23 +39,6 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("3_eh28s")
-
-[node name="AwaitPlayer" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location", "player") instance=ExtResource("4_ilkkj")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 6
-base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])
-keyboard_input_1 = ExtResource("5_exntj")
-keyboard_input_2 = ExtResource("6_ylfpq")
-display_location = NodePath("../../Permanent Selections")
-player = NodePath("../../../../PlayerUIInput")
-
-[node name="SkinSelect" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
-unique_name_in_owner = true
-layout_mode = 2
-current_deck_type = 2
-cards = ExtResource("8_4yfxe")
-display_location = NodePath("../../Permanent Selections")
 
 [node name="SpellSelect1" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
 unique_name_in_owner = true
@@ -100,8 +79,6 @@ script = ExtResource("11_p0xvb")
 input_keys = ExtResource("12_c6o1s")
 
 [connection signal="player_joined" from="." to="MarginContainer/VBoxContainer/Displays" method="_on_player_panel_player_joined"]
-[connection signal="player_joined" from="MarginContainer/VBoxContainer/Displays/AwaitPlayer" to="." method="_on_await_player_player_joined"]
-[connection signal="player_quit" from="MarginContainer/VBoxContainer/Displays/AwaitPlayer" to="." method="_on_await_player_player_quit"]
 [connection signal="player_ready" from="MarginContainer/VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_ready"]
 [connection signal="player_unready" from="MarginContainer/VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_unready"]
 [connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]

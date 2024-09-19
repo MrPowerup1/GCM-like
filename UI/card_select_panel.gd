@@ -118,38 +118,7 @@ func new_cards(to_display:Array):
 	right_card=to_display[3]
 	%RightCard.set_new_card(right_card)
 
-#func transition_display_mode(new_mode:display_mode):
-	#if new_mode==display_mode.SELECTED:
-		#visible=false
-		#%LeftButton.visible=false
-		#%LeftCard.visible=false
-		#%SelectButton.visible=false
-		#%RightButton.visible=false
-		#%RightCard.visible=false
-		#%CenterCard.set_display_style(CardDisplay.DisplayStyle.ICON)
-		#%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-		#%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-	#if new_mode==display_mode.SELECTING:
-		#visible=true
-		#%LeftButton.visible=true
-		#%LeftCard.visible=true
-		#%SelectButton.visible=true
-		#%RightButton.visible=true
-		#%RightCard.visible=true
-		#%CenterCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-		#%LeftCard.set_display_style(CardDisplay.DisplayStyle.TINY)
-		#%RightCard.set_display_style(CardDisplay.DisplayStyle.TINY)
-	#if new_mode==display_mode.ZOOMED:
-		#visible=true
-		#%LeftButton.visible=false
-		#%LeftCard.visible=false
-		#%SelectButton.visible=true
-		#%RightButton.visible=false
-		#%RightCard.visible=false
-		#%CenterCard.set_display_style(CardDisplay.DisplayStyle.ZOOMED)
-		#%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-		#%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-	#current_mode=new_mode
+
 
 
 func _on_left_button_button_down():

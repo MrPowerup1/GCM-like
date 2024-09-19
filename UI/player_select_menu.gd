@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @export var back_scene_path:String = "res://local_or_online.tscn"
 @export var user_disconnect_scene:PackedScene
-@export var match_scene:PackedScene
+@export var next_scene:PackedScene
 
 signal players_ready
 signal players_unready
@@ -12,7 +12,7 @@ signal start_round
 
 func _ready() -> void:
 	Client.peer_disconnect.connect(disconnected)
-
+	
 func _on_players_ready() -> void:
 	%StartRoundPanel.start_countdown()
 
@@ -28,7 +28,7 @@ func _on_back_button_down() -> void:
 	get_tree().change_scene_to_file(back_scene_path)
 
 func _on_start_game_panel_start_round() -> void:
-	get_tree().change_scene_to_packed(match_scene)
+	get_tree().change_scene_to_packed(next_scene)
 
 func start_countdown():
 	%StartRoundPanel.start_countdown()

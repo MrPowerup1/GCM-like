@@ -5,7 +5,8 @@ var active_panel:SelectPanel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	active_panel = get_child(0)
+	#active_panel = get_child(0)
+	new_panel()
 	for child in get_children():
 		if child is SelectPanel:
 			(child as SelectPanel).next.connect(next_display)

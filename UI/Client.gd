@@ -20,14 +20,15 @@ var rtcPeer : WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new()
 var hostId :int
 var lobbyValue = ""
 var lobbyInfo = {}
+var clientName = ""
 
 signal start
 signal wait_for_peers
-signal peer_joined
+signal peer_joined(id:int)
 signal new_lobby_id(new_id:String)
 signal loaded_lobby()
 signal failed_to_load_lobby(lobby_id:String)
-signal peer_disconnect(id:String)
+signal peer_disconnect(id:int)
 signal host_changed(id:int)
 
 # Called when the node enters the scene tree for the first time.
@@ -42,7 +43,7 @@ func RTCServerConnected():
 
 func RTCPeerConnected(id):
 	print("rtc peer connected " + str(id))
-	peer_joined.emit()
+	peer_joined.emit(id)
 	SyncManager.add_peer(id)
 	
 	
@@ -108,7 +109,11 @@ func _process(delta):
 func connected(id):
 	print("New ID, webrtc")
 	rtcPeer.create_mesh(id)
+	for peer in rtcPeer.get_peers():
+		print(peer)
+	#print(rtcPeer.get_peers())
 	multiplayer.multiplayer_peer = rtcPeer
+	
 
 #web rtc connection
 func createPeer(id):
@@ -206,7 +211,7 @@ func join_lobby(lobby_id:String):
 	var message ={
 		"id" : id,
 		"message" : Message.lobby,
-		"name" : "",
+		"name" : clientName,
 		"lobbyValue" : lobby_id,
 		"type":"join"
 	}
@@ -230,7 +235,7 @@ func leave_lobby():
 	var message ={
 		"id" : id,
 		"message" : Message.lobby,
-		"name" : "",
+		"name" : clientName,
 		"lobbyValue" : lobbyValue,
 		"type":"leave"
 	}

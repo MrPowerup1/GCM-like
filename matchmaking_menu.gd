@@ -15,11 +15,13 @@ func _ready() -> void:
 func get_ip() -> String:
 	return %IP.text
 # Called when the node enters the scene tree for the first time.
-
+func get_client_name()->String:
+	return %Name.text
 
 func _on_join_button_down() -> void:
 	SoundFX.select()
 	#join.emit()
+	Client.clientName=%Name.text
 	Client.join_lobby(%IP.text)
 	var load = loading_scene.instantiate()
 	add_child(load)
@@ -40,6 +42,7 @@ func _on_back_button_down() -> void:
 	
 func _on_server_button_down() -> void:
 	SoundFX.select()
+	Client.clientName=%Name.text
 	Server.start_then_join(%IP.text)
 	var load = loading_scene.instantiate()
 	add_child(load)

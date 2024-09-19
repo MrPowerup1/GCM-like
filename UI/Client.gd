@@ -56,7 +56,7 @@ func RTCPeerDisconnected(id):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	peer.poll()
-	if peer.get_available_packet_count() > 0:
+	while peer.get_available_packet_count() > 0:
 		var packet = peer.get_packet()
 		if packet != null:
 			var dataString = packet.get_string_from_utf8()
@@ -69,7 +69,7 @@ func _process(delta):
 			if data.message == Message.userConnected:
 				#GameManager.Players[data.id] = data.player
 				print("User connected")
-				createPeer(data.id)
+				createPeerConnection(data.id)
 			
 			if data.message == Message.userDisconnected:	
 				print("Disconnect")
@@ -107,28 +107,31 @@ func _process(delta):
 	pass
 
 func connected(id):
-	print("New ID, webrtc")
+	print("New ID, webrtc", id)
 	rtcPeer.create_mesh(id)
-	for peer in rtcPeer.get_peers():
-		print(peer)
-	#print(rtcPeer.get_peers())
+	
 	multiplayer.multiplayer_peer = rtcPeer
 	
 
 #web rtc connection
-func createPeer(id):
+func createPeerConnection(id):
 	if id != self.id:
-		var peer : WebRTCPeerConnection = WebRTCPeerConnection.new()
-		peer.initialize({
+		var peer_connection : WebRTCPeerConnection = WebRTCPeerConnection.new()
+		peer_connection.initialize({
 			"iceServers" : [{ "urls": ["stun:stun.l.google.com:19302"] }]
 		})
-		print("binding id " + str(id) + "my id is " + str(self.id))
+		print("binding id " + str(id) + " my id is " + str(self.id))
 		
-		peer.session_description_created.connect(self.offerCreated.bind(id))
-		peer.ice_candidate_created.connect(self.iceCandidateCreated.bind(id))
-		rtcPeer.add_peer(peer, id)
-		if !hostId == self.id:
-			peer.create_offer()
+		peer_connection.session_description_created.connect(self.offerCreated.bind(id))
+		peer_connection.ice_candidate_created.connect(self.iceCandidateCreated.bind(id))
+		rtcPeer.add_peer(peer_connection, id)
+		
+		#THIS IS THE THING I CHANGED TO FIX MESHES, 
+		#OFFERS SHOULD ONLY BE CREATED ONE WAY (So if a offers b, b cant offer a)
+		# SO JUST CHECK IF ID IS GREATER, THEN SEND.  This may fail later, but for now it works
+		#
+		if self.id > id:
+			peer_connection.create_offer()
 		
 		pass
 		

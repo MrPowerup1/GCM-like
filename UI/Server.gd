@@ -34,7 +34,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	peer.poll()
-	if peer.get_available_packet_count() > 0:
+	while peer.get_available_packet_count() > 0:
 		var packet = peer.get_packet()
 		#print (packet)
 		if packet != null:
@@ -64,6 +64,7 @@ func _process(delta):
 	pass
 
 func peer_connected(id):
+	print("Peer connected to server with id ",id)
 	#print("Peer Connected: " + str(id))
 	users[id] = {
 		"id" : id,
@@ -138,7 +139,7 @@ func JoinLobby(user):
 		sendToPlayer(user.id,failed_to_join_lobby_message)
 		return
 	lobbies[user.lobbyValue].AddPlayer(user.id, user.name)
-	for p in lobbies[user.lobbyValue].Players:
+	for p in lobbies[user.lobbyValue].Players.keys():
 		
 		var new_player_data = {
 			"message" : Message.userConnected,

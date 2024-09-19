@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://UI/Client.gd" id="1_qu788"]
 
-[node name="Client" type="Node"]
+[node name="client" type="Node"]
 script = ExtResource("1_qu788")

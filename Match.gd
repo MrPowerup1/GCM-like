@@ -20,7 +20,8 @@ func _ready():
 	SyncManager.sync_stopped.connect(_on_SyncManager_sync_stopped)
 	SyncManager.sync_lost.connect(_on_SyncManager_sync_lost)
 	SyncManager.sync_regained.connect(_on_SyncManager_sync_regained)
-	await get_tree().create_timer(0.5)
+	#TODO: TImer seems to be doing nothing?
+	await get_tree().create_timer(5)
 	if GameManager.is_host:
 		SyncManager.start()
 	#HACK: Just a test method
@@ -51,6 +52,7 @@ func load_players(player_data:Dictionary):
 
 func _on_SyncManager_sync_started():
 	start_match()
+	print("Sync")
 	%"Start Anim".play_start_animation()
 	if logging_enabled and not SyncReplay.active:
 		var dir=DirAccess.open(LOG_FILE_DIRECTORY)

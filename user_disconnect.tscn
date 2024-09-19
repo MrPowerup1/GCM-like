@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://UI/user_disconnect.gd" id="1_4d5cv"]
 
 [node name="UserDisconnect" type="CanvasLayer"]
+layer = 2
 script = ExtResource("1_4d5cv")
 
 [node name="UserDisconnect" type="MarginContainer" parent="."]

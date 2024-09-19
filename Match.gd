@@ -16,6 +16,9 @@ func _ready():
 	SyncManager.sync_stopped.connect(_on_SyncManager_sync_stopped)
 	SyncManager.sync_lost.connect(_on_SyncManager_sync_lost)
 	SyncManager.sync_regained.connect(_on_SyncManager_sync_regained)
+	await get_tree().create_timer(0.5)
+	if GameManager.is_host:
+		SyncManager.start()
 	#HACK: Just a test method
 	#SyncManager.scene_spawned.connect(_test_method)
 	#SyncManager.scene_despawned.connect(_test_method_2)
@@ -100,7 +103,7 @@ func start_match():
 		var new_player = SyncManager.spawn('Player',%Players,player_scene,player_data)
 	%AudioStreamPlayer.play(50)
 	%StartTimer.start()
-	$UI.start()
+	#$UI.start()
 
 func end_match():
 	%AudioStreamPlayer.stop()

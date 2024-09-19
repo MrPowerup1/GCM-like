@@ -20,6 +20,18 @@ layout_mode = 2
 [node name="Waiting For Connect" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
+[node name="HostPanel" type="PanelContainer" parent="PanelContainer/MarginContainer/Waiting For Connect"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"Panel2"
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/Waiting For Connect/HostPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Host"
+horizontal_alignment = 1
+
 [node name="Waiting for Players" type="Label" parent="PanelContainer/MarginContainer/Waiting For Connect"]
 layout_mode = 2
 size_flags_vertical = 3

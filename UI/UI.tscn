@@ -144,7 +144,6 @@ unique_name_in_owner = true
 [connection signal="back" from="SelectionUI/Player Select Menu" to="StateManager/PlayerSelect" method="_on_back_button_down"]
 [connection signal="players_ready" from="SelectionUI/Player Select Menu" to="StateManager/PlayerSelect" method="_on_player_select_screen_players_ready"]
 [connection signal="players_unready" from="SelectionUI/Player Select Menu" to="StateManager/RoundStarting" method="_on_player_select_screen_players_unready"]
-[connection signal="start_game" from="SelectionUI/Player Select Menu" to="StateManager/RoundStarting" method="_on_player_select_menu_start_game"]
 [connection signal="back" from="SelectionUI/FailedToLoad" to="StateManager/FailedToLoad" method="_on_back_button_down"]
 [connection signal="back" from="SelectionUI/UserDisconnect" to="StateManager/UserDisconnect" method="_on_back_button_down"]
 [connection signal="end" from="EndGamePanel" to="StateManager/EndScreen" method="_on_end_button_down"]

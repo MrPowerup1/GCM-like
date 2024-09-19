@@ -28,6 +28,7 @@ signal new_lobby_id(new_id:String)
 signal loaded_lobby()
 signal failed_to_load_lobby(lobby_id:String)
 signal peer_disconnect(id:String)
+signal host_changed(id:int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,7 +44,6 @@ func RTCPeerConnected(id):
 	print("rtc peer connected " + str(id))
 	peer_joined.emit()
 	SyncManager.add_peer(id)
-	
 	
 	
 func RTCPeerDisconnected(id):
@@ -71,12 +71,14 @@ func _process(delta):
 				createPeer(data.id)
 			
 			if data.message == Message.userDisconnected:	
-				pass
+				print("Disconnect")
+				#GameManager.peers.erase(data.id)
 			
 			if data.message == Message.lobby:
 				if data.isValid:
 					GameManager.peers = JSON.parse_string(data.players)
-					hostId = data.host
+					update_host(data.host)
+					#hostId = data.host
 					lobbyValue = data.lobbyValue
 					#wait_for_peers.emit()
 					#loaded_lobby.emit()
@@ -184,8 +186,9 @@ func _on_start_round_button_down():
 	StartGame.rpc()
 	pass # Replace with function body.
 
-@rpc("any_peer", "call_local")
+#@rpc("any_peer", "call_local")
 func StartGame():
+	print("Start Game")
 	var message = {
 		"message": Message.removeLobby,
 		"lobbyID" : lobbyValue
@@ -204,25 +207,37 @@ func join_lobby(lobby_id:String):
 		"id" : id,
 		"message" : Message.lobby,
 		"name" : "",
-		"lobbyValue" : lobby_id
+		"lobbyValue" : lobby_id,
+		"type":"join"
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	#TODO: Consider... What if failed to create lobby?
-	if lobby_id == "":
-		GameManager.is_host=true
+	#if lobby_id == "":
+		#GameManager.is_host=true
 	pass # Replace with function body.	
+
+func update_host(new_id:int):
+	if hostId != new_id:
+		hostId = new_id
+		if id == hostId:
+			GameManager.is_host=true
+		else:
+			GameManager.is_host=false
+		host_changed.emit(new_id)
 
 func leave_lobby():
 	
-	#var message ={
-		#"id" : id,
-		#"message" : Message.removeLobby,
-		#"lobbyValue" : lobbyValue
-	#}
-	#peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-	#await get_tree().create_timer(0.5).timeout
+	var message ={
+		"id" : id,
+		"message" : Message.lobby,
+		"name" : "",
+		"lobbyValue" : lobbyValue,
+		"type":"leave"
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	await get_tree().create_timer(0.5).timeout
 	print("Disconnected peer with id: ",id)
-	#multiplayer.disconnect_peer(id)
+	multiplayer.disconnect_peer(id)
 	var peers = rtcPeer.get_peers()
 	for peer in peers:
 		rtcPeer.remove_peer(peer)

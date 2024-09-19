@@ -14,3 +14,8 @@ func AddPlayer(id, name):
 		"index": Players.size() + 1
 	}
 	return Players[id]
+
+func RemovePlayer(id):	
+	Players.erase(id)
+	if HostID==id and Players.size() > 0:
+		HostID = Players.keys()[0]

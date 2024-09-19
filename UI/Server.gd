@@ -1,4 +1,5 @@
 extends Node
+
 enum Message{
 	id,
 	join,
@@ -8,9 +9,11 @@ enum Message{
 	candidate,
 	offer,
 	answer,
-	removeLobby,
-	checkIn
+	checkIn,
+	serverLobbyInfo,
+	removeLobby
 }
+
 var peer = WebSocketMultiplayerPeer.new()
 var users = {}
 var lobbies = {}
@@ -40,7 +43,10 @@ func _process(delta):
 			#print(data)
 			
 			if data.message == Message.lobby:
-				JoinLobby(data)
+				if data.type=="join":
+					JoinLobby(data)
+				elif data.type=="leave":
+					LeaveLobby(data)
 				
 			if data.message == Message.offer || data.message == Message.answer || data.message == Message.candidate:
 				#print("source id is " + str(data.orgPeer))
@@ -50,8 +56,11 @@ func _process(delta):
 				print("Remove lobby")
 				if lobbies.has(data.lobbyID):
 					for peer in lobbies[data.lobbyID].Players:
-						peer_disconnected(data.id)
+						peer_disconnected(peer)
 					lobbies.erase(data.lobbyID)
+			
+			if data.message == Message.userDisconnected:
+				peer.disconnect_peer(data.id)
 	pass
 
 func peer_connected(id):
@@ -68,10 +77,49 @@ func peer_disconnected(id):
 	users.erase(id)
 	var disconnected = {
 		"id" : id,
-		"message" : Message.userDisconnected
+		"message" : Message.userDisconnected,
 	}
 	peer.get_peer(id).put_packet(JSON.stringify(disconnected).to_utf8_buffer())
 
+
+func LeaveLobby(user):
+	var result = ""
+	if !lobbies.has(user.lobbyValue):
+		var failed_to_leave_lobby_message = {
+			"message" : Message.lobby,
+			"isValid":false,
+			"id" : user.id,
+			"lobbyValue" : user.lobbyValue,
+			"type":"leave"
+		}
+		sendToPlayer(user.id,failed_to_leave_lobby_message)
+		return
+	lobbies[user.lobbyValue].RemovePlayer(user.id)
+	for p in lobbies[user.lobbyValue].Players:
+		
+		var player_data = {
+			"message" : Message.userDisconnected,
+			"id" : user.id
+		}
+		sendToPlayer(p, player_data)
+		
+		var lobbyInfo = {
+			"message" : Message.lobby,
+			"isValid": true,
+			"players" : JSON.stringify(lobbies[user.lobbyValue].Players),
+			"host" : lobbies[user.lobbyValue].HostID,
+			"lobbyValue" : user.lobbyValue,
+			"type":"leave"
+		}
+		sendToPlayer(p, lobbyInfo)
+	
+	var data = {
+		"message" : Message.userDisconnected,
+		"id" : user.id,
+		"lobbyValue" : user.lobbyValue
+	}
+	
+	sendToPlayer(user.id, data)
 
 func JoinLobby(user):
 	var result = ""
@@ -84,7 +132,8 @@ func JoinLobby(user):
 			"message" : Message.lobby,
 			"isValid":false,
 			"id" : user.id,
-			"lobbyValue" : user.lobbyValue
+			"lobbyValue" : user.lobbyValue,
+			"type":"join"
 		}
 		sendToPlayer(user.id,failed_to_join_lobby_message)
 		return
@@ -108,7 +157,8 @@ func JoinLobby(user):
 			"isValid": true,
 			"players" : JSON.stringify(lobbies[user.lobbyValue].Players),
 			"host" : lobbies[user.lobbyValue].HostID,
-			"lobbyValue" : user.lobbyValue
+			"lobbyValue" : user.lobbyValue,
+			"type":"join"
 		}
 		sendToPlayer(p, lobbyInfo)
 	
@@ -117,7 +167,8 @@ func JoinLobby(user):
 		"id" : user.id,
 		"host" : lobbies[user.lobbyValue].HostID,
 		"player" : lobbies[user.lobbyValue].Players[user.id],
-		"lobbyValue" : user.lobbyValue
+		"lobbyValue" : user.lobbyValue,
+		"type":"join"
 	}
 	
 	sendToPlayer(user.id, data)

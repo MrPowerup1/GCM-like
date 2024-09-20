@@ -13,6 +13,7 @@ func _ready() -> void:
 	SyncManager.clear_peers()
 	GameManager.players.clear()
 	GameManager.alive_players.clear()
+	GameManager.reset_decks()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

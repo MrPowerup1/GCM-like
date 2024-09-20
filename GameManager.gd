@@ -96,7 +96,6 @@ func load_player(player_data:Dictionary):
 		 
 
 func remove_player(player_index:int) -> bool:
-	
 	if players.has(player_index):
 		players.erase(player_index)
 		if local_players.has(player_index):
@@ -120,3 +119,17 @@ func get_players_on_peer(peer_id:int)->Array[int]:
 			to_return.append(players.find_key(player))
 	return to_return
 	
+func check_sync()-> bool:
+	for peer in peers.values():
+		if !peer.get('synced'):
+			return false
+	return true
+
+func update_sync(peer_id:int,is_synced:bool):
+	if peer_id !=1:
+		peers[str(peer_id)]['synced'] = is_synced
+
+func reset_decks():
+	universal_level_deck.reset()
+	universal_skin_deck.reset()
+	universal_spell_deck.reset()

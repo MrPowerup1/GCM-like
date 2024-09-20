@@ -12,15 +12,23 @@ signal start_round
 
 func _ready() -> void:
 	Client.peer_disconnect.connect(disconnected)
+	GameManager.reset_decks()
 	
 func _on_players_ready() -> void:
+	unsync.rpc()
 	%StartRoundPanel.start_countdown()
 
-
 func _on_players_unready() -> void:
+	sync.rpc()
 	%StartRoundPanel.stop_countdown()
 
+@rpc("any_peer","call_local")
+func unsync():
+	GameManager.update_sync(multiplayer.get_remote_sender_id(),false)
 
+@rpc("any_peer","call_local")
+func sync():
+	GameManager.update_sync(multiplayer.get_remote_sender_id(),true)
 
 func _on_back_button_down() -> void:
 	#back.emit()

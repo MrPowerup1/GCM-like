@@ -68,11 +68,11 @@ func add_player(index:int):#input:Input_Keys):
 	#if the player has already been assigned, just function
 	var remote_id = multiplayer.get_remote_sender_id()
 	var local_id = multiplayer.get_unique_id()
+	#TODO:what is this for?
 	if remote_id ==local_id:
 		if %PlayerUIInput.player_index==index:
 			%PlayerUIInput.button_activate.connect(button_input)
 			%PlayerUIInput.direction_pressed.connect(directional_input)
-			
 		elif GameManager.local_players.has(index):
 			%PlayerUIInput.player_index = index
 			#print(GameManager.local_players[index]['input_keys'])
@@ -82,6 +82,7 @@ func add_player(index:int):#input:Input_Keys):
 		else:
 			printerr("No known player of index ",index)
 			return
+	%PlayerUIInput.player_index = index
 	attached_player=true
 	player_joined.emit(%PlayerUIInput.player_index)
 	#%Displays.player_joined(%PlayerUIInput.player_index)

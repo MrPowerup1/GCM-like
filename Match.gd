@@ -9,10 +9,13 @@ const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 @export var end_screen:PackedScene
 @export var user_disconnect_scene:PackedScene
 
-
+var started:bool = false
 var logging_enabled:bool = true
 
 #signal start_round()
+
+	
+
 
 func _ready():
 	Client.peer_disconnect.connect(disconnected)
@@ -21,9 +24,10 @@ func _ready():
 	SyncManager.sync_lost.connect(_on_SyncManager_sync_lost)
 	SyncManager.sync_regained.connect(_on_SyncManager_sync_regained)
 	#TODO: TImer seems to be doing nothing?
-	await get_tree().create_timer(5)
-	if GameManager.is_host:
-		SyncManager.start()
+	sync.rpc()
+	#await get_tree().create_timer(5)
+	#if GameManager.is_host:
+		#SyncManager.start()
 	#HACK: Just a test method
 	#SyncManager.scene_spawned.connect(_test_method)
 	#SyncManager.scene_despawned.connect(_test_method_2)
@@ -41,6 +45,14 @@ func _ready():
 	#print(name)
 	#print(node)
 	#print(SyncManager._spawn_manager.spawn_records)
+@rpc("any_peer","call_local")
+func unsync():
+	GameManager.update_sync(multiplayer.get_remote_sender_id(),true)
+
+@rpc("any_peer","call_local")
+func sync():
+	GameManager.update_sync(multiplayer.get_remote_sender_id(),true)
+
 
 func load_players(player_data:Dictionary):
 	for player_id in player_data:
@@ -130,3 +142,12 @@ func disconnected(id:int):
 	var disconnected_panel = user_disconnect_scene.instantiate()
 	add_child(disconnected_panel)
 	disconnected_panel.set_user_id(str(id))
+
+
+func _on_check_sync_timeout() -> void:
+	if !started and !SyncManager.started:
+		if GameManager.is_host and GameManager.check_sync():
+			SyncManager.start()
+			%CheckSync.stop()
+		else:
+			sync.rpc()

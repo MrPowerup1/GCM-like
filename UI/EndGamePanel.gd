@@ -13,7 +13,7 @@ func _ready():
 	Client.peer_disconnect.connect(disconnected)
 
 func display_winner():
-	var winner_index = GameManager.alive_players[0]
+	var winner_index = GameManager.alive_players.values()[0]
 	var winner = GameManager.players[winner_index]
 	var winner_skin = (GameManager.universal_skin_deck.cards[winner.selected_skin] as SkinCard).skin
 	print(GameManager.alive_players.size())

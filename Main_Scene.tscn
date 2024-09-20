@@ -49,5 +49,10 @@ script = ExtResource("9_r4h35")
 
 [node name="UIEvent" type="Node" parent="EventManager"]
 
+[node name="CheckSync" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="EndRound" from="EventManager/StandardRound" to="." method="_on_end_round"]
+[connection signal="timeout" from="CheckSync" to="." method="_on_check_sync_timeout"]

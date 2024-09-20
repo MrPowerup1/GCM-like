@@ -160,7 +160,7 @@ func _network_despawn() ->void:
 
 func pre_despawn()->void:
 	%"Player Status".clear_status()
-	for child in get_children():
+	for child in %"Delayed Casts".get_children():
 		if child is DelayedCastInstance:
 			SyncManager.despawn(child)
 

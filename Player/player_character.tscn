@@ -203,6 +203,9 @@ unique_name_in_owner = true
 script = ExtResource("13_aymwb")
 wait_ticks = 10
 
+[node name="Delayed Casts" type="Node" parent="."]
+unique_name_in_owner = true
+
 [connection signal="dead" from="Health" to="." method="_on_health_dead"]
 [connection signal="health_changed" from="Health" to="Player Status" method="health_changed"]
 [connection signal="timeout" from="DespawnDelay" to="." method="_on_despawn_delay_timeout"]

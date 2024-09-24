@@ -147,10 +147,10 @@ func _on_center_card_new_name(name):
 
 
 func _on_zoomed_select():
-	next.emit()
-	display()
 	center_card.select(player_index,context)
+	display()
 	refresh()
+	next.emit()
 	#new_cards(cards.next_cards(center_card))
 
 

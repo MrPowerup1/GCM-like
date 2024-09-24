@@ -5,7 +5,7 @@ class_name SelectSpell2
 func enter():
 	$"../..".active_panel=%SpellSelect2
 	%SpellSelect2.visible=true
-	%SpellSelect2.transition_display_mode(CardSelectPanel.display_mode.SELECTING)
+	#%SpellSelect2.transition_display_mode(CardSelectPanel.display_mode.SELECTING)
 	%SpellSelect2.refresh()
 
 func exit():

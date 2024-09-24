@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfv8ue3j88ew7"]
+
+[ext_resource type="AudioStream" uid="uid://dtfbox5faho26" path="res://Sound/Blip_Select12.wav" id="1_1ukah"]
+[ext_resource type="Script" path="res://ui_sound_fx_manager.gd" id="1_7cy1i"]
+[ext_resource type="AudioStream" uid="uid://8mwgp0lg27td" path="res://Sound/Blip_Back.wav" id="2_knpch"]
+[ext_resource type="AudioStream" uid="uid://c53j66iumadsn" path="res://Sound/MenuNavigate.wav" id="4_1fg3g"]
+
+[node name="UI SoundFX Manager" type="Node"]
+script = ExtResource("1_7cy1i")
+
+[node name="SelectNoise" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("1_1ukah")
+
+[node name="BackNoise" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_knpch")
+
+[node name="MoveNoise" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_1fg3g")

@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_bmfct"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_imu53"]
-extents_x = 1890126
-extents_y = 1834980
+extents_x = 1049760
+extents_y = 1075752
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_epkfj"]
 extents_x = 826568

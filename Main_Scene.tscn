@@ -1,19 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://fhwmhipqb0rd"]
+[gd_scene load_steps=12 format=3 uid="uid://fhwmhipqb0rd"]
 
 [ext_resource type="Script" path="res://Match.gd" id="1_34fhp"]
-[ext_resource type="PackedScene" uid="uid://gml8gorru1ib" path="res://UI/UI.tscn" id="1_usjvf"]
 [ext_resource type="PackedScene" uid="uid://blo8vwrgo5te8" path="res://Player/player_character.tscn" id="2_brp2j"]
 [ext_resource type="PackedScene" uid="uid://bfi3h4c85n05t" path="res://Basic_Level.tscn" id="2_phpxu"]
+[ext_resource type="PackedScene" uid="uid://b8qylbg6j5sq" path="res://end_game_panel.tscn" id="3_sw3gr"]
+[ext_resource type="PackedScene" uid="uid://b5imxvvgtef5r" path="res://user_disconnect.tscn" id="4_r35uu"]
 [ext_resource type="Script" path="res://Player Manager.gd" id="5_krq7q"]
 [ext_resource type="AudioStream" uid="uid://b8hxwqbmg0y70" path="res://Sound/Test Music V2 (90% slow).wav" id="5_pyaxe"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="6_2ko18"]
+[ext_resource type="PackedScene" uid="uid://ba0uba5gvtlbm" path="res://start_anim.tscn" id="7_pqdf1"]
+[ext_resource type="Script" path="res://States/StateManager.gd" id="8_d7hxw"]
+[ext_resource type="Script" path="res://standard_round.gd" id="9_r4h35"]
 
 [node name="Match" type="Node2D"]
 position = Vector2(0, -1)
 script = ExtResource("1_34fhp")
 player_scene = ExtResource("2_brp2j")
-
-[node name="UI" parent="." instance=ExtResource("1_usjvf")]
+end_screen = ExtResource("3_sw3gr")
+user_disconnect_scene = ExtResource("4_r35uu")
 
 [node name="Basic Level" parent="." instance=ExtResource("2_phpxu")]
 
@@ -31,4 +35,24 @@ script = ExtResource("6_2ko18")
 one_shot = true
 wait_ticks = 100
 
+[node name="Start Anim" parent="." instance=ExtResource("7_pqdf1")]
+unique_name_in_owner = true
+
+[node name="EventManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("8_d7hxw")
+starting_state = NodePath("StandardRound")
+
+[node name="StandardRound" type="Node" parent="EventManager"]
+script = ExtResource("9_r4h35")
+
+[node name="BossRound" type="Node" parent="EventManager"]
+
+[node name="UIEvent" type="Node" parent="EventManager"]
+
+[node name="CheckSync" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="EndRound" from="EventManager/StandardRound" to="." method="_on_end_round"]
+[connection signal="timeout" from="CheckSync" to="." method="_on_check_sync_timeout"]

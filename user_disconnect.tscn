@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5imxvvgtef5r"]
+
+[ext_resource type="Script" path="res://UI/user_disconnect.gd" id="1_4d5cv"]
+
+[node name="UserDisconnect" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_4d5cv")
+
+[node name="UserDisconnect" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UserDisconnect"]
+layout_mode = 2
+theme_type_variation = &"Panel2"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserDisconnect/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Failed" type="Label" parent="UserDisconnect/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "User Disconnected
+"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserDisconnect/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="ID" type="Label" parent="UserDisconnect/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 30
+text = "ID: 
+"
+vertical_alignment = 1
+
+[node name="User ID" type="Label" parent="UserDisconnect/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 5.0
+theme_override_font_sizes/font_size = 30
+text = "TEST1234
+"
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="UserDisconnect/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[connection signal="button_down" from="UserDisconnect/PanelContainer/VBoxContainer/Back" to="." method="_on_back_button_down"]

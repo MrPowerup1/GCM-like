@@ -1,6 +1,7 @@
-extends Panel
+extends SelectPanel
 
-signal exit()
+signal player_ready
+signal player_unready
 
 @rpc("any_peer","call_local")
 func left():
@@ -19,4 +20,11 @@ func select():
 	pass
 @rpc("any_peer","call_local")
 func back():
+	player_unready.emit()
 	exit.emit()
+	
+func focused():
+	%PlayerReady.visible=true
+	player_ready.emit()
+	
+	

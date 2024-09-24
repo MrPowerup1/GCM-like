@@ -12,7 +12,7 @@ class_name Input_Keys
 	#"Dash":"Dash"
 	}
 	
-enum device_type {KEYBOARD,JOYSTICK}
+enum device_type {KEYBOARD,JOYSTICK,REMOTE}
 @export var device:device_type
 @export var device_id:int
 

@@ -5,17 +5,13 @@ signal start_round
 
 func enter():
 	%"Player Select Menu".visible=true
-	%StartGamePanel.visible=true
-	%StartGamePanel.start_countdown()
+	%"Player Select Menu".start_countdown()
 
 func exit():
 	%"Player Select Menu".visible=false
-	%StartGamePanel.visible=false
-	%StartGamePanel.stop_countdown()
+	%"Player Select Menu".stop_countdown()
 	
-func _on_start_game_panel_start_round():
-	start_round.emit()
-	Transition.emit(self,"RoundInProgress")
+	
 
 func _on_player_select_screen_players_unready():
 	Transition.emit(self,"PlayerSelect")
@@ -23,5 +19,10 @@ func _on_player_select_screen_players_unready():
 
 
 func _on_client_peer_disconnect(id):
-	%"User ID".text = str(id)
+	%UserDisconnect.set_user_id(str(id))
 	Transition.emit(self,"UserDisconnect")
+
+
+func _on_player_select_menu_start_game() -> void:
+	start_round.emit()
+	Transition.emit(self,"RoundInProgress")

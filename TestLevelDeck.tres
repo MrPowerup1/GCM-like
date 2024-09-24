@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Deck" load_steps=6 format=3 uid="uid://bfj8ixhb2avq"]
+[gd_resource type="Resource" script_class="Deck" load_steps=7 format=3 uid="uid://bfj8ixhb2avq"]
 
 [ext_resource type="Texture2D" uid="uid://ju7j4u7pyvum" path="res://Art/dash-try.png" id="1_avrc7"]
 [ext_resource type="Script" path="res://Deck.gd" id="1_ovkcu"]
 [ext_resource type="Script" path="res://LevelCard.gd" id="1_sxcqf"]
+[ext_resource type="Script" path="res://Card.gd" id="1_ttxv2"]
 [ext_resource type="PackedScene" uid="uid://fhwmhipqb0rd" path="res://Main_Scene.tscn" id="2_rtxwg"]
 
 [sub_resource type="Resource" id="Resource_28a2g"]
@@ -15,5 +16,5 @@ context = 0
 
 [resource]
 script = ExtResource("1_ovkcu")
-cards = Array[Resource("res://Card.gd")]([SubResource("Resource_28a2g")])
+cards = Array[ExtResource("1_ttxv2")]([SubResource("Resource_28a2g")])
 allowed = Array[bool]([true])

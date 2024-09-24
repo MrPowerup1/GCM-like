@@ -20,14 +20,16 @@ var rtcPeer : WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new()
 var hostId :int
 var lobbyValue = ""
 var lobbyInfo = {}
+var clientName = ""
 
 signal start
 signal wait_for_peers
-signal peer_joined
+signal peer_joined(id:int)
 signal new_lobby_id(new_id:String)
-signal loading_lobby(state:bool)
+signal loaded_lobby()
 signal failed_to_load_lobby(lobby_id:String)
-signal peer_disconnect(id:String)
+signal peer_disconnect(id:int)
+signal host_changed(id:int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,9 +43,8 @@ func RTCServerConnected():
 
 func RTCPeerConnected(id):
 	print("rtc peer connected " + str(id))
-	peer_joined.emit()
+	peer_joined.emit(id)
 	SyncManager.add_peer(id)
-	
 	
 	
 func RTCPeerDisconnected(id):
@@ -55,7 +56,7 @@ func RTCPeerDisconnected(id):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	peer.poll()
-	if peer.get_available_packet_count() > 0:
+	while peer.get_available_packet_count() > 0:
 		var packet = peer.get_packet()
 		if packet != null:
 			var dataString = packet.get_string_from_utf8()
@@ -68,18 +69,22 @@ func _process(delta):
 			if data.message == Message.userConnected:
 				#GameManager.Players[data.id] = data.player
 				print("User connected")
-				createPeer(data.id)
+				createPeerConnection(data.id)
 			
 			if data.message == Message.userDisconnected:	
-				pass
+				print("Disconnect")
+				#GameManager.peers.erase(data.id)
 			
 			if data.message == Message.lobby:
 				if data.isValid:
 					GameManager.peers = JSON.parse_string(data.players)
-					hostId = data.host
+					update_host(data.host)
+					#hostId = data.host
 					lobbyValue = data.lobbyValue
 					#wait_for_peers.emit()
-					loading_lobby.emit(false)
+					#loaded_lobby.emit()
+					##REMOVE THIS PRINT
+					#print("Loaded Sucessfully")
 					new_lobby_id.emit(lobbyValue)
 				else:
 					failed_to_load_lobby.emit(data.lobbyValue)
@@ -102,24 +107,31 @@ func _process(delta):
 	pass
 
 func connected(id):
-	print("New ID, webrtc")
+	print("New ID, webrtc", id)
 	rtcPeer.create_mesh(id)
+	
 	multiplayer.multiplayer_peer = rtcPeer
+	
 
 #web rtc connection
-func createPeer(id):
+func createPeerConnection(id):
 	if id != self.id:
-		var peer : WebRTCPeerConnection = WebRTCPeerConnection.new()
-		peer.initialize({
+		var peer_connection : WebRTCPeerConnection = WebRTCPeerConnection.new()
+		peer_connection.initialize({
 			"iceServers" : [{ "urls": ["stun:stun.l.google.com:19302"] }]
 		})
-		print("binding id " + str(id) + "my id is " + str(self.id))
+		print("binding id " + str(id) + " my id is " + str(self.id))
 		
-		peer.session_description_created.connect(self.offerCreated.bind(id))
-		peer.ice_candidate_created.connect(self.iceCandidateCreated.bind(id))
-		rtcPeer.add_peer(peer, id)
-		if !hostId == self.id:
-			peer.create_offer()
+		peer_connection.session_description_created.connect(self.offerCreated.bind(id))
+		peer_connection.ice_candidate_created.connect(self.iceCandidateCreated.bind(id))
+		rtcPeer.add_peer(peer_connection, id)
+		
+		#THIS IS THE THING I CHANGED TO FIX MESHES, 
+		#OFFERS SHOULD ONLY BE CREATED ONE WAY (So if a offers b, b cant offer a)
+		# SO JUST CHECK IF ID IS GREATER, THEN SEND.  This may fail later, but for now it works
+		#
+		if self.id > id:
+			peer_connection.create_offer()
 		
 		pass
 		
@@ -182,8 +194,9 @@ func _on_start_round_button_down():
 	StartGame.rpc()
 	pass # Replace with function body.
 
-@rpc("any_peer", "call_local")
+#@rpc("any_peer", "call_local")
 func StartGame():
+	print("Start Game")
 	var message = {
 		"message": Message.removeLobby,
 		"lobbyID" : lobbyValue
@@ -192,35 +205,47 @@ func StartGame():
 	start.emit()
 
 func _on_join_lobby_button_down():
-	join_lobby()
+	join_lobby("")
 	
-func join_lobby():
-	loading_lobby.emit(true)
+func join_lobby(lobby_id:String):
+	#loading_lobby.emit(true)
 	connectToServer("")
 	await get_tree().create_timer(0.5).timeout
 	var message ={
 		"id" : id,
 		"message" : Message.lobby,
-		"name" : "",
-		"lobbyValue" : %IP.text
+		"name" : clientName,
+		"lobbyValue" : lobby_id,
+		"type":"join"
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	#TODO: Consider... What if failed to create lobby?
-	if %IP.text == "":
-		GameManager.is_host=true
+	#if lobby_id == "":
+		#GameManager.is_host=true
 	pass # Replace with function body.	
+
+func update_host(new_id:int):
+	if hostId != new_id:
+		hostId = new_id
+		if id == hostId:
+			GameManager.is_host=true
+		else:
+			GameManager.is_host=false
+		host_changed.emit(new_id)
 
 func leave_lobby():
 	
-	#var message ={
-		#"id" : id,
-		#"message" : Message.removeLobby,
-		#"lobbyValue" : lobbyValue
-	#}
-	#peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-	#await get_tree().create_timer(0.5).timeout
+	var message ={
+		"id" : id,
+		"message" : Message.lobby,
+		"name" : clientName,
+		"lobbyValue" : lobbyValue,
+		"type":"leave"
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	await get_tree().create_timer(0.5).timeout
 	print("Disconnected peer with id: ",id)
-	#multiplayer.disconnect_peer(id)
+	multiplayer.disconnect_peer(id)
 	var peers = rtcPeer.get_peers()
 	for peer in peers:
 		rtcPeer.remove_peer(peer)

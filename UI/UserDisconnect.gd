@@ -9,6 +9,6 @@ func exit():
 	%UserDisconnect.visible = false
 
 
-func _on_back_3_button_down():
+func _on_back_button_down() -> void:
 	Transition.emit(self,"LocalOrOnline")
 	%BackNoise.play()

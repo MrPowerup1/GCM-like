@@ -6,7 +6,15 @@ class_name StateManager
 var current_state:State
 var current_state_name:String
 var states:Dictionary = {}
+var current_state_process:bool = true
+var current_state_physics_process:bool = true
+var current_state_network_process:bool = true
 
+
+func set_processes():
+	current_state_physics_process= current_state.do_physics_process
+	current_state_process= current_state.do_process
+	current_state_network_process= current_state.do_network_process
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,17 +29,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if current_state:
+	if current_state and current_state_process:
 		if current_state_name != states.find_key(current_state):
 			current_state=states[current_state_name]
 		current_state.process(delta)
 
 func _physics_process(delta):
-	if current_state:
+	if current_state and current_state_physics_process:
 		current_state.physics_process(delta)
 
 func _network_process(input:Dictionary)->void:
-	if current_state:
+	if current_state and current_state_network_process:
 		current_state.network_process(input)
 func on_transition(state,new_state_name):
 	if state!=current_state:

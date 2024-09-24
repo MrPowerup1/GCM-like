@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=7 format=3 uid="uid://c76htlukbfj68"]
+[gd_resource type="Resource" script_class="Spell" load_steps=8 format=3 uid="uid://c76htlukbfj68"]
 
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_de8h0"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_ktthn"]
 [ext_resource type="PackedScene" uid="uid://cmviupldp2e4p" path="res://Spells/Showcase Spells/Fireball/Fireball Scene.tscn" id="6_o0enp"]
 [ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="9_t7xp4"]
@@ -18,7 +19,7 @@ effect = SubResource("Resource_3hrf7")
 [resource]
 script = ExtResource("10_r3ss6")
 timings = Array[int]([0])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_ayxi2")])
+effects = Array[ExtResource("1_de8h0")]([SubResource("Resource_ayxi2")])
 ping_asap = false
 held_ping_time = 0
 cooldown_on_activate = true

@@ -2,14 +2,16 @@ extends Node
 
 
 
-#Info about all the players
+#General info about players indexed by player index
 var players = {}
 
+#input keys dictionaries indexed by player index
 var local_players = {}
 
-#TODO: Delete? This doesn't do much right now, just holds player unique ids (It's never checked or used during the game)
+#indexed by multiplayer unique id, status
 var peers = {}
 
+#indexed by player index, only holds which players are alive (a little barebones, could it go somewehere else?)
 var alive_players = {}
 
 #Sync the skin deck selection for all players
@@ -27,7 +29,7 @@ var base_input = preload("res://Inputs/Base Input.tres").to_dict()
 var default_player_dict = {
 			"peer_id": -1,
 			"player_index":-1,
-			"known_spells": range(universal_spell_deck.cards.size()),
+			"known_spells": [0,1,2],  #range(universal_spell_deck.cards.size()),
 			"selected_skin": 0,
 			"selected_spells":[],
 			"selected_level":-1
@@ -96,7 +98,6 @@ func load_player(player_data:Dictionary):
 		 
 
 func remove_player(player_index:int) -> bool:
-	
 	if players.has(player_index):
 		players.erase(player_index)
 		if local_players.has(player_index):
@@ -120,3 +121,22 @@ func get_players_on_peer(peer_id:int)->Array[int]:
 			to_return.append(players.find_key(player))
 	return to_return
 	
+func check_sync()-> bool:
+	for peer in peers.values():
+		if !peer.get('synced'):
+			return false
+	return true
+
+func update_sync(peer_id:int,is_synced:bool):
+	if peer_id !=1:
+		peers[str(peer_id)]['synced'] = is_synced
+
+func reset_decks():
+	universal_level_deck.reset()
+	universal_skin_deck.reset()
+	universal_spell_deck.reset()
+
+func reset_player_selections(index:int):
+	assert(players.has(index),"Attempting to reset missing player index")
+	players[index]['selected_spells'].clear()
+		

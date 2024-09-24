@@ -1,24 +1,47 @@
-extends PanelContainer
+extends SelectPanel
 class_name CardSelectPanel
 
+enum DeckType {ALL_SPELL,KNOWN_SPELL,ALL_SKIN}
+@export var current_deck_type:DeckType
 @export var cards:Deck
 @export var left_card:Card
 @export var center_card:Card
 @export var right_card:Card
 @export var center_display:CardDisplay
-@export var player_index:int
-enum display_mode {SELECTED,SELECTING,ZOOMED}
-var current_mode:display_mode
+@export var display_location:Control
+@export var to_display:PackedScene
+var displayed_card:CardDisplay
+var can_select_left_right:bool = false
+#@export var player_index:int
+#enum display_mode {SELECTED,SELECTING,ZOOMED}
+#var current_mode:display_mode
+@export var context:Card.CardContext
 
 
+signal next_mode
+signal back_mode
+signal focus
 
 func _ready():
 	#Get the default skins and display them
 	var to_display = cards.start_cards()
 	new_cards(to_display)
 	refresh()
-	
-	
+	#load_new_deck()
+
+func new_player(new_player_index:int):
+	player_index = new_player_index
+	load_new_deck()
+
+func load_new_deck():
+	if current_deck_type==DeckType.ALL_SKIN:
+		cards = GameManager.universal_skin_deck
+	elif current_deck_type == DeckType.ALL_SPELL:
+		cards=GameManager.universal_spell_deck.duplicate()
+	elif current_deck_type==DeckType.KNOWN_SPELL:
+		print(player_index)
+		print(GameManager.players)
+		cards = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
 
 func refresh():
 	new_cards(cards.next_cards(center_card))
@@ -26,19 +49,21 @@ func refresh():
 	%CenterCard.reset_shader()
 	%RightCard.reset_shader()
 
-signal exit()
-signal next()
+#signal exit()
+#signal next()
 
 @rpc("any_peer","call_local")
 func left():
-	if current_mode != display_mode.ZOOMED:
+	if can_select_left_right:
 		new_cards(cards.next_cards(left_card))
-		%MenuMove.play()
+		SoundFX.move()
+		#%MenuMove.play()
 @rpc("any_peer","call_local")
 func right():
-	if current_mode != display_mode.ZOOMED:
+	if can_select_left_right:
 		new_cards(cards.next_cards(right_card))
-		%MenuMove.play()
+		SoundFX.move()
+		#%MenuMove.play()
 @rpc("any_peer","call_local")
 func up():
 	pass
@@ -49,31 +74,34 @@ func down():
 func select():
 	if center_card is RandomCard:
 		new_cards(cards.next_cards(cards.random()))
-		%SelectNoise.play()
-	if current_mode == display_mode.ZOOMED and cards.select(center_card):
-		center_card.select(player_index)
-		new_cards(cards.next_cards(center_card))
-		next.emit()
-		%SelectNoise.play()
-	if current_mode == display_mode.SELECTING:
-		transition_display_mode(display_mode.ZOOMED)
-		%SelectNoise.play()
-	else:
-		pass
+		SoundFX.select()
+		#%SelectNoise.play()
+	elif cards.select(center_card):
+		next_mode.emit()
+		SoundFX.select()
+		#%SelectNoise.play()
 @rpc("any_peer","call_local")
 func back():
-	if current_mode != display_mode.ZOOMED:
-		exit.emit()
-		%BackNoise.play()
-	else:
-		transition_display_mode(display_mode.SELECTING)
-		%BackNoise.play()
+	back_mode.emit()
+	SoundFX.back()
 
-@rpc("any_peer","call_local")
-func unselect():
-	cards.unselect(center_card)
-	center_card.unselect(player_index)
-	new_cards(cards.next_cards(center_card))
+func display():
+	displayed_card = to_display.instantiate()
+	display_location.add_child(displayed_card)
+	displayed_card.set_new_card(center_card)
+	displayed_card.set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
+
+func undisplay():
+	if displayed_card !=null:
+		displayed_card.queue_free()
+	#to_display.current_style = CardDisplay.DisplayStyle.INVISIBLE
+
+
+#@rpc("any_peer","call_local")
+#func unselect():
+	#cards.unselect(center_card)
+	#center_card.unselect(player_index)
+	#new_cards(cards.next_cards(center_card))
 	
 func new_cards(to_display:Array):
 	if to_display[0]==false:
@@ -92,58 +120,56 @@ func new_cards(to_display:Array):
 	right_card=to_display[3]
 	%RightCard.set_new_card(right_card)
 
-func transition_display_mode(new_mode:display_mode):
-	if new_mode==display_mode.SELECTED:
-		visible=false
-		%LeftButton.visible=false
-		%LeftCard.visible=false
-		%SelectButton.visible=false
-		%RightButton.visible=false
-		%RightCard.visible=false
-		%CenterCard.set_display_style(CardDisplay.DisplayStyle.ICON)
-		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-	if new_mode==display_mode.SELECTING:
-		visible=true
-		%LeftButton.visible=true
-		%LeftCard.visible=true
-		%SelectButton.visible=true
-		%RightButton.visible=true
-		%RightCard.visible=true
-		%CenterCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-		%LeftCard.set_display_style(CardDisplay.DisplayStyle.TINY)
-		%RightCard.set_display_style(CardDisplay.DisplayStyle.TINY)
-	if new_mode==display_mode.ZOOMED:
-		visible=true
-		%LeftButton.visible=false
-		%LeftCard.visible=false
-		%SelectButton.visible=true
-		%RightButton.visible=false
-		%RightCard.visible=false
-		%CenterCard.set_display_style(CardDisplay.DisplayStyle.ZOOMED)
-		%LeftCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-		%RightCard.set_display_style(CardDisplay.DisplayStyle.STANDARD)
-	current_mode=new_mode
+
 
 
 func _on_left_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
-		left()
+		left.rpc()
 
 
 func _on_right_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
-		right()
+		right.rpc()
 
 
 func _on_select_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
-		select()
+		select.rpc()
 
 
 func _on_center_card_new_name(name):
-	if name == "":
-		%NameBox.visible = false
-	else:
-		%NameBox.visible = true
-		%Name.text = name
+	#if name == "":
+		#%NameBox.visible = false
+	#else:
+		#%NameBox.visible = true
+	%Name.text = name
+
+
+func _on_zoomed_select():
+	center_card.select(player_index,context)
+	display()
+	refresh()
+	next.emit()
+	#new_cards(cards.next_cards(center_card))
+
+
+func _on_selected_unselect():
+	#exit.emit()
+	undisplay()
+	cards.unselect(center_card)
+	center_card.unselect(player_index,context)
+	refresh()
+	#new_cards(cards.next_cards(center_card))
+	#unselect()
+
+
+func _on_focused_unfocus():
+	refresh()
+	exit.emit()
+	
+
+func focused():
+	load_new_deck()
+	refresh()
+	focus.emit()

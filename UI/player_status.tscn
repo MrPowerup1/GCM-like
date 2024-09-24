@@ -1,36 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://knpxehglpha1"]
+[gd_scene load_steps=4 format=3 uid="uid://knpxehglpha1"]
 
-[ext_resource type="Texture2D" uid="uid://bwbcfl0pyfxwe" path="res://Art/small wizard.png" id="1_a007s"]
 [ext_resource type="Script" path="res://UI/player_status.gd" id="1_kqv04"]
+[ext_resource type="Script" path="res://Status Manager.gd" id="2_cgwpo"]
+[ext_resource type="PackedScene" uid="uid://7vljt807aqsj" path="res://Instanced Scenes/status_effect_instance.tscn" id="3_ynj70"]
 
 [node name="Player Status" type="PanelContainer"]
-offset_left = 46.0
-offset_top = 15.0
-offset_right = 195.0
-offset_bottom = 50.0
+texture_filter = 1
+offset_right = 64.0
+offset_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("1_kqv04")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
-visible = false
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_a007s")
+size_flags_vertical = 3
+theme_type_variation = &"SimplePanelContainer"
 
-[node name="P1 Health" type="Label" parent="HBoxContainer"]
-visible = false
+[node name="HealthDisplay" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"HeaderLarge"
-text = "P1"
 
-[node name="DamageDelay" type="Timer" parent="HBoxContainer"]
+[node name="DamageDelay" type="Timer" parent="VBoxContainer/PanelContainer/HealthDisplay"]
 unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
-[node name="DamageBar" type="ProgressBar" parent="HBoxContainer"]
+[node name="DamageBar" type="ProgressBar" parent="VBoxContainer/PanelContainer/HealthDisplay"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -40,7 +39,7 @@ theme_type_variation = &"DamageBar"
 value = 100.0
 show_percentage = false
 
-[node name="HealthBar" type="ProgressBar" parent="HBoxContainer/DamageBar"]
+[node name="HealthBar" type="ProgressBar" parent="VBoxContainer/PanelContainer/HealthDisplay/DamageBar"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -55,4 +54,12 @@ theme_type_variation = &"HealthBar"
 value = 60.0
 show_percentage = false
 
-[connection signal="timeout" from="HBoxContainer/DamageDelay" to="." method="_on_damage_delay_timeout"]
+[node name="StatusManager" type="GridContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+columns = 4
+script = ExtResource("2_cgwpo")
+status_instance_scene = ExtResource("3_ynj70")
+
+[connection signal="timeout" from="VBoxContainer/PanelContainer/HealthDisplay/DamageDelay" to="." method="_on_damage_delay_timeout"]

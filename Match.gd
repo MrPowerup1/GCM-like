@@ -6,16 +6,28 @@ class_name Match
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
 @export var player_scene:PackedScene
+@export var end_screen:PackedScene
+@export var user_disconnect_scene:PackedScene
 
+var started:bool = false
 var logging_enabled:bool = true
 
-signal start_round()
+#signal start_round()
+
+	
+
 
 func _ready():
+	Client.peer_disconnect.connect(disconnected)
 	SyncManager.sync_started.connect(_on_SyncManager_sync_started)
 	SyncManager.sync_stopped.connect(_on_SyncManager_sync_stopped)
 	SyncManager.sync_lost.connect(_on_SyncManager_sync_lost)
 	SyncManager.sync_regained.connect(_on_SyncManager_sync_regained)
+	#TODO: TImer seems to be doing nothing?
+	sync.rpc()
+	#await get_tree().create_timer(5)
+	#if GameManager.is_host:
+		#SyncManager.start()
 	#HACK: Just a test method
 	#SyncManager.scene_spawned.connect(_test_method)
 	#SyncManager.scene_despawned.connect(_test_method_2)
@@ -33,6 +45,14 @@ func _ready():
 	#print(name)
 	#print(node)
 	#print(SyncManager._spawn_manager.spawn_records)
+@rpc("any_peer","call_local")
+func unsync():
+	GameManager.update_sync(multiplayer.get_remote_sender_id(),true)
+
+@rpc("any_peer","call_local")
+func sync():
+	GameManager.update_sync(multiplayer.get_remote_sender_id(),true)
+
 
 func load_players(player_data:Dictionary):
 	for player_id in player_data:
@@ -44,6 +64,8 @@ func load_players(player_data:Dictionary):
 
 func _on_SyncManager_sync_started():
 	start_match()
+	print("Sync")
+	%"Start Anim".play_start_animation()
 	if logging_enabled and not SyncReplay.active:
 		var dir=DirAccess.open(LOG_FILE_DIRECTORY)
 		if not dir:
@@ -100,10 +122,32 @@ func start_match():
 		var new_player = SyncManager.spawn('Player',%Players,player_scene,player_data)
 	%AudioStreamPlayer.play(50)
 	%StartTimer.start()
-	$UI.start()
+	#$UI.start()
 
 func end_match():
+	SyncManager.stop()
 	%AudioStreamPlayer.stop()
 
 func _on_start_timer_timeout():
+	print("Start Players")
 	%Players.start_players()
+
+
+func _on_end_round() -> void:
+	end_match()
+	get_tree().change_scene_to_packed(end_screen)
+
+func disconnected(id:int):
+	end_match()
+	var disconnected_panel = user_disconnect_scene.instantiate()
+	add_child(disconnected_panel)
+	disconnected_panel.set_user_id(str(id))
+
+
+func _on_check_sync_timeout() -> void:
+	if !started and !SyncManager.started:
+		if GameManager.is_host and GameManager.check_sync():
+			SyncManager.start()
+			%CheckSync.stop()
+		else:
+			sync.rpc()

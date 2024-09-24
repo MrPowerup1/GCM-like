@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://cmviupldp2e4p"]
+[gd_scene load_steps=21 format=3 uid="uid://cmviupldp2e4p"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/Projectile.gd" id="1_wc0me"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="2_pj4ge"]
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="2_rtpww"]
 [ext_resource type="PackedScene" uid="uid://bqmerbh0i6esf" path="res://Spells/Showcase Spells/Fireball/fire scene.tscn" id="3_0i8tk"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_0j5eh"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="3_nagvh"]
@@ -73,11 +74,11 @@ _data = {
 
 [node name="Fireball" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync", "pierceable"]]
 script = ExtResource("1_wc0me")
-piercing = true
 velocity = NodePath("Velocity")
 timings = Array[int]([0, 2, 4, 0])
 locations = Array[int]([2, 3, 3, 2])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_phwlq"), SubResource("Resource_khwtr"), SubResource("Resource_yw62v"), SubResource("Resource_vs8um")])
+effects = Array[ExtResource("2_rtpww")]([SubResource("Resource_phwlq"), SubResource("Resource_khwtr"), SubResource("Resource_yw62v"), SubResource("Resource_vs8um")])
+rotate_to_caster = true
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_6u01q")

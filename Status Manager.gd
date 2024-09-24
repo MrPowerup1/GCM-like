@@ -4,7 +4,7 @@ extends Node
 var effected_player:Player
 
 func _ready():
-	effected_player=get_parent()
+	effected_player=get_parent().get_parent().get_parent()
 
 func new_status(status:Status_Type,caster:Player):
 	var index=effected_player.num_spells+get_child_count()-1
@@ -13,7 +13,7 @@ func new_status(status:Status_Type,caster:Player):
 		caster=caster,
 		effected_player=effected_player,
 		#Is this needed?
-		index=index
+		index=index,
 	}
 	SyncManager.spawn('Status',self,status_instance_scene,status_data)
 	
@@ -27,7 +27,7 @@ func clear_status(index:int=-1):
 			if (i==index):
 				SyncManager.despawn(get_child(i))
 			elif (i>index):
-				get_child(i).lower_index()
+				get_child(i).status_index=i
 	else:
-		for i in range(get_child_count()):
-			get_child(i).queue_free()
+		for child in get_children():
+			SyncManager.despawn(child)

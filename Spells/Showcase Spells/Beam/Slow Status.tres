@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Status_Type" load_steps=5 format=3 uid="uid://bkb58x5o43edb"]
+[gd_resource type="Resource" script_class="Status_Type" load_steps=7 format=3 uid="uid://bkb58x5o43edb"]
 
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_5xt2g"]
 [ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="1_fm4d1"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="1_qstaw"]
+[ext_resource type="Texture2D" uid="uid://dejhfwvdvy2c5" path="res://Spells/Showcase Spells/Beam/Beam Icon.png" id="3_32qjg"]
 
 [sub_resource type="Resource" id="Resource_xjvmh"]
 script = ExtResource("1_qstaw")
@@ -20,6 +22,10 @@ friction_factor = 0
 [resource]
 script = ExtResource("1_fm4d1")
 timings = Array[int]([0, 2])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
+effects = Array[ExtResource("1_5xt2g")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
 ping_time = 0
 total_effect_time = 60
+status_visible = true
+flash_color = Color(0, 0, 0, 1)
+image = ExtResource("3_32qjg")
+flash_on_ping = false

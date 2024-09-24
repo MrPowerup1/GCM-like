@@ -7,7 +7,6 @@ func enter():
 func exit():
 	%FailedToLoad.visible = false
 
-
-func _on_back_3_button_down():
+func _on_back_button_down() -> void:
 	Transition.emit(self,"OnlineMatchmaking")
 	%BackNoise.play()

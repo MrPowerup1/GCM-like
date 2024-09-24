@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://ch87pslocldsu"]
+
+[ext_resource type="Script" path="res://UI/player_select_menu.gd" id="1_m8veg"]
+[ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="2_fagmk"]
+[ext_resource type="PackedScene" uid="uid://b5imxvvgtef5r" path="res://user_disconnect.tscn" id="2_vlqcs"]
+[ext_resource type="PackedScene" uid="uid://j4gp1hi2pg32" path="res://select_spells.tscn" id="3_4tt6v"]
+[ext_resource type="PackedScene" uid="uid://vaog6h0dcfy2" path="res://UI/PlayerPanel.tscn" id="3_t8xrn"]
+[ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="4_nuwb1"]
+
+[node name="Player Select Menu" type="CanvasLayer"]
+script = ExtResource("1_m8veg")
+user_disconnect_scene = ExtResource("2_vlqcs")
+next_scene = ExtResource("3_4tt6v")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Join and Select Skin"
+horizontal_alignment = 1
+
+[node name="PlayerSelectScreen" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+script = ExtResource("2_fagmk")
+player_panel = ExtResource("3_t8xrn")
+
+[node name="StartRoundPanel" parent="PanelContainer/VBoxContainer" instance=ExtResource("4_nuwb1")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Back" type="Button" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[connection signal="players_ready" from="PanelContainer/VBoxContainer/PlayerSelectScreen" to="." method="_on_players_ready"]
+[connection signal="players_unready" from="PanelContainer/VBoxContainer/PlayerSelectScreen" to="." method="_on_players_unready"]
+[connection signal="start_round" from="PanelContainer/VBoxContainer/StartRoundPanel" to="." method="_on_start_game_panel_start_round"]
+[connection signal="button_down" from="PanelContainer/VBoxContainer/Back" to="." method="_on_back_button_down"]

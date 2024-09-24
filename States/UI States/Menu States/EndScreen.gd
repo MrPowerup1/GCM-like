@@ -6,7 +6,7 @@ signal end_round
 func enter():
 	end_round.emit()
 	%EndGamePanel.visible=true
-	%EndGamePanel.end()
+	%EndGamePanel.display_winner()
 	GameManager.alive_players.clear()
 
 func exit():

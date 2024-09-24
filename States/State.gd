@@ -1,6 +1,11 @@
 extends Node
 class_name State
 
+
+@export var do_process:bool = true
+@export var do_physics_process:bool = true
+@export var do_network_process:bool = true
+
 signal Transition
 
 func enter():

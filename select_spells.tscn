@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://j4gp1hi2pg32"]
+
+[ext_resource type="Script" path="res://UI/player_select_menu.gd" id="1_p3xmn"]
+[ext_resource type="PackedScene" uid="uid://b5imxvvgtef5r" path="res://user_disconnect.tscn" id="2_srcmt"]
+[ext_resource type="PackedScene" uid="uid://fhwmhipqb0rd" path="res://Main_Scene.tscn" id="3_qbsov"]
+[ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="4_ojg81"]
+[ext_resource type="PackedScene" uid="uid://b0x1ktkwyv13l" path="res://UI/NewSpellPlayerPanel.tscn" id="5_88e8s"]
+[ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="6_w43e6"]
+
+[node name="SelectSpells" type="CanvasLayer"]
+script = ExtResource("1_p3xmn")
+user_disconnect_scene = ExtResource("2_srcmt")
+next_scene = ExtResource("3_qbsov")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Select your Spells"
+horizontal_alignment = 1
+
+[node name="PlayerSelectScreen" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+script = ExtResource("4_ojg81")
+player_panel = ExtResource("5_88e8s")
+adding_new_players = false
+
+[node name="StartRoundPanel" parent="PanelContainer/VBoxContainer" instance=ExtResource("6_w43e6")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Back" type="Button" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"BackButton"
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[connection signal="players_ready" from="PanelContainer/VBoxContainer/PlayerSelectScreen" to="." method="_on_players_ready"]
+[connection signal="players_unready" from="PanelContainer/VBoxContainer/PlayerSelectScreen" to="." method="_on_players_unready"]
+[connection signal="start_round" from="PanelContainer/VBoxContainer/StartRoundPanel" to="." method="_on_start_game_panel_start_round"]
+[connection signal="button_down" from="PanelContainer/VBoxContainer/Back" to="." method="_on_back_button_down"]

@@ -1,13 +1,13 @@
-[gd_scene load_steps=22 format=3 uid="uid://blo8vwrgo5te8"]
+[gd_scene load_steps=24 format=3 uid="uid://blo8vwrgo5te8"]
 
 [ext_resource type="Script" path="res://Player/Player Character.gd" id="1_o8ybw"]
+[ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="2_kd1xl"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="2_yhupi"]
-[ext_resource type="Texture2D" uid="uid://7dburm7ilnno" path="res://Player/wizard2.0-Sheet.png" id="3_5eodr"]
+[ext_resource type="Texture2D" uid="uid://bii3s3vwoui3b" path="res://Player/wizard2.0-Sheet.png" id="3_5eodr"]
 [ext_resource type="Script" path="res://Spell Manager.gd" id="3_dckfd"]
-[ext_resource type="Script" path="res://Status Manager.gd" id="3_mdj26"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="3_vaspw"]
-[ext_resource type="PackedScene" uid="uid://dgvt58ltbeh6w" path="res://Instanced Scenes/status_effect_instance.tscn" id="4_4c1wp"]
 [ext_resource type="PackedScene" uid="uid://8jmt2slvcqg" path="res://Spell Effects/Spell Slot.tscn" id="4_tyvj0"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="6_cu1kr"]
 [ext_resource type="Script" path="res://Velocity.gd" id="9_hac0t"]
 [ext_resource type="Script" path="res://Health.gd" id="9_hrbbv"]
 [ext_resource type="PackedScene" uid="uid://knpxehglpha1" path="res://UI/player_status.tscn" id="10_3tqh8"]
@@ -19,6 +19,40 @@
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_4pwhl"]
 extents_x = 513799
 extents_y = 778747
+
+[sub_resource type="Animation" id="Animation_fdsuh"]
+resource_name = "Cast1"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_jodjb"]
+resource_name = "Idle"
+length = 2.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
 
 [sub_resource type="Animation" id="Animation_ouvq7"]
 length = 0.001
@@ -32,7 +66,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [8]
 }
 
 [sub_resource type="Animation" id="Animation_wj64s"]
@@ -54,6 +88,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_brjgp"]
 _data = {
+"Cast1": SubResource("Animation_fdsuh"),
+"Idle": SubResource("Animation_jodjb"),
 "RESET": SubResource("Animation_ouvq7"),
 "Walk": SubResource("Animation_wj64s")
 }
@@ -85,6 +121,7 @@ fixed_position_y = 393216
 position = Vector2(3, 6)
 script = ExtResource("1_o8ybw")
 input = NodePath("PlayerCharacterInput")
+spell_deck = ExtResource("2_kd1xl")
 skin_deck = ExtResource("2_yhupi")
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
@@ -104,17 +141,13 @@ texture_filter = 1
 texture_repeat = 1
 material = SubResource("ShaderMaterial_lbhbm")
 texture = ExtResource("3_5eodr")
-hframes = 12
-
-[node name="Status Manager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("3_mdj26")
-status_instance_scene = ExtResource("4_4c1wp")
+hframes = 16
+frame = 8
 
 [node name="Spell Manager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
-known_spells = Array[Resource("res://Spell Effects/Spell.gd")]([null, null])
+known_spells = Array[ExtResource("6_cu1kr")]([null, null])
 
 [node name="Spell Slot" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
 caster = NodePath("../..")
@@ -132,9 +165,9 @@ fixed_diagonal_velocity_difference = 65536
 fixed_angle_diff = 1000
 friction_fixed = 65536
 mass_fixed = 65536
-acceleration_fixed = 65536
-cut_accel_fixed = 65536
-max_speed_fixed = 262144
+acceleration_fixed = 32768
+cut_accel_fixed = 32768
+max_speed_fixed = 131072
 turning_speed_fixed = 6556
 
 [node name="Health" type="Node" parent="."]
@@ -151,14 +184,15 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -33.0
-offset_right = 34.0
-offset_bottom = -17.0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayerCharacterInput" parent="." node_paths=PackedStringArray("velocity") instance=ExtResource("10_twgyi")]
 unique_name_in_owner = true
@@ -170,6 +204,9 @@ device = 1
 unique_name_in_owner = true
 script = ExtResource("13_aymwb")
 wait_ticks = 10
+
+[node name="Delayed Casts" type="Node" parent="."]
+unique_name_in_owner = true
 
 [connection signal="dead" from="Health" to="." method="_on_health_dead"]
 [connection signal="health_changed" from="Health" to="Player Status" method="health_changed"]

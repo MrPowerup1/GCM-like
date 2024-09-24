@@ -7,7 +7,7 @@ class_name SelectSkin
 func enter():
 	$"../..".active_panel=%SkinSelect
 	%SkinSelect.visible=true
-	%SkinSelect.transition_display_mode(CardSelectPanel.display_mode.SELECTING)
+	#%SkinSelect.transition_display_mode(CardSelectPanel.display_mode.SELECTING)
 	%SkinSelect.refresh()
 
 func exit():
@@ -18,6 +18,7 @@ func exit():
 
 
 func _on_skin_select_exit():
+	$"../..".delete_player()
 	Transition.emit(self,"AwaitingPlayer")
 
 

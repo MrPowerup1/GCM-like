@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=9 format=3 uid="uid://d4bocd5sr10kv"]
+[gd_resource type="Resource" script_class="Spell" load_steps=10 format=3 uid="uid://d4bocd5sr10kv"]
 
 [ext_resource type="Script" path="res://Spell Effects/scatter_effect.gd" id="1_4srle"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_5avhy"]
 [ext_resource type="PackedScene" uid="uid://dvf1ns7e5ppg3" path="res://Spells/Showcase Spells/Wall/Wall Scene.tscn" id="1_10k01"]
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_i0olq"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="2_xpl82"]
 [ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="4_4scny"]
 
@@ -32,7 +33,7 @@ effect = SubResource("Resource_enict")
 [resource]
 script = ExtResource("1_5avhy")
 timings = Array[int]([0])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_xcmvb")])
+effects = Array[ExtResource("1_i0olq")]([SubResource("Resource_xcmvb")])
 ping_asap = false
 held_ping_time = 0
 cooldown_on_activate = true

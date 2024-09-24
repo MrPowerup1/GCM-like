@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=27 format=3 uid="uid://ksudpbtmc2pk"]
+[gd_resource type="Resource" script_class="Spell" load_steps=28 format=3 uid="uid://ksudpbtmc2pk"]
 
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_25a1f"]
 [ext_resource type="PackedScene" uid="uid://cmr36cxa7lt8n" path="res://Spells/Showcase Spells/Beam/Beam Scene.tscn" id="1_80oiu"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_fki4b"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="2_xgf05"]
@@ -29,6 +30,7 @@ script = ExtResource("9_gvbpd")
 delay_time = 12
 effect = SubResource("Resource_eakul")
 delayed_cast_instance = ExtResource("6_8q4v2")
+origin = 0
 
 [sub_resource type="Resource" id="Resource_0y6vu"]
 script = ExtResource("4_kjybn")
@@ -51,13 +53,14 @@ script = ExtResource("8_ya72i")
 
 [sub_resource type="Resource" id="Resource_m2ema"]
 script = ExtResource("7_cypjf")
-spells = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_848x2"), SubResource("Resource_yrn5i")])
+spells = Array[ExtResource("1_25a1f")]([SubResource("Resource_848x2"), SubResource("Resource_yrn5i")])
 
 [sub_resource type="Resource" id="Resource_s3bki"]
 script = ExtResource("9_gvbpd")
 delay_time = 120
 effect = SubResource("Resource_m2ema")
 delayed_cast_instance = ExtResource("6_8q4v2")
+origin = 0
 
 [sub_resource type="Resource" id="Resource_jehdp"]
 script = ExtResource("10_x3ms4")
@@ -74,11 +77,12 @@ script = ExtResource("9_gvbpd")
 delay_time = 12
 effect = SubResource("Resource_74ssn")
 delayed_cast_instance = ExtResource("6_8q4v2")
+origin = 0
 
 [resource]
 script = ExtResource("1_fki4b")
 timings = Array[int]([0, 0, 2, 0, 0, 0, 0])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_qn3tc"), SubResource("Resource_0y6vu"), SubResource("Resource_5x8e8"), SubResource("Resource_j8uej"), SubResource("Resource_s3bki"), SubResource("Resource_jehdp"), SubResource("Resource_uqcau")])
+effects = Array[ExtResource("1_25a1f")]([SubResource("Resource_qn3tc"), SubResource("Resource_0y6vu"), SubResource("Resource_5x8e8"), SubResource("Resource_j8uej"), SubResource("Resource_s3bki"), SubResource("Resource_jehdp"), SubResource("Resource_uqcau")])
 ping_asap = false
 held_ping_time = 0
 cooldown_on_activate = false

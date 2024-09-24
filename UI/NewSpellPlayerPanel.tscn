@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=3 uid="uid://b0x1ktkwyv13l"]
+
+[ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_fatju"]
+[ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="2_uq032"]
+[ext_resource type="PackedScene" uid="uid://b0ya1pk5ik0ea" path="res://PlayerInfo.tscn" id="3_51v3a"]
+[ext_resource type="Script" path="res://UI/Displays.gd" id="3_eh28s"]
+[ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="7_gyjsw"]
+[ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="9_8a4a6"]
+[ext_resource type="Script" path="res://UI/spell_panel_specials.gd" id="9_67sx5"]
+[ext_resource type="Script" path="res://UI/PlayerReady.gd" id="10_7ck0y"]
+[ext_resource type="Script" path="res://Player/PlayerUIInput.gd" id="11_p0xvb"]
+[ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="12_c6o1s"]
+
+[node name="NewSpellPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(160, 300)
+theme_type_variation = &"Panel2"
+script = ExtResource("1_fatju")
+card_scene = ExtResource("2_uq032")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Permanent Selections" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerInfo" parent="MarginContainer/VBoxContainer/Permanent Selections" instance=ExtResource("3_51v3a")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Temporary Selections" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Displays" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("3_eh28s")
+
+[node name="NewSpell" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+layout_mode = 2
+cards = ExtResource("9_8a4a6")
+display_location = NodePath("../../Temporary Selections")
+context = 1
+
+[node name="SpellSelect1" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+unique_name_in_owner = true
+layout_mode = 2
+current_deck_type = 1
+cards = ExtResource("9_8a4a6")
+display_location = NodePath("../../Temporary Selections")
+
+[node name="Spell 2" type="Label" parent="MarginContainer/VBoxContainer/Displays"]
+layout_mode = 2
+text = "Spell 2"
+
+[node name="SpellSelect2" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+unique_name_in_owner = true
+layout_mode = 2
+current_deck_type = 1
+cards = ExtResource("9_8a4a6")
+display_location = NodePath("../../Temporary Selections")
+
+[node name="PlayerReady" type="PanelContainer" parent="MarginContainer/VBoxContainer/Displays"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"Panel2"
+script = ExtResource("10_7ck0y")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Displays/PlayerReady"]
+texture_filter = 1
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Ready"
+horizontal_alignment = 1
+
+[node name="InputCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.25
+one_shot = true
+
+[node name="PlayerUIInput" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("11_p0xvb")
+input_keys = ExtResource("12_c6o1s")
+
+[node name="SpellPanelSpecials" type="Node" parent="."]
+script = ExtResource("9_67sx5")
+
+[connection signal="player_joined" from="." to="MarginContainer/VBoxContainer/Displays" method="_on_player_panel_player_joined"]
+[connection signal="player_joined" from="." to="SpellPanelSpecials" method="_on_new_spell_panel_player_joined"]
+[connection signal="player_ready" from="MarginContainer/VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_ready"]
+[connection signal="player_unready" from="MarginContainer/VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_unready"]
+[connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]

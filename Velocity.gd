@@ -8,7 +8,7 @@ var velocity:SGFixedVector2 = SGFixedVector2.new()
 var facing:int
 var fixed_zero =SGFixed.vector2(0,0)
 #Currently implemented: Player
-enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,STEP}
+enum movement_styles {PLAYER,PROJECTILE,TANK,RESTRICTED,TURRET,STEP,PATH}
 @export var movement_style:movement_styles
 @export var animate:bool
 @export var animation_player:AnimationPlayer
@@ -115,15 +115,16 @@ func move_input(direction:SGFixedVector2):
 		step_move(direction)
 
 func animate_player_movement(direction:SGFixedVector2):
-	if direction.x==0 and direction.y == 0:
-		animation_player.play("RESET")
-	if direction.x>=0:
+	if animation_player.current_animation!="Cast1" and animation_player.current_animation!="Idle" and direction.x==0 and direction.y == 0:
+		animation_player.play("Idle")
+	elif can_move and direction.x>0:
 		%Sprite2D.flip_h = false
 		animation_player.play("Walk")
-	if direction.x<=0 and direction.y == 0:
+	elif can_move and direction.x<0:
 		animation_player.play("Walk")
 		%Sprite2D.flip_h = true
-	
+	elif can_move and direction.y != 0:
+		animation_player.play("Walk")
 	
 func tank_move_input(direction:SGFixedVector2):
 	facing += direction.x*turning_speed_fixed/fixed_point_factor
@@ -235,7 +236,8 @@ func anchor(set_anchor:bool=false):
 
 func set_speed(speed_factor:int=65536):
 	max_speed_fixed = SGFixed.mul(speed_factor,default_max_speed)
-	
+	acceleration_fixed =SGFixed.mul(speed_factor,default_acceleration)
+	cut_accel_fixed =SGFixed.mul(speed_factor,default_cut_accel) 
 
 func set_friction(friction_factor:int=65536):
 	friction_fixed = SGFixed.mul(friction_factor,default_friction)
@@ -281,7 +283,10 @@ func _save_state() ->Dictionary:
 		facing=facing,
 		can_move=can_move,
 		friction = friction_fixed,
-		speed = speed_fixed
+		speed = speed_fixed,
+		max_speed = max_speed_fixed,
+		acceleration = acceleration_fixed,
+		cut_accel = cut_accel_fixed
 	}
 func _load_state(state:Dictionary) ->void:
 	velocity.x=state['velocity_x']
@@ -290,3 +295,6 @@ func _load_state(state:Dictionary) ->void:
 	can_move=state['can_move']
 	friction_fixed=state['friction']
 	speed_fixed=state['speed']
+	max_speed_fixed = state['max_speed']
+	acceleration_fixed =state['acceleration']
+	cut_accel_fixed=state['cut_accel']

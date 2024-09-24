@@ -4,7 +4,8 @@ class_name LocalOrOnline
 const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNetworkAdaptor.gd")
 
 func enter():
-	%SelectionUI.visible=true
+	print("HERE")
+	%SelectionUI.visible=false
 	%LocalOrOnline.visible=true
 	SyncManager.clear_peers()
 

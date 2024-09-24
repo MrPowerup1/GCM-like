@@ -47,3 +47,6 @@ func subdeck(indices:Array) -> Deck:
 		new_deck.allowed.append(allowed[index]) 
 	return new_deck
 		
+func reset():
+	for i in range(allowed.size()):
+		allowed[i] = true

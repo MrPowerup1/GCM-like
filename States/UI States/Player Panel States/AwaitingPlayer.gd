@@ -8,7 +8,7 @@ func enter():
 	%AwaitPlayer.visible=true
 	$"../..".now_ready=true
 	$"../..".active_panel=%AwaitPlayer
-	$"../..".quit()
+	
 
 func exit():
 	%AwaitPlayer.visible=false
@@ -16,9 +16,5 @@ func exit():
 	
 
 func _on_await_player_next():
-	print("Shouldn't Be here")
-	
-
-
-func _on_player_panel_player_joined():
 	Transition.emit(self,"SelectSkin")
+	

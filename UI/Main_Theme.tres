@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=22 format=3 uid="uid://bspowubtcgf6b"]
+[gd_resource type="Theme" load_steps=25 format=3 uid="uid://bspowubtcgf6b"]
 
 [ext_resource type="FontFile" uid="uid://dxyf6qblynmf5" path="res://minecraft-font/MinecraftRegular-Bmg3.otf" id="1_mqobe"]
 [ext_resource type="Texture2D" uid="uid://bcaqscfm6rmmy" path="res://Art/Borders.png" id="2_87rcu"]
 [ext_resource type="Texture2D" uid="uid://c8yhmloay15ws" path="res://Art/Borders_dark.png" id="3_tnna5"]
+[ext_resource type="Texture2D" uid="uid://cq1hyfyjhj5hv" path="res://Art/simple_outline.png" id="4_3dfce"]
 [ext_resource type="Texture2D" uid="uid://caw8icl8kqw4e" path="res://Art/scroll_try.png" id="4_47qgu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h4u5"]
@@ -37,6 +38,8 @@ bg_color = Color(0.533333, 0.698039, 0.643137, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rcxgi"]
 bg_color = Color(0.364706, 0.678431, 0.509804, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8lh2x"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkibx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbvak"]
@@ -61,12 +64,13 @@ texture_margin_top = 4.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iow4e"]
-texture = ExtResource("3_tnna5")
-texture_margin_left = 4.0
-texture_margin_top = 4.0
-texture_margin_right = 4.0
-texture_margin_bottom = 4.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mqj0m"]
+texture = ExtResource("4_3dfce")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+draw_center = false
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x6nm1"]
 texture = ExtResource("4_47qgu")
@@ -74,6 +78,9 @@ texture_margin_left = 8.0
 texture_margin_top = 2.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2n5c4"]
+bg_color = Color(0.6, 0.6, 0.6, 0.6)
 
 [resource]
 BackButton/base_type = &"Button"
@@ -90,9 +97,16 @@ Button/styles/focus = SubResource("StyleBoxFlat_w3jra")
 Button/styles/hover = SubResource("StyleBoxFlat_15gsr")
 Button/styles/normal = SubResource("StyleBoxFlat_wmiej")
 Button/styles/pressed = SubResource("StyleBoxFlat_rcxgi")
+ClearPanelContainer/base_type = &"PanelContainer"
+ClearPanelContainer/styles/panel = SubResource("StyleBoxEmpty_8lh2x")
 DamageBar/base_type = &"ProgressBar"
 DamageBar/styles/background = SubResource("StyleBoxFlat_mkibx")
 DamageBar/styles/fill = SubResource("StyleBoxFlat_xbvak")
+DoubleBorder/base_type = &"MarginContainer"
+DoubleBorder/constants/margin_bottom = 128
+DoubleBorder/constants/margin_left = 128
+DoubleBorder/constants/margin_right = 128
+DoubleBorder/constants/margin_top = 128
 HeaderLarge/font_sizes/font_size = 12
 HeaderMedium/font_sizes/font_size = 8
 HeaderSmall/font_sizes/font_size = 5
@@ -109,6 +123,9 @@ MarginContainer/constants/margin_top = 32
 Panel2/base_type = &"PanelContainer"
 Panel2/styles/panel = SubResource("StyleBoxTexture_g8via")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_mk42h")
-PanelContainer/styles/panel2 = SubResource("StyleBoxTexture_iow4e")
+SimplePanelContainer/base_type = &"PanelContainer"
+SimplePanelContainer/styles/panel = SubResource("StyleBoxTexture_mqj0m")
 SpellPanel/base_type = &"PanelContainer"
 SpellPanel/styles/panel = SubResource("StyleBoxTexture_x6nm1")
+StatusBar/base_type = &"ProgressBar"
+StatusBar/styles/fill = SubResource("StyleBoxFlat_2n5c4")

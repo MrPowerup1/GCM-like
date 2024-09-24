@@ -40,23 +40,27 @@ func activate(index:int):
 	if can_cast[index]:
 		%"Spell Manager".activate.rpc(index)
 		spell_activated.emit(index)
+		%NetworkAnimationPlayer.play("Cast1")
 
 func release(index:int):
 	if can_release[index]:
 		%"Spell Manager".release.rpc(index)
 		spell_released.emit(index)
+		#%NetworkAnimationPlayer.play("Idle")
 	
 func add_status_effect(status:Status_Type,caster:Player):
-	%"Status Manager".new_status(status,caster)
+	%"Player Status".new_status(status,caster)
+	
 	
 func anchor (set_anchor:bool=true):
 	%Velocity.anchor(set_anchor)
+	#%NetworkAnimationPlayer.play("Idle")
 
 func get_held_time(spell_index:int):
 	if spell_index < num_spells:
 		return %"Spell Manager".get_held_time(spell_index)
 	else:
-		return %"Status Manager".get_held_time(spell_index)
+		return %"Player Status".get_held_time(spell_index)
 
 func get_cast_iteration(spell_index:int):
 	%"Spell Manager".get_cast_iteration(spell_index)
@@ -68,7 +72,7 @@ func set_release_permission(index:int, state:bool):
 	can_release[index]=state
 
 func clear_status(index:int):
-	%"Status Manager".clear_status(index-num_spells)
+	%"Player Status".clear_status(index)
 
 func enable():
 	visible=true
@@ -136,7 +140,7 @@ func _on_health_dead():
 
 func start_round():
 	enable()
-	GameManager.alive_players[player_index]=self
+	GameManager.alive_players[player_index] = player_index
 	
 func stop_round():
 	disable()
@@ -152,16 +156,11 @@ func stop_round():
 		#}
 func _network_despawn() ->void:
 	GameManager.alive_players.erase(player_index)
-	print(GameManager.alive_players.size())
-	assert(%"Status Manager".get_child_count()==0,"Child")
+	#assert(%"Player Status".get_child_count()==0,"Child")
 
 func pre_despawn()->void:
-	for status in %"Status Manager".get_children():
-		SyncManager.despawn(status)
-	#for spell in %"Spell Manager".get_children():
-		#SyncManager.despawn(spell)
-	#%"Spell Manager".slots.clear()
-	for child in get_children():
+	%"Player Status".clear_status()
+	for child in %"Delayed Casts".get_children():
 		if child is DelayedCastInstance:
 			SyncManager.despawn(child)
 
@@ -174,7 +173,7 @@ func _network_spawn(data: Dictionary) -> void:
 	#input.input_keys= Input_Keys.from_dict(data['input_keys'])
 	if not SyncReplay.active and peer_id == multiplayer.get_unique_id():
 		input.input_keys = Input_Keys.from_dict(GameManager.local_players[player_index]['input_keys'])
-	spell_deck=GameManager.universal_spell_deck.subdeck(data['known_spells'])
+	#spell_deck=GameManager.universal_spell_deck.subdeck(data['known_spells'])
 	set_skin(data['selected_skin'])
 	var selected_spells = data['selected_spells']
 	var index = 0 
@@ -182,7 +181,6 @@ func _network_spawn(data: Dictionary) -> void:
 		var new_spell = spell_deck.get_card(spell_index).spell
 		equip_spell(new_spell,index)
 		index+=1
-	#GameManager.alive_players.append(self)
 	sync_to_physics_engine()
 	anchor(true)
 	%NetworkAnimationPlayer.play("Walk")

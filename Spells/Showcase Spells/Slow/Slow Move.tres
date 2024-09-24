@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=6 format=3 uid="uid://ca7wsxomf1u4t"]
+
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_uvwj8"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="2_tffil"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="7_xg12m"]
+
+[sub_resource type="Resource" id="Resource_2nmtp"]
+script = ExtResource("2_tffil")
+set_speed = true
+set_friction = false
+speed_factor = 32768
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_pos5g"]
+script = ExtResource("2_tffil")
+set_speed = true
+set_friction = false
+speed_factor = 65536
+friction_factor = 0
+
+[resource]
+script = ExtResource("7_xg12m")
+timings = Array[int]([0, 2])
+effects = Array[ExtResource("1_uvwj8")]([SubResource("Resource_2nmtp"), SubResource("Resource_pos5g")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = true
+cooldown_on_release = false
+cooldown_time = 60

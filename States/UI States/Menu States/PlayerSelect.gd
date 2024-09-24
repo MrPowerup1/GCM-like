@@ -4,26 +4,24 @@ class_name PlayerSelect
 
 
 func enter():
-	%SelectionUI.visible=true
+	%SelectionUI.visible=false
 	%"Player Select Menu".visible=true
-	%PlayerSelectScreen.reset_panels()
-	%PlayerJoin.searching=true
+	#%PlayerSelectScreen.reset_panels()
 
 func exit():
 	%"Player Select Menu".visible=false
-	%PlayerJoin.searching=true
 	
 func _on_player_select_screen_players_ready():
 	Transition.emit(self,"RoundStarting")
 	%SelectNoise.play()
 
+
+func _on_client_peer_disconnect(id):
+	%UserDisconnect.set_user_id(str(id))
+	Transition.emit(self,"UserDisconnect")
+
 #TODO: Only local disconnect for now
-func _on_back_2_button_down():
+func _on_back_button_down() -> void:
 	%Client.leave_lobby()
 	Transition.emit(self,"LocalOrOnline")
 	%BackNoise.play()
-
-
-func _on_client_peer_disconnect(id):
-	%"User ID".text = str(id)
-	Transition.emit(self,"UserDisconnect")

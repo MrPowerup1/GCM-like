@@ -1,18 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://vaog6h0dcfy2"]
+[gd_scene load_steps=13 format=3 uid="uid://vaog6h0dcfy2"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_3lsti"]
 [ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="2_kbems"]
 [ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="2_s85jy"]
 [ext_resource type="PackedScene" uid="uid://dlv10j3yla0vr" path="res://UI/join_panel.tscn" id="2_x2hvt"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="3_0638b"]
-[ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="4_0wvmp"]
+[ext_resource type="PackedScene" uid="uid://b0ya1pk5ik0ea" path="res://PlayerInfo.tscn" id="3_a0uis"]
 [ext_resource type="Script" path="res://UI/PlayerReady.gd" id="4_6ik6p"]
-[ext_resource type="Script" path="res://States/StateManager.gd" id="8_ik0ej"]
-[ext_resource type="Script" path="res://States/UI States/Player Panel States/SelectSkin.gd" id="9_au7yq"]
-[ext_resource type="Script" path="res://States/UI States/Player Panel States/AwaitingPlayer.gd" id="9_novjl"]
-[ext_resource type="Script" path="res://States/UI States/Player Panel States/SelectSpell.gd" id="11_h325i"]
-[ext_resource type="Script" path="res://States/UI States/Player Panel States/SelectSpell2.gd" id="12_o16sc"]
-[ext_resource type="Script" path="res://States/UI States/Player Panel States/Ready.gd" id="13_a4768"]
+[ext_resource type="Script" path="res://UI/Displays.gd" id="6_8vkn6"]
+[ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="7_6o7rb"]
+[ext_resource type="Resource" uid="uid://108qxs1oy0ow" path="res://Inputs/keyboard_right.tres" id="8_o86y1"]
+[ext_resource type="Script" path="res://Player/PlayerUIInput.gd" id="8_v55mc"]
+[ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="9_vxrpo"]
 
 [node name="PlayerPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(160, 300)
@@ -27,95 +26,74 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="Unselected" type="VBoxContainer" parent="MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="MarginContainer/Unselected"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Selected" type="VBoxContainer" parent="MarginContainer/Unselected"]
+[node name="Permanent Selections" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SkinSelect" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
+[node name="PlayerInfo" parent="MarginContainer/VBoxContainer/Permanent Selections" instance=ExtResource("3_a0uis")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-cards = ExtResource("3_0638b")
+skin_visible = false
 
-[node name="SpellSelect1" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
+[node name="Temporary Selections" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-cards = ExtResource("4_0wvmp")
+size_flags_vertical = 3
 
-[node name="SpellSelect2" parent="MarginContainer/Unselected" instance=ExtResource("2_kbems")]
+[node name="Displays" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-cards = ExtResource("4_0wvmp")
+script = ExtResource("6_8vkn6")
 
-[node name="AwaitPlayer" parent="MarginContainer/Unselected" instance=ExtResource("2_x2hvt")]
+[node name="AwaitPlayer" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location", "player") instance=ExtResource("2_x2hvt")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
+base_action_strings = Array[String](["Up", "Down", "Left", "Right", "Spell1", "Spell2"])
+keyboard_input_1 = ExtResource("7_6o7rb")
+keyboard_input_2 = ExtResource("8_o86y1")
+display_location = NodePath("../../Permanent Selections")
+player = NodePath("../../../../PlayerUIInput")
 
-[node name="PlayerReady" type="Panel" parent="."]
+[node name="SkinSelect" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("2_kbems")]
+unique_name_in_owner = true
+layout_mode = 2
+current_deck_type = 2
+cards = ExtResource("3_0638b")
+display_location = NodePath("../../Permanent Selections")
+
+[node name="PlayerReady" type="PanelContainer" parent="MarginContainer/VBoxContainer/Displays"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+theme_type_variation = &"Panel2"
 script = ExtResource("4_6ik6p")
 
-[node name="Label" type="Label" parent="PlayerReady"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -19.0
-offset_right = 40.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Displays/PlayerReady"]
+texture_filter = 1
+layout_mode = 2
 theme_type_variation = &"HeaderLarge"
 text = "Ready"
+horizontal_alignment = 1
 
 [node name="InputCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.25
 one_shot = true
 
-[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
-script = ExtResource("8_ik0ej")
-starting_state = NodePath("AwaitingPlayer")
+[node name="PlayerUIInput" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_v55mc")
+input_keys = ExtResource("9_vxrpo")
 
-[node name="AwaitingPlayer" type="Node" parent="StateManager"]
-script = ExtResource("9_novjl")
-
-[node name="SelectSkin" type="Node" parent="StateManager"]
-script = ExtResource("9_au7yq")
-
-[node name="SelectSpell" type="Node" parent="StateManager"]
-script = ExtResource("11_h325i")
-
-[node name="SelectSpell2" type="Node" parent="StateManager"]
-script = ExtResource("12_o16sc")
-
-[node name="Ready" type="Node" parent="StateManager"]
-script = ExtResource("13_a4768")
-
-[connection signal="player_joined" from="." to="StateManager/AwaitingPlayer" method="_on_player_panel_player_joined"]
-[connection signal="exit" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_exit"]
-[connection signal="next" from="MarginContainer/Unselected/SkinSelect" to="StateManager/SelectSkin" method="_on_skin_select_next"]
-[connection signal="exit" from="MarginContainer/Unselected/SpellSelect1" to="StateManager/SelectSpell" method="_on_spell_select_1_exit"]
-[connection signal="next" from="MarginContainer/Unselected/SpellSelect1" to="StateManager/SelectSpell" method="_on_spell_select_1_next"]
-[connection signal="exit" from="MarginContainer/Unselected/SpellSelect2" to="StateManager/SelectSpell2" method="_on_spell_select_2_exit"]
-[connection signal="next" from="MarginContainer/Unselected/SpellSelect2" to="StateManager/SelectSpell2" method="_on_spell_select_2_next"]
-[connection signal="next" from="MarginContainer/Unselected/AwaitPlayer" to="StateManager/AwaitingPlayer" method="_on_await_player_next"]
-[connection signal="exit" from="PlayerReady" to="StateManager/Ready" method="_on_player_ready_exit"]
+[connection signal="player_joined" from="." to="MarginContainer/VBoxContainer/Displays" method="_on_player_panel_player_joined"]
+[connection signal="player_joined" from="MarginContainer/VBoxContainer/Displays/AwaitPlayer" to="." method="_on_await_player_player_joined"]
+[connection signal="player_quit" from="MarginContainer/VBoxContainer/Displays/AwaitPlayer" to="." method="_on_await_player_player_quit"]
+[connection signal="player_ready" from="MarginContainer/VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_ready"]
+[connection signal="player_unready" from="MarginContainer/VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_unready"]
 [connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]

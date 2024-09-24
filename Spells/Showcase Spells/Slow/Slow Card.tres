@@ -15,4 +15,3 @@ randomizer = false
 name = "Slow"
 image = ExtResource("1_tq37r")
 description = "You are slow"
-context = 0

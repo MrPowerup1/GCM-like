@@ -5,6 +5,7 @@ class_name projectile
 
 @export var piercing:bool
 @export var velocity:Velocity
+@export var rotate_from_caster:bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,7 +26,10 @@ func spawn_specifics():
 	start_moving()
 	
 func start_moving():
-	velocity.constant_vel(caster.get_facing())
+	if rotate_from_caster:
+		velocity.constant_vel(fixed_position.angle_to_point(caster.fixed_position))
+	else:
+		velocity.constant_vel(caster.get_facing())
 	
 func collided(bodies):
 	for body in bodies:

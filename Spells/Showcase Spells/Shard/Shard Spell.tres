@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=10 format=3 uid="uid://f04o14dwx0vd"]
+
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_0156g"]
+[ext_resource type="PackedScene" uid="uid://by3bpk3rd5b7u" path="res://Spells/Showcase Spells/Shard/Shard Scene.tscn" id="2_j3fgy"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="3_o6xs2"]
+[ext_resource type="Script" path="res://Spell Effects/scatter_effect.gd" id="4_pyb4o"]
+[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="5_r8sat"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="5_wvxq5"]
+
+[sub_resource type="Resource" id="Resource_3hrf7"]
+script = ExtResource("3_o6xs2")
+area_scene = ExtResource("2_j3fgy")
+
+[sub_resource type="Resource" id="Resource_qo4fi"]
+script = ExtResource("4_pyb4o")
+effect = SubResource("Resource_3hrf7")
+type = 1
+count = 3
+min_angle = -60
+max_angle = 60
+radius = 10
+min_offset_x = 0
+min_offset_y = 0
+max_offset_x = 0
+max_offset_y = 0
+
+[sub_resource type="Resource" id="Resource_me8h0"]
+script = ExtResource("5_r8sat")
+offset_x = 25
+offset_y = 0
+effect = SubResource("Resource_qo4fi")
+
+[resource]
+script = ExtResource("5_wvxq5")
+timings = Array[int]([0])
+effects = Array[ExtResource("1_0156g")]([SubResource("Resource_me8h0")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = true
+cooldown_on_release = false
+cooldown_time = 20

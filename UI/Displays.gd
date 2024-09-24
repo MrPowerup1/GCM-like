@@ -13,7 +13,8 @@ func _ready():
 			(child as SelectPanel).exit.connect(back_display)
 
 func next_display():
-	focus_index+=1
+	if focus_index < get_child_count():
+		focus_index+=1
 	if get_child(focus_index) is SelectPanel:
 		new_panel()
 	else:
@@ -21,7 +22,8 @@ func next_display():
 	
 
 func back_display():
-	focus_index-=1
+	if focus_index > 0:
+		focus_index-=1
 	if get_child(focus_index) is SelectPanel:
 		new_panel()
 	else:

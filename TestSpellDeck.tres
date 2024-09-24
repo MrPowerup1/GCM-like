@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Deck" load_steps=10 format=3 uid="uid://6lfphqkx7jyp"]
+[gd_resource type="Resource" script_class="Deck" load_steps=11 format=3 uid="uid://6lfphqkx7jyp"]
 
 [ext_resource type="Script" path="res://Deck.gd" id="1_0h7c1"]
 [ext_resource type="Resource" uid="uid://c461ig8ssjsjw" path="res://Spells/Showcase Spells/Wall/Wall Card.tres" id="1_2ri0e"]
@@ -9,8 +9,9 @@
 [ext_resource type="Resource" uid="uid://bsfmuftaj0fg" path="res://Spells/Showcase Spells/Fireball/Fireball Card.tres" id="4_a47es"]
 [ext_resource type="Resource" uid="uid://c13vk6hnkkis1" path="res://Spells/Showcase Spells/Lightning/Lightning Card.tres" id="6_nkd82"]
 [ext_resource type="Resource" uid="uid://jg4nfde2186h" path="res://Spells/Showcase Spells/Slow/Slow Card.tres" id="8_mnu5r"]
+[ext_resource type="Resource" uid="uid://dvcwtrhurtafo" path="res://Spells/Showcase Spells/Shard/Shard Card.tres" id="9_nt60w"]
 
 [resource]
 script = ExtResource("1_0h7c1")
-cards = Array[ExtResource("1_4fd5n")]([ExtResource("6_nkd82"), ExtResource("1_2ri0e"), ExtResource("1_75r8a"), ExtResource("4_a47es"), ExtResource("1_eaac2"), ExtResource("2_wuxpe"), ExtResource("8_mnu5r")])
-allowed = Array[bool]([true, true, true, true, true, true, true])
+cards = Array[ExtResource("1_4fd5n")]([ExtResource("9_nt60w"), ExtResource("6_nkd82"), ExtResource("1_2ri0e"), ExtResource("1_75r8a"), ExtResource("4_a47es"), ExtResource("1_eaac2"), ExtResource("2_wuxpe"), ExtResource("8_mnu5r")])
+allowed = Array[bool]([true, true, true, true, true, true, true, true])

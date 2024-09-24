@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://dvcwtrhurtafo"]
+
+[ext_resource type="Texture2D" uid="uid://dhyhfdxj3x10v" path="res://Spells/Showcase Spells/Fireball/Fireball Icon.png" id="1_n8uws"]
+[ext_resource type="Script" path="res://Elements/Element.gd" id="2_m6ir8"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="3_i5mlu"]
+[ext_resource type="Resource" uid="uid://f04o14dwx0vd" path="res://Spells/Showcase Spells/Shard/Shard Spell.tres" id="4_j1yrm"]
+
+[resource]
+script = ExtResource("3_i5mlu")
+spell = ExtResource("4_j1yrm")
+requirements = Array[ExtResource("2_m6ir8")]([])
+category = 0
+type = 0
+randomizer = false
+name = "Shard"
+image = ExtResource("1_n8uws")
+description = "Shoot Ice"

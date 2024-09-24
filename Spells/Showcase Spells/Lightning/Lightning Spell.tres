@@ -36,6 +36,7 @@ script = ExtResource("7_nshsy")
 delay_time = 30
 effect = SubResource("Resource_fc2v7")
 delayed_cast_instance = ExtResource("5_dpvco")
+origin = 0
 
 [resource]
 script = ExtResource("8_jcmvn")

@@ -283,7 +283,10 @@ func _save_state() ->Dictionary:
 		facing=facing,
 		can_move=can_move,
 		friction = friction_fixed,
-		speed = speed_fixed
+		speed = speed_fixed,
+		max_speed = max_speed_fixed,
+		acceleration = acceleration_fixed,
+		cut_accel = cut_accel_fixed
 	}
 func _load_state(state:Dictionary) ->void:
 	velocity.x=state['velocity_x']
@@ -292,3 +295,6 @@ func _load_state(state:Dictionary) ->void:
 	can_move=state['can_move']
 	friction_fixed=state['friction']
 	speed_fixed=state['speed']
+	max_speed_fixed = state['max_speed']
+	acceleration_fixed =state['acceleration']
+	cut_accel_fixed=state['cut_accel']

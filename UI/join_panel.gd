@@ -43,10 +43,12 @@ func back():
 	pass
 
 func display():
-	displayed_info=to_display.instantiate()
-	displayed_info.player_index = player_index
-	displayed_info.device = player.input_keys.device
-	display_location.add_child(displayed_info)
+	pass
+	
+	#displayed_info=to_display.instantiate()
+	#displayed_info.player_index = player_index
+	#displayed_info.device = player.input_keys.device
+	#display_location.add_child(displayed_info)
 
 func undisplay():
 	if displayed_info !=null:

@@ -14,16 +14,23 @@ func _ready():
 
 func next_display():
 	focus_index+=1
-	new_panel()
+	if get_child(focus_index) is SelectPanel:
+		new_panel()
+	else:
+		next_display()
 	
 
 func back_display():
 	focus_index-=1
-	new_panel()
+	if get_child(focus_index) is SelectPanel:
+		new_panel()
+	else:
+		back_display()
 
 func player_joined(player_index:int):
-	for child:SelectPanel in get_children():
-		child.new_player(player_index)
+	for child in get_children():
+		if child is SelectPanel:
+			(child as SelectPanel).new_player(player_index)
 
 func new_panel():
 	active_panel = get_child(focus_index)

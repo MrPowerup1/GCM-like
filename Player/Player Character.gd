@@ -173,7 +173,7 @@ func _network_spawn(data: Dictionary) -> void:
 	#input.input_keys= Input_Keys.from_dict(data['input_keys'])
 	if not SyncReplay.active and peer_id == multiplayer.get_unique_id():
 		input.input_keys = Input_Keys.from_dict(GameManager.local_players[player_index]['input_keys'])
-	spell_deck=GameManager.universal_spell_deck.subdeck(data['known_spells'])
+	#spell_deck=GameManager.universal_spell_deck.subdeck(data['known_spells'])
 	set_skin(data['selected_skin'])
 	var selected_spells = data['selected_spells']
 	var index = 0 

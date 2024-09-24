@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://vaog6h0dcfy2"]
+[gd_scene load_steps=13 format=3 uid="uid://vaog6h0dcfy2"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_3lsti"]
 [ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="2_kbems"]
 [ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="2_s85jy"]
 [ext_resource type="PackedScene" uid="uid://dlv10j3yla0vr" path="res://UI/join_panel.tscn" id="2_x2hvt"]
 [ext_resource type="Resource" uid="uid://0dlax8f6qunu" path="res://TestSkinDeck.tres" id="3_0638b"]
+[ext_resource type="PackedScene" uid="uid://b0ya1pk5ik0ea" path="res://PlayerInfo.tscn" id="3_a0uis"]
 [ext_resource type="Script" path="res://UI/PlayerReady.gd" id="4_6ik6p"]
 [ext_resource type="Script" path="res://UI/Displays.gd" id="6_8vkn6"]
 [ext_resource type="Resource" uid="uid://dr8mdwdophhsb" path="res://Inputs/keyboard_left.tres" id="7_6o7rb"]
@@ -32,6 +33,12 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="PlayerInfo" parent="MarginContainer/VBoxContainer/Permanent Selections" instance=ExtResource("3_a0uis")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+skin_visible = false
 
 [node name="Temporary Selections" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true

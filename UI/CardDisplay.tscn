@@ -15,7 +15,7 @@ void fragment() {
 	if (curr_color.rga == vec3(0,0,1)  && curr_color.b > 0.0) {
 		COLOR.rgb = new_color.rgb* curr_color.b;
 	}
-		
+
 }
 "
 

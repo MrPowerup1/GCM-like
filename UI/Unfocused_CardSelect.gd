@@ -25,8 +25,10 @@ func next():
 
 
 func _on_card_select_next_mode():
-	next()
+	if %StateManager.current_state==self:
+		next()
 
 
 func _on_card_select_focus():
-	next()
+	if %StateManager.current_state==self:
+		next()

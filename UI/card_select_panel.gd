@@ -15,6 +15,8 @@ var can_select_left_right:bool = false
 #@export var player_index:int
 #enum display_mode {SELECTED,SELECTING,ZOOMED}
 #var current_mode:display_mode
+@export var context:Card.CardContext
+
 
 signal next_mode
 signal back_mode
@@ -123,17 +125,17 @@ func new_cards(to_display:Array):
 
 func _on_left_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
-		left()
+		left.rpc()
 
 
 func _on_right_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
-		right()
+		right.rpc()
 
 
 func _on_select_button_button_down():
 	if GameManager.players[player_index]['peer_id']==multiplayer.get_unique_id():
-		select()
+		select.rpc()
 
 
 func _on_center_card_new_name(name):
@@ -147,7 +149,7 @@ func _on_center_card_new_name(name):
 func _on_zoomed_select():
 	next.emit()
 	display()
-	center_card.select(player_index)
+	center_card.select(player_index,context)
 	refresh()
 	#new_cards(cards.next_cards(center_card))
 
@@ -156,15 +158,18 @@ func _on_selected_unselect():
 	#exit.emit()
 	undisplay()
 	cards.unselect(center_card)
-	center_card.unselect(player_index)
+	center_card.unselect(player_index,context)
 	refresh()
 	#new_cards(cards.next_cards(center_card))
 	#unselect()
 
 
 func _on_focused_unfocus():
-	exit.emit()
 	refresh()
+	exit.emit()
+	
 
 func focused():
+	load_new_deck()
+	refresh()
 	focus.emit()

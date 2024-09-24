@@ -18,16 +18,16 @@ func enter():
 	#%SkinSelect.transition_display_mode(CardSelectPanel.display_mode.SELECTED)
 	#%SkinSelect.refresh()
 	
-
-#TODO: WHICH SIGNAL TRIGGERS THIS
 func back():
 	unselect.emit()
 	Transition.emit(self,"Focused")
 
 
 func _on_card_select_back_mode():
-	back()
+	if %StateManager.current_state==self:
+		back()
 
-
+#TODO:
 func _on_card_select_focus():
-	back()
+	if %StateManager.current_state==self:
+		back()

@@ -28,8 +28,10 @@ func back():
 
 
 func _on_card_select_back_mode():
-	back()
+	if %StateManager.current_state==self:
+		back()
 
 
 func _on_card_select_next_mode():
-	next()
+	if %StateManager.current_state==self:
+		next()

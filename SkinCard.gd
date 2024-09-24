@@ -3,11 +3,11 @@ class_name SkinCard
 
 @export var skin:CharacterSkin
 
-func select(player_index:int):
+func select(player_index:int,context:CardContext):
 	GameManager.players[player_index]['selected_skin'] = GameManager.universal_skin_deck.get_index(self)
 	
 
-func unselect(player_index:int):
+func unselect(player_index:int,context:CardContext):
 	pass
 
 func display(card:CardDisplay):

@@ -11,6 +11,7 @@ shader_parameter/new_color = null
 
 [node name="EndGamePanel" type="CanvasLayer"]
 script = ExtResource("1_0tsmh")
+player_select_path = "res://select_spells.tscn"
 user_disconnect_scene = ExtResource("3_cvyaq")
 
 [node name="EndGamePanel" type="PanelContainer" parent="."]

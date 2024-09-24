@@ -83,8 +83,13 @@ func add_player(index:int):#input:Input_Keys):
 			printerr("No known player of index ",index)
 			return
 	%PlayerUIInput.player_index = index
+	%PlayerInfo.player_index = index
+	print(index)
 	attached_player=true
 	player_joined.emit(%PlayerUIInput.player_index)
+	%PlayerInfo.visible = true
+	#TODO: Fix this hack
+	
 	#%Displays.player_joined(%PlayerUIInput.player_index)
 
 

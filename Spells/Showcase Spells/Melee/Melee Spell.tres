@@ -32,6 +32,7 @@ script = ExtResource("6_7kht5")
 delay_time = 15
 effect = SubResource("Resource_866kn")
 delayed_cast_instance = ExtResource("5_taaod")
+origin = 0
 
 [resource]
 script = ExtResource("7_72c74")

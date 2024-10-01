@@ -9,6 +9,7 @@ var affected_player:Player
 var time_start:int
 var status_index:int
 var status_visible:bool
+var stack_count:int
 # Called when the node enters the scene tree for the first time.
 
 func _process(delta: float) -> void:
@@ -38,22 +39,30 @@ func _on_ping_time_timeout():
 		flash(true)
 		$FlashTimer.start()
 
-
+func stack():
+	stack_count+=1
+	%"Stack Count".text = str(stack_count)
+	%"Stack Count".visible=true
+	release(false)
+	
+	activate()
+	
 func activate():
 	status.activate(original_caster,status_index)
 	%EndTime.start()
 	#%PercentTime.start()
 	if (status.ping_time!=0):
-		$Ping_Time.start()
+		%PingTime.start()
 		status.held(original_caster,status_index)
 		
-func release():
+func release(despawn:bool=true):
 	print("RELEASED EFFECT HOOOBOYY")
 	status.release(original_caster,status_index)
-	#$End_Time.stop()
-	#if (status.ping_time!=0):
-		#$Ping_Time.stop()
-	SyncManager.despawn(self)
+	%EndTime.stop()
+	if (status.ping_time!=0):
+		%PingTime.stop()
+	if despawn:
+		SyncManager.despawn(self)
 	
 func get_held_time():
 	var time=(Time.get_ticks_msec()-time_start)
@@ -102,3 +111,9 @@ func _network_spawn(data: Dictionary) -> void:
 		%PingTime.wait_ticks=status.ping_time
 	
 	activate()
+
+func equals(other_status:Status_Effect_Instance) -> bool:
+	if other_status.status ==status:
+		return true
+	return false
+	

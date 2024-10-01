@@ -48,6 +48,8 @@ script = ExtResource("3_eh28s")
 
 [node name="NewSpell" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
 layout_mode = 2
+theme_type_variation = &"SpellPanel"
+current_deck_type = 3
 cards = ExtResource("9_8a4a6")
 display_location = NodePath("../../Temporary Selections")
 context = 1

@@ -29,3 +29,4 @@ status_visible = true
 flash_color = Color(0, 0, 0, 1)
 image = ExtResource("3_32qjg")
 flash_on_ping = false
+stacking = true

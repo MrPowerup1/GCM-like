@@ -5,22 +5,30 @@
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_jr7we"]
 
 [node name="Status Effect Instance" type="PanelContainer"]
+texture_filter = 1
 theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("1_jc1m2")
 image = ExtResource("2_a8ruu")
 flash_on_ping = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"ClearPanelContainer"
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("2_a8ruu")
 
-[node name="StatusPercent" type="ProgressBar" parent="."]
+[node name="StatusPercent" type="ProgressBar" parent="VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -30,6 +38,15 @@ theme_type_variation = &"StatusBar"
 step = 1.0
 fill_mode = 3
 show_percentage = false
+
+[node name="Stack Count" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+text = "1"
+horizontal_alignment = 1
 
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.5

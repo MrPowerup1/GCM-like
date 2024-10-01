@@ -21,7 +21,11 @@ func init_health(_health):
 	%DamageBar.max_value=health
 
 func new_status(status:Status_Type,caster:Player):
-	%StatusManager.new_status(status,caster)
+	if status.stacking and %StatusManager.stack_status(status):
+		print("stacked")
+		pass
+	else:
+		%StatusManager.new_status(status,caster)
 	#print("A new status has touched the beacon")
 
 func get_held_time(index:int):

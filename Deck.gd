@@ -40,11 +40,12 @@ func unselect(card:Card) -> bool:
 	print("Couldn't find to unselect")
 	return false
 
-func subdeck(indices:Array) -> Deck:
+func subdeck(indices:Array,exclude:Array = []) -> Deck:
 	var new_deck = Deck.new()
 	for index in indices:
-		new_deck.cards.append(cards[index])
-		new_deck.allowed.append(allowed[index]) 
+		if !exclude.has(index):
+			new_deck.cards.append(cards[index])
+			new_deck.allowed.append(allowed[index]) 
 	return new_deck
 		
 func reset():

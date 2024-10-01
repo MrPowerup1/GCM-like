@@ -31,3 +31,11 @@ func clear_status(index:int=-1):
 	else:
 		for child in get_children():
 			SyncManager.despawn(child)
+
+#Returns false if no stacking
+func stack_status(status:Status_Type) -> bool:
+	for child in get_children():
+		if child is Status_Effect_Instance and child.status == status:
+			child.stack()
+			return true
+	return false

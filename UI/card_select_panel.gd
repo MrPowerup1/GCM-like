@@ -1,7 +1,7 @@
 extends SelectPanel
 class_name CardSelectPanel
 
-enum DeckType {ALL_SPELL,KNOWN_SPELL,ALL_SKIN}
+enum DeckType {ALL_SPELL,KNOWN_SPELL,ALL_SKIN,ALL_UNKNOWN_SPELL}
 @export var current_deck_type:DeckType
 @export var cards:Deck
 @export var left_card:Card
@@ -42,6 +42,11 @@ func load_new_deck():
 		print(player_index)
 		print(GameManager.players)
 		cards = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
+	elif current_deck_type==DeckType.ALL_UNKNOWN_SPELL:
+		print(player_index)
+		print(GameManager.players)
+		cards = GameManager.universal_spell_deck.subdeck(range(GameManager.universal_spell_deck.cards.size()),GameManager.players[player_index].get('known_spells'))
+
 
 func refresh():
 	new_cards(cards.next_cards(center_card))

@@ -18,6 +18,7 @@ enum effect_time {on_activate,on_held,on_release}
 @export var flash_color:Color
 @export var image:Texture2D
 @export var flash_on_ping:bool
+@export var stacking:bool
 
 func activate(caster:Player,spell_index:int):
 	if(on_activate!=null):

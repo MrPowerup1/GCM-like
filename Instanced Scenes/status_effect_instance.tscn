@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bus77gjnm5x8l" path="res://Art/Status Icons.png" id="2_a8ruu"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="2_jr7we"]
 
-[node name="Status Effect Instance" type="PanelContainer"]
+[node name="Status Effect Instance" type="PanelContainer" groups=["network_sync"]]
 texture_filter = 1
 theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("1_jc1m2")

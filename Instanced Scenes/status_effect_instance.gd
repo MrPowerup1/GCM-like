@@ -9,7 +9,7 @@ var affected_player:Player
 var time_start:int
 var status_index:int
 var status_visible:bool
-var stack_count:int
+var stack_count:int = 1
 # Called when the node enters the scene tree for the first time.
 
 func _process(delta: float) -> void:
@@ -117,3 +117,10 @@ func equals(other_status:Status_Effect_Instance) -> bool:
 		return true
 	return false
 	
+func _save_state() ->Dictionary:
+	return {
+		stack_count = stack_count
+	}
+
+func _load_state(state:Dictionary) ->void:
+	stack_count=state['stack_count']

@@ -24,14 +24,13 @@ signal focus
 
 func _ready():
 	#Get the default skins and display them
-	var to_display = cards.start_cards()
-	new_cards(to_display)
-	refresh()
+	reset()
 	#load_new_deck()
 
 func new_player(new_player_index:int):
 	player_index = new_player_index
 	load_new_deck()
+	reset()
 
 func load_new_deck():
 	if current_deck_type==DeckType.ALL_SKIN:
@@ -47,6 +46,10 @@ func load_new_deck():
 		print(GameManager.players)
 		cards = GameManager.universal_spell_deck.subdeck(range(GameManager.universal_spell_deck.cards.size()),GameManager.players[player_index].get('known_spells'))
 
+func reset():
+	var to_display = cards.start_cards()
+	new_cards(to_display)
+	refresh()
 
 func refresh():
 	new_cards(cards.next_cards(center_card))
@@ -87,7 +90,8 @@ func select():
 		#%SelectNoise.play()
 @rpc("any_peer","call_local")
 func back():
-	back_mode.emit()
+	if !first:
+		back_mode.emit()
 	SoundFX.back()
 
 func display():

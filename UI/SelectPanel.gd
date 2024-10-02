@@ -2,7 +2,8 @@ extends PanelContainer
 class_name SelectPanel
 
 @export var player_index:int
-
+@export var first:bool
+#@export var last:bool
 
 
 signal exit()

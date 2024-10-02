@@ -14,7 +14,8 @@
 [ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="9_vxrpo"]
 
 [node name="PlayerPanel" type="PanelContainer"]
-custom_minimum_size = Vector2(160, 300)
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_type_variation = &"Panel2"
 script = ExtResource("1_3lsti")
 card_scene = ExtResource("2_s85jy")

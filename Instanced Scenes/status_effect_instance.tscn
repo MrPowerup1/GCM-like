@@ -51,10 +51,6 @@ horizontal_alignment = 1
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="PercentTime" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("2_jr7we")
-
 [node name="EndTime" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_jr7we")
@@ -64,6 +60,5 @@ unique_name_in_owner = true
 script = ExtResource("2_jr7we")
 
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
-[connection signal="timeout" from="PercentTime" to="." method="_on_percent_time_timeout"]
 [connection signal="timeout" from="EndTime" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="PingTime" to="." method="_on_ping_time_timeout"]

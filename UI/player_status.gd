@@ -1,6 +1,7 @@
 extends PanelContainer
 
 var health = 0
+var dead = false
 
 
 func health_changed(new_health:int):
@@ -21,14 +22,14 @@ func init_health(_health):
 	%DamageBar.max_value=health
 
 func new_status(status:Status_Type,caster:Player):
-	if %StatusManager.has_status(status):
-		print("Already have status")
-		if status.stacking:
-			print("Stacked")
-			%StatusManager.stack_status(status)
-	else:
-		%StatusManager.new_status(status,caster)
-	#print("A new status has touched the beacon")
+	if !dead:
+		if %StatusManager.has_status(status):
+			print("Already have status")
+			if status.stacking:
+				print("Stacked")
+				%StatusManager.stack_status(status)
+		else:
+			%StatusManager.new_status(status,caster)
 
 func get_held_time(index:int):
 	return %StatusManager.get_held_time(index)
@@ -39,3 +40,7 @@ func clear_status(index:int = -1):
 
 func _on_damage_delay_timeout():
 	%DamageBar.value = health
+
+
+func _on_health_dead() -> void:
+	dead=true

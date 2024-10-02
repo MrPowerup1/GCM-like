@@ -50,7 +50,6 @@ func stack():
 func activate():
 	status.activate(original_caster,status_index)
 	%EndTime.start()
-	#%PercentTime.start()
 	if (status.ping_time!=0):
 		%PingTime.start()
 		status.held(original_caster,status_index)
@@ -76,8 +75,6 @@ func _network_spawn_preprocess(data: Dictionary) -> Dictionary:
 	if data.get('status',false):
 		data['status_path'] = data['status'].get_path()
 		#%EndTime.wait_ticks=data['status'].total_effect_time
-		#%PercentTime.wait_ticks=int(data['status'].total_effect_time/10)
-		##print (%EndTime.wait_ticks, " End time and Percent time ", %PercentTime.wait_ticks)
 		#if (data['status'].ping_time!=0):
 			#%PingTime.wait_ticks=data['status'].ping_time
 		data.erase('status')
@@ -105,8 +102,6 @@ func _network_spawn(data: Dictionary) -> void:
 	affected_player=get_node(data['effected_player_path'])
 	status_index=data['index']
 	%EndTime.wait_ticks=status.total_effect_time
-	#%PercentTime.wait_ticks=int(status.total_effect_time/10)
-	#print (%EndTime.wait_ticks, " End time and Percent time ", %PercentTime.wait_ticks)
 	if (status.ping_time!=0):
 		%PingTime.wait_ticks=status.ping_time
 	

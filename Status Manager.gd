@@ -7,7 +7,7 @@ func _ready():
 	effected_player=get_parent().get_parent().get_parent()
 
 func new_status(status:Status_Type,caster:Player):
-	var index=effected_player.num_spells+get_child_count()-1
+	var index=get_child_count()-1
 	var status_data = {
 		status=status,
 		caster=caster,

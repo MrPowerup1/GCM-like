@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cipoobpfd0v06" path="res://Spells/Showcase Spells/Melee/Melee Scene.tscn" id="1_khba4"]
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_wb8jy"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="2_7kodn"]
-[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="3_14dql"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="3_14dql"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="4_ngk2p"]
 [ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="5_taaod"]
 [ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="6_7kht5"]
@@ -43,3 +43,4 @@ held_ping_time = 0
 cooldown_on_activate = true
 cooldown_on_release = false
 cooldown_time = 30
+starting_data = {}

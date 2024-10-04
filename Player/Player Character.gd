@@ -65,6 +65,12 @@ func get_held_time(spell_index:int):
 func get_cast_iteration(spell_index:int):
 	%"Spell Manager".get_cast_iteration(spell_index)
 
+func get_spell_data(spell_index:int,key:String):
+	return %"Spell Manager".get_spell_data(spell_index,key)
+
+func set_spell_data(spell_index:int,key:String,value):
+	%"Spell Manager".set_spell_data(spell_index,key,value)
+
 func set_sprite(new_sprite:Texture2D):
 	%Sprite2D.texture=new_sprite
 	

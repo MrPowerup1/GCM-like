@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_5r47u"]
 [ext_resource type="PackedScene" uid="uid://6bd4ui3bfds0" path="res://Instanced Scenes/base_projectile.tscn" id="8_2ylbc"]
 [ext_resource type="Script" path="res://Spell Effects/projectile_effect.gd" id="10_tvxtr"]
-[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="11_umw18"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="11_umw18"]
 [ext_resource type="Script" path="res://Spell Effects/while_held_effect.gd" id="12_os2p7"]
 
 [sub_resource type="Resource" id="Resource_bpjs1"]

@@ -1,9 +1,10 @@
 extends Positional_Effect
 class_name Filter_Effect
 
-enum Restriction_Types{NODE_GROUP,HAS_COMPONENT,DISTANCE_TO_CASTER_LESS_THAN,DISTANCE_TO_CASTER_GREATER_THAN,CAST_ITERATION_EQUALS}
+enum Restriction_Types{NODE_GROUP,HAS_COMPONENT,DISTANCE_TO_CASTER_LESS_THAN,DISTANCE_TO_CASTER_GREATER_THAN,DATA_EQUALS}
 @export var restriction_type:Restriction_Types
 @export var data:String
+@export var data_to_compare_to:String
 @export var effect_to_trigger:Spell_Effect
 
 func trigger(target,caster:Player,spell_index:int,location:SGFixedVector2=target.fixed_position):
@@ -18,7 +19,7 @@ func trigger(target,caster:Player,spell_index:int,location:SGFixedVector2=target
 		do_effect=true
 	elif restriction_type==Restriction_Types.DISTANCE_TO_CASTER_GREATER_THAN and check_distance(target,caster,true):
 		do_effect=true
-	elif restriction_type==Restriction_Types.CAST_ITERATION_EQUALS and check_cast_iteration(caster,spell_index):
+	elif restriction_type==Restriction_Types.DATA_EQUALS and check_data(caster,spell_index):
 		do_effect=true
 	if do_effect:
 		if (effect_to_trigger is Positional_Effect):
@@ -43,8 +44,9 @@ func check_distance(target:SGFixedNode2D,caster:SGFixedNode2D,greater_than:bool)
 	elif !greater_than and target.fixed_position.distance_squared_to(caster.fixed_position) < data.to_int():
 		return true
 	return false
-func check_cast_iteration(caster:Player,spell_index:int)->bool:
-	assert (data.is_valid_int(),"data is not an int")
-	if data.to_int() == caster.get_cast_iteration(spell_index):
+
+
+func check_data(caster:Player,spell_index:int)->bool:
+	if str(caster.get_spell_data(spell_index,data))==data_to_compare_to:
 		return true
 	return false

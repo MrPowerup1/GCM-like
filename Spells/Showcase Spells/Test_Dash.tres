@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bp4jn11syhdyx" path="res://Instanced Scenes/base_area.tscn" id="1_dhx78"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_ktp7w"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_rd6ty"]
-[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="4_eeg7r"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="4_eeg7r"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="5_v4yy4"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Test_Position.gd" id="6_7lwr1"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="7_wiaug"]

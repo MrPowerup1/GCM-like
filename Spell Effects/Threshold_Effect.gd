@@ -13,4 +13,3 @@ func trigger (target,caster:Player,spell_index:int,progress:float=0.0):
 				effects[i-1].trigger(target,caster,spell_index)
 				return
 	effects[threshold_values.size()-1].trigger(target,caster,spell_index)
-

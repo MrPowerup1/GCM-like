@@ -22,4 +22,3 @@ func trigger(target,caster:Player,spell_index:int):
 	new_melee.move_dir=caster.facing
 	new_melee.position+=new_melee.move_dir*held_distance
 	new_melee.initialize(speed,weapon_sprite,on_hit_effect,lifetime,size,caster,piercing,on_timeout_self,on_hit_self)
-

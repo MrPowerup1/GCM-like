@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_u0qbr"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="2_3jkh5"]
-[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="3_pp2n8"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="3_pp2n8"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="4_8exph"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="5_e15g6"]
 [ext_resource type="Texture2D" uid="uid://bu805mifj5p7s" path="res://Spells/Showcase Spells/Melee/melee-Sheet.png" id="6_opqn4"]

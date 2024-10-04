@@ -1,39 +1,39 @@
-[gd_scene load_steps=21 format=3 uid="uid://4h6ifn0uoy5s"]
+[gd_scene load_steps=21 format=3 uid="uid://dk2ss3tud63li"]
 
-[ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_wou1d"]
-[ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="2_i5kp8"]
-[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="2_j8ntl"]
-[ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_yenoc"]
-[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="4_6tw63"]
-[ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="5_d6vow"]
-[ext_resource type="Resource" uid="uid://bmkf8oop3u1a" path="res://Spells/Showcase Spells/Lightning/Lightning Slow Status.tres" id="6_hf2i5"]
-[ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="7_tkhnm"]
-[ext_resource type="Texture2D" uid="uid://b554bbu7tft5x" path="res://Spells/Showcase Spells/Lightning/Lightning-Sheet.png" id="8_434k2"]
-[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="9_j0vnp"]
-[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="10_dhvse"]
+[ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_oqhri"]
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="2_p7ikb"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="3_ek1rw"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="4_qt88x"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="5_bfq1a"]
+[ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="6_gmsj8"]
+[ext_resource type="Resource" uid="uid://bmkf8oop3u1a" path="res://Spells/Showcase Spells/Lightning/Lightning Slow Status.tres" id="7_3eyqw"]
+[ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="8_74yg4"]
+[ext_resource type="Texture2D" uid="uid://b554bbu7tft5x" path="res://Spells/Showcase Spells/Lightning/Lightning-Sheet.png" id="9_xd8f4"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="10_jhjc8"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="11_bvwm7"]
 
 [sub_resource type="Resource" id="Resource_2px4s"]
-script = ExtResource("2_i5kp8")
+script = ExtResource("3_ek1rw")
 animation_name = "strike"
 
 [sub_resource type="Resource" id="Resource_ngw7b"]
-script = ExtResource("3_yenoc")
+script = ExtResource("4_qt88x")
 pulse_to = false
 pulse_from = true
 strength = 10.0
 
 [sub_resource type="Resource" id="Resource_0fjdg"]
-script = ExtResource("4_6tw63")
+script = ExtResource("5_bfq1a")
 offset_x = 0
 offset_y = -65536
 effect = SubResource("Resource_ngw7b")
 
 [sub_resource type="Resource" id="Resource_i1wg7"]
-script = ExtResource("5_d6vow")
-status = ExtResource("6_hf2i5")
+script = ExtResource("6_gmsj8")
+status = ExtResource("7_3eyqw")
 
 [sub_resource type="Resource" id="Resource_x6i6w"]
-script = ExtResource("7_tkhnm")
+script = ExtResource("8_74yg4")
 damage_value = 700
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_u01od"]
@@ -77,10 +77,10 @@ _data = {
 }
 
 [node name="Lightning Strike" type="SGArea2D" groups=["network_sync", "pierceable"]]
-script = ExtResource("1_wou1d")
+script = ExtResource("1_oqhri")
 timings = Array[int]([4, 3, 3, 3])
 locations = Array[int]([3, 2, 2, 2])
-effects = Array[ExtResource("2_j8ntl")]([SubResource("Resource_2px4s"), SubResource("Resource_0fjdg"), SubResource("Resource_i1wg7"), SubResource("Resource_x6i6w")])
+effects = Array[ExtResource("2_p7ikb")]([SubResource("Resource_2px4s"), SubResource("Resource_0fjdg"), SubResource("Resource_i1wg7"), SubResource("Resource_x6i6w")])
 ping_time = 30
 life_time = 40
 
@@ -92,18 +92,18 @@ position = Vector2(0, -20)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -29)
-texture = ExtResource("8_434k2")
+texture = ExtResource("9_xd8f4")
 hframes = 11
 frame = 4
 
 [node name="End_Time" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("9_j0vnp")
+script = ExtResource("10_jhjc8")
 wait_ticks = 60
 
 [node name="Ping_Time" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("9_j0vnp")
+script = ExtResource("10_jhjc8")
 wait_ticks = 60
 
 [node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
@@ -111,7 +111,7 @@ unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_daem0")
 }
-script = ExtResource("10_dhvse")
+script = ExtResource("11_bvwm7")
 
 [connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
 [connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

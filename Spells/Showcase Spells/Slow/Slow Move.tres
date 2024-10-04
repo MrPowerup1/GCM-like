@@ -27,3 +27,4 @@ held_ping_time = 0
 cooldown_on_activate = true
 cooldown_on_release = false
 cooldown_time = 60
+starting_data = {}

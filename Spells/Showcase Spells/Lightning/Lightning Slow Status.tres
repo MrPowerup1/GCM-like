@@ -30,3 +30,4 @@ flash_color = Color(0.8, 0.815686, 0, 1)
 image = ExtResource("2_ukqtb")
 flash_on_ping = true
 stacking = false
+reset_on_stack = false

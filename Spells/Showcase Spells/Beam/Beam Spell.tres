@@ -1,15 +1,14 @@
-[gd_resource type="Resource" script_class="Spell" load_steps=28 format=3 uid="uid://ksudpbtmc2pk"]
+[gd_resource type="Resource" script_class="Spell" load_steps=25 format=3 uid="uid://ksudpbtmc2pk"]
 
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_25a1f"]
 [ext_resource type="PackedScene" uid="uid://cmr36cxa7lt8n" path="res://Spells/Showcase Spells/Beam/Beam Scene.tscn" id="1_80oiu"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="1_fki4b"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="2_xgf05"]
-[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="3_cct3m"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="3_cct3m"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="4_kjybn"]
 [ext_resource type="Script" path="res://Spell Effects/Release_Effect.gd" id="5_452j6"]
 [ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="6_8q4v2"]
 [ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="7_cypjf"]
-[ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="8_ya72i"]
 [ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="9_gvbpd"]
 [ext_resource type="Script" path="res://Spell Effects/Sound_Effect.gd" id="10_x3ms4"]
 [ext_resource type="AudioStream" uid="uid://7w33gowijicp" path="res://Sound/BeamStart.wav" id="11_tqx1u"]
@@ -44,16 +43,9 @@ set_anchor_to = false
 script = ExtResource("5_452j6")
 release_state = false
 
-[sub_resource type="Resource" id="Resource_848x2"]
-script = ExtResource("5_452j6")
-release_state = true
-
-[sub_resource type="Resource" id="Resource_yrn5i"]
-script = ExtResource("8_ya72i")
-
 [sub_resource type="Resource" id="Resource_m2ema"]
 script = ExtResource("7_cypjf")
-spells = Array[ExtResource("1_25a1f")]([SubResource("Resource_848x2"), SubResource("Resource_yrn5i")])
+effects = Array[ExtResource("1_25a1f")]([])
 
 [sub_resource type="Resource" id="Resource_s3bki"]
 script = ExtResource("9_gvbpd")
@@ -88,3 +80,4 @@ held_ping_time = 0
 cooldown_on_activate = false
 cooldown_on_release = true
 cooldown_time = 30
+starting_data = {}

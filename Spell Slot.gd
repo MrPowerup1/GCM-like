@@ -8,7 +8,8 @@ var can_activate:bool = true
 var currently_held:bool = false
 var is_empty=true
 var held_pings:int
-var times_cast:int
+#var times_cast:int
+var spell_data = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,6 +40,7 @@ func swap_spell(new_spell:Spell):
 		$Cooldown_Timer.stop()
 		$Held_Timer.stop()
 		spell=new_spell
+		spell_data = new_spell.starting_data
 		if (spell.cooldown_time>0):
 			$Cooldown_Timer.wait_ticks=spell.cooldown_time
 		if (spell.held_ping_time>0 and !spell.ping_asap):
@@ -48,7 +50,7 @@ func swap_spell(new_spell:Spell):
 
 func activate():
 	if (spell!=null and can_activate):
-		times_cast+=1
+		#times_cast+=1
 		can_activate=false
 		spell.activate(caster,spell_index)
 		if !spell.ping_asap and spell.held_ping_time>0:
@@ -79,21 +81,44 @@ func get_held_time():
 	#TODO: Is there an issue here with rollback?
 	return held_pings
 
-func get_cast_iteration():	
-	return times_cast
+#func get_cast_iteration():	
+	#return times_cast
+
+func get_spell_data(key:String):	
+	return spell_data.get(key)
 	
+func set_spell_data(key:String,value):	
+	spell_data[key] = value
 	
 func _save_state() ->Dictionary:
+	var spell_data_paths = {}
+	for key in spell_data.keys():
+		#if spell_data[key] is Resource:
+			#spell_data_paths[key] = (spell_data[key] as Resource).resource_path
+		if spell_data[key] == null:
+			pass
+		elif spell_data[key] is Node:
+			spell_data_paths[key] = (spell_data[key] as Node).get_path()
+		else:
+			spell_data_paths[key] = spell_data[key]
 	return {
 		can_activate=can_activate,
 		currently_held = currently_held,
 		held_pings = held_pings,
+		data_paths = spell_data_paths
 	}
 
 func _load_state(state:Dictionary) ->void:
 	can_activate = state['can_activate']
 	currently_held = state['currently_held']
 	held_pings = state['held_pings']
+	var spell_data_paths = state['data_paths']
+	for key in spell_data_paths.keys():
+		if str(spell_data_paths[key]).is_absolute_path():
+			spell_data[key] = get_node(spell_data_paths[key])
+		else:
+			spell_data[key] = spell_data_paths[key]
+	
 
 
 	

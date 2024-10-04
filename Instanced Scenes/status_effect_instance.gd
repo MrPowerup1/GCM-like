@@ -43,9 +43,9 @@ func stack():
 	stack_count+=1
 	%"Stack Count".text = str(stack_count)
 	%"Stack Count".visible=true
-	release(false)
-	
-	activate()
+	if status.reset_on_stack:
+		release(false)
+		activate()
 	
 func activate():
 	status.activate(original_caster,status_index)

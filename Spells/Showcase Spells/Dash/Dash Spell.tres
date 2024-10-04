@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="1_hpmlj"]
 [ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="2_lfp5w"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_y5i01"]
-[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="4_ojipr"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="4_ojipr"]
 [ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="5_dvyiu"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="6_yf828"]
 
@@ -51,3 +51,4 @@ held_ping_time = 0
 cooldown_on_activate = true
 cooldown_on_release = false
 cooldown_time = 60
+starting_data = {}

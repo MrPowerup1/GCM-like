@@ -72,5 +72,11 @@ func learn_spell(new_spell:Spell):
 func get_held_time(spell_index:int):
 	return slots[spell_index].get_held_time()
 
-func get_cast_iteration(spell_index:int):
-	return slots[spell_index].get_cast_iteration()
+#func get_cast_iteration(spell_index:int):
+	#return slots[spell_index].get_cast_iteration()
+
+func get_spell_data(spell_index:int,key:String):
+	return slots[spell_index].get_spell_data(key)
+
+func set_spell_data(spell_index:int,key:String,value):
+	slots[spell_index].set_spell_data(key,value)

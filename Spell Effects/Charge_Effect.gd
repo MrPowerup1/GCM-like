@@ -8,4 +8,3 @@ func trigger(target,caster:Player,spell_index:int):
 	threshold.trigger(target,caster,spell_index,time)
 
 # Called when the node enters the scene tree for the first time.
-

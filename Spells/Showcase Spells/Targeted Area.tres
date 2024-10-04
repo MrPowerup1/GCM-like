@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://bnkvt5plhp8al" path="res://Instanced Scenes/base_target.tscn" id="1_o3x65"]
 [ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="4_8vmen"]
-[ext_resource type="Script" path="res://Spell Effects/player_offset_effect.gd" id="6_rhhx3"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="6_rhhx3"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="7_jd83k"]
 [ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="9_66t6c"]
-[ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="10_jce2x"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/End_Effect.gd" id="10_jce2x"]
 [ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="11_isnyg"]
 [ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="12_3ko5q"]
 

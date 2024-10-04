@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://jp0vvkmljtuy"]
+
+[ext_resource type="Texture2D" uid="uid://bx1fpsdg4yf6x" path="res://Spells/Showcase Spells/Lightning/Lightning-Icon.png" id="1_kwduo"]
+[ext_resource type="Script" path="res://Elements/Element.gd" id="2_blbgn"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="3_vhr03"]
+[ext_resource type="Resource" uid="uid://dg4mfe0itsj62" path="res://Spells/Showcase Spells/Lightning Redo/Lightning Spell Redo.tres" id="4_ox6oe"]
+
+[resource]
+script = ExtResource("3_vhr03")
+spell = ExtResource("4_ox6oe")
+requirements = Array[ExtResource("2_blbgn")]([])
+category = 0
+type = 0
+randomizer = false
+name = "Lightning REDO"
+image = ExtResource("1_kwduo")
+description = "Lightning Strike"

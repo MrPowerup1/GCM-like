@@ -35,4 +35,3 @@ func _on_end_time_timeout():
 
 func _on_ping_time_timeout():	
 	trigger_effects_at_time(effect_time.ON_PING,last_frame_bodies)
-

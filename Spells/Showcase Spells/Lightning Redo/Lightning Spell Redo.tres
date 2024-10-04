@@ -1,0 +1,100 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=27 format=3 uid="uid://dg4mfe0itsj62"]
+
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_m8ics"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="3_aln4w"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="4_jcpki"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="5_hjadb"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/set_data_effect.gd" id="7_1nmmd"]
+[ext_resource type="PackedScene" uid="uid://bconn8risps5p" path="res://Spells/Showcase Spells/Lightning Redo/Lightning Target REDO.tscn" id="8_73bwc"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/Despawn_Effect.gd" id="9_5fc3k"]
+[ext_resource type="PackedScene" uid="uid://dk2ss3tud63li" path="res://Spells/Showcase Spells/Lightning Redo/Lightning Strike.tscn" id="9_jyiaq"]
+[ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="10_jcwon"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/Load_Data_Effect.gd" id="10_lkm36"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/Branching_Effect.gd" id="11_kipwu"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="11_lrql0"]
+
+[sub_resource type="Resource" id="Resource_3yhki"]
+script = ExtResource("3_aln4w")
+area_scene = ExtResource("8_73bwc")
+
+[sub_resource type="Resource" id="Resource_1uhey"]
+script = ExtResource("7_1nmmd")
+data_type = 5
+edit_type = 0
+key = "Target"
+data = ""
+area_effect = SubResource("Resource_3yhki")
+
+[sub_resource type="Resource" id="Resource_wi1pq"]
+script = ExtResource("5_hjadb")
+set_anchor_to = true
+
+[sub_resource type="Resource" id="Resource_mn50q"]
+script = ExtResource("7_1nmmd")
+data_type = 1
+edit_type = 0
+key = "Phase"
+data = "Strike"
+
+[sub_resource type="Resource" id="Resource_hae5t"]
+script = ExtResource("10_jcwon")
+effects = Array[ExtResource("1_m8ics")]([SubResource("Resource_1uhey"), SubResource("Resource_wi1pq"), SubResource("Resource_mn50q")])
+
+[sub_resource type="Resource" id="Resource_l8se5"]
+script = ExtResource("4_jcpki")
+offset_x = 20
+offset_y = 0
+effect = SubResource("Resource_hae5t")
+
+[sub_resource type="Resource" id="Resource_i0ijs"]
+script = ExtResource("3_aln4w")
+area_scene = ExtResource("9_jyiaq")
+
+[sub_resource type="Resource" id="Resource_1jr65"]
+script = ExtResource("9_5fc3k")
+
+[sub_resource type="Resource" id="Resource_amh83"]
+script = ExtResource("10_jcwon")
+effects = Array[ExtResource("1_m8ics")]([SubResource("Resource_i0ijs"), SubResource("Resource_1jr65")])
+
+[sub_resource type="Resource" id="Resource_xuokc"]
+script = ExtResource("10_lkm36")
+data_type = 0
+key = "Target"
+effect = SubResource("Resource_amh83")
+update_position_with_target_change = true
+
+[sub_resource type="Resource" id="Resource_mbqa4"]
+script = ExtResource("5_hjadb")
+set_anchor_to = false
+
+[sub_resource type="Resource" id="Resource_pjaxn"]
+script = ExtResource("7_1nmmd")
+data_type = 1
+edit_type = 0
+key = "Phase"
+data = "Target"
+
+[sub_resource type="Resource" id="Resource_njc76"]
+script = ExtResource("10_jcwon")
+effects = Array[ExtResource("1_m8ics")]([SubResource("Resource_xuokc"), SubResource("Resource_mbqa4"), SubResource("Resource_pjaxn")])
+
+[sub_resource type="Resource" id="Resource_qe8wa"]
+script = ExtResource("11_kipwu")
+restriction_type = 0
+key = "Phase"
+values = Array[String](["Target", "Strike"])
+effects = Array[ExtResource("1_m8ics")]([SubResource("Resource_l8se5"), SubResource("Resource_njc76")])
+
+[resource]
+script = ExtResource("11_lrql0")
+timings = Array[int]([0])
+effects = Array[ExtResource("1_m8ics")]([SubResource("Resource_qe8wa")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = false
+cooldown_on_release = true
+cooldown_time = 20
+starting_data = {
+"Phase": "Target"
+}

@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Spell Effects/Release_Effect.gd" id="5_5ammy"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Anchor_Effect.gd" id="5_i1al3"]
 [ext_resource type="Script" path="res://Spell Effects/Charge_Effect.gd" id="6_m7p5m"]
-[ext_resource type="Script" path="res://Spell Effects/End_Effect.gd" id="7_rwebf"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/End_Effect.gd" id="7_rwebf"]
 [ext_resource type="Texture2D" uid="uid://dpawcli1di67r" path="res://Art/3.png" id="7_ye2s0"]
 [ext_resource type="Script" path="res://Spell Effects/Threshold_Effect.gd" id="8_4tvlr"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="8_pc3rs"]

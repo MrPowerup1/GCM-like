@@ -50,7 +50,12 @@ func release(index:int):
 	
 func add_status_effect(status:Status_Type,caster:Player):
 	%"Player Status".new_status(status,caster)
-	
+
+func has_status(status_name:String) -> bool:
+	return %"Player Status".has_status(status_name)
+
+func get_status_stack_count(status_name:String)->int:
+	return %"Player Status".get_status_stack_count(status_name)
 	
 func anchor (set_anchor:bool=true):
 	%Velocity.anchor(set_anchor)
@@ -79,6 +84,9 @@ func set_release_permission(index:int, state:bool):
 
 func clear_status(index:int):
 	%"Player Status".clear_status(index)
+
+func clear_status_with_name(status_name:String):
+	%"Player Status".clear_status_with_name(status_name)
 
 func enable():
 	visible=true

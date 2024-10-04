@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Status_Type" load_steps=9 format=3 uid="uid://6wf47x8hwobc"]
+
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_nai8e"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="2_ssv6v"]
+[ext_resource type="Texture2D" uid="uid://kkef7jb65gyk" path="res://Spells/Showcase Spells/Lightning Redo/Lightning-Icon.png" id="3_jn0yr"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Print Effect.gd" id="3_yy1ts"]
+[ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="6_ujd3t"]
+
+[sub_resource type="Resource" id="Resource_xjvmh"]
+script = ExtResource("2_ssv6v")
+set_speed = true
+set_friction = false
+speed_factor = 8192
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_h2f1a"]
+script = ExtResource("2_ssv6v")
+set_speed = true
+set_friction = false
+speed_factor = 65536
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_tns53"]
+script = ExtResource("3_yy1ts")
+message = "\"SUPER SLOW ACTIVATED\""
+
+[resource]
+script = ExtResource("6_ujd3t")
+status_name = "Super Slow"
+timings = Array[int]([0, 2, 0])
+effects = Array[ExtResource("1_nai8e")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a"), SubResource("Resource_tns53")])
+ping_time = 0
+total_effect_time = 60
+status_visible = true
+flash_color = Color(0, 0, 0, 1)
+image = ExtResource("3_jn0yr")
+flash_on_ping = false
+stacking = true
+reset_on_stack = false
+stack_incompatabilities = Array[String]([])
+max_stack_size = 10

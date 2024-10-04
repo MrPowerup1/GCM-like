@@ -31,17 +31,29 @@ func clear_status(index:int=-1):
 	else:
 		for child in get_children():
 			SyncManager.despawn(child)
+			
+func clear_status_with_name(status_name:String):	
+	for child in get_children():
+		if (child.status.status_name == status_name):
+			SyncManager.despawn(child)
+		
 
 #Returns false if no stacking
-func stack_status(status:Status_Type):
+func stack_status(status_name:String):
 	for child in get_children():
-		if child is Status_Effect_Instance and child.status == status:
+		if child is Status_Effect_Instance and child.status.status_name == status_name:
 			child.stack()
 			return true
 	return false
 
-func has_status(status:Status_Type) -> bool:
+func get_stack_count(status_name:String)->int:
 	for child in get_children():
-		if child is Status_Effect_Instance and child.status == status:
+		if child is Status_Effect_Instance and child.status.status_name == status_name:
+			return child.stack_count
+	return 0
+	
+func has_status(status_name:String) -> bool:
+	for child in get_children():
+		if child is Status_Effect_Instance and child.status.status_name == status_name:
 			return true
 	return false

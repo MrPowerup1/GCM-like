@@ -1,11 +1,37 @@
-[gd_resource type="Resource" script_class="Status_Type" load_steps=7 format=3 uid="uid://bkb58x5o43edb"]
+[gd_resource type="Resource" script_class="Status_Type" load_steps=16 format=3 uid="uid://bkb58x5o43edb"]
 
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_5xt2g"]
 [ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="1_fm4d1"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="1_qstaw"]
 [ext_resource type="Texture2D" uid="uid://dejhfwvdvy2c5" path="res://Spells/Showcase Spells/Beam/Beam Icon.png" id="3_32qjg"]
+[ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="3_feucg"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/Remove_Status_Effect.gd" id="4_1ojjf"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/Filter_Effect.gd" id="4_11tdh"]
+[ext_resource type="Resource" uid="uid://6wf47x8hwobc" path="res://Spells/Showcase Spells/Beam/Super Slow.tres" id="4_w4joy"]
+[ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="6_202op"]
 
-[sub_resource type="Resource" id="Resource_xjvmh"]
+[sub_resource type="Resource" id="Resource_7qiqq"]
+script = ExtResource("3_feucg")
+status = ExtResource("4_w4joy")
+
+[sub_resource type="Resource" id="Resource_g4lls"]
+script = ExtResource("4_1ojjf")
+remove_all = false
+names_to_remove = Array[String](["Slow"])
+
+[sub_resource type="Resource" id="Resource_mjxbb"]
+script = ExtResource("6_202op")
+effects = Array[ExtResource("1_5xt2g")]([SubResource("Resource_7qiqq"), SubResource("Resource_g4lls")])
+
+[sub_resource type="Resource" id="Resource_m3ugw"]
+script = ExtResource("4_11tdh")
+restriction_type = 5
+data = "Slow"
+data_to_compare_to = "3"
+effect_to_trigger = SubResource("Resource_mjxbb")
+comparison_type = 1
+
+[sub_resource type="Resource" id="Resource_s7w8f"]
 script = ExtResource("1_qstaw")
 set_speed = true
 set_friction = false
@@ -21,8 +47,9 @@ friction_factor = 0
 
 [resource]
 script = ExtResource("1_fm4d1")
-timings = Array[int]([0, 2])
-effects = Array[ExtResource("1_5xt2g")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
+status_name = "Slow"
+timings = Array[int]([0, 0, 2])
+effects = Array[ExtResource("1_5xt2g")]([SubResource("Resource_m3ugw"), SubResource("Resource_s7w8f"), SubResource("Resource_h2f1a")])
 ping_time = 0
 total_effect_time = 60
 status_visible = true
@@ -30,4 +57,6 @@ flash_color = Color(0, 0, 0, 1)
 image = ExtResource("3_32qjg")
 flash_on_ping = false
 stacking = true
-reset_on_stack = false
+reset_on_stack = true
+stack_incompatabilities = Array[String](["Super Slow"])
+max_stack_size = 10

@@ -21,6 +21,7 @@ friction_factor = 0
 
 [resource]
 script = ExtResource("2_6utit")
+status_name = "Double Slow"
 timings = Array[int]([0, 2])
 effects = Array[ExtResource("1_8vexc")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
 ping_time = 0
@@ -31,3 +32,5 @@ image = ExtResource("2_ukqtb")
 flash_on_ping = true
 stacking = false
 reset_on_stack = false
+stack_incompatabilities = Array[String]([])
+max_stack_size = 10

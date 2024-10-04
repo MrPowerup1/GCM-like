@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Status_Type" load_steps=7 format=3 uid="uid://ba3kqxwanepcr"]
+
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_jq0e0"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="2_qgxcu"]
+[ext_resource type="Texture2D" uid="uid://dejhfwvdvy2c5" path="res://Spells/Showcase Spells/Beam/Beam Icon.png" id="3_6ubav"]
+[ext_resource type="Script" path="res://Spell Effects/Status Effects/Status_Type.gd" id="4_8hqts"]
+
+[sub_resource type="Resource" id="Resource_xjvmh"]
+script = ExtResource("2_qgxcu")
+set_speed = true
+set_friction = false
+speed_factor = 32768
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_h2f1a"]
+script = ExtResource("2_qgxcu")
+set_speed = true
+set_friction = false
+speed_factor = 65536
+friction_factor = 0
+
+[resource]
+script = ExtResource("4_8hqts")
+status_name = "Slow"
+timings = Array[int]([0, 2])
+effects = Array[ExtResource("1_jq0e0")]([SubResource("Resource_xjvmh"), SubResource("Resource_h2f1a")])
+ping_time = 0
+total_effect_time = 60
+status_visible = true
+flash_color = Color(0, 0, 0, 1)
+image = ExtResource("3_6ubav")
+flash_on_ping = false
+stacking = true
+reset_on_stack = false
+stack_incompatabilities = Array[String]([])
+max_stack_size = 10

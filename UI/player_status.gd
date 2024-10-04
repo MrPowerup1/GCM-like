@@ -23,19 +23,38 @@ func init_health(_health):
 
 func new_status(status:Status_Type,caster:Player):
 	if !dead:
-		if %StatusManager.has_status(status):
+		if has_status(status.status_name):
 			print("Already have status")
-			if status.stacking:
+			if status.stacking and get_status_stack_count(status.status_name) <= status.max_stack_size:
 				print("Stacked")
-				%StatusManager.stack_status(status)
+				%StatusManager.stack_status(status.status_name)
+		elif has_any_status(status.stack_incompatabilities):
+			print("Has Incompatible status")
 		else:
 			%StatusManager.new_status(status,caster)
+
+
 
 func get_held_time(index:int):
 	return %StatusManager.get_held_time(index)
 
 func clear_status(index:int = -1):
 	%StatusManager.clear_status(index)
+
+func clear_status_with_name(status_name:String):
+	%StatusManager.clear_status_with_name(status_name)
+
+func has_status(status_name:String) -> bool:
+	return %StatusManager.has_status(status_name)
+
+func has_any_status(status_names:Array[String])->bool:
+	for status_name in status_names:
+		if %StatusManager.has_status(status_name):
+			return true
+	return false
+
+func get_status_stack_count(status_name:String)->int:
+	return %StatusManager.get_stack_count(status_name)
 
 
 func _on_damage_delay_timeout():

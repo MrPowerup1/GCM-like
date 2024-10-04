@@ -1,6 +1,8 @@
 extends Resource
 class_name Status_Type
 
+
+@export var status_name:String
 @export_category ("Main Effects")
 enum effect_time {on_activate,on_held,on_release}
 @export var timings:Array[effect_time]
@@ -18,8 +20,11 @@ enum effect_time {on_activate,on_held,on_release}
 @export var flash_color:Color
 @export var image:Texture2D
 @export var flash_on_ping:bool
+@export_category("Stack Info")
 @export var stacking:bool
 @export var reset_on_stack:bool
+@export var stack_incompatabilities:Array[String]
+@export var max_stack_size:int=10
 
 func activate(caster:Player,spell_index:int):
 	if(on_activate!=null):

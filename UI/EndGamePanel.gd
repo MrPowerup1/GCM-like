@@ -18,6 +18,7 @@ func display_winner():
 	var winner_skin = (GameManager.universal_skin_deck.cards[winner.selected_skin] as SkinCard).skin
 	%Skin.texture=winner_skin.texture
 	%Skin.material.set_shader_parameter("new_color",winner_skin.color)
+	winner['wins']+=1
 	GameManager.alive_players.clear()
 
 

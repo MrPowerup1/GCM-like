@@ -39,9 +39,15 @@ func update():
 	var skin_card = GameManager.universal_skin_deck.get_card(GameManager.players[player_index]["selected_skin"])
 	%PlayerSkin.texture =skin_card.image
 	set_shader_replacement_color(skin_card.skin.color)
-	
 	if peer_id!=1:
 		%PlayerName.text = GameManager.peers[str(peer_id)]['name']
+	if GameManager.players[player_index]['wins'] >0:
+		%"Wins Panel".visible=true
+		%"Win Count".text = str(GameManager.players[player_index]['wins'])
+		if GameManager.get_most_wins_index().has(player_index):
+			%Crown.visible = true
+		else:
+			%Crown.visible=false
 	
 	
 func set_shader_replacement_color(new_color:Color):

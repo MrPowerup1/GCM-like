@@ -32,7 +32,8 @@ var default_player_dict = {
 			"known_spells": [0,1,2],  #range(universal_spell_deck.cards.size()),
 			"selected_skin": 0,
 			"selected_spells":[],
-			"selected_level":-1
+			"selected_level":-1,
+			"wins":0
 		}
 
 var default_local_player_dict = {
@@ -52,6 +53,7 @@ class PlayerData:
 	var known_spells:Array[int]
 	var selected_skin:int
 	var selected_spells:Array[int]
+	var wins:int = 0
 	#TODO: this should be implemented
 	#var selected_level:int
 	
@@ -140,3 +142,15 @@ func reset_player_selections(index:int):
 	assert(players.has(index),"Attempting to reset missing player index")
 	players[index]['selected_spells'].clear()
 		
+
+func get_most_wins_index() -> Array[int]:
+	var max = 0
+	var max_indices:Array[int]
+	for index in players.keys():
+		if players[index]['wins'] > max:
+			max = players[index]['wins']
+			max_indices.clear()
+			max_indices.append(index)
+		elif players[index]['wins'] == max:
+			max_indices.append(index)
+	return max_indices

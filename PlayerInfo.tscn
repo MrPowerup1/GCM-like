@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0ya1pk5ik0ea"]
+[gd_scene load_steps=9 format=3 uid="uid://b0ya1pk5ik0ea"]
 
 [ext_resource type="Texture2D" uid="uid://tix6kusiwno1" path="res://Inputs/signal3.png" id="1_3jhs6"]
 [ext_resource type="Script" path="res://PlayerInfo.gd" id="1_iaw8y"]
 [ext_resource type="Texture2D" uid="uid://b3maf2r474n4c" path="res://Inputs/keyboard_arrows.png" id="2_5s2sr"]
 [ext_resource type="Texture2D" uid="uid://b37xc8chubxkx" path="res://Inputs/controller_xboxone.png" id="3_3gmuc"]
 [ext_resource type="Texture2D" uid="uid://b4deoms6yi5wy" path="res://Skins/Player Icon.png" id="5_3ud1m"]
+[ext_resource type="Texture2D" uid="uid://c0g8qbmx8ybqp" path="res://crown.png" id="5_a1r65"]
 
 [sub_resource type="Shader" id="Shader_hlk45"]
 code = "shader_type canvas_item;
@@ -52,6 +53,33 @@ stretch_mode = 4
 unique_name_in_owner = true
 layout_mode = 2
 text = "Player Id"
+
+[node name="Wins Panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"SimplePanelContainer"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Wins Panel"]
+layout_mode = 2
+alignment = 1
+
+[node name="Crown" type="TextureRect" parent="Wins Panel/HBoxContainer2"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+texture = ExtResource("5_a1r65")
+
+[node name="Win Count" type="Label" parent="Wins Panel/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0
+"
+
+[node name="Label" type="Label" parent="Wins Panel/HBoxContainer2"]
+layout_mode = 2
+text = "Wins
+"
 
 [node name="PlayerSkin" type="TextureRect" parent="."]
 unique_name_in_owner = true

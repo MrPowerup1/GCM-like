@@ -1,11 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://cipoobpfd0v06"]
+[gd_scene load_steps=22 format=3 uid="uid://cipoobpfd0v06"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_u0qbr"]
 [ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="2_3jkh5"]
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="2_rkbg2"]
 [ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="3_pp2n8"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="4_8exph"]
 [ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="5_e15g6"]
 [ext_resource type="Texture2D" uid="uid://bu805mifj5p7s" path="res://Spells/Showcase Spells/Melee/melee-Sheet.png" id="6_opqn4"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/Change_Target_Effect.gd" id="7_mai5w"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="7_mkjhb"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="8_8tsqf"]
 
@@ -33,13 +35,20 @@ animation_name = "slash"
 script = ExtResource("2_3jkh5")
 pulse_to = false
 pulse_from = true
-strength = 10.0
+strength = 5.0
 
 [sub_resource type="Resource" id="Resource_ub6f8"]
 script = ExtResource("3_pp2n8")
 offset_x = 50
 offset_y = 0
 effect = SubResource("Resource_u3akt")
+
+[sub_resource type="Resource" id="Resource_ub2u3"]
+script = ExtResource("7_mai5w")
+new_target_type = 0
+effect = SubResource("Resource_ub6f8")
+update_position_with_target_change = true
+key = ""
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_u01od"]
 extents_x = 1038778
@@ -62,9 +71,9 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_40t8c"]
 resource_name = "slash"
-length = 0.2
+length = 0.1
 loop_mode = 1
-step = 0.05
+step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -72,7 +81,7 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -87,9 +96,10 @@ _data = {
 [node name="Base Area" type="SGArea2D" groups=["network_sync", "pierceable"]]
 script = ExtResource("1_u0qbr")
 timings = Array[int]([0, 0, 4, 0])
-locations = Array[int]([2, 2, 3, 0])
-effects = Array[Resource("res://Spell Effects/Parent Effects/Spell Effect.gd")]([SubResource("Resource_0fjdg"), SubResource("Resource_x6i6w"), SubResource("Resource_2px4s"), SubResource("Resource_ub6f8")])
+locations = Array[int]([2, 2, 3, 2])
+effects = Array[ExtResource("2_rkbg2")]([SubResource("Resource_0fjdg"), SubResource("Resource_x6i6w"), SubResource("Resource_2px4s"), SubResource("Resource_ub2u3")])
 life_time = 6
+flip_to_caster = true
 
 [node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGRectangleShape2D_u01od")

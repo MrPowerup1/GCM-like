@@ -165,13 +165,13 @@ func player_fixed_move_input(direction:SGFixedVector2):
 						velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
 				else:
 					velocity.y=sign(velocity.y)*max_speed_to_use
-	if direction.x == 0:
+	if  direction.x == 0 or abs(velocity.x) > max_speed_fixed:
 		#APPLY HORIZONTAL FRICTION
 		if abs(velocity.x) < friction_fixed:
 			velocity.x=0
 		else:
 			velocity.x = sign(velocity.x)*abs(abs(velocity.x)-friction_fixed)
-	if direction.y == 0:
+	if  direction.y == 0 or abs(velocity.y) > max_speed_fixed:
 		#APPLY VERTICAL FRICTION
 		if abs(velocity.y) < friction_fixed:
 			velocity.y=0
@@ -199,7 +199,7 @@ func player_fixed_move_redo(direction:SGFixedVector2):
 				velocity.x+=SGFixed.mul(cut_accel_fixed,direction.x)
 			if sign(velocity.y) != sign(direction.y) :
 				velocity.y+=SGFixed.mul(cut_accel_fixed,direction.y)
-	if direction.x == 0:
+	if direction.x == 0 or abs(velocity.x) > friction_fixed:
 		#APPLY HORIZONTAL FRICTION
 		if abs(velocity.x) < friction_fixed:
 			velocity.x=0

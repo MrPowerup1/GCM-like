@@ -15,7 +15,7 @@ area_scene = ExtResource("1_khba4")
 
 [sub_resource type="Resource" id="Resource_3slef"]
 script = ExtResource("3_14dql")
-offset_x = 50
+offset_x = 30
 offset_y = 0
 effect = SubResource("Resource_81phc")
 
@@ -29,7 +29,7 @@ set_anchor_to = false
 
 [sub_resource type="Resource" id="Resource_2ncyj"]
 script = ExtResource("6_7kht5")
-delay_time = 15
+delay_time = 5
 effect = SubResource("Resource_866kn")
 delayed_cast_instance = ExtResource("5_taaod")
 origin = 0

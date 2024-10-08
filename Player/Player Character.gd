@@ -36,6 +36,9 @@ func _ready():
 func get_facing() -> int:
 	return %Velocity.facing
 
+func get_flipped()->bool:
+	return %Sprite2D.flip_h
+
 func activate(index:int):
 	if can_cast[index]:
 		%"Spell Manager".activate.rpc(index)

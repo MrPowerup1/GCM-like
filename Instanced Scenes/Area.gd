@@ -15,6 +15,7 @@ var spell_index:int
 @export var ping_time:int
 @export var life_time:int
 @export var rotate_to_caster:bool
+@export var flip_to_caster:bool
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -42,6 +43,9 @@ func _network_spawn(data: Dictionary) -> void:
 	caster = get_node(data['caster_path'])
 	if rotate_to_caster:
 		fixed_rotation = caster.get_facing()
+	if flip_to_caster:
+		if caster.get_flipped():
+			fixed_scale_x*=-1
 	spell_index=data['spell_index']
 	#if data.has('effects_paths'):
 		#effects.clear()

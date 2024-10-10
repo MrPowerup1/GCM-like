@@ -6,6 +6,8 @@ class_name Input_Keys
 	"Right":"Right",
 	"Up":"Up",
 	"Down":"Down",
+	"Melee":"Melee",
+	"Mobility":"Mobility",
 	"Spell1":"Spell1",
 	"Spell2":"Spell2",
 	#"Melee":"Melee",

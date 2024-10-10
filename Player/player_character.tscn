@@ -147,7 +147,7 @@ frame = 8
 [node name="Spell Manager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_dckfd")
-known_spells = Array[ExtResource("6_cu1kr")]([null, null])
+known_spells = Array[ExtResource("6_cu1kr")]([null, null, null, null])
 
 [node name="Spell Slot" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
 caster = NodePath("../..")
@@ -155,6 +155,14 @@ caster = NodePath("../..")
 [node name="Spell Slot2" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
 caster = NodePath("../..")
 spell_index = 1
+
+[node name="Melee" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
+caster = NodePath("../..")
+spell_index = 2
+
+[node name="Mobility" parent="Spell Manager" node_paths=PackedStringArray("caster") instance=ExtResource("4_tyvj0")]
+caster = NodePath("../..")
+spell_index = 3
 
 [node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("animation_player") groups=["network_sync"]]
 unique_name_in_owner = true

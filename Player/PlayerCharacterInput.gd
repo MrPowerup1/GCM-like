@@ -33,6 +33,14 @@ func _get_local_input() -> Dictionary:
 		input['spell_2_pressed']=true
 	if (Input.is_action_just_released(input_keys.conversion["Spell2"])):
 		input['spell_2_released']=true
+	if (Input.is_action_just_pressed(input_keys.conversion["Melee"])):
+		input['melee_pressed']=true
+	if (Input.is_action_just_released(input_keys.conversion["Melee"])):
+		input['melee_released']=true
+	if (Input.is_action_just_pressed(input_keys.conversion["Mobility"])):
+		input['mobility_pressed']=true
+	if (Input.is_action_just_released(input_keys.conversion["Mobility"])):
+		input['mobility_released']=true
 	if not input_vector.is_equal_approx(fixed_zero_vector):
 		input['input_vector']=input_vector	
 	return input
@@ -70,6 +78,14 @@ func _network_postprocess(input: Dictionary) -> void:
 		button_activate.emit(1)
 	if input.get('spell_2_released',false):
 		button_release.emit(1)
+	if input.get('melee_pressed',false):
+		button_activate.emit(2)
+	if input.get('melee_released',false):
+		button_release.emit(2)
+	if input.get('mobility_pressed',false):
+		button_activate.emit(3)
+	if input.get('mobility_released',false):
+		button_release.emit(3)
 
 func _predict_remote_input(previous_input:Dictionary, ticks_since_last_input: int) -> Dictionary:
 	var input = previous_input.duplicate()
@@ -77,6 +93,10 @@ func _predict_remote_input(previous_input:Dictionary, ticks_since_last_input: in
 	input.erase('spell_1_released')
 	input.erase('spell_2_pressed')
 	input.erase('spell_2_released')
+	input.erase('melee_pressed')
+	input.erase('melee_released')
+	input.erase('mobility_pressed')
+	input.erase('mobility_released')
 	return input
 	
 

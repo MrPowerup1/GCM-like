@@ -1,10 +1,10 @@
 extends SGCharacterBody2D
 class_name Player
 
-var can_release:Array[bool]=[true,true]
-var can_cast:Array[bool]=[true,true]
+var can_release:Array[bool]=[true,true,true,true]
+var can_cast:Array[bool]=[true,true,true,true]
 #var facing:Vector2
-var num_spells:int
+var num_spells:int 
 var snap_to_0:int = 65536/100
 @export var input:PlayerCharacterInput = null
 var skin:CharacterSkin
@@ -93,14 +93,14 @@ func clear_status_with_name(status_name:String):
 
 func enable():
 	visible=true
-	can_cast=[true,true]
-	can_release=[true,true]
+	can_cast=[true,true,true,true]
+	can_release=[true,true,true,true]
 	anchor(false)
 
 func disable():
 	visible=false
-	can_cast=[false,false]
-	can_release=[false,false]
+	can_cast=[false,false,false,false]
+	can_release=[false,false,false,false]
 	anchor(true)
 
 func set_skin(new_skin):

@@ -4,7 +4,10 @@ class_name SpellCard
 @export var spell:Spell
 @export var element:Element
 @export var requirements:Array[Element] = []
-@export_enum("Passive","Active") var category:int
+#Should be bitflags
+enum Categories {None,Melee,Mobility}
+#var category
+@export var category:Categories
 @export_enum("Buff","Movement","Attack","Defense") var type:int
 @export var randomizer = false
 

@@ -7,6 +7,8 @@ script = ExtResource("1_ipmiv")
 conversion = {
 "Down": "Null",
 "Left": "Null",
+"Melee": "Null",
+"Mobility": "Null",
 "Right": "Null",
 "Spell1": "Null",
 "Spell2": "Null",

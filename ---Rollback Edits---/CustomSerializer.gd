@@ -11,11 +11,15 @@ const input_path_mapping = {
 }
 
 enum HeaderFlags {
-	HAS_INPUT_VECTOR = 0x01,
-	SPELL_1_CAST = 0x02,
-	SPELL_1_RELEASE = 0x04,
-	SPELL_2_CAST = 0x08,
-	SPELL_2_RELEASE = 0x10
+	HAS_INPUT_VECTOR = 1<<0,
+	SPELL_1_CAST = 1<<1,
+	SPELL_1_RELEASE = 1<<2,
+	SPELL_2_CAST = 1<<3,
+	SPELL_2_RELEASE = 1<<4,
+	MELEE_CAST = 1<<5,
+	MELEE_RELEASE = 1<<6,
+	MOBILITY_CAST = 1<<7,
+	MOBILITY_RELEASE = 1<<8,
 }
 
 var input_path_mapping_reverse := {}
@@ -52,7 +56,15 @@ func serialize_input(all_input: Dictionary) -> PackedByteArray:
 			header |= HeaderFlags.SPELL_2_CAST
 		if input.get('spell_2_released',false):
 			header |= HeaderFlags.SPELL_2_RELEASE
-		buffer.put_u8(header)
+		if input.get('melee_pressed',false):
+			header |= HeaderFlags.MELEE_CAST
+		if input.get('melee_released',false):
+			header |= HeaderFlags.MELEE_RELEASE
+		if input.get('mobility_pressed',false):
+			header |= HeaderFlags.MOBILITY_CAST
+		if input.get('mobility_released',false):
+			header |= HeaderFlags.MOBILITY_RELEASE
+		buffer.put_u16(header)
 		
 		if input.has('input_vector'):
 			var input_vector: SGFixedVector2 = input['input_vector']
@@ -88,6 +100,14 @@ func unserialize_input(serialized: PackedByteArray) -> Dictionary:
 			input['spell_2_pressed']=true
 		if header & HeaderFlags.SPELL_2_RELEASE:
 			input['spell_2_released']=true
+		if header & HeaderFlags.MELEE_CAST:
+			input['melee_pressed']=true
+		if header & HeaderFlags.MELEE_RELEASE:
+			input['melee_released']=true
+		if header & HeaderFlags.MOBILITY_CAST:
+			input['mobility_pressed']=true
+		if header & HeaderFlags.MOBILITY_RELEASE:
+			input['mobility_released']=true
 		all_input[path] = input
 		
 	return all_input

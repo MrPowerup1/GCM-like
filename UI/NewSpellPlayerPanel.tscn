@@ -63,6 +63,20 @@ current_deck_type = 1
 cards = ExtResource("9_8a4a6")
 display_location = NodePath("../../Temporary Selections")
 
+[node name="SpellSelect3" parent="VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+unique_name_in_owner = true
+layout_mode = 2
+current_deck_type = 1
+cards = ExtResource("9_8a4a6")
+display_location = NodePath("../../Temporary Selections")
+
+[node name="SpellSelect4" parent="VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+unique_name_in_owner = true
+layout_mode = 2
+current_deck_type = 1
+cards = ExtResource("9_8a4a6")
+display_location = NodePath("../../Temporary Selections")
+
 [node name="PlayerReady" type="PanelContainer" parent="VBoxContainer/Displays"]
 unique_name_in_owner = true
 visible = false

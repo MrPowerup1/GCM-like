@@ -10,6 +10,8 @@ class_name Input_Keys
 	"Mobility":"Mobility",
 	"Spell1":"Spell1",
 	"Spell2":"Spell2",
+	"Select":"Select",
+	"Back":"Back"
 	#"Melee":"Melee",
 	#"Dash":"Dash"
 	}

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dlv10j3yla0vr"]
+[gd_scene load_steps=10 format=3 uid="uid://dlv10j3yla0vr"]
 
 [ext_resource type="Texture2D" uid="uid://vrgwtbtdw2i1" path="res://Art/keyboard_c.png" id="1_qilf5"]
 [ext_resource type="Script" path="res://UI/join_panel.gd" id="1_qlrv8"]
 [ext_resource type="Texture2D" uid="uid://hq0aopo6ix1o" path="res://Art/keyboard_n.png" id="3_ecn24"]
 [ext_resource type="Texture2D" uid="uid://4d3k0wpadovj" path="res://Art/xbox_button_color_a.png" id="3_fgcnj"]
+[ext_resource type="Texture2D" uid="uid://x8ydpo4yave0" path="res://Art/keyboard_z.png" id="3_uhyfs"]
 [ext_resource type="Texture2D" uid="uid://clqhsisinmeqe" path="res://Art/xbox_button_menu.png" id="4_0cyn4"]
 [ext_resource type="PackedScene" uid="uid://b0ya1pk5ik0ea" path="res://PlayerInfo.tscn" id="9_2qpdg"]
 
@@ -21,7 +22,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2, 3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("1_qilf5"), ExtResource("3_ecn24"), ExtResource("3_fgcnj"), ExtResource("4_0cyn4")]
+"values": [ExtResource("3_uhyfs"), ExtResource("3_ecn24"), ExtResource("3_fgcnj"), ExtResource("4_0cyn4")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j2eua"]
@@ -57,6 +58,6 @@ vertical_alignment = 1
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("3_ecn24")
+texture = ExtResource("1_qilf5")
 expand_mode = 2
 stretch_mode = 5

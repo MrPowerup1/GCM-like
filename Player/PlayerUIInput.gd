@@ -29,16 +29,16 @@ func _input(event):
 			get_viewport().set_input_as_handled()
 		if (not direction.is_zero_approx()):
 			direction_pressed.emit(direction)
-		if (event.is_action_pressed(input_keys.conversion["Spell1"])):
+		if (event.is_action_pressed(input_keys.conversion["Select"])):
 			button_activate.emit(0)
 			get_viewport().set_input_as_handled()
-		if (event.is_action_released(input_keys.conversion["Spell1"])):
+		if (event.is_action_released(input_keys.conversion["Select"])):
 			button_release.emit(0)
 			get_viewport().set_input_as_handled()
-		if (event.is_action_pressed(input_keys.conversion["Spell2"])):
+		if (event.is_action_pressed(input_keys.conversion["Back"])):
 			button_activate.emit(1)
 			get_viewport().set_input_as_handled()
-		if (event.is_action_released(input_keys.conversion["Spell2"])):
+		if (event.is_action_released(input_keys.conversion["Back"])):
 			button_release.emit(1)
 			get_viewport().set_input_as_handled()
 	

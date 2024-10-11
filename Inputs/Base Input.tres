@@ -5,11 +5,13 @@
 [resource]
 script = ExtResource("1_bmf7o")
 conversion = {
+"Back": "Back",
 "Down": "Down",
 "Left": "Left",
 "Melee": "Melee",
 "Mobility": "Mobility",
 "Right": "Right",
+"Select": "Select",
 "Spell1": "Spell1",
 "Spell2": "Spell2",
 "Up": "Up"

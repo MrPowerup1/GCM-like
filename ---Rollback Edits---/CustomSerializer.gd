@@ -88,7 +88,7 @@ func unserialize_input(serialized: PackedByteArray) -> Dictionary:
 	for i in range(input_count):
 		var path = input_path_mapping_reverse[buffer.get_u8()]
 		var input = {}
-		var header = buffer.get_u8()
+		var header = buffer.get_u16()
 		#Check for input vector with bitwise and
 		if header & HeaderFlags.HAS_INPUT_VECTOR:
 			input["input_vector"] = SGFixed.vector2(buffer.get_64(),buffer.get_64())

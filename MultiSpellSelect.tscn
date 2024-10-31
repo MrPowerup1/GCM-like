@@ -35,10 +35,12 @@ layout_mode = 2
 [node name="CardSelect" parent="VBoxContainer2" instance=ExtResource("2_u0p63")]
 unique_name_in_owner = true
 layout_mode = 2
+current_deck_type = 1
 cards = ExtResource("3_sj1eu")
 spawn_display = true
 handle_despawn_display = false
 display_location = NodePath("../Control/VBoxContainer/Top Spell")
+use_slot_index = true
 
 [node name="Control" type="MarginContainer" parent="VBoxContainer2"]
 layout_mode = 2

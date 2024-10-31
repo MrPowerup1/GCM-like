@@ -20,7 +20,8 @@ var can_select_left_right:bool = false
 #enum display_mode {SELECTED,SELECTING,ZOOMED}
 #var current_mode:display_mode
 @export var context:Card.CardContext
-
+@export var use_slot_index:bool = false
+@export var slot_index:int
 
 signal next_mode
 signal back_mode
@@ -176,7 +177,10 @@ func _on_center_card_new_name(name):
 
 func _on_zoomed_select():
 	selected.emit()
-	center_card.select(player_index,context)
+	if use_slot_index:
+		(center_card as SpellCard).select(player_index,context,slot_index)
+	else:
+		center_card.select(player_index,context)
 	display()
 	refresh()
 	next.emit()

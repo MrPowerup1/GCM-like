@@ -29,7 +29,7 @@ var base_input = preload("res://Inputs/Base Input.tres").to_dict()
 var default_player_dict = {
 			"peer_id": -1,
 			"player_index":-1,
-			"known_spells": [0,1,2,3],  #range(universal_spell_deck.cards.size()),
+			"known_spells": [0,1,2,3,4],  #range(universal_spell_deck.cards.size()),
 			"selected_skin": 0,
 			"selected_spells":[-1,-1,-1,-1],
 			"selected_level":-1,

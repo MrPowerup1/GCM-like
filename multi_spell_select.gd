@@ -56,9 +56,11 @@ func hover_card(new_focus):
 		focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
 		focus = new_focus
 		%CardSelect.display_location = %CardSelect.get_path_to(new_focus)
+		%CardSelect.load_deck(cards)
 		SoundFX.move()
 		%CardSelect.change_title(focus.name)
 		%CardSelect.center_card = focus.get_child(0).card
+		%CardSelect.slot_index = focus.spell_slot_index
 	else:
 		SoundFX.back()
 
@@ -101,6 +103,7 @@ func select():
 	if hovering:
 		to_selecting.emit()
 		print("Player ",player_index," Is selecting")
+		cards.unselect(focus.get_child(0).card)
 	else:
 		%CardSelect.select()
 		to_hovering.emit()

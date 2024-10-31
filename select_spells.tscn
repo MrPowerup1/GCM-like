@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b5imxvvgtef5r" path="res://user_disconnect.tscn" id="2_srcmt"]
 [ext_resource type="PackedScene" uid="uid://fhwmhipqb0rd" path="res://Main_Scene.tscn" id="3_qbsov"]
 [ext_resource type="Script" path="res://UI/Player Select Screen.gd" id="4_ojg81"]
-[ext_resource type="PackedScene" uid="uid://b0x1ktkwyv13l" path="res://UI/NewSpellPlayerPanel.tscn" id="5_88e8s"]
+[ext_resource type="PackedScene" uid="uid://dus1pk7rsdhkj" path="res://MultiSpellPlayerPanel.tscn" id="5_d2ktm"]
 [ext_resource type="PackedScene" uid="uid://uhaxst3vwmo5" path="res://UI/Start_Game_countdown_Panel.tscn" id="6_w43e6"]
 
 [node name="SelectSpells" type="CanvasLayer"]
@@ -36,7 +36,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
 script = ExtResource("4_ojg81")
-player_panel = ExtResource("5_88e8s")
+player_panel = ExtResource("5_d2ktm")
 adding_new_players = false
 
 [node name="StartRoundPanel" parent="PanelContainer/VBoxContainer" instance=ExtResource("6_w43e6")]

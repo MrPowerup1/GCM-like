@@ -51,3 +51,6 @@ func subdeck(indices:Array,exclude:Array = []) -> Deck:
 func reset():
 	for i in range(allowed.size()):
 		allowed[i] = true
+
+func find_first_allowed()->Card:
+	return get_card(allowed.find(true))

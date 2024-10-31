@@ -29,9 +29,9 @@ var base_input = preload("res://Inputs/Base Input.tres").to_dict()
 var default_player_dict = {
 			"peer_id": -1,
 			"player_index":-1,
-			"known_spells": [0,1,2],  #range(universal_spell_deck.cards.size()),
+			"known_spells": [0,1,2,3],  #range(universal_spell_deck.cards.size()),
 			"selected_skin": 0,
-			"selected_spells":[],
+			"selected_spells":[-1,-1,-1,-1],
 			"selected_level":-1,
 			"wins":0
 		}
@@ -58,7 +58,7 @@ class PlayerData:
 	#var selected_level:int
 	
 	func _init(_peer_id:int,_name:String,_index:int,_input:Input_Keys=null
-	,_known_spells:Array[int]=[0,1,2],_selected_skin:int=0,_selected_spells:Array[int]=[0,1]):
+	,_known_spells:Array[int]=[0,1,2,3],_selected_skin:int=0,_selected_spells:Array[int]=[0,1]):
 		peer_id=_peer_id
 		index=_index
 		input=_input
@@ -148,7 +148,7 @@ func reset_decks():
 
 func reset_player_selections(index:int):
 	assert(players.has(index),"Attempting to reset missing player index")
-	players[index]['selected_spells'].clear()
+	players[index]['selected_spells'] = [-1,-1,-1,-1]
 		
 
 func get_most_wins_index() -> Array[int]:

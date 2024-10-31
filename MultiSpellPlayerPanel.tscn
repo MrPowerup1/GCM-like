@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://dus1pk7rsdhkj"]
+
+[ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_ykwen"]
+[ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="2_ik8jj"]
+[ext_resource type="PackedScene" uid="uid://b0ya1pk5ik0ea" path="res://PlayerInfo.tscn" id="3_c6gmd"]
+[ext_resource type="Script" path="res://UI/Displays.gd" id="4_vrpei"]
+[ext_resource type="PackedScene" uid="uid://beaool3b26ge3" path="res://MultiSpellSelect.tscn" id="5_2e8rf"]
+[ext_resource type="Script" path="res://UI/PlayerReady.gd" id="8_2ui8v"]
+[ext_resource type="Script" path="res://Player/PlayerUIInput.gd" id="9_nj2co"]
+[ext_resource type="Resource" uid="uid://dg45jqu0yw6f6" path="res://Inputs/Null Input.tres" id="10_am0tn"]
+
+[node name="MultiSpellPanel" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"Panel2"
+script = ExtResource("1_ykwen")
+card_scene = ExtResource("2_ik8jj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Permanent Selections" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayerInfo" parent="VBoxContainer/Permanent Selections" instance=ExtResource("3_c6gmd")]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 0
+
+[node name="Temporary Selections" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Displays" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("4_vrpei")
+
+[node name="Multi Spell Select" parent="VBoxContainer/Displays" instance=ExtResource("5_2e8rf")]
+layout_mode = 2
+player_index = -1
+
+[node name="PlayerReady" type="PanelContainer" parent="VBoxContainer/Displays"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"Panel2"
+script = ExtResource("8_2ui8v")
+
+[node name="Label" type="Label" parent="VBoxContainer/Displays/PlayerReady"]
+texture_filter = 1
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Ready"
+horizontal_alignment = 1
+
+[node name="InputCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.25
+one_shot = true
+
+[node name="PlayerUIInput" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_nj2co")
+input_keys = ExtResource("10_am0tn")
+
+[connection signal="player_joined" from="." to="VBoxContainer/Displays" method="_on_player_panel_player_joined"]
+[connection signal="player_ready" from="VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_ready"]
+[connection signal="player_unready" from="VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_unready"]
+[connection signal="timeout" from="InputCooldown" to="." method="_on_input_cooldown_timeout"]

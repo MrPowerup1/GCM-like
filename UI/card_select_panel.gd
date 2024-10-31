@@ -11,6 +11,7 @@ enum DeckType {ALL_SPELL,KNOWN_SPELL,ALL_SKIN,ALL_UNKNOWN_SPELL}
 @export var center_display:CardDisplay
 @export_category("Display Spawn Settings")
 @export var spawn_display:bool = true
+@export var handle_despawn_display:bool = true
 @export var display_location:NodePath
 @export var to_display:PackedScene
 var displayed_card:CardDisplay
@@ -116,7 +117,8 @@ func display():
 		displayed_card.set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
 
 func undisplay():
-	if displayed_card !=null:
+	
+	if displayed_card !=null and handle_despawn_display:
 		displayed_card.queue_free()
 	#to_display.current_style = CardDisplay.DisplayStyle.INVISIBLE
 

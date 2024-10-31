@@ -13,18 +13,32 @@ enum Categories {None,Melee,Mobility}
 
 #@export var context:CardContext
 
-func select(player_index:int,context:CardContext):
+func select(player_index:int,context:CardContext,spell_slot_index:int=-1):
+	var universal_spell_slot:int = GameManager.universal_spell_deck.get_index(self)
 	if context == CardContext.SELECTING:
-		GameManager.players[player_index]['selected_spells'].append(GameManager.universal_spell_deck.get_index(self))
+		if spell_slot_index ==-1:
+			spell_slot_index = GameManager.players[player_index]['selected_spells'].find(-1)
+		GameManager.players[player_index]['selected_spells'][spell_slot_index]= universal_spell_slot
 	elif context == CardContext.LEARNING:
-		GameManager.players[player_index]['known_spells'].append(GameManager.universal_spell_deck.get_index(self))
+		GameManager.players[player_index]['known_spells'].append(universal_spell_slot)
 		GameManager.update_spell_deck(player_index)
 
-func unselect(player_index:int,context:CardContext):
+func unselect(player_index:int,context:CardContext):  #,spell_slot_index:int=-1):
+	var universal_spell_slot:int = GameManager.universal_spell_deck.get_index(self)
 	if context == CardContext.SELECTING:
-		GameManager.players[player_index]['selected_spells'].erase(GameManager.universal_spell_deck.get_index(self))
+		##IF SPELL SLOT NOT GIVEN
+		#if spell_slot_index ==-1:
+			##CHECK FOR UNSELECTED SPELL SLOT
+			#if GameManager.players[player_index]['selected_spells'].has(-1):
+				#spell_slot_index = GameManager.players[player_index]['selected_spells'].find(-1) -1
+			##IF ALL SELECTED, PICK LAST
+			#else:
+				#spell_slot_index =GameManager.players[player_index]['selected_spells'].last()
+		#GameManager.players[player_index]['selected_spells'][spell_slot_index]= universal_spell_slot
+		var index = GameManager.players[player_index]['selected_spells'].find(universal_spell_slot)
+		GameManager.players[player_index]['selected_spells'][index] = -1
 	elif context == CardContext.LEARNING:
-		GameManager.players[player_index]['known_spells'].erase(GameManager.universal_spell_deck.get_index(self))
+		GameManager.players[player_index]['known_spells'].erase(universal_spell_slot)
 	
 
 func display(card:CardDisplay):

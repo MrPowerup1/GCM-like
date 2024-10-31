@@ -12,7 +12,6 @@ level = ExtResource("2_rtxwg")
 name = "Test Level"
 image = ExtResource("1_avrc7")
 description = "This is a test level"
-context = 0
 
 [resource]
 script = ExtResource("1_ovkcu")

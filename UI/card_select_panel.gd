@@ -2,13 +2,16 @@ extends SelectPanel
 class_name CardSelectPanel
 
 enum DeckType {ALL_SPELL,KNOWN_SPELL,ALL_SKIN,ALL_UNKNOWN_SPELL}
+@export var title:String
 @export var current_deck_type:DeckType
 @export var cards:Deck
 @export var left_card:Card
 @export var center_card:Card
 @export var right_card:Card
 @export var center_display:CardDisplay
-@export var display_location:Control
+@export_category("Display Spawn Settings")
+@export var spawn_display:bool = true
+@export var display_location:NodePath
 @export var to_display:PackedScene
 var displayed_card:CardDisplay
 var can_select_left_right:bool = false
@@ -21,17 +24,27 @@ var can_select_left_right:bool = false
 signal next_mode
 signal back_mode
 signal focus
+signal selected
 
 func _ready():
 	#Get the default skins and display them
 	reset()
+	%Title.text = title
 	#load_new_deck()
+
+func change_title(new_title:String):
+	title = new_title
+	%Title.text = title
 
 func new_player(new_player_index:int):
 	player_index = new_player_index
 	load_new_deck()
 	reset()
 
+func load_deck(new_deck:Deck):
+	cards = new_deck
+	
+	
 func load_new_deck():
 	if current_deck_type==DeckType.ALL_SKIN:
 		cards = GameManager.universal_skin_deck
@@ -40,7 +53,8 @@ func load_new_deck():
 	elif current_deck_type==DeckType.KNOWN_SPELL:
 		print(player_index)
 		print(GameManager.players)
-		cards = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
+		#cards = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
+		cards = GameManager.players[player_index]['known_spells_deck']
 	elif current_deck_type==DeckType.ALL_UNKNOWN_SPELL:
 		print(player_index)
 		print(GameManager.players)
@@ -95,10 +109,11 @@ func back():
 	SoundFX.back()
 
 func display():
-	displayed_card = to_display.instantiate()
-	display_location.add_child(displayed_card)
-	displayed_card.set_new_card(center_card)
-	displayed_card.set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
+	if spawn_display:
+		displayed_card = to_display.instantiate()
+		get_node(display_location).add_child(displayed_card)
+		displayed_card.set_new_card(center_card)
+		displayed_card.set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
 
 func undisplay():
 	if displayed_card !=null:
@@ -117,10 +132,12 @@ func new_cards(to_display:Array):
 		pass
 		%SelectButton.text="Selected"
 		%SelectButton.disabled=true
+		%CenterCard.set_mode(CardDisplay.Mode.UNSELECTABLE)
 	else:
 		pass
 		%SelectButton.text="Select"
 		%SelectButton.disabled=false
+		%CenterCard.set_mode(CardDisplay.Mode.CLEAR)
 	left_card=to_display[1]
 	%LeftCard.set_new_card(left_card)
 	center_card=to_display[2]
@@ -156,6 +173,7 @@ func _on_center_card_new_name(name):
 
 
 func _on_zoomed_select():
+	selected.emit()
 	center_card.select(player_index,context)
 	display()
 	refresh()

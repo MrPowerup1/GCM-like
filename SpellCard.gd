@@ -18,6 +18,7 @@ func select(player_index:int,context:CardContext):
 		GameManager.players[player_index]['selected_spells'].append(GameManager.universal_spell_deck.get_index(self))
 	elif context == CardContext.LEARNING:
 		GameManager.players[player_index]['known_spells'].append(GameManager.universal_spell_deck.get_index(self))
+		GameManager.update_spell_deck(player_index)
 
 func unselect(player_index:int,context:CardContext):
 	if context == CardContext.SELECTING:

@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ffyuf8apar7g"]
+[gd_scene load_steps=10 format=3 uid="uid://ffyuf8apar7g"]
 
 [ext_resource type="Script" path="res://UI/CardDisplay.gd" id="1_p8ces"]
 [ext_resource type="Resource" uid="uid://c22fntv8t1gh" path="res://Spells/Showcase Spells/Beam/Beam Card.tres" id="2_4mye5"]
 [ext_resource type="Texture2D" uid="uid://b4deoms6yi5wy" path="res://Skins/Player Icon.png" id="2_murhm"]
+[ext_resource type="Texture2D" uid="uid://bcw8a6eddsu2t" path="res://Cancel.png" id="4_eleac"]
+[ext_resource type="Texture2D" uid="uid://6mvrhr7ftmdg" path="res://accept.png" id="5_jfr48"]
+[ext_resource type="Texture2D" uid="uid://0lgjna2a8axp" path="res://lock.png" id="6_6wcql"]
 
 [sub_resource type="Shader" id="Shader_hlk45"]
 code = "shader_type canvas_item;
@@ -23,6 +26,10 @@ void fragment() {
 shader = SubResource("Shader_hlk45")
 shader_parameter/new_color = Color(0.580392, 0.270588, 0.815686, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pgvk1"]
+bg_color = Color(0, 0, 0, 0.564706)
+corner_detail = 1
+
 [node name="Card Option" type="PanelContainer"]
 texture_filter = 1
 offset_right = 8.0
@@ -42,6 +49,7 @@ layout_mode = 2
 [node name="ImageBorder" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"SimplePanelContainer"
 
 [node name="Image" type="TextureRect" parent="HBoxContainer/VBoxContainer/ImageBorder"]
 unique_name_in_owner = true
@@ -88,3 +96,33 @@ theme_override_font_sizes/font_size = 10
 text = "Wizard Man"
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Grey" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pgvk1")
+
+[node name="LockSymbol" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = ExtResource("4_eleac")
+
+[node name="AcceptSymbol" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = ExtResource("5_jfr48")
+
+[node name="LockSymbol2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = ExtResource("6_6wcql")

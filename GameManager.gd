@@ -89,6 +89,7 @@ func add_player(peer_id:int,input:Input_Keys)->int:
 			'input_keys':input.to_dict()
 		}
 	print("New player at index, ",player_index," Has data ",players[player_index])
+	update_spell_deck(player_index)
 	for old_player_index in players:
 		if old_player_index!=player_index:
 			print("old player at index, ",old_player_index," Has data ",players[old_player_index])
@@ -107,6 +108,13 @@ func remove_player(player_index:int) -> bool:
 		print("Removed player. player count is ",players.size())
 		return true
 	return false
+
+#func player_learn_spell(player_index:int,spell_index:int):
+	#pass
+
+func update_spell_deck(player_index:int):
+	assert(players.has(player_index),"Updating spell of missing player index")
+	players[player_index]['known_spells_deck'] = universal_spell_deck.subdeck(players[player_index]['known_spells'])
 
 func get_player_id()->int:
 	print("Current keys ",players.keys())

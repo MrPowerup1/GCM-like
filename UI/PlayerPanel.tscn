@@ -61,11 +61,12 @@ keyboard_input_2 = ExtResource("8_o86y1")
 display_location = NodePath("../../Permanent Selections")
 player = NodePath("../../../../PlayerUIInput")
 
-[node name="SkinSelect" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("2_kbems")]
+[node name="SkinSelect" parent="MarginContainer/VBoxContainer/Displays" instance=ExtResource("2_kbems")]
 unique_name_in_owner = true
 layout_mode = 2
 current_deck_type = 2
 cards = ExtResource("3_0638b")
+spawn_display = true
 display_location = NodePath("../../Permanent Selections")
 
 [node name="PlayerReady" type="PanelContainer" parent="MarginContainer/VBoxContainer/Displays"]

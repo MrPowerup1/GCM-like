@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0x1ktkwyv13l"]
+[gd_scene load_steps=12 format=3 uid="uid://b0x1ktkwyv13l"]
 
 [ext_resource type="Script" path="res://UI/PlayerPanel.gd" id="1_fatju"]
 [ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="2_uq032"]
 [ext_resource type="PackedScene" uid="uid://b0ya1pk5ik0ea" path="res://PlayerInfo.tscn" id="3_51v3a"]
 [ext_resource type="Script" path="res://UI/Displays.gd" id="3_eh28s"]
 [ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="7_gyjsw"]
+[ext_resource type="PackedScene" uid="uid://beaool3b26ge3" path="res://MultiSpellSelect.tscn" id="7_ywh5m"]
 [ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="9_8a4a6"]
 [ext_resource type="Script" path="res://UI/spell_panel_specials.gd" id="9_67sx5"]
 [ext_resource type="Script" path="res://UI/PlayerReady.gd" id="10_7ck0y"]
@@ -40,42 +41,50 @@ unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("3_eh28s")
 
-[node name="NewSpell" parent="VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+[node name="Multi Spell Select" parent="VBoxContainer/Displays" instance=ExtResource("7_ywh5m")]
+layout_mode = 2
+
+[node name="NewSpell" parent="VBoxContainer/Displays" instance=ExtResource("7_gyjsw")]
+visible = false
 layout_mode = 2
 theme_type_variation = &"SpellPanel"
+title = "New Spell"
 current_deck_type = 3
 cards = ExtResource("9_8a4a6")
-display_location = NodePath("../../Temporary Selections")
 context = 1
 first = true
 
-[node name="SpellSelect1" parent="VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+[node name="SpellSelect1" parent="VBoxContainer/Displays" instance=ExtResource("7_gyjsw")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+title = "Spell1"
 current_deck_type = 1
 cards = ExtResource("9_8a4a6")
-display_location = NodePath("../../Temporary Selections")
 
-[node name="SpellSelect2" parent="VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+[node name="SpellSelect2" parent="VBoxContainer/Displays" instance=ExtResource("7_gyjsw")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+title = "Spell2"
 current_deck_type = 1
 cards = ExtResource("9_8a4a6")
-display_location = NodePath("../../Temporary Selections")
 
-[node name="SpellSelect3" parent="VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+[node name="SpellSelect3" parent="VBoxContainer/Displays" instance=ExtResource("7_gyjsw")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+title = "Melee"
 current_deck_type = 1
 cards = ExtResource("9_8a4a6")
-display_location = NodePath("../../Temporary Selections")
 
-[node name="SpellSelect4" parent="VBoxContainer/Displays" node_paths=PackedStringArray("display_location") instance=ExtResource("7_gyjsw")]
+[node name="SpellSelect4" parent="VBoxContainer/Displays" instance=ExtResource("7_gyjsw")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+title = "Mobility"
 current_deck_type = 1
 cards = ExtResource("9_8a4a6")
-display_location = NodePath("../../Temporary Selections")
 
 [node name="PlayerReady" type="PanelContainer" parent="VBoxContainer/Displays"]
 unique_name_in_owner = true

@@ -10,6 +10,7 @@ func enter():
 	%CenterCard.set_display_style(CardDisplay.DisplayStyle.ZOOMED)
 	%RightCard.set_display_style( CardDisplay.DisplayStyle.INVISIBLE)
 	%NameBox.visible=false
+	%TitleBox.visible=false
 
 #TODO: WHICH SIGNAL TRIGGERS THIS
 func next():

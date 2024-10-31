@@ -1,0 +1,173 @@
+[gd_scene load_steps=9 format=3 uid="uid://beaool3b26ge3"]
+
+[ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="1_dm8x5"]
+[ext_resource type="Script" path="res://multi_spell_select.gd" id="1_rjvff"]
+[ext_resource type="PackedScene" uid="uid://dhryy77waq6s8" path="res://UI/card_select_panel.tscn" id="2_u0p63"]
+[ext_resource type="Texture2D" uid="uid://4d3k0wpadovj" path="res://Art/xbox_button_color_a.png" id="2_vewvn"]
+[ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="3_sj1eu"]
+[ext_resource type="Script" path="res://hovering.gd" id="6_bdln0"]
+[ext_resource type="Script" path="res://selecting.gd" id="7_u6uu0"]
+[ext_resource type="Script" path="res://States/StateManager.gd" id="8_y7n2c"]
+
+[node name="Multi Spell Select" type="PanelContainer" node_paths=PackedStringArray("start_focus")]
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.0
+offset_top = -200.0
+offset_right = 74.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_type_variation = &"ClearPanelContainer"
+script = ExtResource("1_rjvff")
+start_focus = NodePath("VBoxContainer2/Control/VBoxContainer/Top Spell")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="CardSelect" parent="VBoxContainer2" instance=ExtResource("2_u0p63")]
+unique_name_in_owner = true
+layout_mode = 2
+cards = ExtResource("3_sj1eu")
+spawn_display = true
+display_location = NodePath("../Control/VBoxContainer/Top Spell")
+
+[node name="Control" type="MarginContainer" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2/Control"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Top Spell" type="PanelContainer" parent="VBoxContainer2/Control/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../HBoxContainer/Left Spell")
+focus_neighbor_right = NodePath("../../HBoxContainer/Right Spell")
+focus_neighbor_bottom = NodePath("../Bottom Spell")
+theme_type_variation = &"ClearPanelContainer"
+
+[node name="Top Spell" parent="VBoxContainer2/Control/VBoxContainer/Top Spell" instance=ExtResource("1_dm8x5")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../HBoxContainer/Left Spell/Left Spell")
+focus_neighbor_right = NodePath("../../../HBoxContainer/Right Spell/Right Spell")
+focus_neighbor_bottom = NodePath("../../../HBoxContainer/Left Spell/Left Spell")
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer2/Control/VBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_vewvn")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer2/Control/VBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_vewvn")
+expand_mode = 1
+
+[node name="Bottom Spell" type="PanelContainer" parent="VBoxContainer2/Control/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../HBoxContainer/Left Spell")
+focus_neighbor_top = NodePath("../Top Spell")
+focus_neighbor_right = NodePath("../../HBoxContainer/Right Spell")
+
+[node name="Bottom Spell" parent="VBoxContainer2/Control/VBoxContainer/Bottom Spell" instance=ExtResource("1_dm8x5")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../HBoxContainer/Left Spell/Left Spell")
+focus_neighbor_top = NodePath("../../../HBoxContainer/Left Spell/Left Spell")
+focus_neighbor_right = NodePath("../../../HBoxContainer/Right Spell/Right Spell")
+theme_type_variation = &"ClearPanelContainer"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/Control"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Left Spell" type="PanelContainer" parent="VBoxContainer2/Control/HBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../../VBoxContainer/Top Spell")
+focus_neighbor_right = NodePath("../Right Spell")
+focus_neighbor_bottom = NodePath("../../VBoxContainer/Bottom Spell")
+theme_type_variation = &"ClearPanelContainer"
+
+[node name="Left Spell" parent="VBoxContainer2/Control/HBoxContainer/Left Spell" instance=ExtResource("1_dm8x5")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../../../VBoxContainer/Top Spell/Top Spell")
+focus_neighbor_right = NodePath("../../Right Spell/Right Spell")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/Bottom Spell/Bottom Spell")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer2/Control/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_vewvn")
+expand_mode = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2/Control/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer2/Control/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_vewvn")
+expand_mode = 1
+
+[node name="Right Spell" type="PanelContainer" parent="VBoxContainer2/Control/HBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Left Spell")
+focus_neighbor_top = NodePath("../../VBoxContainer/Top Spell")
+focus_neighbor_bottom = NodePath("../../VBoxContainer/Bottom Spell")
+theme_type_variation = &"ClearPanelContainer"
+
+[node name="Right Spell" parent="VBoxContainer2/Control/HBoxContainer/Right Spell" instance=ExtResource("1_dm8x5")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../Left Spell/Left Spell")
+focus_neighbor_top = NodePath("../../../VBoxContainer/Top Spell/Top Spell")
+focus_neighbor_bottom = NodePath("../../../VBoxContainer/Bottom Spell/Bottom Spell")
+
+[node name="Grey" type="Panel" parent="VBoxContainer2/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+unique_name_in_owner = true
+script = ExtResource("8_y7n2c")
+starting_state = NodePath("Hovering")
+
+[node name="Hovering" type="Node" parent="StateManager"]
+script = ExtResource("6_bdln0")
+
+[node name="Selecting" type="Node" parent="StateManager"]
+script = ExtResource("7_u6uu0")
+
+[connection signal="to_hovering" from="." to="StateManager/Selecting" method="_on_multi_spell_select_to_hovering"]
+[connection signal="to_selecting" from="." to="StateManager/Hovering" method="_on_multi_spell_select_to_selecting"]
+[connection signal="selected" from="VBoxContainer2/CardSelect" to="." method="_on_card_select_selected"]

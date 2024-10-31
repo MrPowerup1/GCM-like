@@ -2,7 +2,7 @@ extends State
 ##UNFOCUSED - CARD SELECT	
 func enter():
 	#OVERALL VISIBILITY
-	$"../..".visible=true
+	#$"../..".visible=true
 	#BUTTON VISIBILITY: FALSE
 	%LeftButton.visible=false
 	%RightButton.visible=false
@@ -12,8 +12,10 @@ func enter():
 	%CenterCard.set_display_style(CardDisplay.DisplayStyle.TINY)
 	%RightCard.set_display_style( CardDisplay.DisplayStyle.TINY)
 	%NameBox.visible=false
+	%TitleBox.visible=false
 
-#func exit():
+func exit():
+	pass
 	#%SkinSelect.visible=false
 	#%SkinSelect.transition_display_mode(CardSelectPanel.display_mode.SELECTED)
 	#%SkinSelect.refresh()

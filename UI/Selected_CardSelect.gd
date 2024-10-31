@@ -3,7 +3,7 @@ extends State
 signal unselect
 func enter():
 	#OVERALL VISIBILITY
-	$"../..".visible=false
+	#$"../..".visible=false
 	#BUTTON VISIBILITY: FALSE
 	%LeftButton.visible=false
 	%RightButton.visible=false
@@ -11,9 +11,17 @@ func enter():
 	#CARD VISIBILITY TRUE and equal o o o 
 	%LeftCard.set_display_style(CardDisplay.DisplayStyle.INVISIBLE)
 	%CenterCard.set_display_style(CardDisplay.DisplayStyle.TINY)
-	%RightCard.set_display_style( CardDisplay.DisplayStyle.INVISIBLE)	
-	%NameBox.visible=true
-#func exit():
+	%RightCard.set_display_style( CardDisplay.DisplayStyle.INVISIBLE)
+	%CenterCard.set_mode(CardDisplay.Mode.SELECTED)
+	$"../..".theme_type_variation ="ClearPanelContainer"
+	%NameBox.visible=false
+	%TitleBox.visible=false
+func exit():
+	%LeftButton.visible=true
+	%RightButton.visible=true
+	%SelectButton.visible=true
+	%CenterCard.set_mode(CardDisplay.Mode.CLEAR)
+	$"../..".theme_type_variation ="Panel2"
 	#%SkinSelect.visible=false
 	#%SkinSelect.transition_display_mode(CardSelectPanel.display_mode.SELECTED)
 	#%SkinSelect.refresh()

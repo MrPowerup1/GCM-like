@@ -1,17 +1,17 @@
-[gd_resource type="Resource" script_class="SpellCard" load_steps=4 format=3 uid="uid://c13vk6hnkkis1"]
+[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://c13vk6hnkkis1"]
 
 [ext_resource type="Texture2D" uid="uid://bx1fpsdg4yf6x" path="res://Spells/Showcase Spells/Lightning/Lightning-Icon.png" id="1_ynky6"]
 [ext_resource type="Script" path="res://SpellCard.gd" id="2_khvat"]
+[ext_resource type="Script" path="res://Elements/Element.gd" id="2_xt5ds"]
 [ext_resource type="Resource" uid="uid://b5c7fqhh26351" path="res://Spells/Showcase Spells/Lightning/Lightning Spell.tres" id="3_2aaea"]
 
 [resource]
 script = ExtResource("2_khvat")
 spell = ExtResource("3_2aaea")
-requirements = Array[Resource("res://Elements/Element.gd")]([])
+requirements = Array[ExtResource("2_xt5ds")]([])
 category = 0
 type = 0
 randomizer = false
 name = "Lightning"
 image = ExtResource("1_ynky6")
 description = "Lightning Strike"
-context = 0

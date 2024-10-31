@@ -1,8 +1,11 @@
 extends PanelContainer
 class_name CardDisplay
 
+
 @export var card:Card
-enum DisplayStyle {ZOOMED,ICON,STANDARD,TINY,INVISIBLE,DISPLAYING}
+enum DisplayStyle {ZOOMED,ICON,STANDARD,TINY,INVISIBLE,DISPLAYING,HOVERING}
+enum Mode {CLEAR,SELECTED,UNSELECTABLE,GREY}
+@export var current_mode:Mode
 @export var current_style:DisplayStyle #:
 	#set(new_style):
 		#if new_style==DisplayStyle.ICON:
@@ -79,6 +82,29 @@ func set_theme_type(new_theme):
 func set_shader_replacement_color(new_color:Color):
 	%Image.material.set_shader_parameter("new_color",new_color)
 
+func set_mode(new_mode:Mode):
+	if new_mode==Mode.CLEAR:
+		%Grey.visible = false
+		%LockSymbol.visible = false
+		%AcceptSymbol.visible = false
+		%LockSymbol2.visible = false
+	if new_mode==Mode.SELECTED:
+		%Grey.visible = true
+		%LockSymbol.visible = false
+		%AcceptSymbol.visible = true
+		%LockSymbol2.visible = false
+	if new_mode==Mode.UNSELECTABLE:
+		%Grey.visible = true
+		%LockSymbol.visible = false
+		%AcceptSymbol.visible = false
+		%LockSymbol2.visible = true
+	if new_mode==Mode.GREY:
+		%Grey.visible = true
+		%LockSymbol.visible = false
+		%AcceptSymbol.visible = false
+		%LockSymbol2.visible = false
+	current_mode=new_mode
+
 func set_display_style(new_style:DisplayStyle):
 	if new_style==DisplayStyle.ICON:
 		visible=true
@@ -126,4 +152,12 @@ func set_display_style(new_style:DisplayStyle):
 		set_theme_type("ClearPanelContainer")
 		print("New displaying")
 		%CardName.visible=true
+	if new_style==DisplayStyle.HOVERING:
+		visible=true
+		#%CardName.visible=true
+		%DescriptionBox.visible=false
+		%Image.visible=true
+		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
+		%ImageBorder.theme_type_variation = ""
+		set_theme_type("")
 	current_style=new_style

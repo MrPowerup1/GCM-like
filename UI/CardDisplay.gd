@@ -159,5 +159,5 @@ func set_display_style(new_style:DisplayStyle):
 		%Image.visible=true
 		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
 		%ImageBorder.theme_type_variation = ""
-		set_theme_type("")
+		set_theme_type("ClearPanelContainer")
 	current_style=new_style

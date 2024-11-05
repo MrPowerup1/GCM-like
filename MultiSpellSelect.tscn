@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://beaool3b26ge3"]
+[gd_scene load_steps=12 format=3 uid="uid://beaool3b26ge3"]
 
 [ext_resource type="PackedScene" uid="uid://ffyuf8apar7g" path="res://UI/CardDisplay.tscn" id="1_dm8x5"]
 [ext_resource type="Script" path="res://multi_spell_select.gd" id="1_rjvff"]
@@ -7,8 +7,10 @@
 [ext_resource type="Resource" uid="uid://6lfphqkx7jyp" path="res://TestSpellDeck.tres" id="3_sj1eu"]
 [ext_resource type="Script" path="res://spell_slot_panel.gd" id="4_a23fh"]
 [ext_resource type="Script" path="res://hovering.gd" id="6_bdln0"]
+[ext_resource type="Script" path="res://done.gd" id="7_ks42m"]
 [ext_resource type="Script" path="res://selecting.gd" id="7_u6uu0"]
 [ext_resource type="Script" path="res://States/StateManager.gd" id="8_y7n2c"]
+[ext_resource type="Script" path="res://finished.gd" id="10_y8tee"]
 
 [node name="Multi Spell Select" type="PanelContainer" node_paths=PackedStringArray("start_focus")]
 texture_filter = 1
@@ -93,6 +95,7 @@ layout_mode = 2
 focus_neighbor_left = NodePath("../../HBoxContainer/Left Spell")
 focus_neighbor_top = NodePath("../Top Spell")
 focus_neighbor_right = NodePath("../../HBoxContainer/Right Spell")
+focus_neighbor_bottom = NodePath("../../../Done")
 theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("4_a23fh")
 spell_slot_index = 3
@@ -150,6 +153,18 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
+[node name="Done" type="PanelContainer" parent="VBoxContainer2"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Control/VBoxContainer/Bottom Spell")
+theme_type_variation = &"ClearPanelContainer"
+script = ExtResource("7_ks42m")
+
+[node name="DoneButton" type="Button" parent="VBoxContainer2/Done"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"BackButton"
+text = "Finished?"
+
 [node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 unique_name_in_owner = true
 script = ExtResource("8_y7n2c")
@@ -161,6 +176,12 @@ script = ExtResource("6_bdln0")
 [node name="Selecting" type="Node" parent="StateManager"]
 script = ExtResource("7_u6uu0")
 
+[node name="Finished" type="Node" parent="StateManager"]
+script = ExtResource("10_y8tee")
+
+[connection signal="to_finished" from="." to="StateManager/Hovering" method="_on_multi_spell_select_to_finished"]
 [connection signal="to_hovering" from="." to="StateManager/Selecting" method="_on_multi_spell_select_to_hovering"]
+[connection signal="to_hovering" from="." to="StateManager/Finished" method="_on_multi_spell_select_to_hovering"]
 [connection signal="to_selecting" from="." to="StateManager/Hovering" method="_on_multi_spell_select_to_selecting"]
 [connection signal="selected" from="VBoxContainer2/CardSelect" to="." method="_on_card_select_selected"]
+[connection signal="button_down" from="VBoxContainer2/Done/DoneButton" to="." method="_on_button_button_down"]

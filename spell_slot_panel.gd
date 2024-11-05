@@ -1,4 +1,5 @@
 extends PanelContainer
+class_name CardDisplayContainer
 
 @export var do_filter:bool
 enum Filter_Types {Exclude,Include}
@@ -39,3 +40,8 @@ func select_spell():
 	displayed_card.set_new_card(card_to_display)
 	displayed_card.set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
 	
+func highlight(new_state:bool):
+	if new_state:
+		theme_type_variation = "Panel2"
+	else:
+		theme_type_variation = "ClearPanelContainer"

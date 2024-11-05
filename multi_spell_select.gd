@@ -10,6 +10,7 @@ var hovering:bool = true
 
 signal to_hovering
 signal to_selecting
+signal to_finished
 
 
 func new_player(new_player_index:int):
@@ -54,17 +55,29 @@ func _ready() -> void:
 
 func hover_card(new_focus):
 	if new_focus != null:
-		assert(new_focus is PanelContainer,"Focusing on non Card Display object")
 		new_focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.HOVERING)
-		if focus.get_child_count() > 0:
-			focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
-		focus = new_focus
 		%CardSelect.display_location = %CardSelect.get_path_to(new_focus)
-		%CardSelect.load_deck(focus.unfiltered_cards)
+		%CardSelect.load_deck(new_focus.unfiltered_cards)
 		SoundFX.move()
-		%CardSelect.change_title(focus.name)
-		%CardSelect.center_card = focus.get_child(0).card
-		%CardSelect.slot_index = focus.spell_slot_index
+		%CardSelect.change_title(new_focus.name)
+		%CardSelect.center_card = new_focus.get_child(0).card
+		%CardSelect.slot_index = new_focus.spell_slot_index
+	else:
+		SoundFX.back()
+
+func unhover_card(old_focus):
+	old_focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
+
+func hover(new_focus):
+	if new_focus !=null:
+		assert(new_focus is PanelContainer,"Focusing on non PanelContainer object")
+		new_focus.highlight(true)
+		focus.highlight(false)
+		if new_focus is CardDisplayContainer:
+			hover_card(new_focus)
+		if focus is CardDisplayContainer:
+			unhover_card(focus)
+		focus = new_focus
 	else:
 		SoundFX.back()
 
@@ -72,7 +85,7 @@ func hover_card(new_focus):
 func left():
 	if hovering:
 		var new_focus = focus.get_node(focus.focus_neighbor_left)
-		hover_card(new_focus)
+		hover(new_focus)
 	else: 
 		%CardSelect.left()
 
@@ -80,7 +93,7 @@ func left():
 func right():
 	if hovering:
 		var new_focus = focus.get_node(focus.focus_neighbor_right)
-		hover_card(new_focus)
+		hover(new_focus)
 		
 	else: 
 		%CardSelect.right()
@@ -89,7 +102,7 @@ func right():
 func up():
 	if hovering:
 		var new_focus = focus.get_node(focus.focus_neighbor_top)
-		hover_card(new_focus)
+		hover(new_focus)
 	else: 
 		SoundFX.back()
 
@@ -97,7 +110,7 @@ func up():
 func down():
 	if hovering:
 		var new_focus = focus.get_node(focus.focus_neighbor_bottom)
-		hover_card(new_focus)
+		hover(new_focus)
 	else: 
 		to_hovering.emit()
 		SoundFX.back()
@@ -105,12 +118,14 @@ func down():
 @rpc("any_peer","call_local")
 func select():
 	if hovering:
-		print("unselect B1")
-		cards.unselect(focus.get_child(0).card)
-		focus.get_child(0).card.unselect(player_index,focus.context)
-		to_selecting.emit()
-		print("Player ",player_index," Is selecting")
-		
+		if focus is CardDisplayContainer:
+			print("unselect B1")
+			cards.unselect(focus.get_child(0).card)
+			focus.get_child(0).card.unselect(player_index,focus.context)
+			to_selecting.emit()
+			print("Player ",player_index," Is selecting")
+		else:
+			finished_selecting()
 	else:
 		%CardSelect.select()
 		to_hovering.emit()
@@ -119,11 +134,12 @@ func select():
 @rpc("any_peer","call_local")
 func back():
 	if hovering:
-		to_selecting.emit()
-		print("Player ",player_index," Is selecting")
-		print("unselect B2")
-		cards.unselect(focus.get_child(0).card)
-		focus.get_child(0).card.unselect(player_index,focus.context)
+		exit.emit()
+		#to_selecting.emit()
+		#print("Player ",player_index," Is selecting")
+		#print("unselect B2")
+		#cards.unselect(focus.get_child(0).card)
+		#focus.get_child(0).card.unselect(player_index,focus.context)
 	else:
 		%CardSelect.back()
 		to_hovering.emit()
@@ -137,3 +153,14 @@ func _on_card_select_selected() -> void:
 
 func _on_new_spell_selected() -> void:
 	load_new_deck()
+
+func finished_selecting():
+	next.emit()
+	to_finished.emit()
+	
+func entered_selecting():
+	pass
+
+func _on_button_button_down() -> void:
+	finished_selecting()
+	

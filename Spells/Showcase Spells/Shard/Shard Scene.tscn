@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://by3bpk3rd5b7u"]
+[gd_scene load_steps=18 format=3 uid="uid://by3bpk3rd5b7u"]
 
 [ext_resource type="Script" path="res://Instanced Scenes/Projectile.gd" id="1_0gx3i"]
 [ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="2_b3w5j"]
 [ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="3_4u3xw"]
+[ext_resource type="Texture2D" uid="uid://yrstil5il0xe" path="res://Spells/Showcase Spells/Shard/IceShard-Sheet.png" id="6_chmoi"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="6_g22es"]
 [ext_resource type="Script" path="res://Spell Effects/status_effect.gd" id="7_pnks2"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="8_ptdjs"]
 [ext_resource type="Resource" uid="uid://bkb58x5o43edb" path="res://Spells/Showcase Spells/Beam/Slow Status.tres" id="8_x5d4x"]
-[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="9_jex0r"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="10_1dru2"]
 [ext_resource type="Script" path="res://Velocity.gd" id="11_1wkm3"]
 
@@ -17,17 +19,60 @@ damage_value = 50
 script = ExtResource("7_pnks2")
 status = ExtResource("8_x5d4x")
 
+[sub_resource type="Resource" id="Resource_m8cnb"]
+script = ExtResource("6_g22es")
+animation_name = "fire"
+
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_6u01q"]
-extents_x = 539107
-extents_y = 542183
+extents_x = 450218
+extents_y = 265821
+
+[sub_resource type="Animation" id="Animation_ooh4d"]
+resource_name = "fire"
+length = 0.45
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_2flyh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x8toy"]
+_data = {
+"RESET": SubResource("Animation_2flyh"),
+"fire": SubResource("Animation_ooh4d")
+}
 
 [node name="Shard" type="SGArea2D" node_paths=PackedStringArray("velocity") groups=["network_sync", "pierceable"]]
 script = ExtResource("1_0gx3i")
 velocity = NodePath("Velocity")
 rotate_from_caster = true
-timings = Array[int]([0, 0])
-locations = Array[int]([2, 2])
-effects = Array[ExtResource("2_b3w5j")]([SubResource("Resource_phwlq"), SubResource("Resource_vs8um")])
+timings = Array[int]([0, 0, 4])
+locations = Array[int]([2, 2, 3])
+effects = Array[ExtResource("2_b3w5j")]([SubResource("Resource_phwlq"), SubResource("Resource_vs8um"), SubResource("Resource_m8cnb")])
 life_time = 5
 rotate_to_caster = true
 
@@ -37,9 +82,8 @@ shape = SubResource("SGRectangleShape2D_6u01q")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-1.19209e-07, -2.38419e-07)
-scale = Vector2(1.6, 0.5625)
-texture = ExtResource("9_jex0r")
-hframes = 3
+texture = ExtResource("6_chmoi")
+hframes = 9
 
 [node name="Ping_Time" type="Node" parent="."]
 unique_name_in_owner = true
@@ -49,6 +93,13 @@ script = ExtResource("10_1dru2")
 unique_name_in_owner = true
 script = ExtResource("10_1dru2")
 one_shot = true
+
+[node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Velocity")
+libraries = {
+"": SubResource("AnimationLibrary_x8toy")
+}
+script = ExtResource("8_ptdjs")
 
 [node name="Velocity" type="Node" parent="." node_paths=PackedStringArray("body") groups=["network_sync"]]
 script = ExtResource("11_1wkm3")

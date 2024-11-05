@@ -18,15 +18,18 @@ func new_player(new_player_index:int):
 	%"Left Spell".player_index = player_index
 	%"Right Spell".player_index = player_index
 	%"Bottom Spell".player_index = player_index
+	#%"Learn Spell".player_index = player_index
 	%CardSelect.player_index = player_index
 	load_new_deck()
 
 func load_deck(new_deck:Deck):
+	print("TOPIC unselect: deck loaded")
 	cards = new_deck
 	%"Top Spell".load_deck(cards)
 	%"Left Spell".load_deck(cards)
 	%"Right Spell".load_deck(cards)
 	%"Bottom Spell".load_deck(cards)
+	#%"Learn Spell".load_deck(GameManager.universal_spell_deck.subdeck(range(GameManager.universal_spell_deck.cards.size()),GameManager.players[player_index].get('known_spells')))
 
 func load_new_deck():
 	if current_deck_type==DeckType.ALL_SKIN:
@@ -53,10 +56,11 @@ func hover_card(new_focus):
 	if new_focus != null:
 		assert(new_focus is PanelContainer,"Focusing on non Card Display object")
 		new_focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.HOVERING)
-		focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
+		if focus.get_child_count() > 0:
+			focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
 		focus = new_focus
 		%CardSelect.display_location = %CardSelect.get_path_to(new_focus)
-		%CardSelect.load_deck(cards)
+		%CardSelect.load_deck(focus.unfiltered_cards)
 		SoundFX.move()
 		%CardSelect.change_title(focus.name)
 		%CardSelect.center_card = focus.get_child(0).card
@@ -101,9 +105,12 @@ func down():
 @rpc("any_peer","call_local")
 func select():
 	if hovering:
+		print("unselect B1")
+		cards.unselect(focus.get_child(0).card)
+		focus.get_child(0).card.unselect(player_index,focus.context)
 		to_selecting.emit()
 		print("Player ",player_index," Is selecting")
-		cards.unselect(focus.get_child(0).card)
+		
 	else:
 		%CardSelect.select()
 		to_hovering.emit()
@@ -112,7 +119,11 @@ func select():
 @rpc("any_peer","call_local")
 func back():
 	if hovering:
-		pass
+		to_selecting.emit()
+		print("Player ",player_index," Is selecting")
+		print("unselect B2")
+		cards.unselect(focus.get_child(0).card)
+		focus.get_child(0).card.unselect(player_index,focus.context)
 	else:
 		%CardSelect.back()
 		to_hovering.emit()
@@ -120,4 +131,9 @@ func back():
 
 
 func _on_card_select_selected() -> void:
-	focus.get_child(0).queue_free()
+	if focus.get_child_count() >0:
+		focus.get_child(0).queue_free()
+
+
+func _on_new_spell_selected() -> void:
+	load_new_deck()

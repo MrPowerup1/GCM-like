@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://c22fntv8t1gh"]
+[gd_resource type="Resource" script_class="SpellCard" load_steps=6 format=3 uid="uid://c22fntv8t1gh"]
 
 [ext_resource type="Resource" uid="uid://dehdpr3friiuo" path="res://Elements/Fire.tres" id="1_w7pr3"]
 [ext_resource type="Texture2D" uid="uid://dejhfwvdvy2c5" path="res://Spells/Showcase Spells/Beam/Beam Icon.png" id="2_5sye3"]
+[ext_resource type="Script" path="res://Elements/Element.gd" id="3_0qk3r"]
 [ext_resource type="Script" path="res://SpellCard.gd" id="3_h02ns"]
 [ext_resource type="Resource" uid="uid://ksudpbtmc2pk" path="res://Spells/Showcase Spells/Beam/Beam Spell.tres" id="4_46edi"]
 
@@ -9,11 +10,10 @@
 script = ExtResource("3_h02ns")
 spell = ExtResource("4_46edi")
 element = ExtResource("1_w7pr3")
-requirements = Array[Resource("res://Elements/Element.gd")]([])
+requirements = Array[ExtResource("3_0qk3r")]([])
 category = 0
 type = 0
 randomizer = false
 name = "Beam"
 image = ExtResource("2_5sye3")
 description = "Shoot a beam"
-context = 0

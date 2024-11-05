@@ -8,6 +8,9 @@ func random() -> Card:
 	var index = randi_range(0,cards.size()-2)
 	return cards[index]
 
+func has_card(card:Card) ->bool:
+	return cards.has(card)
+	
 func get_card(index:int) -> Card:
 	return cards[index]
 
@@ -31,10 +34,16 @@ func select(card:Card) -> bool:
 		return true
 	return false
 
+func is_allowed(card:Card) ->bool:	
+	var index = cards.find(card)
+	if allowed[index]:
+		return true
+	return false
+
 func unselect(card:Card) -> bool:
 	var index = cards.find(card)
 	if !allowed[index]:
-		print ("Found and unselected")
+		print ("Found and unselected at index ",index," out of ",allowed.size())
 		allowed[index] = true
 		return true
 	print("Couldn't find to unselect")

@@ -6,8 +6,10 @@ func enter():
 	%Grey.visible = true
 	%CardSelect.visible = true
 	%CardSelect.focused()
+	$"../..".hovering = false
 
 func exit():
+	$"../..".hovering = false
 	%Grey.visible = false
 	%CardSelect.visible = false
 	

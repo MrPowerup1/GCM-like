@@ -21,14 +21,17 @@ func _process(delta: float) -> void:
 
 func load_deck(new_deck:Deck):
 	unfiltered_cards = new_deck
-	select_spell()
+	if get_child_count() > 0:
+		pass
+	else:
+		select_spell()
 	
 func select_spell():
 	var filtered_cards = unfiltered_cards #SUBDECK OR SOMETHING TO FILTER
 	var card_to_display:SpellCard = filtered_cards.find_first_allowed()
 	card_to_display.select(player_index,context,spell_slot_index)
 	if unfiltered_cards.select(card_to_display):
-		pass
+		print("Succesfull")
 	else:
 		printerr("card found not available")
 	var displayed_card = to_display.instantiate()

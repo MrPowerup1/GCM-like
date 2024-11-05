@@ -114,7 +114,22 @@ func remove_player(player_index:int) -> bool:
 
 func update_spell_deck(player_index:int):
 	assert(players.has(player_index),"Updating spell of missing player index")
-	players[player_index]['known_spells_deck'] = universal_spell_deck.subdeck(players[player_index]['known_spells'])
+	if players[player_index].has('known_spells_deck'):
+		print("UPDATING")
+		var old_deck =players[player_index]['known_spells_deck']
+		var new_deck = universal_spell_deck.subdeck(players[player_index]['known_spells'])
+		for i in range(old_deck.cards.size()):
+			print("CHECKING CARD ",i)
+			var current_card = old_deck.cards[i]
+			if new_deck.has_card(current_card):
+				if old_deck.is_allowed(current_card):
+					new_deck.allowed[new_deck.get_index(current_card)] = true
+				else:
+					new_deck.allowed[new_deck.get_index(current_card)] = false
+		players[player_index]['known_spells_deck'] = new_deck
+	else:
+		players[player_index]['known_spells_deck'] = universal_spell_deck.subdeck(players[player_index]['known_spells'])
+	
 
 func get_player_id()->int:
 	print("Current keys ",players.keys())

@@ -176,11 +176,12 @@ func _on_center_card_new_name(name):
 
 
 func _on_zoomed_select():
-	selected.emit()
+	
 	if use_slot_index:
 		(center_card as SpellCard).select(player_index,context,slot_index)
 	else:
 		center_card.select(player_index,context)
+	selected.emit()
 	display()
 	refresh()
 	next.emit()
@@ -190,6 +191,7 @@ func _on_zoomed_select():
 func _on_selected_unselect():
 	#exit.emit()
 	undisplay()
+	print("unselect A")
 	cards.unselect(center_card)
 	center_card.unselect(player_index,context)
 	refresh()

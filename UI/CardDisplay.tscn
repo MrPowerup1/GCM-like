@@ -76,6 +76,7 @@ text = "Learn Spell
 "
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="DescriptionBox" type="PanelContainer" parent="HBoxContainer"]
 unique_name_in_owner = true

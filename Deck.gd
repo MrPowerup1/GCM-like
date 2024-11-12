@@ -56,7 +56,28 @@ func subdeck(indices:Array,exclude:Array = []) -> Deck:
 			new_deck.cards.append(cards[index])
 			new_deck.allowed.append(allowed[index]) 
 	return new_deck
-		
+	
+func filter(tags:Array[String],filter_type:String = "EXCLUDE") ->Deck:
+	var new_deck = Deck.new()
+	match filter_type:
+		"EXCLUDE":
+			for card in cards:
+				if card.match_tags(tags,"ANY"):
+					pass
+				else:
+					new_deck.cards.append(card)
+					new_deck.allowed.append(is_allowed(card)) 
+		"INCLUDE":
+			for card in cards:
+				if card.match_tags(tags,"ANY"):
+					new_deck.cards.append(card)
+					new_deck.allowed.append(is_allowed(card)) 
+				else:
+					pass
+		var other:
+			printerr("Filter Failed: cant parse filter type: ",other)
+			return self
+	return new_deck
 func reset():
 	for i in range(allowed.size()):
 		allowed[i] = true

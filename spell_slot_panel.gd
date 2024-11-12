@@ -2,10 +2,11 @@ extends PanelContainer
 class_name CardDisplayContainer
 
 @export var do_filter:bool
-enum Filter_Types {Exclude,Include}
+enum Filter_Types {EXCLUDE,INCLUDE}
 @export var filter_type:Filter_Types
 @export var filter_strings:Array[String]
 var unfiltered_cards:Deck
+var filtered_cards:Deck
 @export var to_display:PackedScene = load("res://UI/CardDisplay.tscn")
 @export var context:Card.CardContext
 @export var spell_slot_index:int
@@ -20,15 +21,25 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func reload_deck():
+	if do_filter:
+		apply_filter()
+	else:
+		filtered_cards = unfiltered_cards
+
 func load_deck(new_deck:Deck):
 	unfiltered_cards = new_deck
+	if do_filter:
+		apply_filter()
+	else:
+		filtered_cards = unfiltered_cards
 	if get_child_count() > 0:
 		pass
 	else:
 		select_spell()
 	
 func select_spell():
-	var filtered_cards = unfiltered_cards #SUBDECK OR SOMETHING TO FILTER
+	#var filtered_cards = unfiltered_cards #SUBDECK OR SOMETHING TO FILTER
 	var card_to_display:SpellCard = filtered_cards.find_first_allowed()
 	card_to_display.select(player_index,context,spell_slot_index)
 	if unfiltered_cards.select(card_to_display):
@@ -45,3 +56,13 @@ func highlight(new_state:bool):
 		theme_type_variation = "Panel2"
 	else:
 		theme_type_variation = "ClearPanelContainer"
+
+func apply_filter():
+	print("Applying filter")
+	match filter_type:
+		Filter_Types.EXCLUDE:
+			filtered_cards = unfiltered_cards.filter(filter_strings,"EXCLUDE")
+		Filter_Types.INCLUDE:
+			filtered_cards = unfiltered_cards.filter(filter_strings,"INCLUDE")
+		
+	

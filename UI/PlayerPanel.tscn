@@ -49,6 +49,7 @@ size_flags_vertical = 3
 [node name="Displays" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/separation = 5
 script = ExtResource("6_8vkn6")
 
 [node name="AwaitPlayer" parent="MarginContainer/VBoxContainer/Displays" node_paths=PackedStringArray("display_location", "player") instance=ExtResource("2_x2hvt")]
@@ -64,6 +65,7 @@ player = NodePath("../../../../PlayerUIInput")
 [node name="SkinSelect" parent="MarginContainer/VBoxContainer/Displays" instance=ExtResource("2_kbems")]
 unique_name_in_owner = true
 layout_mode = 2
+title = "Color"
 current_deck_type = 2
 cards = ExtResource("3_0638b")
 spawn_display = true

@@ -48,20 +48,21 @@ func load_deck(new_deck:Deck):
 	
 	
 func load_new_deck():
+	var new_deck:Deck
 	if current_deck_type==DeckType.ALL_SKIN:
-		cards = GameManager.universal_skin_deck
+		new_deck = GameManager.universal_skin_deck
 	elif current_deck_type == DeckType.ALL_SPELL:
-		cards=GameManager.universal_spell_deck.duplicate()
+		new_deck=GameManager.universal_spell_deck.duplicate()
 	elif current_deck_type==DeckType.KNOWN_SPELL:
 		print(player_index)
 		print(GameManager.players)
 		#cards = GameManager.universal_spell_deck.subdeck(GameManager.players[player_index].get('known_spells'))
-		cards = GameManager.players[player_index]['known_spells_deck']
+		new_deck = GameManager.players[player_index]['known_spells_deck']
 	elif current_deck_type==DeckType.ALL_UNKNOWN_SPELL:
 		print(player_index)
 		print(GameManager.players)
-		cards = GameManager.universal_spell_deck.subdeck(range(GameManager.universal_spell_deck.cards.size()),GameManager.players[player_index].get('known_spells'))
-
+		new_deck = GameManager.universal_spell_deck.subdeck(range(GameManager.universal_spell_deck.cards.size()),GameManager.players[player_index].get('known_spells'))
+	load_deck(new_deck)	
 func reset():
 	var to_display = cards.start_cards()
 	new_cards(to_display)
@@ -205,6 +206,6 @@ func _on_focused_unfocus():
 	
 
 func focused():
-	load_new_deck()
+	#load_new_deck()
 	refresh()
 	focus.emit()

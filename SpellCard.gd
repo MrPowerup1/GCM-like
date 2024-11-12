@@ -8,7 +8,7 @@ class_name SpellCard
 enum Categories {None,Melee,Mobility}
 #var category
 @export var category:Categories
-@export_enum("Buff","Movement","Attack","Defense") var type:int
+#@export_enum("Buff","Movement","Attack","Defense") var type:int
 @export var randomizer = false
 
 #@export var context:CardContext

@@ -17,3 +17,7 @@ func _on_multi_spell_select_to_selecting() -> void:
 
 func _on_multi_spell_select_to_finished() -> void:
 	Transition.emit(self,"Finished")
+
+
+func _on_multi_spell_select_to_unfocused() -> void:
+	Transition.emit(self,"Unfocused")

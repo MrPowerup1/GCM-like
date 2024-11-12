@@ -83,81 +83,83 @@ func set_shader_replacement_color(new_color:Color):
 	%Image.material.set_shader_parameter("new_color",new_color)
 
 func set_mode(new_mode:Mode):
-	if new_mode==Mode.CLEAR:
-		%Grey.visible = false
-		%LockSymbol.visible = false
-		%AcceptSymbol.visible = false
-		%LockSymbol2.visible = false
-	if new_mode==Mode.SELECTED:
-		%Grey.visible = true
-		%LockSymbol.visible = false
-		%AcceptSymbol.visible = true
-		%LockSymbol2.visible = false
-	if new_mode==Mode.UNSELECTABLE:
-		%Grey.visible = true
-		%LockSymbol.visible = false
-		%AcceptSymbol.visible = false
-		%LockSymbol2.visible = true
-	if new_mode==Mode.GREY:
-		%Grey.visible = true
-		%LockSymbol.visible = false
-		%AcceptSymbol.visible = false
-		%LockSymbol2.visible = false
+	match new_mode:
+		Mode.CLEAR:
+			%Grey.visible = false
+			%LockSymbol.visible = false
+			%AcceptSymbol.visible = false
+			%LockSymbol2.visible = false
+		Mode.SELECTED:
+			%Grey.visible = true
+			%LockSymbol.visible = false
+			%AcceptSymbol.visible = true
+			%LockSymbol2.visible = false
+		Mode.UNSELECTABLE:
+			%Grey.visible = true
+			%LockSymbol.visible = false
+			%AcceptSymbol.visible = false
+			%LockSymbol2.visible = true
+		Mode.GREY:
+			%Grey.visible = true
+			%LockSymbol.visible = false
+			%AcceptSymbol.visible = false
+			%LockSymbol2.visible = false
 	current_mode=new_mode
 
 func set_display_style(new_style:DisplayStyle):
-	if new_style==DisplayStyle.ICON:
-		visible=true
-		%CardName.visible=true
-		%DescriptionBox.visible=false
-		%Image.visible=true
-		%Image.custom_minimum_size = Vector2.ONE*zoom_pixels
-		set_theme_type("")
-		%ImageBorder.theme_type_variation = "ClearPanelContainer"
-	if new_style==DisplayStyle.ZOOMED:
-		visible=true
-		%CardName.visible=true
-		%DescriptionBox.visible=true
-		%Image.visible=true
-		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
-		#newName.emit("")
-		%ImageBorder.theme_type_variation = "ClearPanelContainer"
-		set_theme_type("SpellPanel")
-	if new_style==DisplayStyle.STANDARD:
-		visible=true
-		%CardName.visible=false
-		%DescriptionBox.visible=false
-		%Image.visible=true
-		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
-		%ImageBorder.theme_type_variation = "ClearPanelContainer"
-		set_theme_type("")
-	if new_style==DisplayStyle.TINY:
-		visible=true
-		%CardName.visible=false
-		%DescriptionBox.visible=false
-		%Image.visible=true
-		%Image.custom_minimum_size = Vector2.ONE*tiny_pixels
-		%ImageBorder.theme_type_variation = "ClearPanelContainer"
-		set_theme_type("ClearPanelContainer")
-		#newName.emit("")
-	if new_style==DisplayStyle.INVISIBLE:
-		visible=false
-	if new_style==DisplayStyle.DISPLAYING:
-		visible=true
-		#%CardName.visible=true
-		%DescriptionBox.visible=false
-		%Image.visible=true
-		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
-		%ImageBorder.theme_type_variation = ""
-		set_theme_type("ClearPanelContainer")
-		print("New displaying")
-		%CardName.visible=true
-	if new_style==DisplayStyle.HOVERING:
-		visible=true
-		#%CardName.visible=true
-		%DescriptionBox.visible=false
-		%Image.visible=true
-		%Image.custom_minimum_size = Vector2.ONE*standard_pixels
-		%ImageBorder.theme_type_variation = ""
-		set_theme_type("ClearPanelContainer")
+	match new_style:
+		DisplayStyle.ICON:
+			visible=true
+			%CardName.visible=true
+			%DescriptionBox.visible=false
+			%Image.visible=true
+			%Image.custom_minimum_size = Vector2.ONE*zoom_pixels
+			set_theme_type("")
+			%ImageBorder.theme_type_variation = "ClearPanelContainer"
+		DisplayStyle.ZOOMED:
+			visible=true
+			%CardName.visible=true
+			%DescriptionBox.visible=true
+			%Image.visible=true
+			%Image.custom_minimum_size = Vector2.ONE*standard_pixels
+			#newName.emit("")
+			%ImageBorder.theme_type_variation = "ClearPanelContainer"
+			set_theme_type("SpellPanel")
+		DisplayStyle.STANDARD:
+			visible=true
+			%CardName.visible=false
+			%DescriptionBox.visible=false
+			%Image.visible=true
+			%Image.custom_minimum_size = Vector2.ONE*standard_pixels
+			%ImageBorder.theme_type_variation = "ClearPanelContainer"
+			set_theme_type("")
+		DisplayStyle.TINY:
+			visible=true
+			%CardName.visible=false
+			%DescriptionBox.visible=false
+			%Image.visible=true
+			%Image.custom_minimum_size = Vector2.ONE*tiny_pixels
+			%ImageBorder.theme_type_variation = "ClearPanelContainer"
+			set_theme_type("ClearPanelContainer")
+			#newName.emit("")
+		DisplayStyle.INVISIBLE:
+			visible=false
+		DisplayStyle.DISPLAYING:
+			visible=true
+			#%CardName.visible=true
+			%DescriptionBox.visible=false
+			%Image.visible=true
+			%Image.custom_minimum_size = Vector2.ONE*standard_pixels
+			%ImageBorder.theme_type_variation = ""
+			set_theme_type("ClearPanelContainer")
+			print("New displaying")
+			%CardName.visible=true
+		DisplayStyle.HOVERING:
+			visible=true
+			%CardName.visible=true
+			%DescriptionBox.visible=false
+			%Image.visible=true
+			%Image.custom_minimum_size = Vector2.ONE*standard_pixels
+			%ImageBorder.theme_type_variation = ""
+			set_theme_type("ClearPanelContainer")
 	current_style=new_style

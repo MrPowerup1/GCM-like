@@ -136,6 +136,7 @@ func select():
 			finished_selecting()
 	else:
 		%CardSelect.select()
+		cards.select(%CardSelect.center_card)
 		to_hovering.emit()
 	SoundFX.select()
 	

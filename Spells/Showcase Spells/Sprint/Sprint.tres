@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=11 format=3 uid="uid://ubcyyvy25pq6"]
+
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_83ciu"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="2_w0eym"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="3_6qptt"]
+[ext_resource type="PackedScene" uid="uid://tm2psxgle1mc" path="res://Instanced Scenes/delayed_cast_instance.tscn" id="3_55txn"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/End_Effect.gd" id="4_6vgem"]
+[ext_resource type="Script" path="res://Spell Effects/delayed_cast_effect.gd" id="5_7wcpx"]
+
+[sub_resource type="Resource" id="Resource_2nmtp"]
+script = ExtResource("2_w0eym")
+set_speed = true
+set_friction = false
+speed_factor = 131072
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_pos5g"]
+script = ExtResource("2_w0eym")
+set_speed = true
+set_friction = false
+speed_factor = 65536
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_w8jix"]
+script = ExtResource("4_6vgem")
+
+[sub_resource type="Resource" id="Resource_68wsa"]
+script = ExtResource("5_7wcpx")
+delay_time = 50
+effect = SubResource("Resource_w8jix")
+delayed_cast_instance = ExtResource("3_55txn")
+origin = 1
+
+[resource]
+script = ExtResource("3_6qptt")
+timings = Array[int]([0, 2, 0])
+effects = Array[ExtResource("1_83ciu")]([SubResource("Resource_2nmtp"), SubResource("Resource_pos5g"), SubResource("Resource_68wsa")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = false
+cooldown_on_release = true
+cooldown_time = 60
+starting_data = {}

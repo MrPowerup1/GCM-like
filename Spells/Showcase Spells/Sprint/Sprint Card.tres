@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://d0f7nxemqpfgj"]
+
+[ext_resource type="Texture2D" uid="uid://dj2yxkaukvkf5" path="res://Spells/Showcase Spells/Dash/Dash Icon.png" id="1_ukvfp"]
+[ext_resource type="Script" path="res://Elements/Element.gd" id="2_3x1qu"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="3_ibsjp"]
+[ext_resource type="Resource" uid="uid://ubcyyvy25pq6" path="res://Spells/Showcase Spells/Sprint/Sprint.tres" id="4_4i0b0"]
+
+[resource]
+script = ExtResource("3_ibsjp")
+spell = ExtResource("4_4i0b0")
+requirements = Array[ExtResource("2_3x1qu")]([])
+category = 0
+randomizer = false
+name = "Sprint"
+image = ExtResource("1_ukvfp")
+description = "You are Fast"
+tags = Array[String](["Mobility"])

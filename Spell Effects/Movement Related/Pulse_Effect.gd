@@ -6,7 +6,7 @@ class_name Pulse_Effect
 @export var strength:float
 
 
-func trigger(target,caster:Player,spell_index:int,location:SGFixedVector2=caster.fixed_position):
+func trigger(target,caster:Player,spell_index:int,location:SGFixedVector2=caster.get_global_fixed_position()):
 	if target!=null and (target.has_node(NodePath("Velocity"))):
 		if pulse_to:
 			target.get_node(NodePath("Velocity")).pulse_to(location,strength)

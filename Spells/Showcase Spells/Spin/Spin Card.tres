@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellCard" load_steps=5 format=3 uid="uid://u0g063wfebq5"]
+
+[ext_resource type="Texture2D" uid="uid://bjpsx6riw2i6n" path="res://Spells/Showcase Spells/Melee/Melee Icon.png" id="1_lm1wy"]
+[ext_resource type="Script" path="res://Elements/Element.gd" id="2_cqx6v"]
+[ext_resource type="Script" path="res://SpellCard.gd" id="3_cuhk5"]
+[ext_resource type="Resource" uid="uid://df66ao83qm04h" path="res://Spells/Showcase Spells/Spin/Spin Spell.tres" id="4_ov3qx"]
+
+[resource]
+script = ExtResource("3_cuhk5")
+spell = ExtResource("4_ov3qx")
+requirements = Array[ExtResource("2_cqx6v")]([])
+category = 0
+randomizer = false
+name = "Spin"
+image = ExtResource("1_lm1wy")
+description = "Im a little tornado"
+tags = Array[String](["Melee"])

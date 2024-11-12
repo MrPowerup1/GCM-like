@@ -108,7 +108,7 @@ func trigger_effect(effect:Spell_Effect,target):
 	if (effect==null):
 		pass
 	elif (effect is Positional_Effect):
-		(effect as Positional_Effect).trigger(target,caster,spell_index,fixed_position)
+		(effect as Positional_Effect).trigger(target,caster,spell_index,get_global_fixed_position())
 	else:
 		effect.trigger(target,caster,spell_index)
 

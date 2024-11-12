@@ -20,6 +20,7 @@ damage_value = 50
 [sub_resource type="Resource" id="Resource_khwtr"]
 script = ExtResource("3_nagvh")
 area_scene = ExtResource("3_0i8tk")
+spawn_type = 0
 
 [sub_resource type="Resource" id="Resource_yw62v"]
 script = ExtResource("4_pm1pl")

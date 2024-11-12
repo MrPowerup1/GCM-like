@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=8 format=3 uid="uid://df66ao83qm04h"]
+
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="1_0n0gv"]
+[ext_resource type="PackedScene" uid="uid://bpvy3a15b6nh3" path="res://Spells/Showcase Spells/Spin/Spin Scene.tscn" id="2_ucnnk"]
+[ext_resource type="Script" path="res://Spell Effects/Area_Effect.gd" id="3_1im0m"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="4_olfc8"]
+[ext_resource type="Script" path="res://Spell Effects/Spell.gd" id="8_f0q5x"]
+
+[sub_resource type="Resource" id="Resource_81phc"]
+script = ExtResource("3_1im0m")
+area_scene = ExtResource("2_ucnnk")
+spawn_type = 1
+
+[sub_resource type="Resource" id="Resource_s54of"]
+script = ExtResource("4_olfc8")
+offset_x = 0
+offset_y = 0
+effect = SubResource("Resource_81phc")
+
+[resource]
+script = ExtResource("8_f0q5x")
+timings = Array[int]([0])
+effects = Array[ExtResource("1_0n0gv")]([SubResource("Resource_s54of")])
+ping_asap = false
+held_ping_time = 0
+cooldown_on_activate = true
+cooldown_on_release = false
+cooldown_time = 30
+starting_data = {}

@@ -1,0 +1,133 @@
+[gd_scene load_steps=25 format=3 uid="uid://bpvy3a15b6nh3"]
+
+[ext_resource type="Script" path="res://Instanced Scenes/Area.gd" id="1_iuh50"]
+[ext_resource type="Script" path="res://Spell Effects/Parent Effects/Spell Effect.gd" id="2_3vaib"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Pulse_Effect.gd" id="3_4ht74"]
+[ext_resource type="Script" path="res://Spell Effects/Utility Effects/player_offset_effect.gd" id="4_jo6pl"]
+[ext_resource type="Script" path="res://Spell Effects/Damage_Effect.gd" id="5_u5nwp"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Animation_Effect.gd" id="6_5q47b"]
+[ext_resource type="Script" path="res://Spell Effects/Multi_Spell_Effect.gd" id="6_t3a3w"]
+[ext_resource type="Script" path="res://Spell Effects/Movement Related/Speed_Effect.gd" id="7_y67w8"]
+[ext_resource type="Texture2D" uid="uid://bvqc4x7cl613c" path="res://Spells/Showcase Spells/Spin/Spin-Sheet.png" id="8_8bohk"]
+[ext_resource type="Script" path="res://Spell Effects/Testing Related/Test_Position.gd" id="8_uy0g5"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="9_3yt2t"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="10_lymlq"]
+
+[sub_resource type="Resource" id="Resource_ngw7b"]
+script = ExtResource("3_4ht74")
+pulse_to = false
+pulse_from = true
+strength = 3.0
+
+[sub_resource type="Resource" id="Resource_0fjdg"]
+script = ExtResource("4_jo6pl")
+offset_x = -10
+offset_y = 0
+effect = SubResource("Resource_ngw7b")
+
+[sub_resource type="Resource" id="Resource_x6i6w"]
+script = ExtResource("5_u5nwp")
+damage_value = 10
+
+[sub_resource type="Resource" id="Resource_38n7s"]
+script = ExtResource("6_t3a3w")
+effects = Array[ExtResource("2_3vaib")]([SubResource("Resource_0fjdg"), SubResource("Resource_x6i6w")])
+
+[sub_resource type="Resource" id="Resource_2px4s"]
+script = ExtResource("6_5q47b")
+animation_name = "spin"
+
+[sub_resource type="Resource" id="Resource_wyhrk"]
+script = ExtResource("7_y67w8")
+set_speed = true
+set_friction = false
+speed_factor = 32768
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_5ogh4"]
+script = ExtResource("7_y67w8")
+set_speed = true
+set_friction = false
+speed_factor = 65536
+friction_factor = 0
+
+[sub_resource type="Resource" id="Resource_37uu3"]
+script = ExtResource("8_uy0g5")
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_u01od"]
+extents_x = 1656199
+extents_y = 1564220
+
+[sub_resource type="Animation" id="Animation_voy3k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_40t8c"]
+resource_name = "spin"
+length = 0.3
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_daem0"]
+_data = {
+"RESET": SubResource("Animation_voy3k"),
+"spin": SubResource("Animation_40t8c")
+}
+
+[node name="Base Area" type="SGArea2D" groups=["network_sync", "pierceable"]]
+script = ExtResource("1_iuh50")
+timings = Array[int]([3, 4, 4, 2, 4])
+locations = Array[int]([2, 3, 0, 0, 3])
+effects = Array[ExtResource("2_3vaib")]([SubResource("Resource_38n7s"), SubResource("Resource_2px4s"), SubResource("Resource_wyhrk"), SubResource("Resource_5ogh4"), SubResource("Resource_37uu3")])
+ping_time = 5
+life_time = 30
+
+[node name="CollisionShape2D" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGRectangleShape2D_u01od")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("8_8bohk")
+hframes = 3
+
+[node name="End_Time" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_3yt2t")
+wait_ticks = 60
+
+[node name="Ping_Time" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_3yt2t")
+wait_ticks = 60
+
+[node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_daem0")
+}
+script = ExtResource("10_lymlq")
+
+[connection signal="timeout" from="End_Time" to="." method="_on_end_time_timeout"]
+[connection signal="timeout" from="Ping_Time" to="." method="_on_ping_time_timeout"]

@@ -1,6 +1,7 @@
 extends PanelContainer
 class_name CardDisplayContainer
 
+@export var title:String
 @export var do_filter:bool
 enum Filter_Types {EXCLUDE,INCLUDE}
 @export var filter_type:Filter_Types

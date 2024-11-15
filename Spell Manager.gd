@@ -36,6 +36,7 @@ func _process(delta):
 func activate(spell_index:int):
 	if spell_index < slots.size():
 		slots[spell_index].activate()
+		print("Slot name ",slots[spell_index].name)
 	else:
 		printerr("Activating unknown spell slot")
 	#active_spells[spell_index].activate(caster)

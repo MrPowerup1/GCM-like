@@ -82,6 +82,7 @@ input_keys = ExtResource("10_am0tn")
 script = ExtResource("11_nmy4t")
 
 [connection signal="player_joined" from="." to="VBoxContainer/Displays" method="_on_player_panel_player_joined"]
+[connection signal="player_joined" from="." to="MultiSpellPanelSpecial" method="_on_multi_spell_panel_player_joined"]
 [connection signal="selected" from="VBoxContainer/Displays/NewSpell" to="VBoxContainer/Displays/Multi Spell Select" method="_on_new_spell_selected"]
 [connection signal="exit" from="VBoxContainer/Displays/Multi Spell Select" to="MultiSpellPanelSpecial" method="_on_multi_spell_select_exit"]
 [connection signal="player_ready" from="VBoxContainer/Displays/PlayerReady" to="." method="_on_player_ready_player_ready"]

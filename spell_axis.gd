@@ -5,6 +5,10 @@ class_name SpellAxis
 @export var left_spell:CardDisplayContainer
 @export var right_spell:CardDisplayContainer
 @export var bottom_spell:CardDisplayContainer
+@export var top_icon:TextureRect
+@export var left_icon:TextureRect
+@export var bottom_icon:TextureRect
+@export var right_icon:TextureRect
 #var card_displays:Array[CardDisplay]
 #
 #func add_display(new_display:CardDisplay):
@@ -54,6 +58,7 @@ func set_player_index(new_player_index:int):
 	right_spell.player_index = new_player_index
 	left_spell.player_index = new_player_index
 	bottom_spell.player_index = new_player_index
+	
 
 func unlearn(check_card:Card):
 	top_spell.unlearn(check_card)
@@ -66,3 +71,9 @@ func load_spells(spell_index:Array):
 	print("Left spell loading ",spell_index[1]," : ",GameManager.universal_spell_deck.get_card(spell_index[1]).name)
 	print("Right spell loading ",spell_index[2]," : ",GameManager.universal_spell_deck.get_card(spell_index[2]).name)
 	print("Bottom spell loading ",spell_index[3]," : ",GameManager.universal_spell_deck.get_card(spell_index[3]).name)
+
+func change_icons(input_scheme:Input_Keys):
+	top_icon.texture = load(input_scheme.icons["Spell2"])
+	right_icon.texture = load(input_scheme.icons["Spell1"])
+	left_icon.texture = load(input_scheme.icons["Melee"])
+	bottom_icon.texture = load(input_scheme.icons["Mobility"])

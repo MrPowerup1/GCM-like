@@ -48,7 +48,7 @@ handle_despawn_display = false
 display_location = NodePath("../Spell Axis/VBoxContainer/Top Spell")
 use_slot_index = true
 
-[node name="Spell Axis" type="MarginContainer" parent="VBoxContainer2" node_paths=PackedStringArray("top_spell", "left_spell", "right_spell", "bottom_spell")]
+[node name="Spell Axis" type="MarginContainer" parent="VBoxContainer2" node_paths=PackedStringArray("top_spell", "left_spell", "right_spell", "bottom_spell", "top_icon", "left_icon", "bottom_icon", "right_icon")]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 0
@@ -60,6 +60,10 @@ top_spell = NodePath("VBoxContainer/Top Spell")
 left_spell = NodePath("HBoxContainer/Left Spell")
 right_spell = NodePath("HBoxContainer/Right Spell")
 bottom_spell = NodePath("VBoxContainer/Bottom Spell")
+top_icon = NodePath("VBoxContainer/TextureRect2")
+left_icon = NodePath("HBoxContainer/TextureRect")
+bottom_icon = NodePath("VBoxContainer/TextureRect3")
+right_icon = NodePath("HBoxContainer/TextureRect2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2/Spell Axis"]
 layout_mode = 2
@@ -74,8 +78,10 @@ focus_neighbor_right = NodePath("../../HBoxContainer/Right Spell")
 focus_neighbor_bottom = NodePath("../Bottom Spell")
 theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("4_a23fh")
+title = "Standard Spell 1"
 to_display = ExtResource("1_dm8x5")
 blank_card = ExtResource("7_0may4")
+spell_slot_index = 1
 
 [node name="TextureRect2" type="TextureRect" parent="VBoxContainer2/Spell Axis/VBoxContainer"]
 custom_minimum_size = Vector2(16, 16)
@@ -109,6 +115,7 @@ focus_neighbor_right = NodePath("../../HBoxContainer/Right Spell")
 focus_neighbor_bottom = NodePath("../../../Done")
 theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("4_a23fh")
+title = "Mobility Spell"
 do_filter = true
 filter_type = 1
 filter_strings = Array[String](["Mobility"])
@@ -128,10 +135,11 @@ focus_neighbor_right = NodePath("../Right Spell")
 focus_neighbor_bottom = NodePath("../../VBoxContainer/Bottom Spell")
 theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("4_a23fh")
+title = "Melee Spell"
 do_filter = true
 filter_type = 1
 filter_strings = Array[String](["Melee"])
-spell_slot_index = 1
+spell_slot_index = 2
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer2/Spell Axis/HBoxContainer"]
 custom_minimum_size = Vector2(16, 16)
@@ -164,7 +172,7 @@ focus_neighbor_top = NodePath("../../VBoxContainer/Top Spell")
 focus_neighbor_bottom = NodePath("../../VBoxContainer/Bottom Spell")
 theme_type_variation = &"ClearPanelContainer"
 script = ExtResource("4_a23fh")
-spell_slot_index = 2
+title = "Standard Spell 2"
 
 [node name="Grey" type="Panel" parent="VBoxContainer2/Spell Axis"]
 unique_name_in_owner = true

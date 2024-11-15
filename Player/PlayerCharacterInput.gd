@@ -27,18 +27,22 @@ func _get_local_input() -> Dictionary:
 	
 	if (Input.is_action_just_pressed(input_keys.conversion["Spell1"])):
 		input['spell_1_pressed']=true
+		print("spell1")
 	if (Input.is_action_just_released(input_keys.conversion["Spell1"])):
 		input['spell_1_released']=true
 	if (Input.is_action_just_pressed(input_keys.conversion["Spell2"])):
 		input['spell_2_pressed']=true
+		print("spell2")
 	if (Input.is_action_just_released(input_keys.conversion["Spell2"])):
 		input['spell_2_released']=true
 	if (Input.is_action_just_pressed(input_keys.conversion["Melee"])):
 		input['melee_pressed']=true
+		print("melee")
 	if (Input.is_action_just_released(input_keys.conversion["Melee"])):
 		input['melee_released']=true
 	if (Input.is_action_just_pressed(input_keys.conversion["Mobility"])):
 		input['mobility_pressed']=true
+		print("mobility")
 	if (Input.is_action_just_released(input_keys.conversion["Mobility"])):
 		input['mobility_released']=true
 	if not input_vector.is_equal_approx(fixed_zero_vector):

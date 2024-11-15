@@ -18,3 +18,9 @@ conversion = {
 }
 device = 0
 device_id = -2
+icons = {
+"Melee": "res://Art/xbox_button_color_a.png",
+"Mobility": "res://Art/xbox_button_color_a.png",
+"Spell1": "res://Art/xbox_button_color_a.png",
+"Spell2": "res://Art/xbox_button_color_a.png"
+}

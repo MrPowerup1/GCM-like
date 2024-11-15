@@ -61,7 +61,7 @@ func hover_card(new_focus):
 		%CardSelect.display_location = %CardSelect.get_path_to(new_focus)
 		%CardSelect.load_deck(new_focus.filtered_cards)
 		SoundFX.move()
-		%CardSelect.change_title(new_focus.name)
+		%CardSelect.change_title(new_focus.title)
 		var new_card = new_focus.get_child(0).card
 		if new_focus.filtered_cards.has_card(new_card):
 			%CardSelect.center_card = new_focus.get_child(0).card
@@ -179,3 +179,6 @@ func focused():
 
 func unlearn(check_card:Card):
 	spell_axis.unlearn(check_card)
+
+func change_icons(input_scheme:Input_Keys):
+	%"Spell Axis".change_icons(input_scheme)

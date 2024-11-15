@@ -175,7 +175,7 @@ friction_fixed = 65536
 mass_fixed = 65536
 acceleration_fixed = 32768
 cut_accel_fixed = 32768
-max_speed_fixed = 131072
+max_speed_fixed = 196608
 turning_speed_fixed = 6556
 
 [node name="Health" type="Node" parent="."]

@@ -8,6 +8,7 @@ enum Filter_Types {EXCLUDE,INCLUDE}
 var unfiltered_cards:Deck
 var filtered_cards:Deck
 @export var to_display:PackedScene = load("res://UI/CardDisplay.tscn")
+@export var blank_card:Card = load("res://Blank Card.tres")
 @export var context:Card.CardContext
 @export var spell_slot_index:int
 var player_index
@@ -35,9 +36,10 @@ func load_deck(new_deck:Deck):
 		filtered_cards = unfiltered_cards
 	if get_child_count() > 0:
 		pass
-	else:
+	elif GameManager.players[player_index]['selected_spells'][spell_slot_index] == -1:
 		select_spell()
-	
+	else:
+		display_spell()
 func select_spell():
 	#var filtered_cards = unfiltered_cards #SUBDECK OR SOMETHING TO FILTER
 	var card_to_display:SpellCard = filtered_cards.find_first_allowed()
@@ -46,11 +48,15 @@ func select_spell():
 		print("Succesfull")
 	else:
 		printerr("card found not available")
+	display_spell()
+	
+func display_spell():
 	var displayed_card = to_display.instantiate()
 	add_child(displayed_card)
-	displayed_card.set_new_card(card_to_display)
+	var card_index = GameManager.players[player_index]['selected_spells'][spell_slot_index]
+	displayed_card.set_new_card(GameManager.universal_spell_deck.get_card(card_index))
 	displayed_card.set_display_style(CardDisplay.DisplayStyle.DISPLAYING)
-	
+
 func highlight(new_state:bool):
 	if new_state:
 		theme_type_variation = "Panel2"
@@ -65,4 +71,7 @@ func apply_filter():
 		Filter_Types.INCLUDE:
 			filtered_cards = unfiltered_cards.filter(filter_strings,"INCLUDE")
 		
+func unlearn(check_card:Card):
+	if get_child_count() > 0 and get_child(0).card == check_card:
+		get_child(0).set_new_card(blank_card)
 	

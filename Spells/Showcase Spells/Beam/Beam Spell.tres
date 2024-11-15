@@ -17,6 +17,7 @@
 [sub_resource type="Resource" id="Resource_ngex5"]
 script = ExtResource("2_xgf05")
 area_scene = ExtResource("1_80oiu")
+spawn_type = 0
 
 [sub_resource type="Resource" id="Resource_eakul"]
 script = ExtResource("3_cct3m")

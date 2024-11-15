@@ -12,6 +12,7 @@
 [sub_resource type="Resource" id="Resource_81phc"]
 script = ExtResource("2_7kodn")
 area_scene = ExtResource("1_khba4")
+spawn_type = 0
 
 [sub_resource type="Resource" id="Resource_3slef"]
 script = ExtResource("3_14dql")

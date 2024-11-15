@@ -164,6 +164,7 @@ func reset_decks():
 func reset_player_selections(index:int):
 	assert(players.has(index),"Attempting to reset missing player index")
 	players[index]['selected_spells'] = [-1,-1,-1,-1]
+	
 		
 
 func get_most_wins_index() -> Array[int]:

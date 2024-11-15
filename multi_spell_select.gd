@@ -5,6 +5,7 @@ enum DeckType {ALL_SPELL,KNOWN_SPELL,ALL_SKIN,ALL_UNKNOWN_SPELL}
 @export var current_deck_type:DeckType
 @export var cards:Deck
 @export var start_focus:PanelContainer
+@export var spell_axis:SpellAxis
 var focus:PanelContainer
 var hovering:bool = true
 
@@ -16,23 +17,19 @@ signal to_unfocused
 
 func new_player(new_player_index:int):
 	player_index = new_player_index
-	%"Top Spell".player_index = player_index
-	%"Left Spell".player_index = player_index
-	%"Right Spell".player_index = player_index
-	%"Bottom Spell".player_index = player_index
+	spell_axis.set_player_index(new_player_index)
 	#%"Learn Spell".player_index = player_index
 	%CardSelect.player_index = player_index
 	load_new_deck()
+	print("new player loaded")
+	if GameManager.players[new_player_index].has('selected_spells'):
+		print("Loading existing spells")
+		spell_axis.load_spells(GameManager.players[new_player_index]['selected_spells'])
 
 func load_deck(new_deck:Deck):
 	print("TOPIC unselect: deck loaded")
 	cards = new_deck
-	#Melee
-	%"Left Spell".load_deck(cards)
-	#Mobility
-	%"Bottom Spell".load_deck(cards)
-	%"Top Spell".load_deck(cards)
-	%"Right Spell".load_deck(cards)
+	spell_axis.set_deck(new_deck)
 	%"Spell Axis".set_display_style(CardDisplay.DisplayStyle.TINY)
 	
 	#%"Learn Spell".load_deck(GameManager.universal_spell_deck.subdeck(range(GameManager.universal_spell_deck.cards.size()),GameManager.players[player_index].get('known_spells')))
@@ -63,10 +60,11 @@ func hover_card(new_focus):
 		new_focus.get_child(0).set_display_style(CardDisplay.DisplayStyle.HOVERING)
 		%CardSelect.display_location = %CardSelect.get_path_to(new_focus)
 		%CardSelect.load_deck(new_focus.filtered_cards)
-		print("New deck is of sizee ",new_focus.filtered_cards.cards.size())
 		SoundFX.move()
 		%CardSelect.change_title(new_focus.name)
-		%CardSelect.center_card = new_focus.get_child(0).card
+		var new_card = new_focus.get_child(0).card
+		if new_focus.filtered_cards.has_card(new_card):
+			%CardSelect.center_card = new_focus.get_child(0).card
 		%CardSelect.slot_index = new_focus.spell_slot_index
 	else:
 		SoundFX.back()
@@ -145,6 +143,7 @@ func back():
 	if hovering:
 		exit.emit()
 		to_unfocused.emit()
+		#spell_axis.unlearn(%CardSelect.center_card)
 		#to_selecting.emit()
 		#print("Player ",player_index," Is selecting")
 		#print("unselect B2")
@@ -175,4 +174,8 @@ func _on_button_button_down() -> void:
 	finished_selecting()
 	
 func focused():
+	load_new_deck()
 	to_hovering.emit()
+
+func unlearn(check_card:Card):
+	spell_axis.unlearn(check_card)

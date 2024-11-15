@@ -50,6 +50,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 15
 text = "Press:"
 horizontal_alignment = 1
 vertical_alignment = 1

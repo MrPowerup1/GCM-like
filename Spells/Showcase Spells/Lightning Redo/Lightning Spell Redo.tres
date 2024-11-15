@@ -16,6 +16,7 @@
 [sub_resource type="Resource" id="Resource_3yhki"]
 script = ExtResource("3_aln4w")
 area_scene = ExtResource("8_73bwc")
+spawn_type = 0
 
 [sub_resource type="Resource" id="Resource_1uhey"]
 script = ExtResource("7_1nmmd")
@@ -49,6 +50,7 @@ effect = SubResource("Resource_hae5t")
 [sub_resource type="Resource" id="Resource_i0ijs"]
 script = ExtResource("3_aln4w")
 area_scene = ExtResource("9_jyiaq")
+spawn_type = 0
 
 [sub_resource type="Resource" id="Resource_1jr65"]
 script = ExtResource("9_5fc3k")

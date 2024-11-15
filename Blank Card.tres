@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Card" load_steps=3 format=3 uid="uid://bvlinv4k6eb8"]
+
+[ext_resource type="Script" path="res://Card.gd" id="1_8h1gk"]
+[ext_resource type="Texture2D" uid="uid://8gqdd61uxs7r" path="res://Art/cancel icon.png" id="1_31ogt"]
+
+[resource]
+script = ExtResource("1_8h1gk")
+name = "Blank"
+image = ExtResource("1_31ogt")
+description = "No card"
+tags = Array[String](["Any"])

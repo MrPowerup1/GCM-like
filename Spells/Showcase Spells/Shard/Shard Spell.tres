@@ -10,6 +10,7 @@
 [sub_resource type="Resource" id="Resource_3hrf7"]
 script = ExtResource("3_o6xs2")
 area_scene = ExtResource("2_j3fgy")
+spawn_type = 0
 
 [sub_resource type="Resource" id="Resource_qo4fi"]
 script = ExtResource("4_pyb4o")

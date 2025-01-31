@@ -1,11 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfi3h4c85n05t"]
+[gd_scene load_steps=10 format=3 uid="uid://bfi3h4c85n05t"]
 
 [ext_resource type="Script" path="res://Level.gd" id="1_autiy"]
-[ext_resource type="Texture2D" uid="uid://cvlg5hpajjgas" path="res://Art/1.png" id="2_bmfct"]
+[ext_resource type="Texture2D" uid="uid://bub1q1d4kvygy" path="res://Art/Background Lower.png" id="2_g0npt"]
+[ext_resource type="Texture2D" uid="uid://dujp5rlwrj6if" path="res://Art/Background Upper.png" id="3_74h6d"]
+[ext_resource type="Texture2D" uid="uid://cl7e3ls7px845" path="res://Art/Background fill.png" id="3_e38xw"]
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_dy3qh"]
+extents_x = 501216
+extents_y = 524288
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_imu53"]
-extents_x = 1049760
-extents_y = 1075752
+extents_x = 5794184
+extents_y = 2938646
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_xdh6f"]
+extents_x = 1506056
+extents_y = 2436302
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_epkfj"]
 extents_x = 826568
@@ -17,18 +27,162 @@ extents_x = 23208972
 [node name="Basic Level" type="Node"]
 script = ExtResource("1_autiy")
 
+[node name="Lower" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("2_g0npt")
+
+[node name="Base" type="Sprite2D" parent="."]
+z_index = -3
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("3_e38xw")
+
+[node name="Upper" type="Sprite2D" parent="."]
+z_index = 2
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("3_74h6d")
+
 [node name="StaticBody2D" type="SGStaticBody2D" parent="." groups=["pierceable"]]
 collision_layer = 3
 collision_mask = 3
-fixed_position_x = 18350080
-fixed_position_y = 12255232
-position = Vector2(280, 187)
+fixed_position_x = 18481152
+fixed_position_y = 13172736
+position = Vector2(282, 201)
 
-[node name="CollisionShape2D" type="SGCollisionShape2D" parent="StaticBody2D"]
+[node name="Tree Base18" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = 6160384
+fixed_position_y = 8323072
+position = Vector2(94, 127)
+
+[node name="Tree Base17" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = 14548992
+fixed_position_y = 9502720
+position = Vector2(222, 145)
+
+[node name="Tree Base16" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = 20840448
+fixed_position_y = 8323072
+position = Vector2(318, 127)
+
+[node name="Tree Base15" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = 18743296
+fixed_position_y = -65536
+position = Vector2(286, -1)
+
+[node name="Tree Base14" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = 18743296
+fixed_position_y = -7405568
+position = Vector2(286, -113)
+
+[node name="Tree Base13" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = 13500416
+fixed_position_y = -8388608
+position = Vector2(206, -128)
+
+[node name="Tree Base12" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = 5111808
+fixed_position_y = -9502720
+position = Vector2(78, -145)
+
+[node name="Center" type="SGCollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("SGRectangleShape2D_imu53")
+fixed_position_x = 3080192
+fixed_position_y = -524288
+position = Vector2(47, -8)
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
-texture = ExtResource("2_bmfct")
+[node name="Center2" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_xdh6f")
+fixed_position_x = 10354688
+fixed_position_y = -1048576
+position = Vector2(158, -16)
+
+[node name="Tree Base11" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -7471104
+fixed_position_y = -8454144
+position = Vector2(-114, -129)
+
+[node name="Tree Base10" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -8519680
+fixed_position_y = -4194304
+position = Vector2(-130, -64)
+
+[node name="Tree Base9" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -12779520
+fixed_position_y = -8454144
+position = Vector2(-195, -129)
+
+[node name="Tree Base8" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -13828096
+fixed_position_y = -5308416
+position = Vector2(-211, -81)
+
+[node name="Tree Base7" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -14876672
+fixed_position_y = -1048576
+position = Vector2(-227, -16)
+
+[node name="Tree Base6" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -4390912
+fixed_position_y = -65536
+position = Vector2(-67, -1)
+
+[node name="Tree Base19" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -8519680
+fixed_position_y = 983040
+position = Vector2(-130, 15)
+
+[node name="Tree Base5" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -13762560
+fixed_position_y = 983040
+position = Vector2(-210, 15)
+
+[node name="Tree Base20" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -12713984
+fixed_position_y = 5177344
+position = Vector2(-194, 79)
+
+[node name="Tree Base4" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -13762560
+fixed_position_y = 9371648
+position = Vector2(-210, 143)
+
+[node name="Tree Base3" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -8519680
+fixed_position_y = 8323072
+position = Vector2(-130, 127)
+
+[node name="Tree Base2" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -2293760
+fixed_position_y = 9371648
+position = Vector2(-35, 143)
+
+[node name="Tree Base" type="SGCollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SGRectangleShape2D_dy3qh")
+fixed_position_x = -131072
+fixed_position_y = 5177344
+position = Vector2(-2, 79)
 
 [node name="Left" type="SGStaticBody2D" parent="."]
 collision_layer = 3
